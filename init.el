@@ -7,6 +7,7 @@
 
 ;;;; fzlbpms init file
 ; wagnerdocri@gmail.com
+;https://github.com/wagnermarques/emacsinitfile
 
 ;some refs
 ;http://ergoemacs.org/emacs/elisp_basics.html
@@ -244,7 +245,17 @@ I N I T    F I L E    E X E C U T I N G    N O W . . .")
 (add-to-list 'load-path 
              (concat  *FZL_HOME* "/etc/emacs/js2-mode"))
 (autoload 'js2-mode "js2-mode" nil t)
+
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+;based on https://gist.github.com/lowstz/1934718
+(add-to-list 'load-path (concat *FZL_HOME*  "/etc/emacs/jdee-2.4.1/lisp"))
+;(add-to-list 'load-path (expand-file-name "$ELISP_DIR/jde/lisp"))
+;(add-to-list 'load-path (expand-file-name "$ELISP_DIR/cedet/common")
+;(load-file (expand-file-name "$ELISP_DIR/cedet/common/cedet.el"))
+(add-to-list 'load-path (concat *FZL_HOME*  "/etc/emacs/elib-1.0"))
+(add-to-list 'load-path (concat *FZL_HOME*  "/etc/emacs/ant-contrib"))
+(add-to-list 'load-path (concat *FZL_HOME*  "/etc/emacs/apache-ant-svn-0.1-SNAPSHOT"))
 
 
 
@@ -279,11 +290,15 @@ I N I T    F I L E    E X E C U T I N G    N O W . . .")
 
 ; i n s t a l a n d o   c e d e t
 (load-file
- (concat *FZL_HOME* "/etc/emacs/cedet-1.1/common/cedet.el"))
+ (concat *FZL_HOME* "/etc/emacs/cedet-1.1/common/cedetel"))
 
 (global-ede-mode 1)                      ; Enable the Project management system
 (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
 (global-srecode-minor-mode 1)            ; Enable template insertion menu
+
+
+; j d e e 
+(require 'jde)
 
 ;http://emacswiki.org/emacs/SpeedBar
 ;Speedbar Without A Separate Frame
@@ -331,6 +346,7 @@ I N I T    F I L E    E X E C U T I N G    N O W . . .")
 ;;  browse-url defaults to the OS default browser.  Some the OS default browser
 ;;  might not be set up.  Use 'M-x customize-option' browse-url-browser-function
 ;;  to pick a specific browser, (like setting Firefox as the browser to use).
+
 
 ;;;;;ending configuring load-path
 
