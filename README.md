@@ -1,31 +1,37 @@
 emacsinitfile
 =============
 
+
 FZLBPMS emacs init file 
 -----------------------
 
-Using this init.el file in the way proposed below:
-to a non intrusive customization related to your own customization
+If you want use this init.el without fzlbpms you shound want do it
+in a non intrusive way in related to your own customization.
 
->This emacs init file should be use by comand like this:
+
+So, start you emacs with a command like this:
 >emacs -q -l $FZL_HOME/etc/emacs/sitelisp/emacsinitfile/init.el
->($FZL_HOME is a enviroment variable)
 
-### Some notes:
+where: ($FZL_HOME is a enviroment variable)
+
+
+### Some another notes:
 I preferred to install some packages by (Options - Manage Emacs
-Packages) for different reasons below and because I use this init.el
-in different emacs like 23 and 24. This justify the comments about its
-packages in the init.el file.
+Packages) way for different reasons listed below
+
 > magit - because its dependences
->Tested with enviroments listed below:
+
+
+
+This init.el was tested within enviroments listed below:
 >GNU Emacs 24.1.1 
 >(i686-redhat-linux-gnu, GTK+ Version 2.24.13)  of 2012-11-17 on buildvm-15.phx2.fedoraproject.org
 
 
 
-
 The features achieve by this customization can be consulted
-in each dependencies site.
+in the el files. 
+
 
 
 wagner
