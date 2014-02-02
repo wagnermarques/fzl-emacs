@@ -1,31 +1,32 @@
 emacsinitfile
 =============
 
-My emacs init file
+FZLBPMS emacs init file 
+-----------------------
 
-This emacs init file should be use by comand like this:
-emacs -q -l fzlbpms/etc/emacs/emacsinitfile/init.el
-Using this init.el file in this way can be non intrusive in related to your customization.
+Using this init.el file in the way proposed below:
+to a non intrusive customization related to your own customization
+
+>This emacs init file should be use by comand like this:
+>emacs -q -l $FZL_HOME/etc/emacs/sitelisp/emacsinitfile/init.el
+>($FZL_HOME is a enviroment variable)
+
+### Some notes:
+I preferred to install some packages by (Options - Manage Emacs
+Packages) for different reasons below and because I use this init.el
+in different emacs like 23 and 24. This justify the comments about its
+packages in the init.el file.
+> magit - because its dependences
+>Tested with enviroments listed below:
+>GNU Emacs 24.1.1 
+>(i686-redhat-linux-gnu, GTK+ Version 2.24.13)  of 2012-11-17 on buildvm-15.phx2.fedoraproject.org
 
 
-In order to this init.el work propertly, you need 
-1) FZL_HOME envoroment variable defined for $USER/fzlbpms
-2) AND this dependences in fzlbpms/
+
 
 The features achieve by this customization can be consulted
 in each dependencies site.
 
-$FZL_HOME/etc/emacs/emacsinitfile/init.el
-$FZL_HOME/etc/emacs/yasnippets_defined_for_fzlbpms
-$FZL_HOME/etc/emacs/ant-contrib
-$FZL_HOME/etc/emacs/cedet-1.1
-$FZL_HOME/etc/emacs/elib-1.0
-$FZL_HOME/etc/emacs/magit
-$FZL_HOME/etc/emacs/apache-ant-svn-0.1-SNAPSHOT
-$FZL_HOME/etc/emacs/js2-mode
-$FZL_HOME/etc/emacs/auto-complete-1.3.1
-$FZL_HOME/etc/emacs/jdee-2.4.1
-$FZL_HOME/etc/emacs/yasnippet
 
 wagner
 wagnerdcri@gmail.com

@@ -1,0 +1,337 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;G E N E R A L    P U R P O S E    C O N F I G U R A T I O N
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(provide 'config_general_emacs_behaviour)
+(scroll-bar-mode -1)
+
+;will allow you to type just "y" instead of "yes" when you exit.
+(fset 'yes-or-no-p 'y-or-n-p) 
+
+;http://www.emacswiki.org/emacs/StickyModifiers
+;From the documentation, 
+;Â“This means that you can release the modifier key before pressing down 
+;the key that you wish to be modified. 
+;Although this is non-standard behavior, it is recommended because 
+;it reduces the strain on your hand, thus reducing the incidence of the dreaded 
+;Emacs-pinky syndrome.Â”
+(setq modifier-keys-are-sticky t)
+
+;will make ctrl, shift, alt "sticky" in xemacs.
+;(Does anybody know how to do this in emacs?)
+;With sticky-keys, you dont have to hold down the ctrl/shift/alt key and another key simultaneosly.
+;For example, to type ctrl-a, you'd have to tap on the 'ctrl'-key, followed by a tap on the 'a'-key. This feature is useful for folks with sore wrists/hands.
+(setq message-log-max 512) ;will reduce the number of messages that appear in the "*Messages*" window to 512.
+
+;will make the display of date and time persistent.
+(setq display-time-day-and-date t) (display-time) 
+
+;will highlight region between point and mark.
+(transient-mark-mode t) 
+
+;will highlight during query.
+(setq query-replace-highlight t) 
+
+;highlight incremental search
+(setq search-highlight t) 
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;F O N T S 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;http://www.emacswiki.org/emacs/SetFonts
+(set-face-attribute 'default (selected-frame) :height 80)
+
+;http://www.gnu.org/software/emacs/manual/html_node/emacs/Font-Lock.html
+;means that we want fontification in all modes.
+(global-font-lock-mode t ) 
+
+;denotes our interest in maximum possible fontification.
+(setq font-lock-maximum-decoration t) 
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;t y p e - b r e a k
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;https://github.com/typester/emacs/blob/master/lisp/type-break.el
+;get intermittent messages to stop typing
+; "Enable or disable typing-break mode.
+;  This is a minor mode, but it is global to all buffers by default.
+;A negative prefix argument disables this mode.
+;No argument or any non-negative argument enables it.
+(type-break-mode -1)
+
+;http://lists.gnu.org/archive/html/emacs-pretest-bug/2005-01/msg00085.html
+; Allow type-break-file-name to be nil and if so, don't use
+;        a session file.
+;(type-break-file-name nil)
+
+;http://repo.or.cz/w/emacs.git/blob/HEAD:/lisp/type-break.el
+(setq type-break-query-mode nil)
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;V I S U A L    I N T E R F A C E   C O N F I G U R A T I O N
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set cursor and mouse colours:
+(set-cursor-color "yellow")
+(set-mouse-color "white")
+
+(set-background-color "dark slate gray")
+(set-foreground-color "blanched almond")
+
+
+;http://www.djcbsoftware.nl/dot-emacs.html
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; general settings
+;;
+(menu-bar-mode  nil)                       ;; t show the menu, nil hides...
+(mouse-avoidance-mode 'jump)             ;; mouse ptr when cursor is too close
+(tool-bar-mode -1)                       ;; turn-off toolbar 
+
+(setq cua-enable-cua-keys nil)           ;; only for rectangles
+(cua-mode t)
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;F I L E    E X T E N S I O N    R E L A T E D    B E H A V I O R
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Treat .rhtml files as HTML
+(setq auto-mode-alist (cons '("\\.rhtml\\'" . html-mode) auto-mode-alist))
+
+
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;L A N G U A G E   A N D   C H A R S E T    C O N F I G U R A T I O N
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;________________________________________________________________
+;; Handle files with mixed UNIX and DOS line endings.
+;; http://marc.info/?l=tex-br&m=122278754619960
+;;________________________________________________________________
+
+;; Ativa a quebra automatica de linhas para todos os modos. Para desativÃ¡-la,
+;; substitua "1" por "0", na linha abaixo.
+(add-hook 'text-mode-hook
+     '(lambda () (auto-fill-mode 1)))
+
+
+
+
+;;________________________________________________________________
+;;    Handle files with mixed UNIX and DOS line endings.
+;;________________________________________________________________
+
+(defun remove-dos-eol ()
+  "Do not use '^M' in files containing mixed UNIX and DOS line endings."
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table ?\^M []))
+
+
+
+
+;Eu tambÃ©m consegui resolver o problema da auto-correÃ§Ã£o de palavras
+;grafadas erradamente. Para que o flyspell seja carregado
+;automaticamente, basta fazer:
+
+;; Sugerir correcoes de textos grafados erradamente (COM CODIGO ISSO NAO FICOU BOM... PELO MENOS COM WSDLS)
+;(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;(add-hook 'message-mode-hook 'turn-on-flyspell)
+;(add-hook 'text-mode-hook 'turn-on-flyspell)
+;(add-hook 'c-mode-common-hook 'flyspell-prog-mode)
+;(add-hook 'tcl-mode-hook 'flyspell-prog-mode)
+;(defun turn-on-flyspell ()
+; "Force flyspell-mode on using a positive arg. For use in hooks."
+; (interactive)
+; (flyspell-mode 1))
+; (flyspell-mode 0))
+
+;;________________________________________________________________
+;; Handle files with mixed UNIX and DOS line endings.
+;;________________________________________________________________
+
+(defun remove-dos-eol ()
+  "Do not use '^M' in files containing mixed UNIX and DOS line endings."
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table ?\^M []))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;E M A C S    M O D E S     R E L A T E D  C O N F I G U R A T I O N
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;will make text-mode default.
+(setq default-major-mode 'text-mode)
+
+
+
+                                
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;
+;;;;;basic configuration...
+;;;;;http://xenon.stanford.edu/~manku/dotemacs.html
+;;;;;
+;;;;;
+;;;;;
+;;;;;some lines are commeting because some errors arrived still need do be fixed
+;;;;;
+;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;R e m o v i n g    A n n o y a n c e s 
+
+;(setq inhibit-startup-message t) ;will inhibit startup messages.
+(setq require-final-newline t) ;will make the last line end in a carriage return.
+(fset 'yes-or-no-p 'y-or-n-p) ;will allow you to type just "y" instead of "yes" when you exit.
+(setq next-line-add-newlines nil) ;will disallow creation of new lines when you press the "arrow-down key" at end of the buffer. 
+
+
+;o mode default, ao inves de text-mode, vamos utilizar o org-mode
+(setq-default major-mode 'org-mode)
+
+;conjunto de caracteres latin 1 he mais interessante que UTF-8
+;(set-language-environment "Latin-1")
+(set-language-environment "Latin-1")
+ 
+;
+(setq default-directory *FZL_HOME*)
+
+;Desabilitando controlx control z
+(global-unset-key "\C-x\C-z")
+
+
+;; Permanent display of line and column numbers is handy.
+(setq-default line-number-mode 't)
+(setq-default column-number-mode 't)
+
+
+;; Set cursor and mouse colours:
+(set-cursor-color "yellow")
+(set-mouse-color "white")
+
+
+;; Treat .rhtml files as HTML
+(setq auto-mode-alist (cons '("\\.rhtml\\'" . html-mode) auto-mode-alist))
+;(setq backup-directory-alist '((".*" . (concat *FZL_HOME* "/backups/emacs/autosaved_files/"))))
+;(setq backup-directory-alist `(("." . *fzl-backup-dir*))) FIXME
+(setq backup-directory-alist `(("." . "~/fzlbpms/backups/emacs/autosaved_files/")))
+
+
+
+;G e n e r a l    E m b e l l i s h m e n t s 
+(setq modifier-keys-are-sticky t) 
+;will make ctrl, shift, alt "sticky" in xemacs. 
+;(Does anybody know how to do this in emacs?) 
+;With sticky-keys, you dont have to hold down the ctrl/shift/alt key and another key simultaneosly. 
+;For example, to type ctrl-a, you'd have to tap on the 'ctrl'-key, followed by a tap on the 'a'-key. This feature is useful for folks with sore wrists/hands.
+(setq message-log-max 512) ;will reduce the number of messages that appear in the "*Messages*" window to 512.
+(setq display-time-day-and-date t) (display-time) ;will make the display of date and time persistent.
+(require 'paren) (show-paren-mode t) ;will highlight matching parentheses next to cursor.
+(setq-default indent-tabs-mode nil) ;will introduce spaces instead of tabs by default.
+(setq-default truncate-lines t) ;will trucate lines if they are too long. (OBSERVAR PRA VER SE PERMANECE COM ESSA CONF)
+(setq-default truncate-partial-width-windows nil) ;will trucate even when screen is split into multiple windows.
+;(require 'auto-show) (auto-show-mode 1) (setq-default auto-show-mode t) ;load auto-show (shows lines when cursor moves to right of long line).
+;(auto-show-make-point-visible) ;will position the cursor to end of output in shell mode.
+;(auto-show-make-point-visible) ;will position cursor to end of output in shell mode automatically.
+(transient-mark-mode t) ;will highlight region between point and mark.
+(setq query-replace-highlight t) ;will highlight during query.
+(setq search-highlight t) ;highlight incremental search
+(setq default-major-mode 'text-mode) ;will make text-mode default.
+;(global-font-lock-mode t t) ;means that we want fontification in all modes.
+;(setq font-lock-maximum-decoration t) ;denotes our interest in maximum possible fontification.
+(type-break-mode) ;get intermittent messages to stop typing
+
+;(setq enable-recursive-minibuffers t) ;; allow recursive editing in minibuffer
+;(resize-minibuffer-mode 1)            ;; minibuffer gets resized if it becomes too big
+;(follow-mode t)                       ;; follow-mode allows easier editing of long files 
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
+
+; Moving cursor down at bottom scrolls only a single line, not half page
+(setq scroll-step 1)
+(setq scroll-conservatively 5)
+(global-set-key [delete] 'delete-char)
+
+(set-background-color "dark slate gray")
+(set-foreground-color "blanched almond")
+
+;ativa numero de linhas nos buffers
+(global-linum-mode 1)
+
+;ativa numero da coluna
+(column-number-mode 1)
+
+;desabilitando aquela pagina inicial do emacs, legal mas desecessária
+(setq inhibit-startup-message t)
+
+
+
+
+
+;;________________________________________________________________
+;;  Handle files with mixed UNIX and DOS line endings.
+;;  http://marc.info/?l=tex-br&m=122278754619960
+;;________________________________________________________________
+
+;; Ativa a quebra automatica de linhas para todos os modos. Para desativá-la,
+;; substitua "1" por "0", na linha abaixo.
+(add-hook 'text-mode-hook
+     '(lambda () (auto-fill-mode 1)))
+
+;; Se a quebra automatica de linhas estiver ativada, as linhas são
+;; quebradas se ultrapassarem a coluna 70.
+(setq fill-column 70)
+
+;Eu também consegui resolver o problema da auto-correção de palavras
+;grafadas erradamente. Para que o flyspell seja carregado
+;automaticamente, basta fazer:
+
+;; Sugerir correcoes de textos grafados erradamente (COM CODIGO ISSO NAO FICOU BOM... PELO MENOS COM WSDLS)
+;(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;(add-hook 'message-mode-hook 'turn-on-flyspell)
+;(add-hook 'text-mode-hook 'turn-on-flyspell)
+;(add-hook 'c-mode-common-hook 'flyspell-prog-mode)
+;(add-hook 'tcl-mode-hook 'flyspell-prog-mode)
+;(defun turn-on-flyspell ()
+;   "Force flyspell-mode on using a positive arg.  For use in hooks."
+;   (interactive)
+;   (flyspell-mode 1))
+;   (flyspell-mode 0))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

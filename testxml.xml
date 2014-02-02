@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!-- http://www.w3schools.com/schema/schema_howto.asp -->
+<note>
+  <to>Tove</to>
+  <from>Jani</from>
+  <heading>Reminder</heading>
+  <body>
+    Don't forget me this weekend!
+  </body>
+
+</note>
