@@ -35,4 +35,4 @@ in the el files.
 
 
 wagner
-wagnerdcri@gmail.com
+wagnerdocri@gmail.com
