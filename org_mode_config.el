@@ -1,4 +1,5 @@
 (provide 'org_mode_config)
+
 ;;CONFIGURING ORG-MODE
 ;;https://email.esm.psu.edu/pipermail/macosx-emacs/2011-October/003027.html
 ;; Conventional selection/deletion
@@ -16,7 +17,6 @@
   (local-set-key (kbd "S-<down>") 'next-line-mark))
 
 (add-hook 'org-mode-hook 'my-org-mode-stuff)
-
 
 
 

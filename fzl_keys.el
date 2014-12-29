@@ -42,6 +42,9 @@
 
 (provide 'fzl_keys)
 
+;Desabilitando controlx control z -> to undo: C-x U
+(global-unset-key "\C-x\C-z")
+
 
 ;;http://www.emacswiki.org/emacs/RyanSpringerDotEmacs
 ;; shift + arrow key = switch to window

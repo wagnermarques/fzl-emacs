@@ -1,7 +1,6 @@
-; i n s t a l a n d o a u t o c o m p l e t e
+
 (provide 'autocomplete_config)
 
-; i n s t a l a n d o    a u t o c o m p l e t e
 (require 'auto-complete-config) ;https://github.com/auto-complete/auto-complete/issues/26
 
 ;;ac-dictionary-directories

@@ -11,15 +11,6 @@
 (setq-default line-number-mode 't)
 (setq-default column-number-mode 't)
 
-;Desabilitando controlx control z -> to undo: C-x U
-(global-unset-key "\C-x\C-z")
-
-;conjunto de caracteres latin 1 he mais interessante que UTF-8
-;(set-language-environment "Latin-1")
-(set-language-environment "Latin-1")
-
-; o mode default, ao inves de text-mode, vamos utilizar o org-mode
-(setq-default major-mode 'org-mode)
 
 ;will introduce spaces instead of tabs by default.
 (setq-default indent-tabs-mode nil) 

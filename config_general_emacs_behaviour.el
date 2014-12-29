@@ -2,14 +2,18 @@
 ;G E N E R A L    P U R P O S E    C O N F I G U R A T I O N
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+
 (provide 'config_general_emacs_behaviour)
+(message (concat "||\t config_general_emacs_behaviour.el: \t :*dynamic_binding_context_name* = " *dynamic_binding_context_name*))
+
 (scroll-bar-mode -1)
 
 ;will allow you to type just "y" instead of "yes" when you exit.
 (fset 'yes-or-no-p 'y-or-n-p) 
 
 ;http://www.emacswiki.org/emacs/StickyModifiers
-;From the documentation, 
+;From the documentation:
 ;This means that you can release the modifier key before pressing down 
 ;the key that you wish to be modified. 
 ;Although this is non-standard behavior, it is recommended because 
@@ -112,6 +116,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Treat .rhtml files as HTML
 (setq auto-mode-alist (cons '("\\.rhtml\\'" . html-mode) auto-mode-alist))
+;; Treat .rhtml files as HTML
+;(setq backup-directory-alist '((".*" . (concat *FZL_HOME* "/backups/emacs/autosaved_files/"))))
+;(setq backup-directory-alist `(("." . *fzl-backup-dir*))) FIXME
+
+
+(setq backup-directory-alist `(("." . "~/PROGSATIVOS/fzlbpms/backup/emacs/autosaved_files")))
 
 
 
@@ -149,7 +159,7 @@
 
 
 
-;Eu também consegui resolver o problema da auto-correção de palavras
+;Eu tambem consegui resolver o problema da auto-correcao de palavras
 ;grafadas erradamente. Para que o flyspell seja carregado
 ;automaticamente, basta fazer:
 
@@ -165,23 +175,13 @@
 ; (flyspell-mode 1))
 ; (flyspell-mode 0))
 
-;;________________________________________________________________
-;; Handle files with mixed UNIX and DOS line endings.
-;;________________________________________________________________
-
-(defun remove-dos-eol ()
-  "Do not use '^M' in files containing mixed UNIX and DOS line endings."
-  (interactive)
-  (setq buffer-display-table (make-display-table))
-  (aset buffer-display-table ?\^M []))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;E M A C S    M O D E S     R E L A T E D  C O N F I G U R A T I O N
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;will make text-mode default.
 (setq default-major-mode 'text-mode)
-
+;(setq-default major-mode 'org-mode)
 
 
                                 
@@ -192,7 +192,7 @@
 ;;;;;
 ;;;;;basic configuration...
 ;;;;;http://xenon.stanford.edu/~manku/dotemacs.html
-;;;;;
+;;;;; 
 ;;;;;
 ;;;;;
 ;;;;;some lines are commeting because some errors arrived still need do be fixed
@@ -203,18 +203,15 @@
 
 ;(setq inhibit-startup-message t) ;will inhibit startup messages.
 (setq require-final-newline t) ;will make the last line end in a carriage return.
-(fset 'yes-or-no-p 'y-or-n-p) ;will allow you to type just "y" instead of "yes" when you exit.
 (setq next-line-add-newlines nil) ;will disallow creation of new lines when you press the "arrow-down key" at end of the buffer. 
 
-
-;o mode default, ao inves de text-mode, vamos utilizar o org-mode
-(setq-default major-mode 'org-mode)
 
 ;conjunto de caracteres latin 1 he mais interessante que UTF-8
 ;(set-language-environment "Latin-1")
 (set-language-environment "Latin-1")
  
-;
+;*FZL_HOME* is a global variable
+;in fact a dinamic binding for *FZL_HOME* variable
 (setq default-directory *FZL_HOME*)
 
 ;Desabilitando controlx control z
@@ -230,12 +227,6 @@
 (set-cursor-color "yellow")
 (set-mouse-color "white")
 
-
-;; Treat .rhtml files as HTML
-(setq auto-mode-alist (cons '("\\.rhtml\\'" . html-mode) auto-mode-alist))
-;(setq backup-directory-alist '((".*" . (concat *FZL_HOME* "/backups/emacs/autosaved_files/"))))
-;(setq backup-directory-alist `(("." . *fzl-backup-dir*))) FIXME
-(setq backup-directory-alist `(("." . "~/fzlbpms/backups/emacs/autosaved_files/")))
 
 
 
