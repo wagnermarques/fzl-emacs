@@ -15,7 +15,7 @@
           (rval 'sql-product))
       (if (symbol-value rval)
           (let ((filename
-                 (concat "~/.emacs.d/sql/"
+                 (concat (concat *fzl_dot_emacs_dir* "/sql-history/")
                          (symbol-name (symbol-value rval))
                          "-history.sql")))
             (set (make-local-variable lval) filename))

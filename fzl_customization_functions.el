@@ -64,78 +64,9 @@
 
 
 
-;aprendi isso em http://snipplr.com/view/18678/loadmyfavoritefile/
-;pra usar he so fazer o seguinte depois que o emacs tiver carregado
-;M-x load-emacs-initfile RET
-;seguir o exemplo por demais arquivos
-
-(defun fzl-dev-edit-emacs-initfile ()
-  " abre arquivo de configuracao/customizacao do emacs do fzlbpms"
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-etc/etc/emacs/emacsinitfile/init.el"))
-)
-
-(defun fzl-dev-edit-fzl-message-org-file()
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-etc/etc/emacs/fzl-messages.org"))
-  (org-toggle-inline-images)
-)
-
-(defun fzl-dev-edit-scripts-de-builds-fzlbpms()
-  (interactive)
-  (find-file "/home/administrador/fzlbpms_related/fzlbpms-apps/exportar_fzlbpms.sh")
-  (find-file "/home/administrador/fzlbpms_related/fzlbpms-apps/fzlfn_exportadir_etc.sh")
-  (find-file "/home/administrador/fzlbpms_related/fzlbpms-apps/fzlfn_exportadir_bin")
-  (find-file "/home/administrador/fzlbpms_related/fzlbpms-apps/fzlbpms_utils___shared_functions.sh")
-  (find-file "/home/administrador/fzlbpms_related/fzlbpms-apps/fzlbpms_utils___handle_script_parameters.sh")
-)
-
-
-
-;;f u n c s para abrir arquivos de build/exportacao
-(defun fzl-dev-edit-file-exportar_fzlbpms()
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/exportar_fzlbpms.sh"))
-)
-(defun fzl-dev-edit-file-fzlfn_exportadir_etc()
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlfn_exportadir_etc.sh"))
-)
-(defun fzl-dev-edit-file-fzlfn_exportadir_bin()
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlfn_exportadir_bin.sh"))
-)
-(defun fzl-dev-edit-file-fzlbpms_utils___shared_functions()
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms_utils___shared_functions.sh"))
-)
-(defun fzl-dev-edit-file-fzlbpms_utils___handle_script_parameters()
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms_utils___handle_script_parameters.sh"))
-)
-
-
-
-;funcs para abrir e editar arquivos do projeto binproject (svn_scritps)
-(defun fzl-dev-edit-binproject-file-fzl_svn_status()
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/svn_scripts/fzl_svn_status.sh"))
-)
-(defun fzl-dev-edit-binproject-file-fzl_svn_co_fzlbms_bin()
-  (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/svn_scripts/fzl_svn_co_fzlbms_bin.sh"))
-)
 ;funcs para abrir e editar arquivos do projeto binproject (svn_scritps)
 (defun fzl-dev-edit-binproject-files-envconfig-envsetup-and-fzl_startup()
   (interactive)
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/fzl_startup.sh"))
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/fzl_env_config.sh"))
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/fzl_config_env.sh"))
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/fzl_config_paths.sh"))
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/fzl_config_variables.sh"))
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/fzl_env_setup.sh"))
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/fzl_env_setup_runner.c"))
-  (find-file (concat *FZL_APPS_HOME* "/fzlbpms-bin/bin/fzl_utils.sh"))
 )
 
 

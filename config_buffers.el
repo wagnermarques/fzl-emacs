@@ -1,14 +1,9 @@
 
 
-
 ;; turn off welcome screen
 (setq inhibit-startup-message t)
 
-(find-file *index_document_path*)
-;(switch-to-buffer indexdocume)
-
-;;CONFIG SHELL BUFFER
-;will position cursor to end of output in shell mode automatically.
+;;TODO CONFIG SHELL BUFFER: will position cursor to end of output in shell mode automatically.
 ;(auto-show-make-point-visible) ;TODO see why this...
 ;Debugger entered--Lisp error: (void-function auto-show-make-point-visible)
 ;  (auto-show-make-point-visible)
@@ -23,4 +18,4 @@
 ;  normal-top-level()
 
 (provide 'config_buffers)
-
+          

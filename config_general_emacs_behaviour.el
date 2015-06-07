@@ -1,11 +1,5 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;G E N E R A L    P U R P O S E    C O N F I G U R A T I O N
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
 (provide 'config_general_emacs_behaviour)
-(message (concat "||\t config_general_emacs_behaviour.el: \t :*dynamic_binding_context_name* = " *dynamic_binding_context_name*))
+
 
 (scroll-bar-mode -1)
 

@@ -1,9 +1,9 @@
-;;; evt_keys.el --- keys facilitate use of emacs in evtbpms enviroment
+;;; evt_keys.el --- keys facilitate use of emacs
 
 ;; Emacs Lisp Archive Entry
-;; Filename: evt_keys.el
+;; Filename: fzl_keys.el
 ;; Version: 0.0   (or RCS/CVS *Revision*)
-;; Keywords: svtbpms emacs .emacs
+;; Keywords: fzlbpms emacs .emacs
 ;; Author: wagner franca marques
 ;; Maintainer: wagner franca marques
 ;; Created: 2013-12-12
@@ -33,16 +33,17 @@
 
 ;; 
 ;; put this file in you site-lisp and require it
-;; (require 'svt_keys)
+;; (require 'fzl_keys)
 ;; 
 ;;
 ;;
 
+
 ;http://ergoemacs.org/emacs/keyboard_shortcuts.html
+
 
 (provide 'fzl_keys)
 
-;Desabilitando controlx control z -> to undo: C-x U
 (global-unset-key "\C-x\C-z")
 
 
@@ -54,13 +55,14 @@
 ;(define-key global-map (kbd "\e\eb") 'eval-buffer) ;ESC ESC b
 
 (define-key global-map (kbd "\er") 'eval-region) ;ESC r
-(define-key global-map (kbd "\eb") 'eval-region) ;ESC b
+(define-key global-map (kbd "\eb") 'eval-buffer) ;ESC b
 (define-key global-map (kbd "\es") 'shell) ;ESC s
 
 (define-key global-map (kbd "\em") 'make-directory) ;ESC m
 
 (define-key global-map (kbd "\ec") 'org-agenda-list)
 (define-key global-map (kbd "\et") 'org-todo-list)
+
 
 
 ;handle windows
