@@ -8,12 +8,20 @@
 ** Run the shell command line cmd and display the output (shell-command). 
    M-! cmd RET
 
-* git commands
+* git
+** getting help
+*** git help config
 ** configuring username 
-*** to consult the present username
+*** to consult the present username and email
     git config user.name
-*** setting up new user.name
-    git config --global user.name "wagnermarques"
+    git config user.email 
 
-git remote -v
+*** setting up new user.name and email
+    git config --global user.name "wagnermarques"
+    git config --global user.email "wagnerdocri@gmail.com"
+
+** configuring push
+   git config --global push.default matching
+** another commands
+    git remote -v
 
