@@ -1,36 +1,115 @@
 (setq debug-on-error t)
 
 
-(setq *FZL_HOME* (getenv "FZL_HOME"))
-(setq *fzl_emacs_config_dir* (concat *FZL_HOME* "/etc/emacs"))
-(setq *fzl_dot_emacs_dir* (concat *fzl_emacs_config_dir* "/lisp"))
-(add-to-list 'load-path *fzl_dot_emacs_dir*)
 
-(find-file "/home/administrador/fzlbpms/fzlbpms/etc/emacs/lisp/find_files.el")
+(defun require_common_packages()
+  "requires common packages... common in sense that will be required either with or without fzlbpms"
+  (require 'config_code_lisp)
+  (require 'config_package_system)
+  (require 'config_lines_columns_and_cursor_behaviour)
+  (require 'config_general_emacs_behaviour)
+  (require 'config_buffers)
+  (require 'fzl_find_file_functions)
+  (require 'fzl_keys)
+  (require 'fzl_utils)
+  (require 'speedbar_config)
+)
 
-;;this require is needed at first
-(require 'config_code_lisp)
-(require 'config_global_variables)
+(defun customize_emacs_in_fzlbpms_presence (strFzlHome)
+  "customize_emacs_in_fzlbpms_presence"
+  (let* ((*FZL_HOME* strFzlHome))
+    (require_common_packages)
+;;    (require 'config_global_variables_in_fzlbpms_presence)
+  ))
 
-(require 'config_package_system)
 
-(require 'config_lines_columns_and_cursor_behaviour)
-(require 'config_general_emacs_behaviour)
-(require 'config_buffers)
-(require 'fzl_find_file_functions)
-(require 'fzl_keys)
-(require 'fzl_utils)
+(defun customize_emacs_without_fzlbpms_enviroment()
+  "customize_emacs_without_fzlbpms_envoriment"
+  (require_common_packages)
+)
+
+
+;; atencao: *fzl_emacs_site_lisp* ou *default_load_path_dir*
+;; (add-to-list 'load-path *default_load_path_dir*)
+(if (getenv "FZL_HOME")
+    (let* ((*FZL_HOME* (getenv "FZL_HOME"))
+	   (*fzl_emacs_config_dir* (concat *FZL_HOME* "/etc/emacs"))
+	   (*fzl_emacs_site_lisp* (concat *fzl_emacs_config_dir* "/emacsinitel"))
+	   (*fzl_emacs_packages_checkouts* (concat  *fzl_emacs_config_dir* "/checkouts"))
+	   (*fzl_emacs_packages_downloaded* (concat *fzl_emacs_config_dir* "/downloaded-packages"))
+	   (*fzl-backup-dir* (concat *FZL_HOME* "/backups/emacs/autosaved_files"))
+	   (*fzl_shared_schemas* (concat *FZL_HOME* "/shared/xml_schemas"))
+	   (package-user-dir  (concat *fzl_emacs_config_dir* "/installed_from_elpa" ))
+	   (*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
+           (default-directory *FZL_HOME*))
+      (add-to-list 'load-path *default_load_path_dir*)
+      
+      ;;FZL_HOME directory must be defined and created fisically
+      (if (not (file-directory-p (concat *FZL_HOME* "/etc")))
+	  (mkdir (concat *FZL_HOME* "/etc")))
+      (if (not (file-directory-p (concat *FZL_HOME* "/etc/emacs")))
+	  (mkdir (concat *FZL_HOME* "/etc/emacs")))
+      (if (not (file-directory-p *fzl_emacs_site_lisp* ))
+	  (mkdir *fzl_emacs_site_lisp*))
+      (if (not (file-directory-p *fzl_emacs_packages_checkouts*))
+	  (mkdir *fzl_emacs_packages_checkouts*))
+      (if (not (file-directory-p *fzl_emacs_packages_downloaded*))
+	  (mkdir *fzl_emacs_packages_downloaded*))
+      (if (not (file-directory-p (concat *fzl_emacs_config_dir* "/installed_from_elpa" )))
+	  (mkdir (concat *fzl_emacs_config_dir* "/installed_from_elpa" )))
+      (if (not (file-directory-p (concat *FZL_HOME* "/backups")))
+	  (mkdir (concat *FZL_HOME* "/backups")))
+      (if (not (file-directory-p (concat *FZL_HOME* "/backups/emacs")))
+	  (mkdir (concat *FZL_HOME* "/backups/emacs")))
+      (if (not (file-directory-p (concat *FZL_HOME* "/backups/emacs/autosaved_files")))
+	  (mkdir (concat *FZL_HOME* "/backups/emacs/autosaved_files")))
+      (if (not (file-directory-p (concat *FZL_HOME* "/shared")))
+	  (mkdir (concat *FZL_HOME* "/shared")))
+      (if (not (file-directory-p (concat *FZL_HOME* "/shared/xml_schemas")))
+	  (mkdir (concat *FZL_HOME* "/shared/xml_schemas")))
+      (customize_emacs_in_fzlbpms_presence *FZL_HOME*))
+
+  (let* ((*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
+	 (package-user-dir  "~/.emacs.d/elpa" )
+         (default-directory "~/env-dev/sources/emacsinitfile"))
+    (add-to-list 'load-path *default_load_path_dir*)
+    (if (not (file-directory-p "~/.emacs.d/elpa"))
+	(mkdir "~/.emacs.d/elpa"))
+    (if (not (file-directory-p "~/.emacs.d/backups"))
+	(mkdir "~/.emacs.d/backups"))
+    (if (not (file-directory-p "~/.emacs.d/xml_schemas"))
+	(mkdir "~/.emacs.d/xml_schemas"))
+    (customize_emacs_without_fzlbpms_enviroment)))
+
+
+
+
+;(defun fzl-bashcommand-autocomplete-installation-shell-script()
+;  "just download in the fzlbpms context rigth place. 
+;   Change init.el accordingle is needed"
+;  (interactive)
+;  (split-string
+;   (shell-command-to-string "bash autocomplete_installation.sh")))
+
+;(defun fzl-bashcommand-cedet-installation-shell-script()
+;  "just download in the fzlbpms context rigth place. Change init.el accordingle is needed"
+;  (interactive)
+;  (split-string
+;   (shell-command-to-string "bash cedet_installation.sh")))
+
+
+
 
 ;;pagkages configs
-(require 'org_mode_config)
-(require 'calendar_config)
-(require 'cedet_config)
-(require 'autocomplete_config)
-(require 'js_mode_config)
-(require 'speedbar_config)
-(require 'sql_mode_config)
-(require 'yasnippet_config)
-(require 'config_code_c_style_for_K_and_RStyle)
+;(require 'org_mode_config)
+;(require 'calendar_config)
+;(require 'cedet_config)
+;(require 'autocomplete_config)
+;(require 'js_mode_config)
+
+;(require 'sql_mode_config)
+;(require 'yasnippet_config)
+;(require 'config_code_c_style_for_K_and_RStyle)
 
 ;;     (require 'config_lines_columns_and_cursor_behaviour)
 ;     (require 'config_fonts_and_themes) ;maybe its contents must migrate to buffers_config.el

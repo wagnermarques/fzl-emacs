@@ -1,6 +1,5 @@
 (provide 'config_package_system)
-(setq package-user-dir  (concat *fzl_emacs_config_dir* "/elpa" ))
-      
+
 ;;http://ergoemacs.org/emacs/emacs_package_system.html
 ;;http://stackoverflow.com/questions/10092322/how-to-automatically-install-emacs-packages-by-specifying-a-list-of-package-name
 
@@ -37,17 +36,16 @@
   
   ;;(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
   ;:(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  :;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-  ;:list the repositories containing them
-  (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
-			   ("gnu" . "http://elpa.gnu.org/packages/")
+  ;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  ;;list the repositories containing them
+  ;;("elpa" . "http://tromey.com/elpa/")
+  
+  (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 			   ("marmalade" . "http://marmalade-repo.org/packages/")
 			   ("org" . "http://orgmode.org/elpa/")
 			   ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 
-
-  
   (setq package-load-list '(all))     ;; List of packages to load
   (package-initialize)                ;; Initialize & Install Package
 
@@ -68,12 +66,12 @@
       (when (not (package-installed-p p))
 	(package-install p))))
   
-
   
   (unless package-archive-contents
     ;; Refresh the packages descriptions
     (package-refresh-contents))
 
+  
   (unless (package-installed-p 'org)  ;; Make sure the Org package is
     (package-install 'org))
   
@@ -82,18 +80,6 @@
    ; (package-install 'org))           ;; installed, install it if not
 
 
-(defun fzl-bashcommand-autocomplete-installation-shell-script()
-  "just download in the fzlbpms context rigth place. 
-   Change init.el accordingle is needed"
-  (interactive)
-  (split-string
-   (shell-command-to-string "bash autocomplete_installation.sh")))
-
-(defun fzl-bashcommand-cedet-installation-shell-script()
-  "just download in the fzlbpms context rigth place. Change init.el accordingle is needed"
-  (interactive)
-  (split-string
-   (shell-command-to-string "bash cedet_installation.sh")))
 
 
 

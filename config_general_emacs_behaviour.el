@@ -206,7 +206,7 @@
  
 ;*FZL_HOME* is a global variable
 ;in fact a dinamic binding for *FZL_HOME* variable
-(setq default-directory *FZL_HOME*)
+
 
 ;Desabilitando controlx control z
 (global-unset-key "\C-x\C-z")
