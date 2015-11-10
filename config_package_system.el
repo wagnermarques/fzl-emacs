@@ -9,6 +9,7 @@
   (require 'package)
 
   (setq packages-to-be-installed-list '(org
+                                        php-mode
 					markdown-mode
 					auto-complete
 					flycheck

@@ -46,3 +46,16 @@
 
   (call-interactively 'iimage-mode))
 
+
+;;;;14 Working with source code
+#+BEGIN_SRC emacs-lisp
+(+ 1 2 3 4)
+#+END_SRC
+;;Use C-c C-c to evaluate the current code block and insert its results in the Org-mode buffer
+
+;;;;http://orgmode.org/guide/Working-With-Source-Code.html
+;;;;http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lisp.html
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((lisp . t)))
+

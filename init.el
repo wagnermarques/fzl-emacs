@@ -1,6 +1,14 @@
 (setq debug-on-error t)
+(require 'cl)
 
-
+(defun define_enviroment_variables()
+  "fzlbpms define a enviroment variables, 
+   but users that are using this emacsinitel configuration without fzlbpms 
+   runs this function to define some enviroment variable like JAVA_HOME, M2_HOME etc...
+   That enviroment variables are difined in properties.csv and readed by this function"
+  (setenv "M2_HOME" "/home/administrador/progsativos/fzlbpms/integrated/builds/apache-maven-3.3.3")
+  (setenv "PATH" (concat (getenv "PATH") ":/home/administrador/progsativos/fzlbpms/integrated/builds/apache-maven-3.3.3/bin"))
+)
 
 (defun require_common_packages()
   "requires common packages... common in sense that will be required either with or without fzlbpms"
@@ -13,19 +21,23 @@
   (require 'fzl_keys)
   (require 'fzl_utils)
   (require 'speedbar_config)
+  (require 'flycheck_config)
 )
+
 
 (defun customize_emacs_in_fzlbpms_presence (strFzlHome)
   "customize_emacs_in_fzlbpms_presence"
   (let* ((*FZL_HOME* strFzlHome))
     (require_common_packages)
 ;;    (require 'config_global_variables_in_fzlbpms_presence)
-  ))
+    )
+)
 
 
 (defun customize_emacs_without_fzlbpms_enviroment()
   "customize_emacs_without_fzlbpms_envoriment"
   (require_common_packages)
+  (define_enviroment_variables)
 )
 
 
@@ -43,7 +55,6 @@
 	   (*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
            (default-directory *FZL_HOME*))
       (add-to-list 'load-path *default_load_path_dir*)
-      
       ;;FZL_HOME directory must be defined and created fisically
       (if (not (file-directory-p (concat *FZL_HOME* "/etc")))
 	  (mkdir (concat *FZL_HOME* "/etc")))
@@ -67,7 +78,11 @@
 	  (mkdir (concat *FZL_HOME* "/shared")))
       (if (not (file-directory-p (concat *FZL_HOME* "/shared/xml_schemas")))
 	  (mkdir (concat *FZL_HOME* "/shared/xml_schemas")))
-      (customize_emacs_in_fzlbpms_presence *FZL_HOME*))
+      (customize_emacs_in_fzlbpms_presence *FZL_HOME*)
+      (find-file (concat  *fzl_emacs_site_lisp* "/init.el"))
+       (find-file (concat  *fzl_emacs_site_lisp* "/index.org"))
+      )
+
 
   (let* ((*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
 	 (package-user-dir  "~/.emacs.d/elpa" )
@@ -79,7 +94,12 @@
 	(mkdir "~/.emacs.d/backups"))
     (if (not (file-directory-p "~/.emacs.d/xml_schemas"))
 	(mkdir "~/.emacs.d/xml_schemas"))
-    (customize_emacs_without_fzlbpms_enviroment)))
+    (customize_emacs_without_fzlbpms_enviroment)
+    (find-file (concat  *default_load_path_dir* "/init.el"))
+    (find-file (concat  *default_load_path_dir* "/index.org")))
+
+  );;(if (getenv "FZL_HOME")
+
 
 
 
