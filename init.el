@@ -1,13 +1,37 @@
 (setq debug-on-error t)
+
+(defun set-default-directory()
+  "if FZL_HOME is defined, the default-directory is $FZL_HOME/etc/emacs/emacsinitfile/
+   otherwhise default-directory will be what is defined below"
+  (if (getenv "FZL_HOME")
+      (setq *emacsinitfile-default-directory* (concat (getenv "FZL_HOME") "etc/emacs/emacsinitfile/"))
+    (setq *emacsinitfile-default-directory* "~/env-dev/sources/emacsinitfile/")))
+    
+
 (require 'cl)
+
+
+(defun define_enviroment_variables_from_file()
+  "fzlbpms define a enviroment variables, 
+   but users that are using this emacsinitel configuration without fzlbpms 
+   runs this function to define some enviroment variable like JAVA_HOME, M2_HOME etc...
+   That enviroment variables are difined in properties.csv and readed by this function"
+  (when (file-readable-p "properties.csv")
+    (with-temp-buffer
+      (insert-file-contents "properties.csv")
+      (goto-char (point-min))
+      (while (not (eobp))
+        ;; do something here with buffer content
+        (forward-line))))
+  )
+
 
 (defun define_enviroment_variables()
   "fzlbpms define a enviroment variables, 
    but users that are using this emacsinitel configuration without fzlbpms 
    runs this function to define some enviroment variable like JAVA_HOME, M2_HOME etc...
    That enviroment variables are difined in properties.csv and readed by this function"
-  (setenv "M2_HOME" "/home/administrador/progsativos/fzlbpms/integrated/builds/apache-maven-3.3.3")
-  (setenv "PATH" (concat (getenv "PATH") ":/home/administrador/progsativos/fzlbpms/integrated/builds/apache-maven-3.3.3/bin"))
+  (require 'config-enviroment)
 )
 
 (defun require_common_packages()
@@ -25,19 +49,27 @@
 )
 
 
+;;###############################################################
+;; IMPORTANT...
+;;###############################################################
 (defun customize_emacs_in_fzlbpms_presence (strFzlHome)
   "customize_emacs_in_fzlbpms_presence"
   (let* ((*FZL_HOME* strFzlHome))
     (require_common_packages)
+    (define_enviroment_variables)
+    (set-default-directory)
 ;;    (require 'config_global_variables_in_fzlbpms_presence)
     )
 )
 
-
+;;###############################################################
+;; IMPORTANT...
+;;###############################################################
 (defun customize_emacs_without_fzlbpms_enviroment()
   "customize_emacs_without_fzlbpms_envoriment"
   (require_common_packages)
   (define_enviroment_variables)
+   (set-default-directory)
 )
 
 
@@ -46,7 +78,7 @@
 (if (getenv "FZL_HOME")
     (let* ((*FZL_HOME* (getenv "FZL_HOME"))
 	   (*fzl_emacs_config_dir* (concat *FZL_HOME* "/etc/emacs"))
-	   (*fzl_emacs_site_lisp* (concat *fzl_emacs_config_dir* "/emacsinitel"))
+	   (*fzl_emacs_site_lisp* (concat *fzl_emacs_config_dir* "/emacsinitfile"))
 	   (*fzl_emacs_packages_checkouts* (concat  *fzl_emacs_config_dir* "/checkouts"))
 	   (*fzl_emacs_packages_downloaded* (concat *fzl_emacs_config_dir* "/downloaded-packages"))
 	   (*fzl-backup-dir* (concat *FZL_HOME* "/backups/emacs/autosaved_files"))
@@ -86,7 +118,7 @@
 
   (let* ((*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
 	 (package-user-dir  "~/.emacs.d/elpa" )
-         (default-directory "~/env-dev/sources/emacsinitfile"))
+         (default-directory (set-default-directory)))
     (add-to-list 'load-path *default_load_path_dir*)
     (if (not (file-directory-p "~/.emacs.d/elpa"))
 	(mkdir "~/.emacs.d/elpa"))
