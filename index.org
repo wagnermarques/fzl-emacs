@@ -1,0 +1,81 @@
+
+W E L C O M E    T O    E M A C S I N I T F I L E
+
+* forms
+** EMACS CONFIGURATION FORM  
+  #+BEGIN_SRC emacs-lisp
+    (defun show-properties-form()
+        "show properties form in or without fzlbpms presence"
+        (setq debug-on-error t)
+        (forms-find-file './form-control-for-properties.el'))
+    (show-properties-form)
+  #+END_SRC  
+
+  #+RESULTS:
+  : show-properties-form
+
+** forms instructions
+*** general instructions
+    "-*- forms -*-" (in the very begginer of the file active forms-mode)
+*** records navigation 
+    ;; [next]	  forms-next-record
+    ;; [prior]	  forms-prev-record
+    ;; [begin]	  forms-first-record
+    ;; [end]	  forms-last-record
+    ;; [S-TAB]	  forms-prev-field
+    ;; [backtab]	  forms-prev-field
+
+*** Edit mode commands:
+    ;;
+    ;; TAB		 forms-next-field
+    ;; \C-c TAB	 forms-next-field
+    ;; \C-c <	 forms-first-record
+    ;; \C-c >	 forms-last-record
+    ;; \C-c ?	 describe-mode
+    ;; \C-c \C-k	 forms-delete-record
+    ;; \C-c \C-q	 forms-toggle-read-only
+    ;; \C-c \C-o	 forms-insert-record
+    ;; \C-c \C-l	 forms-jump-record
+    ;; \C-c \C-n	 forms-next-record
+    ;; \C-c \C-p	 forms-prev-record
+    ;; \C-c \C-r	 forms-search-backward
+    ;; \C-c \C-s	 forms-search-forward
+    ;; \C-c \C-x	 forms-exit
+
+
+
+* tutorials
+** execute code within org-mode
+   just C-c C-c to evaluate the code
+     #+BEGIN_SRC emacs-lisp
+       (+ 10 2 3 4)
+     #+END_SRC  
+
+     #+RESULTS:
+=19
+=   
+
+
+
+
+* EMACSINITFILE TODO_LISTS
+** configure web-mode
+   http://web-mode.org/
+   config-web-mode.el
+
+
+
+
+
+
+
+
+
+* FZLBPMS TODO_LIST
+** TODO <2015-11-15 Dom> config enviroment
+*** TODO <2015-11-15 Dom> when enviroment variable FZL_HOME is difined without "/" at its end, the directory needs helps, whent there is "/" there ara no problmes
+** eclipse
+*** TODO <2015-11-14 Sáb> prepare eclipse modelling
+**** TODO <2015-11-14 Sáb> install papyrus acceleo m2eclipse
+**** TODO <2015-11-14 Sáb> emacs
+*** TODO <2015-11-14 Sáb> prepare eclipse reporting 
