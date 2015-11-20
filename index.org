@@ -70,6 +70,9 @@ W E L C O M E    T O    E M A C S I N I T F I L E
 
 
 
+** define enviroment variable in one properties file
+   (defun define_enviroment_variables_from_file()
+   
 
 * FZLBPMS TODO_LIST
 ** TODO <2015-11-15 Dom> config enviroment

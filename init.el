@@ -1,15 +1,13 @@
 (setq debug-on-error t)
+(require 'cl)
 
 (defun set-default-directory()
   "if FZL_HOME is defined, the default-directory is $FZL_HOME/etc/emacs/emacsinitfile/
    otherwhise default-directory will be what is defined below"
   (if (getenv "FZL_HOME")
-      (setq *emacsinitfile-default-directory* (concat (getenv "FZL_HOME") "etc/emacs/emacsinitfile/"))
+      (setq *emacsinitfile-default-directory* "/home/administrador/env-dev/sources/fzlbpms-code")    
     (setq *emacsinitfile-default-directory* "~/env-dev/sources/emacsinitfile/")))
-    
-
-(require 'cl)
-
+;;(setq *emacsinitfile-default-directory* (concat (getenv "FZL_HOME") "etc/emacs/emacsinitfile/"))    
 
 (defun define_enviroment_variables_from_file()
   "fzlbpms define a enviroment variables, 
@@ -46,6 +44,7 @@
   (require 'fzl_utils)
   (require 'speedbar_config)
   (require 'flycheck_config)
+  (require 'ess_config)
 )
 
 
@@ -78,15 +77,17 @@
 (if (getenv "FZL_HOME")
     (let* ((*FZL_HOME* (getenv "FZL_HOME"))
 	   (*fzl_emacs_config_dir* (concat *FZL_HOME* "/etc/emacs"))
-	   (*fzl_emacs_site_lisp* (concat *fzl_emacs_config_dir* "/emacsinitfile"))
+	   ;;(*fzl_emacs_site_lisp* (concat *fzl_emacs_config_dir* "/emacsinitfile"))
+           (*fzl_emacs_site_lisp*  "/home/administrador/env-dev/sources/emacsinitfile")
 	   (*fzl_emacs_packages_checkouts* (concat  *fzl_emacs_config_dir* "/checkouts"))
 	   (*fzl_emacs_packages_downloaded* (concat *fzl_emacs_config_dir* "/downloaded-packages"))
 	   (*fzl-backup-dir* (concat *FZL_HOME* "/backups/emacs/autosaved_files"))
 	   (*fzl_shared_schemas* (concat *FZL_HOME* "/shared/xml_schemas"))
 	   (package-user-dir  (concat *fzl_emacs_config_dir* "/installed_from_elpa" ))
-	   (*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
-           (default-directory *FZL_HOME*))
+	   (*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile"))
       (add-to-list 'load-path *default_load_path_dir*)
+      (add-to-list 'load-path (concat *default_load_path_dir* "/checkouts/ESS"))
+      
       ;;FZL_HOME directory must be defined and created fisically
       (if (not (file-directory-p (concat *FZL_HOME* "/etc")))
 	  (mkdir (concat *FZL_HOME* "/etc")))
@@ -120,15 +121,14 @@
 	 (package-user-dir  "~/.emacs.d/elpa" )
          (default-directory (set-default-directory)))
     (add-to-list 'load-path *default_load_path_dir*)
+    
     (if (not (file-directory-p "~/.emacs.d/elpa"))
 	(mkdir "~/.emacs.d/elpa"))
     (if (not (file-directory-p "~/.emacs.d/backups"))
 	(mkdir "~/.emacs.d/backups"))
     (if (not (file-directory-p "~/.emacs.d/xml_schemas"))
 	(mkdir "~/.emacs.d/xml_schemas"))
-    (customize_emacs_without_fzlbpms_enviroment)
-    (find-file (concat  *default_load_path_dir* "/init.el"))
-    (find-file (concat  *default_load_path_dir* "/index.org")))
+    (customize_emacs_without_fzlbpms_enviroment))
 
   );;(if (getenv "FZL_HOME")
 
@@ -358,7 +358,3 @@
 ;P R I N T I N G    S O M E    F I N A L    C O N F I G   P A R A M E T E R S.")
 ;(message "----------------------------------- \n")
 ;(message "get_tempo_de_carregamento_do_emacs = %d" (get_tempo_de_carregamento_do_emacs current-time-at-emacs-startup))
-
-
-
-

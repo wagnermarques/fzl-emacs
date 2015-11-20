@@ -22,3 +22,7 @@ tramp
 
 # elpa packages
 /elpa/
+
+# third part emacs packages checktous
+/checkouts/
+
