@@ -1,25 +1,5 @@
 (provide 'fzl_functions)
 
-;;UPDATE THIS FUNCTION
-(defun print_fzl_global_variables ()
-
-  ;;iterate e print name and value of the variable list
-  
-  ;;  (message (concat "*FZL_HOME* = " *FZL_HOME*))
-  ;;  (message (concat "*USERNAME* = " *USERNAME*))
-  ;;  (message (concat "*USER* = " *USER*))
-  ;;  (message (concat "*FZL_VERSION* = " *FZL_VERSION*))
-  ;;  (message (concat "*MAIL* = " *MAIL*))
-  
-  ;;  (message (concat "*fzl_emacs_config_dir* = " *fzl_emacs_config_dir* ))
-  ;; (message (concat "*fzl_emacsinitfile_dir* = " *fzl_emacsinitfile_dir* ))
-  ;;  (message (concat "*fzl_emacs_packages_checkouts* = " *fzl_emacs_packages_checkouts*))
-  ;;  (message (concat "*fzl_emacs_packages* = " *fzl_emacs_packages* ))
-  ;;  (message (concat "*fzl-backup-dir* = " *fzl-backup-dir* ))
-  ;;  (message (concat "*fzl_shared_schemas* = " *fzl_shared_schemas* ))
-
-)
-
 (defun fzl-set-default-directory-to-FZL_HOME-etc() 
   'set default directory to FZL_HOME etc' 
   (interactive)
@@ -37,6 +17,56 @@
   (interactive "sdir to be searched: \nsnamePattern: ")
    (message (split-string (shell-command-to-string
     (format "find %s -type f -name '*namePattern*'")))))
+
+;;eclipse modelling
+(defun fzl-eclipse-modeling--start()
+  "start eclipse modelling"
+  (interactive)
+  (message "(defun start_eclipse()...")
+  (shell-command-to-string
+   "/home/administrador/progsativos/fzlbpms/integrated/eclipse/eclipse-modeling-mars-1-linux-gtk-x86_64/eclipse"))
+
+(defun fzl-eclipse-modeling--wrksp-dired-find-file()
+  "list files in eclipse modelling workspace"
+  (interactive)
+  (message "(defun fzl-eclipse-modeling--wrksp-list-files()...")
+  (dired-find-file
+   "/home/administrador/progsativos/fzlbpms/wrksp-eclipse/eclipse-modeling-mars-1-linux-gtk-x86_64/"))
+
+(defun fzl-eclipse-modeling--wrksp-log()
+  "show error log"
+  (interactive)
+  (message "(defun fzl-eclipse-modeling--error-log()...")
+  (find-file
+   "/home/administrador/progsativos/fzlbpms/wrksp-eclipse/eclipse-modeling-mars-1-linux-gtk-x86_64/.metadata/.log"))
+
+
+
+
+(defun fzl-eclipse-reporting--start()
+  "start eclipse reporting"
+  (interactive)
+  (message "(defun start_eclipse()...")
+  (shell-command-to-string
+   "/home/administrador/progsativos/fzlbpms/integrated/eclipse/eclipse-reporting-mars-1-linux-gtk-x86_64/eclipse"))
+
+
+(defun fzl-maven-settings()
+  "open maven settings.xml"
+  (interactive)
+  (find-file (concat **M2_HOME** "/config/settings.xml")))
+
+(defun fzl-nexus-logs()
+  "open the wrapper.log nexus file"
+  (interactive)
+  (find-file (concat **NEXUS_HOME** "/config/settings.xml")))
+
+(defun fzl-nexus-url()
+  "open nexus"
+  (interactive)
+  (shell-command "firefox http://localhost:8081/nexus/#welcome"))
+
+
 
 ;(svt 'klklkl')
 

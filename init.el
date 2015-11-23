@@ -1,6 +1,19 @@
 (setq debug-on-error t)
 (require 'cl)
 
+;; some interesinf interactive functions
+;; all of them starts with fzl_
+;; so to know them, just do
+;; C-h (to search for...)
+;; f (functions)
+;; fzl_ (starting with fzl_ string)
+
+
+(setq **M2_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/builds/apache-maven-3.3.3")
+(setq **NEXUS_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/builds/nexus-2.11.4-01")
+(setq **JAVA_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/jdks/jdk1.8.0_65")
+
+
 (defun set-default-directory()
   "if FZL_HOME is defined, the default-directory is $FZL_HOME/etc/emacs/emacsinitfile/
    otherwhise default-directory will be what is defined below"
@@ -34,6 +47,7 @@
 
 (defun require_common_packages()
   "requires common packages... common in sense that will be required either with or without fzlbpms"
+  (require 'fzl_functions)
   (require 'config_code_lisp)
   (require 'config_package_system)
   (require 'config_lines_columns_and_cursor_behaviour)
@@ -85,52 +99,61 @@
 	   (*fzl_shared_schemas* (concat *FZL_HOME* "/shared/xml_schemas"))
 	   (package-user-dir  (concat *fzl_emacs_config_dir* "/installed_from_elpa" ))
 	   (*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile"))
-      (add-to-list 'load-path *default_load_path_dir*)
-      (add-to-list 'load-path (concat *default_load_path_dir* "/checkouts/ESS"))
+
+  
+                (add-to-list 'load-path *default_load_path_dir*)
       
-      ;;FZL_HOME directory must be defined and created fisically
-      (if (not (file-directory-p (concat *FZL_HOME* "/etc")))
-	  (mkdir (concat *FZL_HOME* "/etc")))
-      (if (not (file-directory-p (concat *FZL_HOME* "/etc/emacs")))
-	  (mkdir (concat *FZL_HOME* "/etc/emacs")))
-      (if (not (file-directory-p *fzl_emacs_site_lisp* ))
-	  (mkdir *fzl_emacs_site_lisp*))
-      (if (not (file-directory-p *fzl_emacs_packages_checkouts*))
-	  (mkdir *fzl_emacs_packages_checkouts*))
-      (if (not (file-directory-p *fzl_emacs_packages_downloaded*))
-	  (mkdir *fzl_emacs_packages_downloaded*))
-      (if (not (file-directory-p (concat *fzl_emacs_config_dir* "/installed_from_elpa" )))
-	  (mkdir (concat *fzl_emacs_config_dir* "/installed_from_elpa" )))
-      (if (not (file-directory-p (concat *FZL_HOME* "/backups")))
-	  (mkdir (concat *FZL_HOME* "/backups")))
-      (if (not (file-directory-p (concat *FZL_HOME* "/backups/emacs")))
-	  (mkdir (concat *FZL_HOME* "/backups/emacs")))
-      (if (not (file-directory-p (concat *FZL_HOME* "/backups/emacs/autosaved_files")))
-	  (mkdir (concat *FZL_HOME* "/backups/emacs/autosaved_files")))
-      (if (not (file-directory-p (concat *FZL_HOME* "/shared")))
-	  (mkdir (concat *FZL_HOME* "/shared")))
-      (if (not (file-directory-p (concat *FZL_HOME* "/shared/xml_schemas")))
-	  (mkdir (concat *FZL_HOME* "/shared/xml_schemas")))
-      (customize_emacs_in_fzlbpms_presence *FZL_HOME*)
-      (find-file (concat  *fzl_emacs_site_lisp* "/init.el"))
-       (find-file (concat  *fzl_emacs_site_lisp* "/index.org"))
-      )
+                ;;FZL_HOME directory must be defined and created fisically
+                (if (not (file-directory-p (concat *FZL_HOME* "/etc")))
+                    (mkdir (concat *FZL_HOME* "/etc")))
+                (if (not (file-directory-p (concat *FZL_HOME* "/etc/emacs")))
+                    (mkdir (concat *FZL_HOME* "/etc/emacs")))
+                (if (not (file-directory-p *fzl_emacs_site_lisp* ))
+                    (mkdir *fzl_emacs_site_lisp*))
+                (if (not (file-directory-p *fzl_emacs_packages_checkouts*))
+                    (mkdir *fzl_emacs_packages_checkouts*))
+                (if (not (file-directory-p *fzl_emacs_packages_downloaded*))
+                    (mkdir *fzl_emacs_packages_downloaded*))
+                (if (not (file-directory-p (concat *fzl_emacs_config_dir* "/installed_from_elpa" )))
+                    (mkdir (concat *fzl_emacs_config_dir* "/installed_from_elpa" )))
+                (if (not (file-directory-p (concat *FZL_HOME* "/backups")))
+                    (mkdir (concat *FZL_HOME* "/backups")))
+                (if (not (file-directory-p (concat *FZL_HOME* "/backups/emacs")))
+                    (mkdir (concat *FZL_HOME* "/backups/emacs")))
+                (if (not (file-directory-p (concat *FZL_HOME* "/backups/emacs/autosaved_files")))
+                    (mkdir (concat *FZL_HOME* "/backups/emacs/autosaved_files")))
+                (if (not (file-directory-p (concat *FZL_HOME* "/shared")))
+                    (mkdir (concat *FZL_HOME* "/shared")))
+                (if (not (file-directory-p (concat *FZL_HOME* "/shared/xml_schemas")))
+                    (mkdir (concat *FZL_HOME* "/shared/xml_schemas")))
+                (customize_emacs_in_fzlbpms_presence *FZL_HOME*)
+                (find-file (concat  *fzl_emacs_site_lisp* "/init.el"))
+                (find-file (concat  *fzl_emacs_site_lisp* "/index.org"))
+       );;(if (getenv "FZL_HOME") IS     T-R-U-E
+                
 
-
-  (let* ((*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
-	 (package-user-dir  "~/.emacs.d/elpa" )
-         (default-directory (set-default-directory)))
-    (add-to-list 'load-path *default_load_path_dir*)
-    
-    (if (not (file-directory-p "~/.emacs.d/elpa"))
-	(mkdir "~/.emacs.d/elpa"))
-    (if (not (file-directory-p "~/.emacs.d/backups"))
-	(mkdir "~/.emacs.d/backups"))
-    (if (not (file-directory-p "~/.emacs.d/xml_schemas"))
-	(mkdir "~/.emacs.d/xml_schemas"))
-    (customize_emacs_without_fzlbpms_enviroment))
-
-  );;(if (getenv "FZL_HOME")
+       (let* ((*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
+              (package-user-dir  "~/.emacs.d/elpa" )
+              (default-directory (set-default-directory))
+              (eclipse_home "/home/administrador/progsativos/fzlbpms/integrated/eclipse/eclipse-modeling-mars-1-linux-gtk-x86_64"))
+         (add-to-list 'load-path *default_load_path_dir*)
+         
+         (if (not (file-directory-p "~/.emacs.d/elpa"))
+             (mkdir "~/.emacs.d/elpa"))
+         (if (not (file-directory-p "~/.emacs.d/backups"))
+             (mkdir "~/.emacs.d/backups"))
+         (if (not (file-directory-p "~/.emacs.d/xml_schemas"))
+             (mkdir "~/.emacs.d/xml_schemas"))
+         
+         (customize_emacs_without_fzlbpms_enviroment)
+         
+         (find-file (concat *default_load_path_dir* "/init.el"))
+         (find-file (concat *default_load_path_dir* "/index.org"))
+         (find-file (concat *default_load_path_dir* "/fzl_functions.el"))
+         (find-file (concat *default_load_path_dir* "/config-enviroment.el"))
+         );;(if (getenv "FZL_HOME") IS   F-A-L-S-E
+  
+);;(if (getenv "FZL_HOME")
 
 
 
