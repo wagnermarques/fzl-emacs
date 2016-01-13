@@ -12,14 +12,14 @@
 (setq **M2_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/builds/apache-maven-3.3.3")
 (setq **NEXUS_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/builds/nexus-2.11.4-01")
 (setq **JAVA_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/jdks/jdk1.8.0_65")
-
+(setq **EMACSINITFILE_HOME** "/home/casa/env-dev/sources/emacsinitfile")
 
 (defun set-default-directory()
   "if FZL_HOME is defined, the default-directory is $FZL_HOME/etc/emacs/emacsinitfile/
    otherwhise default-directory will be what is defined below"
   (if (getenv "FZL_HOME")
       (setq *emacsinitfile-default-directory* "/home/administrador/env-dev/sources/fzlbpms-code")    
-    (setq *emacsinitfile-default-directory* "~/env-dev/sources/emacsinitfile/")))
+    (setq *emacsinitfile-default-directory* **EMACSINITFILE_HOME**)))
 ;;(setq *emacsinitfile-default-directory* (concat (getenv "FZL_HOME") "etc/emacs/emacsinitfile/"))    
 
 (defun define_enviroment_variables_from_file()
@@ -132,7 +132,7 @@
        );;(if (getenv "FZL_HOME") IS     T-R-U-E
                 
 
-       (let* ((*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile")
+       (let* ((*default_load_path_dir* **EMACSINITFILE_HOME**)
               (package-user-dir  "~/.emacs.d/elpa" )
               (default-directory (set-default-directory))
               (eclipse_home "/home/administrador/progsativos/fzlbpms/integrated/eclipse/eclipse-modeling-mars-1-linux-gtk-x86_64"))
