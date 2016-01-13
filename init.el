@@ -9,9 +9,9 @@
 ;; fzl_ (starting with fzl_ string)
 
 
-(setq **M2_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/builds/apache-maven-3.3.3")
-(setq **NEXUS_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/builds/nexus-2.11.4-01")
-(setq **JAVA_HOME**  "/home/administrador/progsativos/fzlbpms/integrated/jdks/jdk1.8.0_65")
+(setq **M2_HOME**     "/home/casa/PROGSATIVOS/apache-maven-3.3.3/")
+(setq **NEXUS_HOME**  "/home/casa/PROGSATIVOS/nexus-2.11.4-01-bundle/nexus-2.11.4-01")
+(setq **JAVA_HOME**   "/home/casa/PROGSATIVOS/jdk1.8.0_65")
 (setq **EMACSINITFILE_HOME** "/home/casa/env-dev/sources/emacsinitfile")
 
 (defun set-default-directory()
