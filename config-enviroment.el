@@ -30,8 +30,12 @@
 
 
 
-
+;;let((cmdLs )
+;;
+;;    );
 (shell-command (concat **NEXUS_HOME** "/bin/nexus start"))
+(shell-command (concat (concat "cd " **NEXUS_HOME**) " && $(pwd)"))
+
 (find-file (concat **NEXUS_HOME** "/logs/wrapper.log"))
 (shell-command "firefox http://localhost:8081/nexus/#welcome")
 

@@ -11,10 +11,14 @@
 ;;NOTE;;
 ;;THE PATH PATHER IS: ALWAYS PUT THE LAST "/" IN THE PATHS
 ;;IN THE CODE THIS IS CONCATENATED WHITH IT IN MIND
-(setq **M2_HOME**     "/home/wagner/PROGSATIVOS/apache-maven-3.3.3/")
-(setq **NEXUS_HOME**  "/home/wagner/PROGSATIVOS/nexus-2.11.4-01/")
-(setq **JAVA_HOME**   "/home/wagner/PROGSATIVOS/jdk1.8.0_65/")
-(setq **EMACSINITFILE_HOME** "/home/wagner/env-dev/sources/emacsinitfile/")
+(setq **DEV_TOOLS_BASEDIR** "/home/wagner/PROGSATIVOS/")
+
+(setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "apache-maven-3.3.3/"))
+(setq **NEXUS_HOME**  (concat **DEV_TOOLS_BASEDIR** "nexus-2.11.4-01/"))
+(setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdk1.8.0_65/"))
+(setq **EMACSINITFILE_HOME**  "/home/wagner/env-dev/sources/emacsinitfile/")
+(setq **EMACSINITFILE_LOG_FILE** (concat **EMACSINITFILE_HOME** "emacsinitfile.log"))
+
 
 (defun set-default-directory()
   "if FZL_HOME is defined, the default-directory is $FZL_HOME/etc/emacs/emacsinitfile/
@@ -50,6 +54,7 @@
 (defun require_common_packages()
   "requires common packages... common in sense that will be required either with or without fzlbpms"
   (require 'fzl_functions)
+  (require 'config_logging)
   (require 'config_code_lisp)
   ;;(require 'config_package_system)
   (require 'config_lines_columns_and_cursor_behaviour)

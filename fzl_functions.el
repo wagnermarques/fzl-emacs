@@ -56,7 +56,12 @@
   (interactive)
   (find-file (concat **M2_HOME** "/config/settings.xml")))
 
-(defun fzl-nexus-logs()
+(defun fzl-open-log-emacsinitfile-logs()
+  "open the wrapper.log nexus file"
+  (interactive)
+  (find-file **EMACSINITFILE_LOG_FILE**))
+
+(defun fzl-nexus-settings-xml()
   "open the wrapper.log nexus file"
   (interactive)
   (find-file (concat **NEXUS_HOME** "/config/settings.xml")))
