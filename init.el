@@ -11,12 +11,14 @@
 ;;NOTE;;
 ;;THE PATH PATHER IS: ALWAYS PUT THE LAST "/" IN THE PATHS
 ;;IN THE CODE THIS IS CONCATENATED WHITH IT IN MIND
-(setq **DEV_TOOLS_BASEDIR** "/home/wagner/PROGSATIVOS/")
+
+(setq **HOME** "/home/administrador/")
+(setq **DEV_TOOLS_BASEDIR** (concat **HOME** "PROGSATIVOS/"))
 
 (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "apache-maven-3.3.3/"))
 (setq **NEXUS_HOME**  (concat **DEV_TOOLS_BASEDIR** "nexus-2.11.4-01/"))
 (setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdk1.8.0_65/"))
-(setq **EMACSINITFILE_HOME**  "/home/wagner/env-dev/sources/emacsinitfile/")
+(setq **EMACSINITFILE_HOME**  (concat **HOME** "wagnerdocri@gmail.com/env-dev/sources/emacsinitfile/"))
 (setq **EMACSINITFILE_LOG_FILE** (concat **EMACSINITFILE_HOME** "emacsinitfile.log"))
 
 

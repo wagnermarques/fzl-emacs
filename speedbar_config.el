@@ -66,7 +66,8 @@
   )
 (global-set-key "\C-x1" 'reset-window-config)
 
-
+;credits for this line:http://stackoverflow.com/questions/5135209/show-hidden-files-in-speedbar
+(setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
 
 ;;SPEEDBAR
 ;https://sites.google.com/site/xiangyangsite/home/linux-unix/emacs/speedbar-in-one-frame
