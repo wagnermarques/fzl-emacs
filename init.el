@@ -1,170 +1,59 @@
 (setq debug-on-error t)
 (require 'cl)
 
-;; some interesinf interactive functions
-;; all of them starts with fzl_
-;; so to know them, just do
-;; C-h (to search for...)
-;; f (functions)
-;; fzl_ (starting with fzl_ string)
+(setq **HOME** (concat (concat "/home/" (getenv "USER")) "/"))
+(setq **FZL_HOME** (getenv "FZL_HOME")) ;;DEFINE THIS ENVIRONMENTAL VARIBLE IF YOU WANT
+(setq **DEV_TOOLS_BASEDIR** (concat **FZL_HOME** "/integrated/"))
 
-;;NOTE;;
-;;THE PATH PATHER IS: ALWAYS PUT THE LAST "/" IN THE PATHS
-;;IN THE CODE THIS IS CONCATENATED WHITH IT IN MIND
-
-(setq **HOME** "/home/administrador/")
-(setq **DEV_TOOLS_BASEDIR** (concat **HOME** "PROGSATIVOS/"))
-
+;;CHANGE DEV TOOLS ACCORDINGLY
 (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "apache-maven-3.3.3/"))
 (setq **NEXUS_HOME**  (concat **DEV_TOOLS_BASEDIR** "nexus-2.11.4-01/"))
 (setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdk1.8.0_65/"))
-(setq **EMACSINITFILE_HOME**  (concat **HOME** "wagnerdocri@gmail.com/env-dev/sources/emacsinitfile/"))
-(setq **EMACSINITFILE_LOG_FILE** (concat **EMACSINITFILE_HOME** "emacsinitfile.log"))
+(setq **EMACSINITFILE_HOME**  (concat **DEV_TOOLS_BASEDIR** "emacsinitfile"))
+(setq **EMACSINITFILE_LOG_FILE** (concat **DEV_TOOLS_BASEDIR** "emacsinitfile.log"))
+
+;(message (concat "**M2_HOME** = " **M2_HOME**))
+;(message (concat "**NEXUS_HOME** = " **NEXUS_HOME**))
+;(message (concat "**JAVA_HOME** = " **JAVA_HOME**))
+;(message (concat "**EMACSINITFILE_HOME** = " **EMACSINITFILE_HOME** ))
+;(message (concat "**EMACSINITFILE_LOG_FILE** = " **EMACSINITFILE_LOG_FILE** ))
+
+(setq *fzl_emacs_packages_checkouts* (concat  **EMACSINITFILE_HOME** "/checkouts"))
+(setq *fzl_emacs_packages_downloaded* (concat **EMACSINITFILE_HOME** "/downloaded-packages"))
+(setq *fzl-backup-dir* (concat **FZL_HOME** "/backups/emacs/autosaved_files"))
+(setq *fzl_shared_schemas* (concat **FZL_HOME** "/shared/xml_schemas"))
+(setq *packages-installed-from-elpa-dir*  (concat **EMACSINITFILE_HOME** "/installed_from_elpa" ))
+
+;(message (concat "*fzl_emacs_packages_checkouts* = " *fzl_emacs_packages_checkouts*))
+;(message (concat "*fzl_emacs_packages_downloaded* = " *fzl_emacs_packages_downloaded*))
+;(message (concat "*fzl-backup-dir* = " *fzl-backup-dir* ))
+;(message (concat "*fzl_shared_schemas* = " *fzl_shared_schemas*))
+;(message (concat "*packages-installed-from-elpa-dir* = " *packages-installed-from-elpa-dir*))
+
+(add-to-list 'load-path **EMACSINITFILE_HOME**)
+(add-to-list 'load-path *fzl_emacs_packages_checkouts*)
+(add-to-list 'load-path *fzl_emacs_packages_downloaded*)
+(add-to-list 'load-path *packages-installed-from-elpa-dir*)
+
+(require 'fzl_functions)
+(require 'config_logging)
+(require 'config_code_lisp)
+;;(require 'config_package_system)
+(require 'config_lines_columns_and_cursor_behaviour)
+(require 'config_general_emacs_behaviour)
+(require 'config_buffers)
+(require 'fzl_find_file_functions)
+(require 'fzl_keys)
+(require 'fzl_utils)
+(require 'speedbar_config)
+(require 'flycheck_config)
+;(require 'ess_config)
 
 
-(defun set-default-directory()
-  "if FZL_HOME is defined, the default-directory is $FZL_HOME/etc/emacs/emacsinitfile/
-   otherwhise default-directory will be what is defined below"
-  (if (getenv "FZL_HOME")
-      (setq *emacsinitfile-default-directory* "/home/administrador/env-dev/sources/fzlbpms-code")    
-    (setq *emacsinitfile-default-directory* **EMACSINITFILE_HOME**)))
-;;(setq *emacsinitfile-default-directory* (concat (getenv "FZL_HOME") "etc/emacs/emacsinitfile/"))    
-
-(defun define_enviroment_variables_from_file()
-  "fzlbpms define a enviroment variables, 
-   but users that are using this emacsinitel configuration without fzlbpms 
-   runs this function to define some enviroment variable like JAVA_HOME, M2_HOME etc...
-   That enviroment variables are difined in properties.csv and readed by this function"
-  (when (file-readable-p "properties.csv")
-    (with-temp-buffer
-      (insert-file-contents "properties.csv")
-      (goto-char (point-min))
-      (while (not (eobp))
-        ;; do something here with buffer content
-        (forward-line))))
-  )
-
-
-(defun define_enviroment_variables()
-  "fzlbpms define a enviroment variables, 
-   but users that are using this emacsinitel configuration without fzlbpms 
-   runs this function to define some enviroment variable like JAVA_HOME, M2_HOME etc...
-   That enviroment variables are difined in properties.csv and readed by this function"
-  (require 'config-enviroment)
-)
-
-(defun require_common_packages()
-  "requires common packages... common in sense that will be required either with or without fzlbpms"
-  (require 'fzl_functions)
-  (require 'config_logging)
-  (require 'config_code_lisp)
-  ;;(require 'config_package_system)
-  (require 'config_lines_columns_and_cursor_behaviour)
-  (require 'config_general_emacs_behaviour)
-  (require 'config_buffers)
-  (require 'fzl_find_file_functions)
-  (require 'fzl_keys)
-  (require 'fzl_utils)
-  (require 'speedbar_config)
-  (require 'flycheck_config)
-  (require 'ess_config)
-)
-
-
-;;###############################################################
-;; IMPORTANT...
-;;###############################################################
-(defun customize_emacs_in_fzlbpms_presence (strFzlHome)
-  "customize_emacs_in_fzlbpms_presence"
-  (let* ((*FZL_HOME* strFzlHome))
-    (require_common_packages)
-    (define_enviroment_variables)
-    (set-default-directory)
-;;    (require 'config_global_variables_in_fzlbpms_presence)
-    )
-)
-
-;;###############################################################
-;; IMPORTANT...
-;;###############################################################
-(defun customize_emacs_without_fzlbpms_enviroment()
-  "customize_emacs_without_fzlbpms_envoriment"
-  (require_common_packages)
-  (define_enviroment_variables)
-   (set-default-directory)
-)
-
-
-;; atencao: *fzl_emacs_site_lisp* ou *default_load_path_dir*
-;; (add-to-list 'load-path *default_load_path_dir*)
-(if (getenv "FZL_HOME")
-    (let* ((*FZL_HOME* (getenv "FZL_HOME"))
-	   (*fzl_emacs_config_dir* (concat *FZL_HOME* "/etc/emacs"))
-	   ;;(*fzl_emacs_site_lisp* (concat *fzl_emacs_config_dir* "/emacsinitfile"))
-           (*fzl_emacs_site_lisp*  "/home/administrador/env-dev/sources/emacsinitfile")
-	   (*fzl_emacs_packages_checkouts* (concat  *fzl_emacs_config_dir* "/checkouts"))
-	   (*fzl_emacs_packages_downloaded* (concat *fzl_emacs_config_dir* "/downloaded-packages"))
-	   (*fzl-backup-dir* (concat *FZL_HOME* "/backups/emacs/autosaved_files"))
-	   (*fzl_shared_schemas* (concat *FZL_HOME* "/shared/xml_schemas"))
-	   (package-user-dir  (concat *fzl_emacs_config_dir* "/installed_from_elpa" ))
-	   (*default_load_path_dir* "/home/administrador/env-dev/sources/emacsinitfile"))
-
-  
-                (add-to-list 'load-path *default_load_path_dir*)
-      
-                ;;FZL_HOME directory must be defined and created fisically
-                (if (not (file-directory-p (concat *FZL_HOME* "/etc")))
-                    (mkdir (concat *FZL_HOME* "/etc")))
-                (if (not (file-directory-p (concat *FZL_HOME* "/etc/emacs")))
-                    (mkdir (concat *FZL_HOME* "/etc/emacs")))
-                (if (not (file-directory-p *fzl_emacs_site_lisp* ))
-                    (mkdir *fzl_emacs_site_lisp*))
-                (if (not (file-directory-p *fzl_emacs_packages_checkouts*))
-                    (mkdir *fzl_emacs_packages_checkouts*))
-                (if (not (file-directory-p *fzl_emacs_packages_downloaded*))
-                    (mkdir *fzl_emacs_packages_downloaded*))
-                (if (not (file-directory-p (concat *fzl_emacs_config_dir* "/installed_from_elpa" )))
-                    (mkdir (concat *fzl_emacs_config_dir* "/installed_from_elpa" )))
-                (if (not (file-directory-p (concat *FZL_HOME* "/backups")))
-                    (mkdir (concat *FZL_HOME* "/backups")))
-                (if (not (file-directory-p (concat *FZL_HOME* "/backups/emacs")))
-                    (mkdir (concat *FZL_HOME* "/backups/emacs")))
-                (if (not (file-directory-p (concat *FZL_HOME* "/backups/emacs/autosaved_files")))
-                    (mkdir (concat *FZL_HOME* "/backups/emacs/autosaved_files")))
-                (if (not (file-directory-p (concat *FZL_HOME* "/shared")))
-                    (mkdir (concat *FZL_HOME* "/shared")))
-                (if (not (file-directory-p (concat *FZL_HOME* "/shared/xml_schemas")))
-                    (mkdir (concat *FZL_HOME* "/shared/xml_schemas")))
-                (customize_emacs_in_fzlbpms_presence *FZL_HOME*)
-                (find-file (concat  *fzl_emacs_site_lisp* "/init.el"))
-                (find-file (concat  *fzl_emacs_site_lisp* "/index.org"))
-       );;(if (getenv "FZL_HOME") IS     T-R-U-E
-                
-
-       (let* ((*default_load_path_dir* **EMACSINITFILE_HOME**)
-              (package-user-dir  "~/.emacs.d/elpa" )
-              (default-directory (set-default-directory))
-              (eclipse_home "/home/administrador/progsativos/fzlbpms/integrated/eclipse/eclipse-modeling-mars-1-linux-gtk-x86_64"))
-         (add-to-list 'load-path *default_load_path_dir*)
-         
-         (if (not (file-directory-p "~/.emacs.d/elpa"))
-             (mkdir "~/.emacs.d/elpa"))
-         (if (not (file-directory-p "~/.emacs.d/backups"))
-             (mkdir "~/.emacs.d/backups"))
-         (if (not (file-directory-p "~/.emacs.d/xml_schemas"))
-             (mkdir "~/.emacs.d/xml_schemas"))
-         
-         (customize_emacs_without_fzlbpms_enviroment)
-         
-         (find-file (concat *default_load_path_dir* "/init.el"))
-         (find-file (concat *default_load_path_dir* "/index.org"))
-         (find-file (concat *default_load_path_dir* "/fzl_functions.el"))
-         (find-file (concat *default_load_path_dir* "/config-enviroment.el"))
-         );;(if (getenv "FZL_HOME") IS   F-A-L-S-E
-  
-);;(if (getenv "FZL_HOME")
-
-
+(find-file (concat **EMACSINITFILE_HOME** "/init.el"))
+(find-file (concat **EMACSINITFILE_HOME** "/index.org"))
+(find-file (concat **EMACSINITFILE_HOME** "/fzl_functions.el"))
+(find-file (concat **EMACSINITFILE_HOME** "/config-enviroment.el"))
 
 
 
