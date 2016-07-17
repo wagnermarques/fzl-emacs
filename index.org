@@ -45,7 +45,7 @@ W E L C O M E    T O    E M A C S I N I T F I L E
     
 
 * urls
-  http://localhost:8081/nexus
+  http://localhost:8081/#browse/welcome
   file:///home/administrador/progsativos/fzlbpms/integrated/servers/Runtime_ESBSE/docs/cxf-api/index.html
   file:///home/administrador/progsativos/fzlbpms/integrated/servers/Runtime_ESBSE/docs/cxf-api/index-all.html
 
@@ -60,6 +60,11 @@ W E L C O M E    T O    E M A C S I N I T F I L E
 
 ***  Service Activity Monitoring (SAM) 
      log / monitor service calls done with the Apache CXF Framework
+
+** Karaf
+   
+   http://karaf.apache.org/index.html
+   
 
 * tutorials
 ** execute code within org-mode

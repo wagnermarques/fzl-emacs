@@ -110,6 +110,8 @@
     (require 'yasnippet_config)
     (require 'config_env_for_shell_and_startup_some_dev_tools)
     (require 'config-web-mode)
+
+    (require 'fzl_menu)
     
     (require 'find_files)
 ;(require 'config_code_c_style_for_K_and_RStyle)

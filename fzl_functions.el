@@ -1,5 +1,10 @@
 (provide 'fzl_functions)
 
+(defun fzl_new_shell(shell_name)
+  (interactive shell_name)
+  (fzl_open_shell_in_a_buffer shell_name)
+  )
+
 (defun fzl-set-default-directory-to-FZL_HOME-etc() 
   'set default directory to FZL_HOME etc' 
   (interactive)
@@ -57,7 +62,7 @@
   (find-file (concat **M2_HOME** "/config/settings.xml")))
 
 (defun fzl-open-log-emacsinitfile-logs()
-  "open the wrapper.log nexus file"
+  "open emacsinitfile log"
   (interactive)
   (find-file **EMACSINITFILE_LOG_FILE**))
 
@@ -67,13 +72,11 @@
   (find-file (concat **NEXUS_HOME** "/config/settings.xml")))
 
 (defun fzl-nexus-url()
-  "open nexus"
+  "open nexus welcome url"
   (interactive)
-  (shell-command "firefox http://localhost:8081/nexus/#welcome"))
+  (shell-command "firefox http://localhost:8081/#browse/welcome"))
 
 
-
-;(svt 'klklkl')
 
 
 ;(defun svt-find-grep (sDiretorio, sGrepPattern)
@@ -113,23 +116,6 @@
 ;(defun open-fzlbpms-initfile ()
 ; "open emacs init file"
 ; (find-file " /run/media/wagner/Mass memory/fzlbpms/etc/emacs/checkouts/emacsinitfile/init.el"))
-
-
-;(defun myCommand ()
-; "One sentence summary of what this command do.
-
-;More details here. Be sure to mention the return value if relevant.
-;Lines here should not be longer than 70 chars,
-;and don't indent them."
-; (interactive)
-; (let (localVar1 localVar2 …)
-; (setq localVar1 …)
-; (setq localVar2 …)
-; ;; do something …
-; )
-;)
-
-
 
 
 

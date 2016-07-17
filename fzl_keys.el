@@ -56,7 +56,7 @@
 
 (define-key global-map (kbd "\er") 'eval-region) ;ESC r
 (define-key global-map (kbd "\eb") 'eval-buffer) ;ESC b
-(define-key global-map (kbd "\es") 'shell) ;ESC s
+(define-key global-map (kbd "\es") 'fzl_open_shell_in_a_buffer) ;ESC s
 
 (define-key global-map (kbd "\em") 'make-directory) ;ESC m
 
