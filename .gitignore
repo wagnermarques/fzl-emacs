@@ -1,5 +1,7 @@
 # -*- mode: gitignore; -*-
 #ref.: https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
+
+*.log
 *~
 \#*\#
 /.emacs.desktop

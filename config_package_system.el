@@ -3,7 +3,7 @@
 ;;http://ergoemacs.org/emacs/emacs_package_system.html
 ;;http://stackoverflow.com/questions/10092322/how-to-automatically-install-emacs-packages-by-specifying-a-list-of-package-name
 
-(message (concat (expand-file-name "./config_package_system.el") " --> loaded sucessfully"))
+(log (concat (expand-file-name "./config_package_system.el") " --> loaded sucessfully"))
 
 (when (>= emacs-major-version 24)
   (require 'package)

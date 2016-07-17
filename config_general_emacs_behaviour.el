@@ -308,6 +308,27 @@
 
 
 
+;;________________________________________________________________
+;;  
+;;  EMACS HOOKS
+;;________________________________________________________________
+
+;; when visit .log files turn on fzl-hooked auto-revert-tail-mode
+;; credits in http://emacs.stackexchange.com/questions/13005/is-there-a-decent-log-viewing-mode-for-large-log-files
+(add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-tail-mode))
+(defun fzl-hook-for-auto-revert-tail-mode ()
+  (end-of-buffer)
+  (make-variable-buffer-local 'auto-revert-interval)
+  (setq auto-revert-interval 1)
+  (auto-revert-set-timer)
+  (make-variable-buffer-local 'auto-revert-verbose)
+  (setq auto-revert-verbose nil)
+  (read-only-mode t)
+  (font-lock-mode 0)
+  (when (fboundp 'show-smartparens-mode)
+    (show-smartparens-mode 0)))
+(add-hook 'auto-revert-tail-mode-hook 'fzl-hook-for-auto-revert-tail-mode)
+
 
 
 

@@ -1,59 +1,134 @@
 (setq debug-on-error t)
 (require 'cl)
 
+;(setq url-proxy-services '(("no_proxy" . "work\\.com")
+;                           ("http_proxy" . "wagner:nicolas1*@192.168.0.2:3128")
+;			    ("ftp_proxy" . "wagner:nicolas1*@192.168.0.2:3128")
+;			    ("all_proxy" . "wagner:nicolas1*@192.168.0.2:3128")))
+					
+
 (setq **HOME** (concat (concat "/home/" (getenv "USER")) "/"))
-(setq **FZL_HOME** (getenv "FZL_HOME")) ;;DEFINE THIS ENVIRONMENTAL VARIBLE IF YOU WANT
-(setq **DEV_TOOLS_BASEDIR** (concat **FZL_HOME** "/integrated/"))
-
-;;CHANGE DEV TOOLS ACCORDINGLY
-(setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "apache-maven-3.3.3/"))
-(setq **NEXUS_HOME**  (concat **DEV_TOOLS_BASEDIR** "nexus-2.11.4-01/"))
-(setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdk1.8.0_65/"))
-(setq **EMACSINITFILE_HOME**  (concat **DEV_TOOLS_BASEDIR** "emacsinitfile"))
-(setq **EMACSINITFILE_LOG_FILE** (concat **DEV_TOOLS_BASEDIR** "emacsinitfile.log"))
-
-;(message (concat "**M2_HOME** = " **M2_HOME**))
-;(message (concat "**NEXUS_HOME** = " **NEXUS_HOME**))
-;(message (concat "**JAVA_HOME** = " **JAVA_HOME**))
-;(message (concat "**EMACSINITFILE_HOME** = " **EMACSINITFILE_HOME** ))
-;(message (concat "**EMACSINITFILE_LOG_FILE** = " **EMACSINITFILE_LOG_FILE** ))
-
-(setq *fzl_emacs_packages_checkouts* (concat  **EMACSINITFILE_HOME** "/checkouts"))
-(setq *fzl_emacs_packages_downloaded* (concat **EMACSINITFILE_HOME** "/downloaded-packages"))
-(setq *fzl-backup-dir* (concat **FZL_HOME** "/backups/emacs/autosaved_files"))
-(setq *fzl_shared_schemas* (concat **FZL_HOME** "/shared/xml_schemas"))
-(setq *packages-installed-from-elpa-dir*  (concat **EMACSINITFILE_HOME** "/installed_from_elpa" ))
-
-;(message (concat "*fzl_emacs_packages_checkouts* = " *fzl_emacs_packages_checkouts*))
-;(message (concat "*fzl_emacs_packages_downloaded* = " *fzl_emacs_packages_downloaded*))
-;(message (concat "*fzl-backup-dir* = " *fzl-backup-dir* ))
-;(message (concat "*fzl_shared_schemas* = " *fzl_shared_schemas*))
-;(message (concat "*packages-installed-from-elpa-dir* = " *packages-installed-from-elpa-dir*))
-
-(add-to-list 'load-path **EMACSINITFILE_HOME**)
-(add-to-list 'load-path *fzl_emacs_packages_checkouts*)
-(add-to-list 'load-path *fzl_emacs_packages_downloaded*)
-(add-to-list 'load-path *packages-installed-from-elpa-dir*)
-
-(require 'fzl_functions)
-(require 'config_logging)
-(require 'config_code_lisp)
-;;(require 'config_package_system)
-(require 'config_lines_columns_and_cursor_behaviour)
-(require 'config_general_emacs_behaviour)
-(require 'config_buffers)
-(require 'fzl_find_file_functions)
-(require 'fzl_keys)
-(require 'fzl_utils)
-(require 'speedbar_config)
-(require 'flycheck_config)
-;(require 'ess_config)
 
 
-(find-file (concat **EMACSINITFILE_HOME** "/init.el"))
-(find-file (concat **EMACSINITFILE_HOME** "/index.org"))
-(find-file (concat **EMACSINITFILE_HOME** "/fzl_functions.el"))
-(find-file (concat **EMACSINITFILE_HOME** "/config-enviroment.el"))
+
+(defun fzl_print_global_variables()
+  "print defined variables and its values"
+  (interactive)
+  (message (concat "**HOME** = \t" **HOME**))  
+  (message (concat "**PWD** = \t" **PWD**))
+  (message (concat "**FZL_HOME** = \t" **FZL_HOME**))
+  (message (concat "**DEV_TOOLS_BASEDIR** = \t" **DEV_TOOLS_BASEDIR**))
+  
+  (message (concat "**M2_HOME** = \t" **M2_HOME**))
+  (message (concat "**NEXUS_HOME** = \t" **NEXUS_HOME**))
+  (message (concat "**JAVA_HOME** = \t"  **JAVA_HOME**))
+
+  (message (concat "**EMACSINITFILE_HOME** = \t" **EMACSINITFILE_HOME**))  
+  (message (concat "**EMACSINITFILE_LOG_FILE** = \t" **EMACSINITFILE_LOG_FILE**))
+
+  (message (concat "*fzl_emacs_packages_checkouts* = \t" *fzl_emacs_packages_checkouts*))
+  (message (concat "*fzl_emacs_packages_downloaded* = \t" *fzl_emacs_packages_downloaded*))
+  (message (concat "*fzl_emacs_autosaved_files* = \t" *fzl_emacs_autosaved_files*))
+  (message (concat "*fzl_emacs_yasnippets_snippets*" *fzl_emacs_yasnippets_snippets*))
+  
+  (message (concat "*fzl_shared_xml_schemas* = \t" *fzl_shared_xml_schemas*))
+  (message (concat "*packages-installed-from-elpa-dir* = \t"  *packages-installed-from-elpa-dir*))
+  )
+
+
+(defun configure_load_path()
+  (setq load-path
+	(append (list nil **EMACSINITFILE_HOME**
+                    *fzl_emacs_packages_checkouts*
+                    "~/emacs")
+		load-path)))
+
+
+
+;;DEFINE THIS ENVIRONMENTAL VARIABLE
+;;THIS JUST REPRESENTS A DIRECTORY WHERE SHOULD BE YOU DEVTOOLS IN ITS INTEGRATED DIR
+(if (not (getenv "FZL_HOME"))
+    ;;in case FZL_HOME was not defined...
+    (message "PLEASE EXPORT FZL_HOME ENVIRONMENT VARIABLE")
+
+  ;;in case FZL_HOME was defined...
+  (progn
+    (setq **PWD** (file-name-directory load-file-name))
+    (setq **FZL_HOME** (getenv "FZL_HOME"))   
+    (setq **DEV_TOOLS_BASEDIR** (concat **FZL_HOME** "/integrated/"))
+    
+    ;;CHANGE DEV TOOLS ACCORDINGLY
+    (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "build/apache-maven-3.3.3/"))
+    (setq **NEXUS_HOME**  (concat **DEV_TOOLS_BASEDIR** "build/nexus-3.0.1-01/"))
+
+    (setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdks/jdk1.8.0_65/"))
+
+    (setq **EMACSINITFILE_HOME**  **PWD**)
+    (setq **EMACSINITFILE_LOG_FILE** (concat **EMACSINITFILE_HOME** "emacsinitfile.out"))
+
+    (setq *fzl_emacs_packages_checkouts* (concat  **EMACSINITFILE_HOME** "dir_for_pkgs_checkouts"))
+    (setq *fzl_emacs_packages_downloaded* (concat **EMACSINITFILE_HOME** "dir_for_pkgs_downloads"))
+    (setq *fzl_emacs_autosaved_files* (concat **EMACSINITFILE_HOME** "dir_for_autosaved_files"))
+    (setq *fzl_emacs_yasnippets_snippets* (concat **EMACSINITFILE_HOME** "dir_for_yasnippets_snippets"))
+    
+    (setq *fzl_shared_xml_schemas* (concat **FZL_HOME** "/shared/xml_schemas"))
+    (setq *packages-installed-from-elpa-dir*  (concat **EMACSINITFILE_HOME** "/dir_for_elpa_pkg_installations" ))
+
+    (fzl_print_global_variables)
+    (configure_load_path)
+
+    (require 'fzl_functions)
+    (require 'config_logging)
+    (require 'config_code_lisp)
+    (require 'config_package_system)
+
+    (require 'iimage_mode_config)
+    (require 'iswitchb_config)
+    
+    (require 'config_lines_columns_and_cursor_behaviour)
+    (require 'config_general_emacs_behaviour)
+    (require 'config_buffers)
+
+    (require 'fzl_find_file_functions)
+    (require 'fzl_keys)
+    (require 'fzl_utils)
+
+    (require 'cedet_config)
+    (require 'speedbar_config)
+    (require 'flycheck_config)
+
+    (require 'org_mode_config)
+    (require 'calendar_config)
+    (require 'ess_config)
+    (require 'autocomplete_config)
+
+   ;C O D I N G   C O N F I G U R A T I O N S
+    (require 'config_code_in_general)
+    (require 'js_mode_config)
+    (require 'config_code_c_style_for_K_and_RStyle)
+    (require 'sql_mode_config)
+    (require 'yasnippet_config)
+    (require 'config_env_for_shell_and_startup_some_dev_tools)
+    (require 'config-web-mode)
+    
+    (require 'find_files)
+;(require 'config_code_c_style_for_K_and_RStyle)
+
+    ;;xml
+     (defvar *nxml_or_PSGML* "nxml")
+     (require 'xml_mode) ;TODO: nxml
+
+    (find-file "init.el")
+    (find-file "org_mode_config.el")
+    (find-file "index.org")
+    (log "+++++ EMACSINITFILE INITIALIZATION PROCESSED +++++")
+    );(else block, the (progn
+  );(if
+	     
+;(find-file (concat **EMACSINITFILE_HOME** "/init.el"))
+;(find-file (concat **EMACSINITFILE_HOME** "/index.org"))
+;(find-file (concat **EMACSINITFILE_HOME** "/fzl_functions.el"))
+;(find-file (concat **EMACSINITFILE_HOME** "/config-enviroment.el"))
 
 
 
@@ -73,54 +148,7 @@
 
 
 
-;;pagkages configs
-;(require 'org_mode_config)
-;(require 'calendar_config)
-;(require 'cedet_config)
-;(require 'autocomplete_config)
-;(require 'js_mode_config)
 
-;(require 'sql_mode_config)
-;(require 'yasnippet_config)
-;(require 'config_code_c_style_for_K_and_RStyle)
-
-;;     (require 'config_lines_columns_and_cursor_behaviour)
-;     (require 'config_fonts_and_themes) ;maybe its contents must migrate to buffers_config.el
-;     (require 'fzl_customization_functions)
-;     (require 'fzl_keys)
-     
-;     (require 'calendar_config)
-;     (require 'find_files)
-
-
-     ;dev
-     ;commented because I am not using FZL_APP_HOME for a wile...
-     ;(require  'util-minibuffer-as-a-promp)
-
-
-
-     ;P A C K A G E S   C O N F I G U R A T I O N S
-     ;C E D E T
-;     (require  'fzl_pkg_install_functions)
-;     (require  'autocomplete_config) 
-;     (require  'cedet_config)
-;     (require  'speedbar_config)
-     
-     
-     ;C O D I N G   C O N F I G U R A T I O N S
-     ;TODO make a common config_code.el for all languages
-     ;TODO make a config_code_specificlanguage.el for each specific language
-     ;TODO explain better the 'config_code_system as a file documentation
-;     (require 'config_code_in_general)
-;     (require 'config_code_system)
-;     (require 'config_code_lisp)
-     
-     ;c++
-;     (require  'config_code_c_style_for_K_and_RStyle)
-
-     ;xml
-;     (defvar *nxml_or_PSGML* "nxml")
-;     (require 'xml_mode) ;TODO: nxml
 
 
 
@@ -177,8 +205,7 @@
 
 
 
-;iimage_mode_config.el
-;iswitchb_config.el
+
 ;javascript_mode_config.el
 ;jdee_config.el
 ;nxml_mode_config.el
@@ -226,7 +253,7 @@
 ;(require 'fzl_customization_functions)
 ;(require 'org_mode_config)
 ;(require 'sql_mode_config)
-;(require 'iimage_mode_config)
+
 
 
 

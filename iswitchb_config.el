@@ -1,4 +1,5 @@
-;http://www.emacswiki.org/emacs/IswitchBuffers
+;;http://www.emacswiki.org/emacs/IswitchBuffers
+
 (iswitchb-mode 1)
 (defun iswitchb-local-keys ()
   (mapc (lambda (K) 
@@ -10,3 +11,5 @@
 	  ("<down>"  . ignore             ))))
 
 (add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
+(provide 'iswitchb_config)
+

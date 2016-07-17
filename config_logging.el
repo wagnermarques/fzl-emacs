@@ -2,9 +2,15 @@
 (message "config_login loaded sucessfully....")
 
 (defun touch_emacsinitfile_logfile()
-  "touch emacsinitfile.log file"
-  (shell-command (concat "touch " **EMACSINITFILE_LOG_FILE**)))
+  (shell-command-to-string "touch emacsinitfile.log"))
 
+(defun log(str)
+  "log in emacsinitfile.log"
+  (progn
+    (setq cmd (concat (concat "echo " str) " >> emacsinitfile.log"))
+    (shell-command-to-string cmd)))
 
 (touch_emacsinitfile_logfile)
-(fzl-open-log-emacsinitfile-logs) ;defined in fzl_functions.el
+
+;(find-file **EMACSINITFILE_LOG_FILE**)
+
