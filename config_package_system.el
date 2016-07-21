@@ -15,7 +15,10 @@
 					flycheck
 					gist
 					magit
-                                        yasnippet))
+                                        yasnippet
+                                        emacs-eclim
+                                        company
+					))
   
 
   ;;ANOTHER INTERESINTG PACKAGES
