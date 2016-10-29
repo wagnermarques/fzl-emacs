@@ -1,8 +1,8 @@
 (provide 'find_files)
 
-
-;(find-file (concat *fzl_emacsinitfile_dir*  "/autocomplete_installation.el"))
-;(find-file (concat *fzl_emacsinitfile_dir*  "/autocomplete_installation.sh"))
+(find-file (concat **EMACSINITFILE_HOME**  "/elfeed_config.el"))
+;(find-file (concat **EMACSINITFILE_HOME**  "/autocomplete_installation.el"))
+;(find-file (concat **EMACSINITFILE_HOME**  "/autocomplete_installation.sh"))
 ;(require 'autocomplete_installation)
 
 
@@ -49,5 +49,5 @@
 ;(find-file (concat *FZL_HOME* "/bin/fzl_env_setup_runner.c"))
 ;(find-file (concat *FZL_HOME* "/bin/fzl_utils.sh"))
 
-(split-window-below)
-(find-file (concat **EMACSINITFILE_HOME** "/emacsinitfile.log"))
+;(split-window-below)
+;(find-file (concat **EMACSINITFILE_HOME** "/emacsinitfile.log"))

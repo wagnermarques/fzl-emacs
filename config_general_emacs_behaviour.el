@@ -34,6 +34,12 @@
 (setq search-highlight t) 
 
 
+(setq auto-mode-alist
+(append
+'(("\\.war\\'" . archive-mode))
+'(("\\.ear\\'" . archive-mode))
+'(("\\.sar\\'" . archive-mode))
+auto-mode-alist))
 
 
 

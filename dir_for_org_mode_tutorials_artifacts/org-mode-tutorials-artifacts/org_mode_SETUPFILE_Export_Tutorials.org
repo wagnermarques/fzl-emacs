@@ -1,0 +1,94 @@
+
+
+https://www.gnu.org/software/emacs/manual/html_mono/org.html#Exporting
+
+#+OPTIONS: ':nil *:t -:t ::t &lt;:t \n:nil ^:t arch:headline author:t c:nil
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+
+
+* toc
+#+OPTIONS: H:5 toc:t   
+
+* titulos
+#+OPTIONS: num:nil
+
+* Titulo do documento
+  Deixar em branco aqui e definir no buffer
+  Definir nos dois concatena
+  #+TITLE:
+  #+SUBTITLE:
+
+
+* Autoria do documento
+#+AUTHOR: Wagner França Marques
+#+DESCRIPTION:
+#+CREATOR: <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3.2)
+
+Latex export options
+-------------------------------------------------------------------------
+http://orgmode.org/worg/org-contrib/babel/examples/article-class.html
+-------------------------------------------------------------------------
+--#+LaTeX_CLASS: bjmarticle
+--#+LaTeX_CLASS: org-article
+--#+LaTeX_CLASS_OPTIONS: [article,letterpaper,times,12pt,listings-bw,microtype]
+#+LATEX_CLASS: abntex2
+#+LATEX_CLASS_OPTIONS: [article,11pt,oneside,a4paper,english,brazil,sumario=tradicional]
+--#+LATEX_HEADER: \usepackage{xyz}
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{nomencl} 			% Lista de simbolos
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+% ---
+
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Modelo Canônico de\\ Artigo científico com \abnTeX}
+\autor{Equipe \abnTeX\thanks{\url{http://www.abntex.net.br/}} \and Lauro
+César
+Araujo\thanks{laurocesar@laurocesar.com}}
+\local{Brasil}
+\data{2015, v-1.9.6}
+% ---
+
+
+Html export options
+header
+#+HTML_HEAD: <link rel="stylesheet" title="OrgModeTuts-ESTILO-PADRAO"  type="text/css" href="org-mode-tutorials-css-style.css" />
+#+HTML_HEAD_EXTRA: <link rel="alternate stylesheet" title="OrgModeTuts-ThanksForBjm" type="text/css" href="http://www.star.bris.ac.uk/bjm/css/bjm.css" />
+
+http://orgmode.org/manual/JavaScript-support.html
+http://orgmode.org/worg/code/org-info-js/org-info-src.js
+#+INFOJS_OPT: view:info toc:nil
+
+
+#+OPTIONS: html-link-use-abs-url:nil html-postamble:auto
+#+OPTIONS: html-preamble:t html-scripts:t html-style:t
+#+OPTIONS: html5-fancy:nil tex:t
+#+HTML_DOCTYPE: xhtml-strict
+#+HTML_CONTAINER: div
+
+#+KEYWORDS:
+
+#+HTML_LINK_HOME:
+#+HTML_LINK_UP:
+#+HTML_MATHJAX:
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.star.bris.ac.uk/bjm/css/bjm.css" />
+#+HTML_HEAD_EXTRA:
+
+
+
+#+LATEX_HEADER:

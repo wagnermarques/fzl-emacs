@@ -9,16 +9,30 @@
   (require 'package)
 
   (setq packages-to-be-installed-list '(org
+                                        ;auctex
+                                        ebib
+                                        org-ref
+                                        reftex
                                         php-mode
 					markdown-mode
 					auto-complete
+                                        ;iedit
+                                        ;multiple-cursors
+                                        ;;auto-complete-c-headers
 					flycheck
 					gist
 					magit
                                         yasnippet
+                                        java-snippets
                                         emacs-eclim
                                         company
+                                        elfeed
+                                        elfeed-org
 					))
+;;  elfeed-goodies     20160926.209  available  melpa      Elfeed goodies
+;;  elfeed-org         20160814.314  available  melpa      Configure elfeed with one or more org-mode files
+;;  elfeed-web         1.1.0         available  marmalade  web interface to Elfeed
+;;  elfeed-web         20160904.1131 available  melpa      web interface to Elfeed
   
 
   ;;ANOTHER INTERESINTG PACKAGES

@@ -2,6 +2,7 @@
 ;http://www.delorie.com/gnu/docs/elisp-manual-21/elisp_201.html
 ;http://www.mygooglest.com/fni/dot-emacs.html
 
+
 (provide 'speedbar_config)
 
 
@@ -25,9 +26,15 @@
  '(speedbar-show-unknown-files t))
 
 
+
+
 ;;SPEEDBAR
 ;https://sites.google.com/site/xiangyangsite/home/linux-unix/emacs/speedbar-in-one-frame
 (require 'speedbar)
+
+;http://stackoverflow.com/questions/15063081/speedbar-how-to-fix-the-base-directory-not-change-as-buffer-switched
+(set 'speedbar-update-flag nil)
+
 (defconst my-speedbar-buffer-name "SPEEDBAR")
 (setq speedbar-buffer (get-buffer-create my-speedbar-buffer-name)
       speedbar-frame (selected-frame)

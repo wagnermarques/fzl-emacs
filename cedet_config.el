@@ -4,6 +4,16 @@
 
 (provide 'cedet_config)
 
+;turn on semantic
+(semantic-mode t)
+
+(defun my:add-semmantic-as-backend-of-autocomplete()
+  (add-to-list 'ac-sources 'ac-source-semantic))
+
+(add-hook 'c-mode-common-hook 'my:add-semmantic-as-backend-of-autocomplete)
+
+
+
 ;IN CASE OF SOURCE CODE TRUNK INSTALLATION...
 ;(load-file
 ; (concat *cedet_home* "/common/cedet.el"))

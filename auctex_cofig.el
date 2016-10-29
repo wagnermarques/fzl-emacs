@@ -1,0 +1,2 @@
+(provide 'auctex_cofig)
+
