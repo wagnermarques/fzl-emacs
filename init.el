@@ -2,7 +2,6 @@
 
 (require 'cl)
 
-
 ;;(setq url-proxy-services '(("no_proxy"   . "work\\.com")
 ;;                           ("http_proxy" . "wagner:nicolas1*@192.168.0.2:3128")
 ;;			    ("ftp_proxy"  . "wagner:nicolas1*@192.168.0.2:3128")
@@ -49,6 +48,7 @@
 
 
 ;;DEFINE THIS ENVIRONMENTAL VARIABLE
+
 ;;THIS JUST REPRESENTS A DIRECTORY WHERE SHOULD BE YOU DEVTOOLS WHERE ARE YOURS INTEGRATED DIR
 (if (not (and (getenv "FZL_HOME")  (getenv "FZL_HOME_SERVER")))
 
@@ -68,14 +68,17 @@
         (progn    
           (setq **FZL_HOME** (file-name-as-directory **FZL_HOME_provided**))
           (setq **FZL_HOME_SERVER** (file-name-as-directory **FZL_HOME_SERVER_provided**)))
+
       (error "Sorry the $FZL_HOME and $FZL_HOME_SERVER must be accessible"))
     
 
     (setq **DEV_TOOLS_BASEDIR** (concat **FZL_HOME** "integrated/"))
     (message **DEV_TOOLS_BASEDIR**)
 
+
     ;;CHANGE DEV TOOLS ACCORDINGLY
-    (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "build/apache-maven-3.3.3/"))    
+    (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "build/apache-maven-3.3.9"))    
+
     (setq **NEXUS_HOME**  (concat **DEV_TOOLS_BASEDIR** "build/nexus-3.0.1-01/"))
 
     (setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdks/jdk1.8.0_65/"))
@@ -130,6 +133,8 @@
     (require 'flycheck_config)
 
     (require 'org_mode_config)
+    (require 'reftex)    
+    ;(require 'auctex)Debugger entered--Lisp error: (error "Required feature `auctex' was not provided")
     (require 'calendar_config)
     (require 'ess_config)
     (require 'autocomplete_config)
@@ -140,12 +145,18 @@
     (require 'config_code_c_style_for_K_and_RStyle)
     (require 'sql_mode_config)
     (require 'yasnippet_config)
+    (require 'iedit_config)
+    (require 'multiple_cursors_config)
+    
     (require 'config_env_for_shell_and_startup_some_dev_tools)
     (require 'config-web-mode)
 
     (require 'fzl_menus)
     (require 'config_eclipse)
     (require 'find_files)
+
+    (require 'elfeed_config)
+    
 ;(require 'config_code_c_style_for_K_and_RStyle)
 
     ;;xml

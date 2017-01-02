@@ -2,18 +2,27 @@
 
 https://www.gnu.org/software/emacs/manual/html_mono/org.html#Exporting
 
-##+OPTIONS: ':nil *:t -:t ::t &lt;:t \n:nil ^:t arch:headline author:t c:nil
-#+OPTIONS: ':nil *:t -:t ::t &lt;:t \n:nil ^:t arch:headline author:t c:t
-##+SELECT_TAGS: export
+
+#+OPTIONS: ':nil *:t -:t ::t &lt;:t \n:nil ^:t arch:headline author:t c:nil
+#+SELECT_TAGS: export
+
 #+EXCLUDE_TAGS: noexport
 
 
 * toc
+<<<<<<< HEAD
 ##+OPTIONS: H:5 toc:t   
 #+OPTIONS: H:5 toc:nil   
 * titulos
 ##+OPTIONS: num:nil
 #+OPTIONS: num:t
+=======
+#+OPTIONS: H:5 toc:t   
+
+* titulos
+#+OPTIONS: num:nil
+
+>>>>>>> 28e5f69afa0c7bb80e00b0beeec6afbb6ce8b7b0
 * Titulo do documento
   Deixar em branco aqui e definir no buffer
   Definir nos dois concatena
@@ -40,8 +49,13 @@ http://orgmode.org/worg/org-contrib/babel/examples/article-class.html
 % ---
 % Pacotes fundamentais 
 % ---
+<<<<<<< HEAD
 
 %%\usepackage{lmodern}			% Usa a fonte Latin Modern
+=======
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+
+>>>>>>> 28e5f69afa0c7bb80e00b0beeec6afbb6ce8b7b0
 \usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
 \usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
 \usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.

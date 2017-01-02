@@ -1,7 +1,15 @@
 (provide 'autocomplete_config)
 
 (require 'auto-complete-config) ;https://github.com/auto-complete/auto-complete/issues/26
+(ac-config-default)
 
+
+
+;;https://www.youtube.com/watch?v=HTUE03LnaXA
+(defun fzl:ac-ac-header-init()
+   (require 'auto-complete-c-headers)
+   (add-to-list 'ac-sources 'ac-sources-headers)
+  )
 ;;ac-dictionary-directories
 ;(add-to-list 'ac-dictionary-directories (concat *FZL_HOME* "/etc/emacs/auto-complete-1.3.1/byte-compiled/dict"))
 
