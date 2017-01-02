@@ -1,14 +1,15 @@
 (setq debug-on-error t)
+
 (require 'cl)
 
-;(setq url-proxy-services '(("no_proxy" . "work\\.com")
-;                           ("http_proxy" . "wagner:nicolas1*@192.168.0.2:3128")
-;			    ("ftp_proxy" . "wagner:nicolas1*@192.168.0.2:3128")
-;			    ("all_proxy" . "wagner:nicolas1*@192.168.0.2:3128")))
-					
+
+;;(setq url-proxy-services '(("no_proxy"   . "work\\.com")
+;;                           ("http_proxy" . "wagner:nicolas1*@192.168.0.2:3128")
+;;			    ("ftp_proxy"  . "wagner:nicolas1*@192.168.0.2:3128")
+;;			    ("all_proxy"  . "wagner:nicolas1*@192.168.0.2:3128")))
+
 
 (setq **HOME** (concat (concat "/home/" (getenv "USER")) "/"))
-
 
 
 (defun fzl_print_global_variables()
@@ -36,6 +37,7 @@
   )
 
 
+
 (defun configure_load_path()
   (setq load-path
 	(append (list nil **EMACSINITFILE_HOME**
@@ -45,24 +47,47 @@
 
 
 
+
 ;;DEFINE THIS ENVIRONMENTAL VARIABLE
-;;THIS JUST REPRESENTS A DIRECTORY WHERE SHOULD BE YOU DEVTOOLS IN ITS INTEGRATED DIR
-(if (not (getenv "FZL_HOME"))
+;;THIS JUST REPRESENTS A DIRECTORY WHERE SHOULD BE YOU DEVTOOLS WHERE ARE YOURS INTEGRATED DIR
+(if (not (and (getenv "FZL_HOME")  (getenv "FZL_HOME_SERVER")))
+
     ;;in case FZL_HOME was not defined...
-    (message "PLEASE EXPORT FZL_HOME ENVIRONMENT VARIABLE")
+    (message "PLEASE EXPORT FZL_HOME AND FZL_HOME_SERVER ENVIRONMENT VARIABLES")
+
 
   ;;in case FZL_HOME was defined...
   (progn
     (setq **PWD** (file-name-directory load-file-name))
-    (setq **FZL_HOME** (getenv "FZL_HOME"))   
-    (setq **DEV_TOOLS_BASEDIR** (concat **FZL_HOME** "/integrated/"))
+
+
+    ;;TEST AND EQUALIZE DIRS PROVIDED FOR NO VERY FINAL SLASH CHARACTERS
+    (setq **FZL_HOME_provided** (getenv "FZL_HOME"))
+    (setq **FZL_HOME_SERVER_provided** (getenv "FZL_HOME_SERVER"))
+    (if (and (file-accessible-directory-p **FZL_HOME_provided**) (file-accessible-directory-p **FZL_HOME_SERVER_provided**))
+        (progn    
+          (setq **FZL_HOME** (file-name-as-directory **FZL_HOME_provided**))
+          (setq **FZL_HOME_SERVER** (file-name-as-directory **FZL_HOME_SERVER_provided**)))
+      (error "Sorry the $FZL_HOME and $FZL_HOME_SERVER must be accessible"))
     
+
+    (setq **DEV_TOOLS_BASEDIR** (concat **FZL_HOME** "integrated/"))
+    (message **DEV_TOOLS_BASEDIR**)
+
     ;;CHANGE DEV TOOLS ACCORDINGLY
-    (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "build/apache-maven-3.3.3/"))
+    (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "build/apache-maven-3.3.3/"))    
     (setq **NEXUS_HOME**  (concat **DEV_TOOLS_BASEDIR** "build/nexus-3.0.1-01/"))
 
     (setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdks/jdk1.8.0_65/"))
 
+    (setq **APACHEDS_STUDIO_HOME**   (concat **DEV_TOOLS_BASEDIR** "eclipse/ApacheDirectoryStudio-2.0.0.v20151221-M10-linux.gtk.x86_64/"))
+    (setq **ECLIPSE_MODELING_HOME**   (concat **DEV_TOOLS_BASEDIR** "eclipse/eclipse-modeling-neon-R-linux-gtk-x86_64/"))    
+
+    (setq **APACHEDS_HOME**   (concat **FZL_HOME_SERVER** "/integrated/servers/apacheds-2.0.0-M22/"))
+
+    (setq **KARAF_HOME**      (concat **FZL_HOME_SERVER** "/integrated/servers/apache-karaf-4.0.5/"))
+    (setq **EXO_HOME**      (concat **FZL_HOME_SERVER** "/integrated/servers/platform-community-4.3.0/"))
+    
     (setq **EMACSINITFILE_HOME**  **PWD**)
     (setq **EMACSINITFILE_LOG_FILE** (concat **EMACSINITFILE_HOME** "emacsinitfile.out"))
 
@@ -74,8 +99,15 @@
     (setq *fzl_shared_xml_schemas* (concat **FZL_HOME** "/shared/xml_schemas"))
     (setq *packages-installed-from-elpa-dir*  (concat **EMACSINITFILE_HOME** "/dir_for_elpa_pkg_installations" ))
 
+    (setq **WKSP_MVN_PROJECTS** (concat **FZL_HOME** "/workspaces/users/admin/mavenprojects/"))
+    (message **WKSP_MVN_PROJECTS**)
+    
+    
     (fzl_print_global_variables)
     (configure_load_path)
+
+    ;;Comment line below if you are not behind a proxy
+    ;;(require 'config_proxy)
 
     (require 'fzl_functions)
     (require 'config_logging)
@@ -111,8 +143,8 @@
     (require 'config_env_for_shell_and_startup_some_dev_tools)
     (require 'config-web-mode)
 
-    (require 'fzl_menu)
-    
+    (require 'fzl_menus)
+    (require 'config_eclipse)
     (require 'find_files)
 ;(require 'config_code_c_style_for_K_and_RStyle)
 

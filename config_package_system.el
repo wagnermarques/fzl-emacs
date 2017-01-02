@@ -16,6 +16,7 @@
 					gist
 					magit
                                         yasnippet
+                                        java-snippets
                                         emacs-eclim
                                         company
 					))

@@ -1,40 +1,42 @@
 emacsinitfile
 =============
 
-
-yet another emacs init file 
----------------------------
-I've been using this configuration of emacs working with my fzlbpms
-project enviroment (fzlbpms is just a project with a lot of text to edit)
-
-If you want to use this init.el without fzlbpms that is ok too
-To do it, in a non intrusive way in relation to your own emacs,
-this customization should be started with your emacs with a command like this:
-
-without fzlbpms
-git clone https://github.com/wagnermarques/emacsinitfile.git
->emacs -q -l path/to/emacsinitfile/init.el
-
-with fzlbpms
-its necessary to download fzlbpms, buth there are no link yet
-you will need to define $FZL_HOME enviroment variable to any location you want.
->emacs -q -l $FZL_HOME/etc/emacs/lisp/init.el
+The intent of emacsinitfile is support develop source code within the presence of another tools the compose a enviroment that I called FZLBPMS.
+The BPMS is just a dream, for now. With several fantastic peace of software together like nexus, maven, eclipse and some framework the main intent is to provide a bpms plataform to develope softwares.
+So, when its require to be define FZL_HOME envionment is for find the several tools and framework.
+So the expected enviroment variables is
 
 
-### Some another notes:
-The niciest change I've made is to use emacs package repositories, and
-to be non intrusive with yours alredy installed package in you emacs,
-I happened to redefine the "package-user-dir" variable to isolate
-packages installed automatically by this emacs customization.
+# USAGE
 
-### path configurations
-So please change this init.el accordingle :)
-(setq **M2_HOME**     "/path/to/your/apache-maven-3.3.3/")
-(setq **NEXUS_HOME**  "/path/to/your/nexus-2.11.4-01-bundle/nexus-2.11.4-01")
-(setq **JAVA_HOME**   "/path/to/your/jdk1.8.0_65")
-(setq **EMACSINITFILE_HOME** "/path/to/your/emacsinitfile/cloned/git/repository")
 
-    
+## Getting the Sources
+git clone 
+
+https://github.com/wagnermarques/emacsinitfile.git
+
+
+## Export enviroment variables
+
+I have ben use this enviroment variables, change it accordingle...
+
+export FZL_HOME=/run/media/wagner/Seagate\ Expansion\ Drive/wagnerdocri@gmail.com2/fzlbpms/fzlStudio/
+
+export JAVA_HOME=/run/media/wagner/Seagate\ Expansion\ Drive/wagnerdocri@gmail.com2/fzlbpms/fzlStudio/integrated/jdks/jdk1.8.0_65/
+
+export FZL_HOME_SERVER=/run/media/wagner/Seagate\ Expansion\ Drive/wagnerdocri@gmail.com2/fzlbpms/fzlServer/ 
+
+
+## start emacs with emacsinitfile configurations
+
+cd to emacsinitfile source code
+emacs -q -l &
+
+
+## or all together
+ export JAVA_HOME=/run/media/wagner/Seagate\ Expansion\ Drive/wagnerdocri@gmail.com2/fzlbpms/fzlStudio/integrated/jdks/jdk1.8.0_65/ && export FZL_HOME=/run/media/wagner/Seagate\ Expansion\ Drive/wagnerdocri@gmail.com2/fzlbpms/fzlStudio/ && export FZL_HOME_SERVER=/run/media/wagner/Seagate\ Expansion\ Drive/wagnerdocri@gmail.com2/fzlbpms/fzlServer/ && cd /run/media/wagner/Seagate\ Expansion\ Drive/wagnerdocri@gmail.com2/envs/env-dev/sources/emacsinitfile/ && emacs -q -l init.el
+
+
 
 wagner
 wagnerdocri@gmail.com

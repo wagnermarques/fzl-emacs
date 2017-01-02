@@ -1,5 +1,6 @@
 (provide 'fzl_functions)
 
+
 (defun fzl_new_shell(shell_name)
   (interactive shell_name)
   (fzl_open_shell_in_a_buffer shell_name)
@@ -59,7 +60,7 @@
 (defun fzl-maven-settings()
   "open maven settings.xml"
   (interactive)
-  (find-file (concat **M2_HOME** "/config/settings.xml")))
+  (find-file (concat **M2_HOME** "conf/settings.xml")))
 
 (defun fzl-open-log-emacsinitfile-logs()
   "open emacsinitfile log"

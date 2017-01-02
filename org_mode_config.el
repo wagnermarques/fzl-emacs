@@ -60,5 +60,77 @@
 ;;;;http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lisp.html
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((lisp . t)))
+ '((emacs-lisp . t)
+   (sh . t)))
+
+(setq org-confirm-babel-evaluate nil)
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+;;(org-babel-do-load-languages
+;; 'org-babel-load-languages
+;; '((lisp . t)\
+;; '(emacs-lisp . t)
+;; '(R . t)
+;; '(java .t)
+; '(sh . t)
+;; '(js . t)
+;; '(css . t)
+;; '(C++ . t)
+;; '(clousure . t)
+;; '(sqlite . t)
+;; '(sed . t)))
+;;(setq org-src-fontify-natively t)
+;; (setq org-html-htmlize-output-type 'inline-css) ;; default
+;;(setq org-html-htmlize-output-type 'css)
+;; (setq org-html-htmlize-font-prefix "") ;; default
+;;(setq org-html-htmlize-font-prefix "org-")
+
+;; (eval-after-load 'org
+;;   (lambda()
+;;     ;(require 'ob-tangle)
+ ;;    ;(require 'ess-site)
+;;     ;(require 'ob-R)
+;;     ;(require 'ob-emacs-lisp)
+;;     ;(require 'ob-latex)
+;;     ;(require 'octave)
+;;     ;(require 'ob-python)
+;;     ;(require 'ob-sql)
+;;     ;(require 'ob-shell)
+     ;(require 'ob-sqlite)
+     ;;(require 'ob-julia);"arquivo ou diretório não encontrado" "ob-julia")
+     ;(require 'ob-perl)
+     ;(require 'ob-org)
+     ;(require 'ob-awk)
+        ;(require 'ob-sed);(file-error "Cannot open load file" "arquivo ou diretório não encontrado" "ob-sed")
+     ;(require 'ob-css)
+     ;(require 'ob-js)
+        ;(require 'ob-stata); (file-error "Cannot open load file" "arquivo ou diretório não encontrado" "ob-stata")
+;;     (setq org-export-babel-evaluate nil)
+;;     (setq org-startup-indented t)
+;;     ;; increase imenu depth to include third level headings
+;;     (setq org-imenu-depth 3)
+;;     ;; Set sensible mode for editing dot files
+;;     (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+     ;; Update images from babel code blocks automatically
+;;     (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+;;     (setq org-src-fontify-natively t)
+;;     (setq org-src-tab-acts-natively t)
+;;     (setq org-confirm-babel-evaluate nil)))
+
+
+;;http://orgmode.org/tmp/worg/org-tutorials/org-latex-export.html
+(require 'org-latex)
+(unless (boundp 'org-export-latex-classes)
+  (setq org-export-latex-classes nil))
+(add-to-list 'org-export-latex-classes
+             '("article"
+               "\\documentclass{book}"
+               ("\\section{%s}" . "\\section*{%s}")))  
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;http://orgmode.org/orgguide.pdf
+;;PUBLISHING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
