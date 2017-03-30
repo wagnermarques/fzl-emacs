@@ -112,10 +112,38 @@ auto-mode-alist))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;F I L E    E X T E N S I O N    R E L A T E D    B E H A V I O R
+;;
+;;         F I L E    E X T E N S I O N    R E L A T E D    B E H A V I O R
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;refs
+;;http://salishsea-meopar-docs.readthedocs.io/en/latest/work_env/emacs_config.html
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Treat .rhtml files as HTML
 (setq auto-mode-alist (cons '("\\.rhtml\\'" . html-mode) auto-mode-alist))
+;(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(setq auto-mode-alist
+      (cons '("\\.py$" . python-mode)
+       auto-mode-alist))
+(setq interpeter-mode-alist
+      (cons '("python" . python-mode)
+       interpreter-mode-alist))
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+;(require 'python-outline)
+(setq auto-mode-alist (append '(("\\.py" . python-outline)) auto-mode-alist))
+
+;;https://github.com/ananthakumaran/tide/blob/master/README.md
+(add-hook 'js2-mode-hook #'setup-tide-mode)
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . tide-mode))
+;;(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
 ;; Treat .rhtml files as HTML
 ;(setq backup-directory-alist '((".*" . (concat *FZL_HOME* "/backups/emacs/autosaved_files/"))))
 ;(setq backup-directory-alist `(("." . *fzl-backup-dir*))) FIXME

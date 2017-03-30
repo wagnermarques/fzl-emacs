@@ -2,6 +2,7 @@
 #ref.: https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
 *temp*
 *.log
+*log
 *~
 \#*\#
 /.emacs.desktop

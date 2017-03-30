@@ -1,10 +1,12 @@
 (provide 'org_mode_config)
+(require 'org_mode_export_odt_styles)
+(require 'ob-sh)
 
 ;;http://ebib.sourceforge.net/manual/ebib-manual.html#orgmode-and-markdown
-(org-add-link-type "ebib" 'ebib)
+;(org-add-link-type "ebib" 'ebib)
 
 ;https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html
-(setq org-image-actual-width '(400))
+;(setq org-image-actual-width '(400))
 
 ;;CONFIGURING ORG-MODE
 ;;https://email.esm.psu.edu/pipermail/macosx-emacs/2011-October/003027.html
@@ -69,13 +71,23 @@
 ;;;;http://orgmode.org/guide/Working-With-Source-Code.html
 ;;;;http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lisp.html
 ;;(require 'ess-site) ;;for R
+(require 'ob-sh)
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((emacs-lisp . t)
+ '(
    (sh . t)
-   (latex . t)
-   (R . t)))
+   (python . t)
+   (R . t)
+   (ruby . t)
+   (ditaa . t)
+   (dot . t)
+   (octave . t)
+   (sqlite . t)
+   (perl . t)
+   ))
 
+;;;SYNTAX HIGHLIGHTING IN ORG-BABEL
+;;http://orgmode.org/worg/org-contrib/babel/examples/fontify-src-code-blocks.html
 (setq org-confirm-babel-evaluate nil)
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
@@ -141,7 +153,7 @@
 
 
 ;;http://orgmode.org/tmp/worg/org-tutorials/org-latex-export.html
-(require 'org-latex)
+;(require 'org-latex)
 (unless (boundp 'org-export-latex-classes)
   (setq org-export-latex-classes nil))
 (add-to-list 'org-export-latex-classes
@@ -206,3 +218,9 @@
             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
             ("\\paragraph{%s}" . "\\paragraph*{%s}")
             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+
+
+;;CONFIG ORG-MODE/CONTRIB BY GIT REPO
+;;http://orgmode.org/manual/Installation.html
+

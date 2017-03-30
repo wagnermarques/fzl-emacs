@@ -2,13 +2,18 @@
 
 (require 'cl)
 
-;;(setq url-proxy-services '(("no_proxy"   . "work\\.com")
-;;                           ("http_proxy" . "wagner:nicolas1*@192.168.0.2:3128")
-;;			    ("ftp_proxy"  . "wagner:nicolas1*@192.168.0.2:3128")
-;;			    ("all_proxy"  . "wagner:nicolas1*@192.168.0.2:3128")))
-
+;;If you are behind a proxy
+;;search for (require 'config_proxy) line in this file
+;;and just uncomment it
 
 (setq **HOME** (concat (concat "/home/" (getenv "USER")) "/"))
+
+;;;all data format goes here, not sparced in emacs-mode-configurations.el files
+;;http://orgmode.org/manual/Custom-time-format.html
+;;http://unix.stackexchange.com/questions/103941/custom-date-format-in-emacs-org-mode
+(setq org-export-html-date-format-string "%Y-%m-%d")
+(setq-default org-display-custom-times t)
+(setq org-time-stamp-custom-formats '("<%b %e, %Y>" . "<%b %e, %Y %H:%M>"))
 
 
 (defun fzl_print_global_variables()
@@ -25,7 +30,8 @@
 
   (message (concat "**EMACSINITFILE_HOME** = \t" **EMACSINITFILE_HOME**))  
   (message (concat "**EMACSINITFILE_LOG_FILE** = \t" **EMACSINITFILE_LOG_FILE**))
-
+  (message (concat "**tide-tsserver_LOG_FILE** = \t" **tide-tsserver_LOG_FILE**))
+  
   (message (concat "*fzl_emacs_packages_checkouts* = \t" *fzl_emacs_packages_checkouts*))
   (message (concat "*fzl_emacs_packages_downloaded* = \t" *fzl_emacs_packages_downloaded*))
   (message (concat "*fzl_emacs_autosaved_files* = \t" *fzl_emacs_autosaved_files*))
@@ -93,7 +99,8 @@
     
     (setq **EMACSINITFILE_HOME**  **PWD**)
     (setq **EMACSINITFILE_LOG_FILE** (concat **EMACSINITFILE_HOME** "emacsinitfile.out"))
-
+    (setq **tide-tsserver_LOG_FILE** (concat **EMACSINITFILE_HOME** "tss.log"))
+    
     (setq *fzl_emacs_packages_checkouts* (concat  **EMACSINITFILE_HOME** "dir_for_pkgs_checkouts"))
     (setq *fzl_emacs_packages_downloaded* (concat **EMACSINITFILE_HOME** "dir_for_pkgs_downloads"))
     (setq *fzl_emacs_autosaved_files* (concat **EMACSINITFILE_HOME** "dir_for_autosaved_files"))
@@ -138,6 +145,8 @@
     (require 'calendar_config)
     (require 'ess_config)
     (require 'autocomplete_config)
+    (require 'config_dockerfile)
+    
 
    ;C O D I N G   C O N F I G U R A T I O N S
     (require 'config_code_in_general)
