@@ -1,3 +1,6 @@
 [submodule "ESS"]
 	path = ESS
 	url = https://github.com/wagnermarques/ESS.git
+[submodule "dockerfile-mode"]
+	path = dockerfile-mode
+	url = https://github.com/spotify/dockerfile-mode.git
