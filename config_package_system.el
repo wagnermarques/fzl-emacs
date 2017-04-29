@@ -10,48 +10,48 @@
 
   (setq packages-to-be-installed-list '(org
                                         ;;typescript resources
-                                        tide               ;20170303.1211 available  melpa      Typescript Interactive Development Environment
-                                        ob-typescript      ;20150804.530  available  melpa      org-babel functions for typescript evaluation
-                                        ts-comint          ;20161006.1034 available  melpa      Run a Typescript interpreter in an inferior process window.
-                                        tss                ;20150913.708  available  melpa      provide a interface for auto-complete.el/flymake.el on typescript-mode.
-                                        typescript-mode    ;20161130.1944 installed             Major mode for editing typescript
-                                        esqlite            ;20151206.406  available  melpa      Manipulate sqlite file from Emacs
-                                        esqlite-helm       ;20151116.50   available  melpa      Define helm source for sqlite database
-                                        eslint-fix         ;20160819.36   available  melpa      Fix JavaScript files using ESLint
-                                        ess                ;20170118.232  available  melpa      Emacs Speaks Statistics
-                                        ess-R-data-view    ;20130509.458  available  melpa      Data viewer for GNU R
-                                        ess-R-object-popup ;20130302.336  available  melpa      popup description of R object
-                                        ess-smart-equals   ;20150201.2201 available  melpa      better smart-assignment with =-key in R and S
-                                        ess-view           ;20160309.1315 available  melpa      View R dataframes in a spreadsheet software
-                                        auctex
-                                        ebib
-                                        org-ref
-                                        org-plus-contrib
-                                        reftex
-                                        php-mode
-                                        markdown-mode
-                                        auto-complete
-                                        iedit
-                                        multiple-cursors
-                                        auto-complete-c-headers
-                                        flycheck
-                                        gist
-                                        yasnippet
-                                        el-autoyas         ;20120918.617  available  melpa      Automatically create Emacs-Lisp Yasnippets
-                                        helm-c-yasnippet   ;20170128.742  available  melpa      helm source for yasnippet.el
-                                        yatemplate         ;20161108.1305 available  melpa      File templates with yasnippet
-                                        java-snippets      ;20160626.1952 installed             Yasnippets for Java
-                                        angular-snippets   ;20140513.2223 available  melpa      Yasnippets for AngularJS
-                                        auto-yasnippet     ;20160925.225  available  melpa      Quickly create disposable yasnippets
-                                        clojure-snippets   ;20161024.16   available  melpa      Yasnippets for clojure
-                                        common-lisp-snippets ;20161231.1557 available  melpa      Yasnippets for Common Lisp
-                                        java-snippets
-                                        eclim
-                                        ac-emacs-eclim
-                                        company-emacs-eclim
-                                        company
-                                        elfeed
-                                        elfeed-org
+                                        ;tide               ;20170303.1211 available  melpa      Typescript Interactive Development Environment
+                                        ;ob-typescript      ;20150804.530  available  melpa      org-babel functions for typescript evaluation
+                                        ;ts-comint          ;20161006.1034 available  melpa      Run a Typescript interpreter in an inferior process window.
+                                        ;tss                ;20150913.708  available  melpa      provide a interface for auto-complete.el/flymake.el on typescript-mode.
+                                        ;typescript-mode    ;20161130.1944 installed             Major mode for editing typescript
+                                        ;esqlite            ;20151206.406  available  melpa      Manipulate sqlite file from Emacs
+                                        ;esqlite-helm       ;20151116.50   available  melpa      Define helm source for sqlite database
+                                        ;eslint-fix         ;20160819.36   available  melpa      Fix JavaScript files using ESLint
+                                        ;ess                ;20170118.232  available  melpa      Emacs Speaks Statistics
+                                        ;ess-R-data-view    ;20130509.458  available  melpa      Data viewer for GNU R
+                                        ;ess-R-object-popup ;20130302.336  available  melpa      popup description of R object
+                                        ;ess-smart-equals   ;20150201.2201 available  melpa      better smart-assignment with =-key in R and S
+                                        ;ess-view           ;20160309.1315 available  melpa      View R dataframes in a spreadsheet software
+                                        ;auctex
+                                        ;ebib
+                                        ;org-ref
+                                        ;org-plus-contrib
+                                        ;reftex
+                                        ;php-mode
+                                        ;markdown-mode
+                                        ;auto-complete
+                                        ;iedit
+                                        ;multiple-cursors
+                                        ;auto-complete-c-headers
+                                        ;flycheck
+                                        ;gist
+                                        ;yasnippet
+                                        ;el-autoyas         ;20120918.617  available  melpa      Automatically create Emacs-Lisp Yasnippets
+                                        ;helm-c-yasnippet   ;20170128.742  available  melpa      helm source for yasnippet.el
+                                        ;yatemplate         ;20161108.1305 available  melpa      File templates with yasnippet
+                                        ;java-snippets      ;20160626.1952 installed             Yasnippets for Java
+                                        ;angular-snippets   ;20140513.2223 available  melpa      Yasnippets for AngularJS
+                                        ;auto-yasnippet     ;20160925.225  available  melpa      Quickly create disposable yasnippets
+                                        ;clojure-snippets   ;20161024.16   available  melpa      Yasnippets for clojure
+                                        ;common-lisp-snippets ;20161231.1557 available  melpa      Yasnippets for Common Lisp
+                                        ;java-snippets
+                                        ;eclim
+                                        ;ac-emacs-eclim
+                                        ;company-emacs-eclim
+                                        ;company
+                                        ;elfeed
+                                        ;elfeed-org
                                         ))
 ;;  elfeed-goodies     20160926.209  available  melpa      Elfeed goodies
 ;;  elfeed-org         20160814.314  available  melpa      Configure elfeed with one or more org-mode files

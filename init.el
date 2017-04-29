@@ -83,11 +83,11 @@
 
 
     ;;CHANGE DEV TOOLS ACCORDINGLY
-    (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "build/apache-maven-3.3.9"))    
+    (setq **M2_HOME**     (concat **DEV_TOOLS_BASEDIR** "build/apache-maven-3.3.3"))    
 
     (setq **NEXUS_HOME**  (concat **DEV_TOOLS_BASEDIR** "build/nexus-3.0.1-01/"))
 
-    (setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdks/jdk1.8.0_65/"))
+    (setq **JAVA_HOME**   (concat **DEV_TOOLS_BASEDIR** "jdks/jdk1.8.0_65"))
 
     (setq **APACHEDS_STUDIO_HOME**   (concat **DEV_TOOLS_BASEDIR** "eclipse/ApacheDirectoryStudio-2.0.0.v20151221-M10-linux.gtk.x86_64/"))
     (setq **ECLIPSE_MODELING_HOME**   (concat **DEV_TOOLS_BASEDIR** "eclipse/eclipse-modeling-neon-R-linux-gtk-x86_64/"))    
