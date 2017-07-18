@@ -75,7 +75,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
-   (sh . t)
+   (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
    (python . t)
    (R . t)
    (ruby . t)
@@ -84,7 +84,41 @@
    (octave . t)
    (sqlite . t)
    (perl . t)
+   (emacs-lisp . t)
+   (java . t)
+   (C . t)
+   (cpp . t)
+   (awk . t)
+   (js . t)
+   (plantuml . t)
+   (sql . t)
+   (sqlite . t)
+   (groovy . t)
+   (browser . t)
+   (http . t)
+   (translate . t)
+   (typescript . t)
    ))
+
+;;;SOME ANOTHER ORG-BABEL CONFIGURATIONS
+;;;fix-me
+;;;some help
+;;;https://blog.aaronbieber.com/2016/11/23/creating-org-mode-structure-templates.html
+;;;https://github.com/suvayu/.emacs.d/blob/master/org-mode-config.el
+;;;http://www.nicholasvanhorn.com/posts/org-structure-completion.html
+;;;for now, using it in a org-mode buffer that just work
+;#+NAME: org-structure-template-alist to config <s
+;#+BEGIN_SRC emacs-lisp 
+;        (add-to-list 'org-structure-template-alist
+;                     '("s" "#+NAME: <code_blk_name>
+;  ,#+HEADER: :session <session_name>
+;  ,#+HEADER: :var data1=1 :var data2=2 :var data3=3\n
+;  ,#+HEADER: :results value<value|output>  scalar<table|vector|list|scalar|verbatim|file>  org<raw|org|html|latex|pp|drawer> replace<silent|replace|append|prepend>\n
+;  ,#+BEGIN_SRC <lang>\n\n#+END_SRC"))
+;#+END_SRC
+
+        (add-to-list 'org-structure-template-alist
+                     '("s" "#+NAME: <code_blk_name>\n#+HEADER: :session <session_name>\n#+HEADER: :var data1=1 :var data2=2 :var data3=3\n#+HEADER: :results value<value|output>  scalar<table|vector|list|scalar|verbatim|file>  org<raw|org|html|latex|pp|drawer> replace<silent|replace|append|prepend>\n#+BEGIN_SRC <lang>\n\n#+END_SRC"))
 
 ;;;SYNTAX HIGHLIGHTING IN ORG-BABEL
 ;;http://orgmode.org/worg/org-contrib/babel/examples/fontify-src-code-blocks.html

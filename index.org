@@ -1,6 +1,17 @@
 
 W E L C O M E    T O    E M A C S I N I T F I L E
 
+
+* Hi
+  This is a emacs customization for developers
+
+** Programming tools considered
+   https://nodejs.org/en/
+   http://yeoman.io/
+   https://gruntjs.com/
+   https://dojo.io/tutorials/   
+
+
 * forms
 ** EMACS CONFIGURATION FORM  
   #+BEGIN_SRC emacs-lisp

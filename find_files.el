@@ -50,4 +50,4 @@
 ;(find-file (concat *FZL_HOME* "/bin/fzl_utils.sh"))
 
 ;(split-window-below)
-;(find-file (concat **EMACSINITFILE_HOME** "/emacsinitfile.log"))
+(find-file (concat **EMACSINITFILE_HOME** "/emacsinitfile.log"))
