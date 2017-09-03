@@ -87,7 +87,6 @@
    (emacs-lisp . t)
    (java . t)
    (C . t)
-   (cpp . t)
    (awk . t)
    (js . t)
    (plantuml . t)
@@ -99,6 +98,8 @@
    (translate . t)
    (typescript . t)
    ))
+
+                                        ;   ;(cpp . t)
 
 ;;;SOME ANOTHER ORG-BABEL CONFIGURATIONS
 ;;;fix-me
@@ -151,10 +152,10 @@
  ;;    ;(require 'ess-site)
 ;;     ;(require 'ob-R)
 
- (eval-after-load 'org
-   (lambda()
+;; (eval-after-load 'org
+;;   (lambda()
 ;;     ;(require 'ob-tangle)
-     (require 'ess-site)
+;;     (require 'ess-site)
 ;;     ;(require 'ob11-R)
 
 ;;     ;(require 'ob-emacs-lisp)

@@ -1,10 +1,25 @@
 (provide 'fzl_functions)
 
+;;;;;;;;;;;;;;;;  shell function utils
+;;FROM: https://stackoverflow.com/questions/6532998/how-to-run-multiple-shells-on-emacs
+(defun fzl-new-shell (shell_name)
+  (let ((currentbuf (get-buffer-window (current-buffer)))
+        (newbuf     (generate-new-buffer-name shell_name)))
+    (generate-new-buffer newbuf)
+    (set-window-dedicated-p currentbuf nil)
+    (set-window-buffer currentbuf newbuf)
+    (shell newbuf)))
 
-(defun fzl_new_shell(shell_name)
-  (interactive shell_name)
-  (fzl_open_shell_in_a_buffer shell_name)
-  )
+(defun fzl-shell(shell_name)
+  (interactive "p\ncShell_name")
+  (message shell_name))
+
+
+(defun fzl-get-image-from-url (url filename)
+  (shell-command (concat "wget -O " filename " " url))
+  (org-redisplay-inline-images))
+
+
 
 (defun fzl-set-default-directory-to-FZL_HOME-etc() 
   'set default directory to FZL_HOME etc' 

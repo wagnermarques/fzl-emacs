@@ -2,11 +2,9 @@
 
 (require 'cl)
 
-;;If you are behind a proxy
-;;search for (require 'config_proxy) line in this file
-;;and just uncomment it
-
 (setq **HOME** (concat (concat "/home/" (getenv "USER")) "/"))
+
+(defconst emacs-start-time (current-time))
 
 ;;;all data format goes here, not sparced in emacs-mode-configurations.el files
 ;;http://orgmode.org/manual/Custom-time-format.html
@@ -116,6 +114,9 @@
     (fzl_print_global_variables)
     (configure_load_path)
 
+    ;;If you are behind a proxy
+    ;;search for (require 'config_proxy) line in this file
+    ;;and just uncomment it
     ;;Comment line below if you are not behind a proxy
     ;;(require 'config_proxy)
 
