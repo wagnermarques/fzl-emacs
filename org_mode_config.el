@@ -1,6 +1,12 @@
 (provide 'org_mode_config)
+
 (require 'org_mode_export_odt_styles)
 (require 'ob-sh)
+
+;;babel browser phantom dependency
+;;https://github.com/krisajenkins/ob-browser
+(add-to-list 'exec-path "/run/media/wagner/51d54d26-34c8-4671-8da1-c12adc7a5a2c/wagnerdocri@gmail.com2/envs/env-dev/sources/emacsinitfile/node_modules/")
+;(setenv "PATH" (mapconcat 'identity exec-path ":"))
 
 ;;http://ebib.sourceforge.net/manual/ebib-manual.html#orgmode-and-markdown
 ;(org-add-link-type "ebib" 'ebib)
@@ -27,13 +33,6 @@
 ;;(add-hook 'org-mode-hook 'my-org-mode-stuff)
 
 
-
-
-
-;http://floatsolutions.com/blog/2010/10/displaying-inline-images-in-emacs-org-mode/
-;; -- Display images in org mode
-;; enable image mode first
-(iimage-mode)
 ;; USE ESC t to toggle toggle image view
 (global-set-key (kbd "\et") 'org-toggle-iimage-in-org)
 
@@ -71,7 +70,6 @@
 ;;;;http://orgmode.org/guide/Working-With-Source-Code.html
 ;;;;http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lisp.html
 ;;(require 'ess-site) ;;for R
-(require 'ob-sh)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
@@ -99,7 +97,14 @@
    (typescript . t)
    ))
 
-                                        ;   ;(cpp . t)
+
+
+
+(add-to-list 'org-structure-template-alist
+             '("s" "#+NAME: <code_blk_name>\n#+HEADER: :session <session_name>\n#+HEADER: :var data1=1 :var data2=2 :var data3=3\n#+HEADER: :results value<value|output>  scalar<table|vector|list|scalar|verbatim|file>  org<raw|org|html|latex|pp|drawer> replace<silent|replace|append|prepend>\n#+BEGIN_SRC <lang>\n\n#+END_SRC"))
+
+
+;;(cpp . t)
 
 ;;;SOME ANOTHER ORG-BABEL CONFIGURATIONS
 ;;;fix-me
@@ -109,6 +114,7 @@
 ;;;http://www.nicholasvanhorn.com/posts/org-structure-completion.html
 ;;;for now, using it in a org-mode buffer that just work
 ;#+NAME: org-structure-template-alist to config <s
+
 ;#+BEGIN_SRC emacs-lisp 
 ;        (add-to-list 'org-structure-template-alist
 ;                     '("s" "#+NAME: <code_blk_name>
@@ -118,8 +124,6 @@
 ;  ,#+BEGIN_SRC <lang>\n\n#+END_SRC"))
 ;#+END_SRC
 
-        (add-to-list 'org-structure-template-alist
-                     '("s" "#+NAME: <code_blk_name>\n#+HEADER: :session <session_name>\n#+HEADER: :var data1=1 :var data2=2 :var data3=3\n#+HEADER: :results value<value|output>  scalar<table|vector|list|scalar|verbatim|file>  org<raw|org|html|latex|pp|drawer> replace<silent|replace|append|prepend>\n#+BEGIN_SRC <lang>\n\n#+END_SRC"))
 
 ;;;SYNTAX HIGHLIGHTING IN ORG-BABEL
 ;;http://orgmode.org/worg/org-contrib/babel/examples/fontify-src-code-blocks.html
@@ -201,9 +205,8 @@
 ;;http://orgmode.org/orgguide.pdf
 ;;PUBLISHING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-     (setq org-confirm-babel-evaluate nil)))
+;;do not confirm when C-c C-c for code evaluation
+(setq org-confirm-babel-evaluate nil)
 
 
 ;;http://orgmode.org/tmp/worg/org-tutorials/org-latex-export.html

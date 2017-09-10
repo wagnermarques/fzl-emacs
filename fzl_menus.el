@@ -18,6 +18,7 @@
      ("Shell"
       ["Open Shell in Maven Projects Workspaces" (fzl-shell-maven-projects-workspace)])
      
+
      ("Urls"
       ["github" (fzl-github-open)])
 
@@ -27,7 +28,8 @@
       ["fzlServer/bin (TODO)" (fzl-speedbar-change-dir-to-fzlServer-bin)]
       )
      ("Logs"
-      ["fzlbpms.log (open)" (fzl-fzlbpms-log)]))
+      ["emacsinitfile.log (open)" (fzl-open-emacsinitfile-log)]
+      ["fzlbpms.log (open)" (fzl-open-fzlbpms-log)]))
     
      ;; http://emacs-fu.blogspot.com/2008/12/running-console-programs-inside-emacs.html
     ("fzlStudio"

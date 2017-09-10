@@ -89,11 +89,12 @@ auto-mode-alist))
 ;V I S U A L    I N T E R F A C E   C O N F I G U R A T I O N
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set cursor and mouse colours:
-(set-cursor-color "yellow")
+;;(set-cursor-color "yellow")
+(set-cursor-color "red")
 (set-mouse-color "white")
 
-(set-background-color "dark slate gray")
-(set-foreground-color "blanched almond")
+(set-background-color "white") 
+(set-foreground-color "black")
 
 
 ;http://www.djcbsoftware.nl/dot-emacs.html
@@ -252,8 +253,8 @@ auto-mode-alist))
 
 
 ;; Set cursor and mouse colours:
-(set-cursor-color "yellow")
-(set-mouse-color "white")
+(set-cursor-color "red")
+(set-mouse-color "yellow")
 
 
 
@@ -293,8 +294,6 @@ auto-mode-alist))
 (setq scroll-conservatively 5)
 (global-set-key [delete] 'delete-char)
 
-(set-background-color "dark slate gray")
-(set-foreground-color "blanched almond")
 
 ;ativa numero de linhas nos buffers
 (global-linum-mode 1)
@@ -347,21 +346,6 @@ auto-mode-alist))
 ;;  EMACS HOOKS
 ;;________________________________________________________________
 
-;; when visit .log files turn on fzl-hooked auto-revert-tail-mode
-;; credits in http://emacs.stackexchange.com/questions/13005/is-there-a-decent-log-viewing-mode-for-large-log-files
-(add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-tail-mode))
-(defun fzl-hook-for-auto-revert-tail-mode ()
-  (end-of-buffer)
-  (make-variable-buffer-local 'auto-revert-interval)
-  (setq auto-revert-interval 1)
-  (auto-revert-set-timer)
-  (make-variable-buffer-local 'auto-revert-verbose)
-  (setq auto-revert-verbose nil)
-  (read-only-mode t)
-  (font-lock-mode 0)
-  (when (fboundp 'show-smartparens-mode)
-    (show-smartparens-mode 0)))
-(add-hook 'auto-revert-tail-mode-hook 'fzl-hook-for-auto-revert-tail-mode)
 
 
 ;;from https://www.emacswiki.org/emacs/ShellMode

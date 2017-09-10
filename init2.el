@@ -3,13 +3,38 @@
 ;; So there are a lot of global vars that define whare are these tools are in the disk
 ;; There are not a main goal of emacs usability 
 
+;; are there any effort to adapt this for windows
 
-;;I want to see error in emacs debug mode
+;;some references
+
+;;https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html
+;;https://www.gnu.org/software/emacs/manual/
+;;https://www.emacswiki.org/emacs?interface=en
+
+
+;;Entering the Debugger on an Error
+;;https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_node/elisp_225.html
 (setq debug-on-error t)
+
+
+;;Some startup global variables
+(setq emacs-startup-init-timestamp (current-time))
+(defvar times-stamp-format-pattern "%a %b %d %H:%M:%S %Z %Y")
+(defvar date-format-pattern "%a %b %d %H:%M:%S %Z %Y")
+(defvar time-format-pattern "%a %b %d %H:%M:%S %Z %Y")
+(defvar dayOfWeekendStr-dayOfMoutnInt-moutnInStr "%A %e %B")
+
+
+;;starting emacs in maximed window
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
 
 ;;At the very first things to do is habilitate load emacsinitfile customization files
 ;;To do this: **PWD** first global var means this script directory
+;;https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Libraries.html
+;;https://www.gnu.org/software/emacs/manual/html_node/elisp/Library-Search.html
+;;https://www.gnu.org/software/emacs/manual/html_node/efaq/Changing-load_002dpath.html
 (setq **PWD** (file-name-directory load-file-name))
 (defun configure_load_path()
   (setq load-path
@@ -20,68 +45,99 @@
 (configure_load_path)
 
 
-;;May be util to use some common lisp sintaxe code
-(require 'cl)
+;;Before load .el files we need prevent some code requirments
+(require 'config_code_lisp) ;;none lisp coding cofigure in this file for now
 
 
 ;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
 (require 'global_variables_setup)
 
+
+;;create emacsinitfile.log file
+;;and provide a fzlUtil/log function to write on it
+(require 'config_logging)
+
+
 ;;configure emacs packages repositories installing list of packages automatically
 (require 'config_package_system)
 
-;;Some utils modules  
-(require 'dateUtil)
 
-;;Some of my very util functions
+;;Some of my super utils functions, keys and menus
 (require 'fzl_functions)
-
-(require 'config_logging)
-(require 'config_code_lisp)
-(require 'config_package_system)
-
-(require 'iimage_mode_config)
-(require 'iswitchb_config)
-
-(require 'config_lines_columns_and_cursor_behaviour)
-(require 'config_general_emacs_behaviour)
-(require 'config_buffers)
-
-(require 'fzl_find_file_functions)
 (require 'fzl_keys)
 (require 'fzl_utils)
+(require 'fzl_menus)
 
+
+;;basic emacs functionalities
+;;https://ftp.gnu.org/old-gnu/Manuals/emacs/html_node/emacs_181.html
+(require 'iswitchb_config)
+(require 'config_buffers) ;;for now just inhibit emacs startup buffer 
+(require 'config_lines_columns_and_cursor_behaviour)
+(require 'config_general_emacs_behaviour)
+
+(require 'iedit_config) ;multiple cursor C
+(require 'yasnippet_config)
+
+(require 'speedbar_config) ;;put a speedbar in confined buffer and opens it
+
+
+
+
+;;open some interesting buffers at emacs starting up like
+;;emacsinitfile.log and others
+(require 'find_files)
+
+
+
+;;B A S I C  C O D I N G   C O N F I G U R A T I O N S
+(require 'config_code_in_general)
+(require 'autocomplete_config)
 (require 'cedet_config)
-(require 'speedbar_config)
 (require 'flycheck_config)
 
+
+;;ORG MODE CONFIG
+(require 'iimage_mode_config);; -- Display images in org mode
 (require 'org_mode_config)
-(require 'reftex)    
+
+
+
+
+
+
+
+
+
+
+
+
+;(require 'reftex)    
 
 ;;(require 'auctex)Debugger entered--Lisp error: (error "Required feature `auctex' was not provided")
-(require 'calendar_config)
-(require 'ess_config)
-(require 'autocomplete_config)
-(require 'config_dockerfile)
+;(require 'calendar_config)
+;(require 'ess_config)
+
+;(require 'config_dockerfile)
 
 
 ;;C O D I N G   C O N F I G U R A T I O N S
-(require 'config_code_in_general)
-(require 'js_mode_config)
-(require 'config_code_c_style_for_K_and_RStyle)
-(require 'sql_mode_config)
-(require 'yasnippet_config)
-(require 'iedit_config)
-(require 'multiple_cursors_config)
+;(require 'config_code_in_general)
+;(require 'js_mode_config)
+;(require 'config_code_c_style_for_K_and_RStyle)
+;(require 'sql_mode_config)
 
-(require 'config_env_for_shell_and_startup_some_dev_tools)
-(require 'config-web-mode)
 
-(require 'fzl_menus)
-(require 'config_eclipse)
-(require 'find_files)
+;(require 'multiple_cursors_config)
 
-(require 'elfeed_config)
+;(require 'config_env_for_shell_and_startup_some_dev_tools)
+;(require 'config-web-mode)
+
+
+;(require 'config_eclipse)
+
+
+;(require 'elfeed_config)
 
 
 
@@ -90,28 +146,10 @@
 ;(require 'config_code_c_style_for_K_and_RStyle)
 
 ;;xml
-(defvar *nxml_or_PSGML* "nxml")
-(require 'xml_mode) ;TODO: nxml
-
-;(find-file (concat **EMACSINITFILE_HOME** "/init.el"))
-;(find-file (concat **EMACSINITFILE_HOME** "/index.org"))
-;(find-file (concat **EMACSINITFILE_HOME** "/fzl_functions.el"))
-;(find-file (concat **EMACSINITFILE_HOME** "/config-enviroment.el"))
+;(defvar *nxml_or_PSGML* "nxml")
+;(require 'xml_mode) ;TODO: nxml
 
 
-
-;(defun fzl-bashcommand-autocomplete-installation-shell-script()
-;  "just download in the fzlbpms context rigth place. 
-;   Change init.el accordingle is needed"
-;  (interactive)
-;  (split-string
-;   (shell-command-to-string "bash autocomplete_installation.sh")))
-
-;(defun fzl-bashcommand-cedet-installation-shell-script()
-;  "just download in the fzlbpms context rigth place. Change init.el accordingle is needed"
-;  (interactive)
-;  (split-string
-;   (shell-command-to-string "bash cedet_installation.sh")))
 
 
 
@@ -212,7 +250,7 @@
 ;(require  'config_general_emacs_behaviour)
 ;(require 'yasnippet_config)
 ;(require 'magit_config)
-;(require 'autocomplete_config)
+
 ;(require 'ceted_config)
 ;(require 'javascript_mode_config)
 ;(require 'xml_mode)

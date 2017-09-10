@@ -8,18 +8,64 @@
 (when (>= emacs-major-version 24)
   (require 'package)
 
-  (setq packages-to-be-installed-list '(
-                                        eieio              ;1.4           built-in   Enhanced Implementation of Emacs Interpreted Objects
-                                        eieio-core         ;1.4           built-in   Core implementation for eieio
-					ede                ;1.2           built-in   Emacs Development Environment gloss
-					cedet              ;2.0           built-in   Setup CEDET environment
-					cl-generic         ;        1.0           built-in   CLOS-style generic functions for Elisp
-					cl-lib             ;            1.0           built-in   Common Lisp extensions for Emacs
+  (setq packages-to-be-installed-list '(;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; NON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+                                        ;https://www.youtube.com/watch?v=jNa3axo40qM
+                                        ;https://www.emacswiki.org/emacs/Iedit
+                                        ;C- and corespondently multimple selections will take place. edit and all will be edited too. C- to finish                                        
+                                        iedit ;multiple-cursors
+                                                                                
+                                        ;feed reader
+                                        elfeed
+                                        elfeed-org
+                                        elfeed-goodies     ;20160926.209  available  melpa      Elfeed goodies
+                                        elfeed-org         ;20160814.314  available  melpa      Configure elfeed with one or more org-mode files
+                                        elfeed-web         ;1.1.0         available  marmalade  web interface to Elfeed
+                                        elfeed-web         ;20160904.1131 available  melpa      web interface to Elfeed
+                                        
+                                        ;the greate org-mode
+                                        org
+                                        ;;https://github.com/krisajenkins/ob-browser
+                                        ob-browser
+                                        ;;https://github.com/zweifisch/ob-http
+                                        ob-http
+                                        ;;https://github.com/krisajenkins/ob-translate/blob/master/ob-translate.el
+                                        ob-translate
+
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; BASIC PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;cedet              ;2.0           built-in   Setup CEDET environment
+                                        ;eieio              ;1.4           built-in   Enhanced Implementation of Emacs Interpreted Objects
+                                        ;eieio-core         ;1.4           built-in   Core implementation for eieio
+                                        ;ede                ;1.2           built-in   Emacs Development Environment gloss
+                                        auto-complete
+
+                                        ;;https://github.com/mooz/auto-complete-c-headers
+                                        auto-complete-c-headers
+
+                                        yasnippet
+                                        
+                                        ;;[f3] 'flymake-display-err-menu-for-current-line)
+                                        ;;[f4] 'flymake-goto-next-error)
+                                        flycheck
+                                        
+
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; C/C++ PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					;cl-generic         ;        1.0           built-in   CLOS-style generic functions for Elisp
+					;cl-lib             ;            1.0           built-in   Common Lisp extensions for Emacs
+                                        
+					
+
 
                                         ;elpy                                        
                                         ;;typescript resources
                                         ;tide               ;20170303.1211 available  melpa      Typescript Interactive Development Environment
-					org                                        
+
                                         ;ob-typescript      ;20150804.530  available  melpa      org-babel functions for typescript evaluation
 
                                         ;https://github.com/josteink/ts-comint
@@ -27,6 +73,7 @@
                                         ;ts-comint          
                                         ;tss                ;20150913.708  available  melpa      provide a interface for auto-complete.el/flymake.el on typescript-mode.
                                         ;typescript-mode    ;20161130.1944 installed             Major mode for editing typescript
+
                                         ;esqlite            ;20151206.406  available  melpa      Manipulate sqlite file from Emacs
                                         ;esqlite-helm       ;20151116.50   available  melpa      Define helm source for sqlite database
                                         ;eslint-fix         ;20160819.36   available  melpa      Fix JavaScript files using ESLint
@@ -42,15 +89,11 @@
                                         ;reftex
                                         ;php-mode
                                         ;markdown-mode
-                                        ;auto-complete
-                                        ;iedit
-                                        ;multiple-cursors
-                                        ;auto-complete-c-headers
-                                        ;flycheck
+
+                                        
                                         ;gist
-                                        ;yasnippet
+
                                         ;el-autoyas         ;20120918.617  available  melpa      Automatically create Emacs-Lisp Yasnippets
-                                        ;helm-c-yasnippet   ;20170128.742  available  melpa      helm source for yasnippet.el
                                         ;yatemplate         ;20161108.1305 available  melpa      File templates with yasnippet
                                         ;java-snippets      ;20160626.1952 installed             Yasnippets for Java
                                         ;angular-snippets   ;20140513.2223 available  melpa      Yasnippets for AngularJS
@@ -62,13 +105,7 @@
                                         ;ac-emacs-eclim
                                         ;company-emacs-eclim
                                         ;company
-                                        ;elfeed
-                                        ;elfeed-org
                                         ))
-;;  elfeed-goodies     20160926.209  available  melpa      Elfeed goodies
-;;  elfeed-org         20160814.314  available  melpa      Configure elfeed with one or more org-mode files
-;;  elfeed-web         1.1.0         available  marmalade  web interface to Elfeed
-;;  elfeed-web         20160904.1131 available  melpa      web interface to Elfeed
   
 
   ;;ANOTHER INTERESINTG PACKAGES

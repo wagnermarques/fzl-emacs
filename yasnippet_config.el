@@ -4,7 +4,7 @@
 ;https://github.com/jney/yasnippet/blob/master/doc/snippet-organization.rst
 ;http://capitaomorte.github.com/yasnippet/snippet-organization.html#loading-snippets
 ;https://github.com/jney/yasnippet-js-mode
-
+(fzl_log "yasnippet_config.el loaded sucessfully!!!")
 
 (provide 'yasnippet_config)
 
@@ -13,10 +13,10 @@
 
 
 ;; Develop and keep personal snippets under ~/emacs.d/mysnippets
-(setq yas/root-directory *fzl_emacs_yasnippets_snippets*)
+;(setq yas/root-directory *fzl_emacs_yasnippets_snippets*)
 
 ;; Load the snippets
-(yas/load-directory yas/root-directory)
+;(yas/load-directory yas/root-directory)
 
 
 ;(setq yas/root-directory '(

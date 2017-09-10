@@ -1,6 +1,7 @@
 (provide 'find_files)
 
-(find-file (concat **EMACSINITFILE_HOME**  "/elfeed_config.el"))
+(find-file (concat **EMACSINITFILE_HOME**  "/emacsinitfile.log"))
+;(find-file (concat **EMACSINITFILE_HOME**  "/elfeed_config.el"))
 ;(find-file (concat **EMACSINITFILE_HOME**  "/autocomplete_installation.el"))
 ;(find-file (concat **EMACSINITFILE_HOME**  "/autocomplete_installation.sh"))
 ;(require 'autocomplete_installation)

@@ -1,5 +1,11 @@
 (provide 'fzl_functions)
 
+;;;;;;;;;;;;;;;;  C/C++ 
+(defun fzl-list-c/c++header-files-directories()
+  "list where are .h files are located on"
+  ;;gcc -v -E - < /dev/null
+  )
+
 ;;;;;;;;;;;;;;;;  shell function utils
 ;;FROM: https://stackoverflow.com/questions/6532998/how-to-run-multiple-shells-on-emacs
 (defun fzl-new-shell (shell_name)
@@ -13,6 +19,9 @@
 (defun fzl-shell(shell_name)
   (interactive "p\ncShell_name")
   (message shell_name))
+
+
+
 
 
 (defun fzl-get-image-from-url (url filename)
@@ -91,6 +100,30 @@
   "open nexus welcome url"
   (interactive)
   (shell-command "firefox http://localhost:8081/#browse/welcome"))
+
+
+;;;;;;;;;;FIND FILES
+(defun fzl-open-bookmark-emacs-configuration-files()
+  "open-initel-file"
+  (interactive)
+  (find-file (concat *fzl_dot_emacs_dir*  "/find_files.el"))
+)
+
+(defun fzl-open-code-config-files()
+  (interactive)
+  "open code configurations files"
+  (find-file (concat **fzl_dot_emacs_dir**  "/yasnippet_config.el"))
+)
+                                                                   
+;(fzl-open-initel-file)
+;(fzl-open-yasnippet-config)
+;(fzl-open-yasnippet-el)
+;(fzl-open-find_file_functions)
+
+
+
+
+
 
 
 
