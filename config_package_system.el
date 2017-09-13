@@ -27,6 +27,7 @@
                                         
                                         ;the greate org-mode
                                         org
+                                        ;org-plus-contrib
                                         ;;https://github.com/krisajenkins/ob-browser
                                         ob-browser
                                         ;;https://github.com/zweifisch/ob-http

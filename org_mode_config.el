@@ -1,41 +1,68 @@
 (provide 'org_mode_config)
 
-(require 'org_mode_export_odt_styles)
-(require 'ob-sh)
+;;http://orgmode.org/worg/org-configs/org-customization-guide.html
 
-;;babel browser phantom dependency
-;;https://github.com/krisajenkins/ob-browser
-(add-to-list 'exec-path "/run/media/wagner/51d54d26-34c8-4671-8da1-c12adc7a5a2c/wagnerdocri@gmail.com2/envs/env-dev/sources/emacsinitfile/node_modules/")
-;(setenv "PATH" (mapconcat 'identity exec-path ":"))
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
 
-;;http://ebib.sourceforge.net/manual/ebib-manual.html#orgmode-and-markdown
-;(org-add-link-type "ebib" 'ebib)
 
-;https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html
-;(setq org-image-actual-width '(400))
+;;;;;;;;;;;;;;;;;;PUBLISHING;;;;;;;;;;;;;;;;;
+;;http://orgmode.org/orgguide.pdf
+;;
 
-;;CONFIGURING ORG-MODE
-;;https://email.esm.psu.edu/pipermail/macosx-emacs/2011-October/003027.html
-;; Conventional selection/deletion
-;(setq org-support-shift-select t)
+;;;;;;;;;;;;;;;;;;BABEL;;;;;;;;;;;;;;;;;
+;;http://orgmode.org/orgguide.pdf
+;;do not confirm when C-c C-c for code evaluation
+(setq org-confirm-babel-evaluate nil)
 
-; thanks to PT (org-mode list)
-;;(defun my-org-mode-stuff ()
-;;  "define selection by keyboard similar to Mac and Windows"
-;;  (require 'pc-select)
-;;  (local-set-key (kbd "C-S-<right>") 'forward-word)
-;;  (local-set-key (kbd "C-S-<left>") 'backward-word)
-;;  (local-set-key (kbd "S-<right>") 'forward-char)
-;;  (local-set-key (kbd "S-<left>") 'backward-char)
-;;  (local-set-key (kbd "S-<up>") 'previous-line)
-;;  (local-set-key (kbd "S-<down>") 'next-line))
+;;BABEL LANGUAGES
+;;http://orgmode.org/worg/org-contrib/babel/languages.html
 
-;;(add-hook 'org-mode-hook 'my-org-mode-stuff)
+;; active Babel languages
+;; active Baral languages deps
+;;(require 'ess_config);;needed for R language
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . nil)
+   (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
+   (python . t)
+   (ruby . t)
+   (ditaa . t)
+   (dot . t)
+   (octave . t)
+   (sqlite . t)
+   (perl . t)
+   (emacs-lisp . t)
+   (java . t)
+   (C . t)
+   (awk . t)
+   (js . t)
+   (plantuml . t)
+   (sql . t)
+   (sqlite . t)
+   (groovy . t)
+   (browser . t)
+   (http . t)
+   (R . t)  ;; to wokrs, just delete ob-R.elc from your emacs.d ->  https://github.com/syl20bnr/spacemacs/issues/4618
+   ))
+;;(org-babel-do-load-languages
+; 'org-babel-load-languages
+; '(
+;   
+;  
+
+
+
 
 
 ;; USE ESC t to toggle toggle image view
 (global-set-key (kbd "\et") 'org-toggle-iimage-in-org)
 
+
+
+;;;;;;;;;;;;;;;;;;IIMAGE;;;;;;;;;;;;;;;;;
 ;; add the org file link format to the iimage mode regex
 (add-to-list 'iimage-mode-image-regex-alist
 (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
@@ -61,78 +88,22 @@
   (call-interactively 'iimage-mode))
 
 
-;;;;14 Working with source code
-;;#+BEGIN_SRC emacs-lisp
-;;(+ 1 2 3 4)
-;;#+END_SRC
-;;Use C-c C-c to evaluate the current code block and insert its results in the Org-mode buffer
 
-;;;;http://orgmode.org/guide/Working-With-Source-Code.html
-;;;;http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lisp.html
-;;(require 'ess-site) ;;for R
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
-   (python . t)
-   (R . t)
-   (ruby . t)
-   (ditaa . t)
-   (dot . t)
-   (octave . t)
-   (sqlite . t)
-   (perl . t)
-   (emacs-lisp . t)
-   (java . t)
-   (C . t)
-   (awk . t)
-   (js . t)
-   (plantuml . t)
-   (sql . t)
-   (sqlite . t)
-   (groovy . t)
-   (browser . t)
-   (http . t)
-   (translate . t)
-   (typescript . t)
-   ))
-
-
-
-
-(add-to-list 'org-structure-template-alist
-             '("s" "#+NAME: <code_blk_name>\n#+HEADER: :session <session_name>\n#+HEADER: :var data1=1 :var data2=2 :var data3=3\n#+HEADER: :results value<value|output>  scalar<table|vector|list|scalar|verbatim|file>  org<raw|org|html|latex|pp|drawer> replace<silent|replace|append|prepend>\n#+BEGIN_SRC <lang>\n\n#+END_SRC"))
-
-
-;;(cpp . t)
-
-;;;SOME ANOTHER ORG-BABEL CONFIGURATIONS
-;;;fix-me
-;;;some help
-;;;https://blog.aaronbieber.com/2016/11/23/creating-org-mode-structure-templates.html
-;;;https://github.com/suvayu/.emacs.d/blob/master/org-mode-config.el
-;;;http://www.nicholasvanhorn.com/posts/org-structure-completion.html
-;;;for now, using it in a org-mode buffer that just work
-;#+NAME: org-structure-template-alist to config <s
-
-;#+BEGIN_SRC emacs-lisp 
-;        (add-to-list 'org-structure-template-alist
-;                     '("s" "#+NAME: <code_blk_name>
-;  ,#+HEADER: :session <session_name>
-;  ,#+HEADER: :var data1=1 :var data2=2 :var data3=3\n
-;  ,#+HEADER: :results value<value|output>  scalar<table|vector|list|scalar|verbatim|file>  org<raw|org|html|latex|pp|drawer> replace<silent|replace|append|prepend>\n
-;  ,#+BEGIN_SRC <lang>\n\n#+END_SRC"))
-;#+END_SRC
+;;;;;;;;;;;;;;;;;;PHANTONJS;;;;;;;;;;;;;;;;;
+;;babel browser phantom dependency
+;;https://github.com/krisajenkins/ob-browser
+(add-to-list 'exec-path "/run/media/wagner/51d54d26-34c8-4671-8da1-c12adc7a5a2c/wagnerdocri@gmail.com2/envs/env-dev/sources/emacsinitfile/node_modules/")
+;(setenv "PATH" (mapconcat 'identity exec-path ":"))
 
 
 ;;;SYNTAX HIGHLIGHTING IN ORG-BABEL
 ;;http://orgmode.org/worg/org-contrib/babel/examples/fontify-src-code-blocks.html
-(setq org-confirm-babel-evaluate nil)
-(setq org-src-fontify-natively t)
-(setq org-src-tab-acts-natively t)
-;;(org-babel-do-load-languages
-;; 'org-babel-load-languages
-;; '((lisp . t)\
+;(setq org-confirm-babel-evaluate nil)
+;(setq org-src-fontify-natively t)
+;(setq org-src-tab-acts-natively t)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((lisp . t)))
 ;; '(emacs-lisp . t)
 ;; '(R . t)
 ;; '(java .t)
@@ -193,20 +164,14 @@
 
 ;;http://orgmode.org/tmp/worg/org-tutorials/org-latex-export.html
 ;(require 'org-latex)
-(unless (boundp 'org-export-latex-classes)
-  (setq org-export-latex-classes nil))
-(add-to-list 'org-export-latex-classes
-             '("article"
-               "\\documentclass{book}"
-               ("\\section{%s}" . "\\section*{%s}")))  
+;(unless (boundp 'org-export-latex-classes)
+;  (setq org-export-latex-classes nil))
+;(add-to-list 'org-export-latex-classes
+;             '("article"
+;               "\\documentclass{book}"
+;               ("\\section{%s}" . "\\section*{%s}")))  
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;http://orgmode.org/orgguide.pdf
-;;PUBLISHING
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;do not confirm when C-c C-c for code evaluation
-(setq org-confirm-babel-evaluate nil)
 
 
 ;;http://orgmode.org/tmp/worg/org-tutorials/org-latex-export.html
@@ -221,7 +186,7 @@
 
 ;;http://orgmode.org/worg/dev/org-export-reference.html
 ;;http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-LaTeX.html
-(setq exec-path (append exec-path '("/usr/tex")))
+;;(setq exec-path (append exec-path '("/usr/tex")))
 ;;TODO (load "auctex.el" nil t t)
 ;;TODO (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
@@ -229,35 +194,35 @@
 
 ;;;LaTeX Export for Org Mode < 8.0
 ;;;http://orgmode.org/worg/org-tutorials/org-latex-export.html
-(require 'ox-latex)
-(unless (boundp 'org-latex-classes)
-  (setq org-latex-classes nil))
-(add-to-list 'org-latex-classes
-             '("article"
-               "\\documentclass{article}"
-               ("\\section{%s}" . "\\section*{%s}")))
+;(require 'ox-latex)
+;(unless (boundp 'org-latex-classes)
+;  (setq org-latex-classes nil))
+;(add-to-list 'org-latex-classes
+;             '("article"
+;               "\\documentclass{article}"
+;               ("\\section{%s}" . "\\section*{%s}")))
 
-(add-to-list 'org-latex-classes
-          '("abntex2"
-            "\\documentclass{abntex2}"
-
-
-            "\\usepackage{lmodern}"
-            "\\usepackage[T1]{fontenc}"
-            "\\usepackage[utf8]{inputenc}"
-            "\\usepackage{indentfirst}"
-            "\\usepackage{nomencl}"
-            "\\usepackage{color}"
-            "\\usepackage{graphicx}"
-            "\\usepackage{microtype}"
-            
-            ("\\section{%s}" . "\\section*{%s}")
-            ("\\subsection{%s}" . "\\subsection*{%s}")
-            ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-            ("\\paragraph{%s}" . "\\paragraph*{%s}")
-            ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-
+;(add-to-list 'org-latex-classes
+;          '("abntex2"
+;            "\\documentclass{abntex2}"
+;
+;
+;            "\\usepackage{lmodern}"
+;            "\\usepackage[T1]{fontenc}"
+;            "\\usepackage[utf8]{inputenc}"
+;            "\\usepackage{indentfirst}"
+;            "\\usepackage{nomencl}"
+;            "\\usepackage{color}"
+;            "\\usepackage{graphicx}"
+;            "\\usepackage{microtype}"
+;            
+;            ("\\section{%s}" . "\\section*{%s}")
+;            ("\\subsection{%s}" . "\\subsection*{%s}")
+;            ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+;            ("\\paragraph{%s}" . "\\paragraph*{%s}")
+;            ("\\subparagraph{%s}" . "\\subparagraph*{%s}")));
+;
+;
 
 ;;CONFIG ORG-MODE/CONTRIB BY GIT REPO
 ;;http://orgmode.org/manual/Installation.html

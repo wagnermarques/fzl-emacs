@@ -12,6 +12,10 @@
 ;;https://www.emacswiki.org/emacs?interface=en
 
 
+(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
+			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
+
+
 ;;Entering the Debugger on an Error
 ;;https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_node/elisp_225.html
 (setq debug-on-error t)
@@ -105,6 +109,8 @@
 
 
 
+;;R
+(require 'ess_config)
 
 
 
@@ -116,7 +122,7 @@
 
 ;;(require 'auctex)Debugger entered--Lisp error: (error "Required feature `auctex' was not provided")
 ;(require 'calendar_config)
-;(require 'ess_config)
+
 
 ;(require 'config_dockerfile)
 

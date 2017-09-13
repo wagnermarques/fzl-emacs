@@ -29,3 +29,22 @@ tramp
 # third part emacs packages checktous
 /checkouts/
 
+
+#Latex transformations
+**/*.html
+**/*.tex
+**/*.log
+
+#Tangle languages
+**/*.java
+**/*.py
+**/*.c
+**/*.cpp
+
+#
+./semanticdb
+.RData
+.Rhistory
+**/*.org_archive
+
+/nome_modules
