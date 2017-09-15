@@ -21,11 +21,14 @@
 
 ;; active Babel languages
 ;; active Baral languages deps
-;;(require 'ess_config);;needed for R language
-
+;;(require 'ess_config);;needed for R language code blocks
+;;(slime)  ;;slime is needed for lisp language code blocks
+;;TODO:How to enable slime automatically for lisp blocks?
+;;for now lets use emacs-lisp :)
+(setq org-babel-python-command "python3") ;;needed for python3 interpreter
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((emacs-lisp . nil)
+ '((emacs-lisp . t)
    (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
    (python . t)
    (ruby . t)

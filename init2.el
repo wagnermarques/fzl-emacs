@@ -11,7 +11,7 @@
 ;;https://www.gnu.org/software/emacs/manual/
 ;;https://www.emacswiki.org/emacs?interface=en
 
-
+;;If behind a proxy just uncomment this line below an change accordingly
 (setq url-proxy-services '(("no_proxy" . "work\\\\.com")
 			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
 
@@ -52,14 +52,13 @@
 ;;Before load .el files we need prevent some code requirments
 (require 'config_code_lisp) ;;none lisp coding cofigure in this file for now
 
-
-;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
-(require 'global_variables_setup)
-
-
 ;;create emacsinitfile.log file
 ;;and provide a fzlUtil/log function to write on it
 (require 'config_logging)
+
+
+;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
+(require 'global_variables_setup)
 
 
 ;;configure emacs packages repositories installing list of packages automatically
@@ -103,7 +102,10 @@
 
 ;;ORG MODE CONFIG
 (require 'iimage_mode_config);; -- Display images in org mode
+;;TODO: Install slime and startup at this emacs startup
+;;(setq inferior-lisp-program "/opt/sbcl/bin/sbcl") ;;needed for org_mode lisp code blocks
 (require 'org_mode_config)
+;;(slime)
 
 
 
@@ -113,6 +115,10 @@
 (require 'ess_config)
 
 
+
+
+;;BUILD TOOLS
+(require 'maven_config)
 
 
 

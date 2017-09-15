@@ -48,3 +48,9 @@ tramp
 **/*.org_archive
 
 /nome_modules
+*.class
+*.pdf
+semanticdb
+node_modules
+
+

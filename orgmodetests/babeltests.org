@@ -1,0 +1,161 @@
+#+Title: Emacs para professores de programação
+
+#+OPTIONS: tex:t          Do the right thing automatically (MathJax) [http://orgmode.org/manual/LaTeX-fragments.html#LaTeX-fragments]
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style1.css" />  [http://orgmode.org/manual/CSS-support.html#CSS-support]
+#+HTML_HEAD_EXTRA: <link rel="alternate stylesheet" type="text/css" href="style2.css" /> [http://orgmode.org/manual/CSS-support.html#CSS-support]
+
+* Introducao
+  Este arquivo tem o objetivo de testar a utilização da funcionalidade
+  de inserção de códigos no texto, de rodar o código sem sair do
+  texto, de obter o resultado do código inserido no texto
+  automaticamente e exportar o texto com tudo isso para várias mídas
+  como pdf, html, Odt ou até mesmo para o msword.
+  Para tanto vamos fazer alguns hello worlds para demonstrar que o
+  emacs, mais especificamente o componente Babel do org-mode,
+  realmente realizam estas funcionalidades.
+
+  O site https://helloworldcollection.github.io/ foi utilizado como
+  fonte para os códigos hello workds apresentados.
+
+* Hello Words em várias linguagens
+
+** Lisp
+#+CAPTION: hello world lisp
+#+NAME: test_lisp_code
+#+HEADER: :results value list replace
+#+HEADER: :exports both
+#+BEGIN_SRC emacs-lisp
+(message "Hello World")
+#+END_SRC
+
+#+RESULTS: test_lisp_code
+: - Hello World
+
+
+** Python
+Este código configura o babel pra usar o interpretador python3
+Sua execução está marcada com result none o que quer dizer que nenhum
+output referente a essa execução é incluída no texto.
+Poderíamos não exportar esse código se quizéssemos pra não poluir o
+documento final, mas vamos deixar esse pra efeitos de documentação
+#+begin_src emacs-lisp :results none
+(setq org-babel-python-command "python3")
+#+end_src
+
+Agora, configurado o interpretador, podemos confirmar que é exatamente
+ele que estamos utilizando.
+#+begin_src python :results output
+import sys
+print(sys.version)
+#+end_src
+
+#+RESULTS:
+: 3.5.3 (default, May 10 2017, 15:05:55) 
+: [GCC 6.3.1 20161221 (Red Hat 6.3.1-1)]
+
+Agora o hello world em python.
+
+#+CAPTION: hello world python
+#+NAME: hello world python
+#+HEADER: :results output  replace
+#+HEADER: :exports both
+#+BEGIN_SRC python
+print("Hello World")
+#+END_SRC
+
+#+RESULTS: bloco_python
+: 
+: Hello World
+
+
+
+** R
+#+CAPTION: hello world R
+#+NAME: hello world R
+#+HEADER: :results output  replace
+#+HEADER: :exports both
+#+BEGIN_SRC R
+cat("Hello world\n")
+#+END_SRC
+
+#+RESULTS: hello world R
+: Hello world
+
+
+** Java
+Hellow workd em Java. Lembrar de incluir a propriedade de
+header: #+HEADERS: :classname HelloWorld senão não funciona.
+#+CAPTION: hello world Java
+#+NAME: hello world Java
+#+HEADER: :results output  replace
+#+HEADER: :exports both
+#+HEADERS: :classname HelloWorld 
+#+BEGIN_SRC java
+  public class HelloWorld {
+      public static void main(String[] args) {
+          System.out.println("Hello, World");
+      }
+  }
+#+end_src
+
+#+RESULTS: hello world Java
+: Hello, World
+
+
+
+
+** c
+#+CAPTION: hello world C-Ansi
+#+NAME: hello world C
+#+HEADER: :results output  replace
+#+HEADER: :exports both
+#+BEGIN_SRC C
+/* Hello World in C, Ansi-style */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+  puts("Hello World!");
+  return EXIT_SUCCESS;
+}
+#+END_SRC
+
+#+RESULTS: hello world C
+: Hello World!
+
+
+** C++ 
+#+CAPTION: hello world C++
+#+NAME: hello world C++
+#+HEADER: :results output  replace
+#+HEADER: :exports both
+#+BEGIN_SRC C++ :includes <iostream>
+  std::cout<<"Hello World!\n";
+#+END_SRC
+
+#+RESULTS: hello world C++
+: Hello World!
+
+
+** SQL
+Pra facilitar vamos usar o sqlite pra rodar um sql e printar um hello world
+Para mais informações acessar:
+http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-sqlite.html
+
+#+CAPTION: hello world SQL
+#+NAME: hello world SQL
+#+HEADER: :results output  replace
+#+HEADER: :exports both
+#+BEGIN_SRC sqlite :db ":memory:"
+SELECT 'Hello World';
+#+end_src
+
+#+RESULTS: hello world SQL
+: "Hello World"
+
+
+
+
+

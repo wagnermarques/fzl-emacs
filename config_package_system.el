@@ -42,8 +42,9 @@
                                         ;eieio              ;1.4           built-in   Enhanced Implementation of Emacs Interpreted Objects
                                         ;eieio-core         ;1.4           built-in   Core implementation for eieio
                                         ;ede                ;1.2           built-in   Emacs Development Environment gloss
+                                        slime                            ;20170828.451  available  melpa      Superior Lisp Interaction Mode for Emacs
                                         auto-complete
-
+                                        
                                         ;;https://github.com/mooz/auto-complete-c-headers
                                         auto-complete-c-headers
 

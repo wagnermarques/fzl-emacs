@@ -1,0 +1,107 @@
+#+Title: emacs para professores de programação
+#+AUTHOR:  Wagner França Marques
+#+EMAIL:  wagnerdocri@gmail.com
+#+DATE:    11/08/2017
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTION: [bigger]
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  pt
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+* Introdução
+  + Código+Texto+Execucao do Código = Muitos Alt-Tabs *:(*
+  + Exportação em várias mídias = Muitas ferramentas de software
+  + Tudo isso muitas vezes é =  improdutividade  
+* Alternativas e Ferramentas de Softwares
+** emacs[fn:emacs-site]
+    [[file:./imgs/emacs-logo1.png]]
+    + org-mode [fn:org-mode-site]
+      [[file:./imgs/org-mode-unicorn-logo.png]]R code { C-c ' pra editar}
+    + ess (emacs speeks statistics)[fn:ess-repo][fn:ess-site]     
+      C-c C-e i {instala pacotes do R}
+    + Beamer[fn:beamer-tut1] 
+** Beamer  [fn:Beamer-export-commands] [fn:Beamer-export]
+C-c C-e l b     (org-beamer-export-to-latex)
+    Exporta como arquivo LaTeX com extensao .tex
+C-c C-e l B     (org-beamer-export-as-latex)
+    Exporta para um buffer temporário. Não cria o arquivo
+C-c C-e l P     (org-beamer-export-to-pdf)
+    Exporta pra um arquivo LaTeX e converte pra PDF
+C-c C-e l O
+    Exporta pra LaTeX, converte pra PDF e abre o PDF
+* Babel Headers [fn:SpecificHeaderArguments]
+** :results [fn:BabelHeaders]
++ collection <value|output>
+  Como os resultados devem ser coletados
+  value: resultado da ultima instrucao
+  output: resultado é tudo que for impresso na saída padrão
++ type 
+  Especifica que tipo de resultado o bloco de código retorna
+  Isso tem implicações quanto *como o resultado será processado antes
+  de ser inserido no texto*
+  :results value table {resultado é interpretado como org-mode table}
+  :results value list  {resultado é interpretado como org-mode list}
+  :results value verbatim {resultado é pego literalmente}
+  :results value file {resultado é interpretado como um caminho para o
+  arquivo gerado}
++ format
+  Especifica que tipo de resultado o bloco retornará
+  Traz implicações em *como o resultado será inserido* no texto
+  :results value raw {resultado é inserido como éle é}
+  :results value org {resultado é inserido dentro de BEGIN_SRC}
+  :results value html{resultado é considerado um HTML e inserido no
+  texto dentro de um BEGIN_HTML block}
+  :results value latex {resultado é considerado como LaTeX o posto
+  dentro de um BEGIN_LaTeX}
+  :results value code {resultado é um código e posto dentro de um
+  bloco de código}
+  :results value pp {resultado é convertido em pretty-printed code e
+  posto dentro de um bloco de código. Suporte para  Emacs Lisp, Python, and Ruby}
+    {resultado é inserido dentro de um RESULTS drawer. Util para inserir raw or org syntax results}  
++ handling
+  Especifica como os resultados devem ser processados
+  :results output silent.{resultado e mostrado no minibuffer mas nao
+  inserido no texto}
+  :results output replace {a cada execucao o resultado é reinserido
+  substituindo o anterior}
+  :results output append {resultado é *acrescentado após* aos anteriores}
+  :results output prepend resultado é *acrescentado antes* do ultimo anteriores}
+
+** :exports [fn:Exports]
+   Especifica o que deve ser incluído no html ou latex exportado
+   :exports code {opção padrao de exportar apenas o código}
+   :exports results {exporta só o resultado da execucção do código e
+   não o código}
+   :exports both {exporta tanto o código como o resultado}
+   :exports none {nao exporta nada}
+* Demo
+** Breve apresentação do emacs e do org-mode
+
+* Considerações Finais
+** Pontos Positivos
+   + Melhora produtividade
+   + Mais flexibilidade com diversas liguagens e midias
+** Pontos Negativos
+   + Curva de aprendizado alta
+   + Mudança de paradigma em relação aos Editores de Texto
+* refs
+[fn:SpecificHeaderArguments] https://www.gnu.org/software/emacs/manual/html_node/org/Specific-header-arguments.html#Specific-header-arguments
+[fn:BabelHeaders] https://www.gnu.org/software/emacs/manual/html_node/org/results.html
+[fn:Exports] https://www.gnu.org/software/emacs/manual/html_node/org/exports.html#exports
+[fn:ess-repo] https://github.com/emacs-ess/ESS
+[fn:ess-site] http://ess.r-project.org/
+[fn:org-mode-site] http://orgmode.org/
+[fn:emacs-site] https://www.gnu.org/software/emacs/
+[fn:beamer-tut1] http://orgmode.org/worg/exporters/beamer/tutorial.html
+[fn:Beamer-export-commands] http://orgmode.org/manual/Beamer-export-commands.html
+[fn:Beamer-export] http://orgmode.org/manual/Beamer-export.html
