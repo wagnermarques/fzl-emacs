@@ -1,0 +1,105 @@
+#+Title: Emacs para professores de progamação
+
+* Introdução
+  O emacs pode ser um recurso valioso para produção de materiais
+  didáticos para o assunto de programação.
+* Hello Worlds em algumas linguagens
+** lisp  
+  #+Name: hw lisp
+  #+HEADER: :results value replace
+  #+HEADER: :exports both
+  #+BEGIN_SRC emacs-lisp
+  (message "Hello World")
+  #+END_SRC
+
+  #+RESULTS: hw lisp
+  : Hello World
+
+** python
+
+
+#+BEGIN_SRC emacs-lisp  :results none
+(setq org-babel-python-command "python3")
+#+END_SRC
+
+
+
+  #+Name: hw pyhton
+  #+HEADER: :results output replace
+  #+HEADER: :exports both
+  #+BEGIN_SRC python
+  print("Hello World")
+  #+END_SRC
+
+  #+RESULTS: hw pyhton
+  : Hello World
+   
+** R
+
+   Segue um Hello World em R. 
+   R é uma linguagem muito interessante
+
+  #+Name: hw R
+  #+HEADER: :results output replace
+  #+HEADER: :exports both
+  #+BEGIN_SRC R
+  cat ("Hello World")
+  #+END_SRC
+
+  #+RESULTS: hw R
+  : Hello World
+
+sfa
+
+** Java
+  #+Name: hw Java
+  #+HEADER: :results output replace
+  #+HEADER: :exports both
+  #+HEADER: :classname HelloWorld
+  #+BEGIN_SRC java
+  public class HelloWorld {
+     public static void main(String[] args){
+     System.out.println("Hello World");
+     }
+  }
+  #+END_SRC
+
+  #+RESULTS: hw Java
+  : Hello World
+
+** C
+  #+Name: hw C
+  #+HEADER: :results output replace
+  #+HEADER: :exports both
+  #+BEGIN_SRC C
+  int main(void){
+  puts ("Hello World");
+  return 0;
+  }
+  #+END_SRC
+
+  #+RESULTS: hw C
+  : Hello World
+
+** C++
+  #+Name: hw C++
+  #+HEADER: :results output replace
+  #+HEADER: :exports both
+  #+BEGIN_SRC C++ :includes <iostream>
+  std::cout<<"Hello World";
+  #+END_SRC
+
+  #+RESULTS: hw C++
+  : Hello World
+  
+** Sql
+  #+Name: hw sql
+  #+HEADER: :results output replace
+  #+HEADER: :exports both
+  #+BEGIN_SRC sqlite :db ":memory:" 
+  SELECT 'Hello World';
+  #+END_SRC
+
+  #+RESULTS: hw sql
+  : "Hello World"
+
