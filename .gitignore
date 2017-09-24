@@ -52,5 +52,5 @@ tramp
 *.pdf
 semanticdb
 node_modules
-
-
+./ESS
+./dockerfile-mode
