@@ -12,9 +12,35 @@
                                         ;;;;;;;;;; NON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;    DEALING WITH FILES      ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+                                        ;;Dealing with files
+                                        ;elpy depends on find-file-in-project
+                                        ;https://melpa.org/#/find-file-in-project
+                                        find-file-in-project ;20170531.2054 dependency            Find file/directory and review Diff/Patch/Commit efficiently everywhere
+
+                                        ;https://www.youtube.com/watch?v=AfZX39jd6cw
+                                        ;https://www.youtube.com/watch?v=lsgPNVIMkIE
+                                        ;ido
+                                        ;elpy depends on idomenu
+                                        idomenu ;20141123.1320 available  melpa      imenu tag selection a la ido
+
+
+                                        ;https://github.com/auto-complete/popup-el
+                                        ;elpy depends on popup
+                                        popup ;             20160709.729  dependency            Visual Popup User Interface
+
+                                        ;https://github.com/skeeto/emacs-web-server
+                                        ;elpy dependes on it and many others
+                                        ;TODO: define config_simple-httpd.el file
+                                        ;simple-httpd       ;20170125.1910 dependency            pure elisp HTTP server
+                                        
                                         ;https://www.youtube.com/watch?v=jNa3axo40qM
                                         ;https://www.emacswiki.org/emacs/Iedit
-                                        ;C- and corespondently multimple selections will take place. edit and all will be edited too. C- to finish                                        
+                                        ;C- and corespondently multimple selections will take place. edit and all will be edited too. C- to finish
+                                        ;elpy depends on iedit
                                         iedit ;multiple-cursors
                                                                                 
                                         ;feed reader
@@ -53,18 +79,41 @@
                                         ;;[f3] 'flymake-display-err-menu-for-current-line)
                                         ;;[f4] 'flymake-goto-next-error)
                                         flycheck
-                                        
+
 
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;;;;;;;;;; C/C++ PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; HTML PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;elpy depends on this htmlize package
+                                        ;https://melpa.org/#/htmlize
+                                        ;TODO: Opens htmlized file in html buffer for C-c C-v usage
+                                        htmlize ;           20161211.1019 available  melpa      Convert buffer text and decorations to HTML.
+
+                                        ;impatient-mode
+                                        ;https://melpa.org/#/impatient-mode
+                                        ;https://www.youtube.com/watch?v=mnfPRLlsXqU
+                                        ;https://www.youtube.com/watch?v=QV6XVyXjBO8&feature=youtu.be
+                                        ;elpy depends on impatient-mode
+                                        ;TODO: start httpd whenerve a html file is visited
+                                        impatient-mode     ;20170505.1921 available  melpa      Serve buffers live over HTTP
+                                        
+                                        
 					;cl-generic         ;        1.0           built-in   CLOS-style generic functions for Elisp
 					;cl-lib             ;            1.0           built-in   Common Lisp extensions for Emacs
                                         
 					
 
-
-                                        ;elpy                                        
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; PYTHON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;https://github.com/jorgenschaefer/pyvenv
+                                        pyvenv             ;20170826.812  available  melpa      Python virtual environment interface
+                                        elpy
+                                        fuzzy              ;20150729.2037 available  melpa      Fuzzy Matching
+                                        highlight-indent-guides ;20170531.2054 dependency            Find file/directory and review Diff/Patch/Commit efficiently everywhere
+                                        nose               ;20140520.948  available  melpa      Easy Python test running in Emacs
+                                        
+                                        
                                         ;;typescript resources
                                         ;tide               ;20170303.1211 available  melpa      Typescript Interactive Development Environment
 

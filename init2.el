@@ -12,8 +12,8 @@
 ;;https://www.emacswiki.org/emacs?interface=en
 
 ;;If behind a proxy just uncomment this line below an change accordingly
-(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
-			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
+;;(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
+;;			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
 
 
 ;;Entering the Debugger on an Error
@@ -29,7 +29,7 @@
 (defvar dayOfWeekendStr-dayOfMoutnInt-moutnInStr "%A %e %B")
 
 
-;;starting emacs in maximed window
+; maximize emacs window
 (custom-set-variables
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
@@ -56,15 +56,17 @@
 ;;and provide a fzlUtil/log function to write on it
 (require 'config_logging)
 
-
+;;G L O B A L    V A R I A B L E S
 ;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
 (require 'global_variables_setup)
 
 
+;;I N S T A L L I N G    E M A C S    P A C K A G E S
 ;;configure emacs packages repositories installing list of packages automatically
 (require 'config_package_system)
 
 
+;;S U P E R    U T I L S    F U N C T I O N S 
 ;;Some of my super utils functions, keys and menus
 (require 'fzl_functions)
 (require 'fzl_keys)
@@ -109,16 +111,21 @@
 
 
 
+;;C O N F I G U R E    P R O G R A M M I N G     L A N G U A G E S
+;;html
+(require 'config_simple_httpd)
 
+;;java programming language
+(require 'java_config)
+(require 'maven_config)
 
-;;R
+;;R programming language
 (require 'ess_config)
 
+;;Python
+(require 'config_elpy)
 
 
-
-;;BUILD TOOLS
-(require 'maven_config)
 
 
 
@@ -142,7 +149,7 @@
 
 ;(require 'multiple_cursors_config)
 
-;(require 'config_env_for_shell_and_startup_some_dev_tools)
+
 ;(require 'config-web-mode)
 
 

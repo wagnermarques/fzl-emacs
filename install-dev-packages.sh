@@ -13,8 +13,12 @@ dnf install kernel-devel kernel-headers gcc gcc-c++ -y
 dnf groupinstall "C Development Tools and Libraries"
 
 #phyton 
-pip3 install pylint -y
 #https://matplotlib.org/users/index.html
+
+#jedi is a an awesome autocompletion/static analysis library for Python #https://github.com/davidhalter/jedi
+#Elpy, the Emacs Lisp Python Environment #https://github.com/jorgenschaefer/elpy
+#rope, a python refactoring library #https://github.com/python-rope/rope
+pip3 install elpy rope jedi 
 pip3 install matplotlib -y
 
 #ruby
@@ -36,6 +40,21 @@ which pdflatex
 
 #R
 dnf install R -y #R.x86_64 : A language for data analysis and graphics
+
+
+#LINTERS FOR FLYCKEC USE
+#lit for python
+pip install pylint -y
+pip3 install pylint -y
+
+#lint  for javascript
+npm install eslint -y
+
+#lint for typescript
+#https://palantir.github.io/tslint/
+#Switch to the root of your TypeScript to create tslint.jsonconfig with tslint --init
+npm install typescript -g -y
+npm install tslint -g -y
 
 
 #References

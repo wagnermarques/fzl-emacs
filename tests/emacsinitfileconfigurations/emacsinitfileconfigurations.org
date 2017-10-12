@@ -1,0 +1,30 @@
+#+Title:emacsinitfileconfigurations
+
+* FlyCheck
+
+#+Name:flycheck-version
+#+HEADER: :results value
+#+Begin_src emacs-lisp
+(flycheck-version)
+#+End_src
+
+#+RESULTS: flycheck-version
+: 31snapshot (package: 20170626.1707)
+
+
+#+Name:flycheck-verify-setup
+#+HEADER: :results output
+#+Begin_src emacs-lisp
+(flycheck-verify-setup)
+#+End_src
+
+#+RESULTS: flycheck-verify-setup
+
+
+#+Name:
+#+HEADER: :results output
+#+Begin_src emacs-lisp
+(flycheck-verify-checker)
+#+End_src
+
+

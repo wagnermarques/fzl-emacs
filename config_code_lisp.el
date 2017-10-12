@@ -4,5 +4,3 @@
 ;;    (loop for p in packages-to-be-installed-list uses it
 (require 'cl)
 
-;; the auto-revert-set-timer function needs it
-(require 'timer)

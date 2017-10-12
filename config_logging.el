@@ -1,19 +1,15 @@
+;;; makes emacsfile.log opens and revert sequencially to reflect its changes 
 (provide 'config_logging)
-
-
 
 (defun create_emacsinitfile_logfile()
   (progn
     (shell-command-to-string "> emacsinitfile.log")
     (shell-command-to-string "chmod +w emacsinitfile.log")))
 
-
 (defun create_fzlbpms_logfile()
   (progn
     (shell-command-to-string "> fzlbpms.log")
     (shell-command-to-string "chmod +w fzlbpms.log")))
-
-
 
 (defun fzl_log(str)
   "log in emacsinitfile.log"
@@ -29,6 +25,8 @@
     (setq cmd (concat (concat "echo " str) " >> fzlbpms.log"))
     (shell-command-to-string cmd)))
 
+;; the auto-revert-set-timer function needs it
+(require 'timer)
 
 (create_emacsinitfile_logfile)
 

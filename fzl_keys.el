@@ -64,6 +64,8 @@
 (define-key global-map (kbd "\et") 'org-todo-list)
 
 
+;;handling files
+(global-set-key (kbd "\ef") 'find-file-in-project)
 
 ;handle windows
 ;refs 

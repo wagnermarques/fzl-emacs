@@ -122,9 +122,14 @@ auto-mode-alist))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Treat .rhtml files as HTML
 (setq auto-mode-alist (cons '("\\.rhtml\\'" . html-mode) auto-mode-alist))
-;(require 'yaml-mode)
+
+;;(require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
+;;
+;;python files
+;;
 (setq auto-mode-alist
       (cons '("\\.py$" . python-mode)
        auto-mode-alist))
@@ -132,12 +137,16 @@ auto-mode-alist))
       (cons '("python" . python-mode)
        interpreter-mode-alist))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
-;(require 'python-outline)
+;;(require 'python-outline)
 (setq auto-mode-alist (append '(("\\.py" . python-outline)) auto-mode-alist))
 
+;;
+;;javascript
+;;
 ;;https://github.com/ananthakumaran/tide/blob/master/README.md
 (add-hook 'js2-mode-hook #'setup-tide-mode)
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . tide-mode))
+
 ;;(require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-hook 'web-mode-hook
@@ -145,7 +154,10 @@ auto-mode-alist))
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
 
-;; Treat .rhtml files as HTML
+;;
+;;HTML files
+;;Treat .rhtml files as HTML
+;;
 ;(setq backup-directory-alist '((".*" . (concat *FZL_HOME* "/backups/emacs/autosaved_files/"))))
 ;(setq backup-directory-alist `(("." . *fzl-backup-dir*))) FIXME
 
@@ -205,6 +217,7 @@ auto-mode-alist))
 ; (flyspell-mode 0))
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;E M A C S    M O D E S     R E L A T E D  C O N F I G U R A T I O N
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -213,9 +226,7 @@ auto-mode-alist))
 ;(setq-default major-mode 'org-mode)
 
 
-                                
-
-
+                              
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;

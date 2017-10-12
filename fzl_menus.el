@@ -7,13 +7,12 @@
     
     ("Emacsinitfile"
      ("Org-mode"
-      ["Export html C-c C-e h h " (progn
+      ["Open org-mode cheat sheet in browser" (progn
                        (start-process
-                        "PROCESS-Emacsinitfile-export-html"
-                        "PROCESS-Emacsinitfile-export-html"
+                        "ProcessName=OrgModeCheetSheetInBrowser"
+                        "BufferNameForTheProcess=OrgModeCheetSheetInBrowser"
                         "firefox"
-                        "file:///run/media/wagner/Seagate%20Expansion%20Drive/wagnerdocri@gmail.com2/Documentos/Etec/PlanoDeAulaPCII/ConexaoEPersistenciaDeDados/ConexaoEPersistenciaDeDados.html"
-                        (org-html-export-to-html)))])
+                        "http://orgmode.org/orgcard.pdf"))])
      
      ("Shell"
       ["Open Shell in Maven Projects Workspaces" (fzl-shell-maven-projects-workspace)])
@@ -30,18 +29,23 @@
      ("Logs"
       ["emacsinitfile.log (open)" (fzl-open-emacsinitfile-log)]
       ["fzlbpms.log (open)" (fzl-open-fzlbpms-log)]))
-    
+
      ;; http://emacs-fu.blogspot.com/2008/12/running-console-programs-inside-emacs.html
     ("fzlStudio"
+     ("Emacs"
+      ["Find file in project Esc-f-f-p (kbd \\ef)" (find-file-in-project)])
      ("R"
       ["Open R-Studio" (fzl-start-rstudio)])
+     ("Android"
+      ["Listar Pacotes Instalados e Disponiveis in Another Buffer (sdkmanager --list)" (fzl-android-sdkmanager-open    )])
      ("Maven"
       ["Maven (settings)"  (fzl-maven-settings)])
      ("Nexus"
       ["Nexus (start)"  (fzl-start-nexus)]
       ["Nexus (Open in Firefox)"  (fzl-nexus-open-in-firefox)]
       ["Nexus (settings)"  (fzl-nexus-settings-xml)]
-      ["Nexus (online documentation)"  (shell-command " firefox https://books.sonatype.com/nexus-book/3.0/reference/index.html")]     
+      ["Nexusk
+ (online documentation)"  (shell-command " firefox https://books.sonatype.com/nexus-book/3.0/reference/index.html")]     
       ["Nexus (start)"  (djcb-term-start-or-switch "mutt" t)])
      ("Eclipse"
       ["Eclipse Java"    (djcb-term-start-or-switch "mc" t)]
@@ -77,6 +81,29 @@
        ["View friends" twitter-get-friends-timeline]
        ["What are you doing?" twitter-status-edit])
 
+     ("Google"
+      ;;google tools
+      ["Open Google Console" (fzl-open-url-in-browser "https://console.developers.google.com/")]
+      ["Maps JavaScript API" (fzl-open-url-in-browser "https://developers.google.com/maps/documentation/javascript/?hl=pt-br")]
+      )
+
+     ("DojoTookit"
+      ;;dojotoolkit links
+      ["Site: Nabble Forum" (fzl-open-url-in-browser "http://dojo-toolkit.33424.n3.nabble.com/")]
+      ["Dojo2 Github" (fzl-open-url-in-browser "https://github.com/dojo")]
+      ["Dojo create " (fzl-open-url-in-browser "https://github.com/dojo")])
+     
+
+     ("NodeJs+Typescript+WebPack"
+      ;;typescript links
+      ["Community samples" (fzl-open-url-in-browser "https://github.com/Microsoft/TypeScriptSamples/")]
+      ["Dojo2 Github" (fzl-open-url-in-browser "https://github.com/dojo")]
+      ["Site:Nodejs" (fzl-open-url-in-browser "https://nodejs.org/en/)")]
+      ["Site:Webpack" (fzl-open-url-in-browser "https://webpack.github.io/")]
+      )      
+
+     
+     
      ("Misc"  ;; submenu
        ;; http://emacs-fu.blogspot.com/2009/01/counting-words.html
       ["Shell" fzl_open_shell_in_a_buffer]

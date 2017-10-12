@@ -48,7 +48,7 @@
    (groovy . t)
    (browser . t)
    (http . t)
-   (R . t)  ;; to wokrs, just delete ob-R.elc from your emacs.d ->  https://github.com/syl20bnr/spacemacs/issues/4618
+   (R . t)  ;; to wokrs, just delete ob-R.elc from your emacs.d ->  https://github.com/syl20bnr/spacemacs/issues/4618 in my case: rm ./elpa/org-20171009/ob-R.elc
    ))
 ;;(org-babel-do-load-languages
 ; 'org-babel-load-languages
