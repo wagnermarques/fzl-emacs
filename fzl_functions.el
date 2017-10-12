@@ -346,7 +346,8 @@
 (defun fzl-maven-settings()
   "open maven settings.xml"
   (interactive)
-  (find-file (concat **M2_HOME** "conf/settings.xml")))
+  (message (concat **M2_HOME** "/conf/settings.xml"))
+  (find-file (concat **M2_HOME** "/conf/settings.xml")))
 
 (defun fzl-open-log-emacsinitfile-logs()
   "open emacsinitfile log"

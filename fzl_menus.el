@@ -33,7 +33,7 @@
      ;; http://emacs-fu.blogspot.com/2008/12/running-console-programs-inside-emacs.html
     ("fzlStudio"
      ("Emacs"
-      ["Find file in project Esc-f-f-p (kbd \\ef)" (find-file-in-project)])
+      ["Find file in project Esc-f (kbd \\ef)" (find-file-in-project)])
      ("R"
       ["Open R-Studio" (fzl-start-rstudio)])
      ("Android"

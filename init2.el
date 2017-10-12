@@ -56,15 +56,18 @@
 ;;and provide a fzlUtil/log function to write on it
 (require 'config_logging)
 
+
+;; S H E L L    S C R I P T S 
+(setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/")))
+
+
 ;;G L O B A L    V A R I A B L E S
 ;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
 (require 'global_variables_setup)
 
-
 ;;I N S T A L L I N G    E M A C S    P A C K A G E S
 ;;configure emacs packages repositories installing list of packages automatically
 (require 'config_package_system)
-
 
 ;;S U P E R    U T I L S    F U N C T I O N S 
 ;;Some of my super utils functions, keys and menus

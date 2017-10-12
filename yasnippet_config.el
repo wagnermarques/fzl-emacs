@@ -1,14 +1,19 @@
-;y a s n i p p e t
+;;y a s n i p p e t
 ;https://github.com/capitaomorte/yasnippet
 ;http://capitaomorte.github.io/yasnippet/snippet-reference.html
 ;https://github.com/jney/yasnippet/blob/master/doc/snippet-organization.rst
 ;http://capitaomorte.github.com/yasnippet/snippet-organization.html#loading-snippets
 ;https://github.com/jney/yasnippet-js-mode
+
+;;; Comentary:
+;;; Code:
 (fzl_log "yasnippet_config.el loaded sucessfully!!!")
 
-(provide 'yasnippet_config)
+;;https://www.emacswiki.org/emacs/Yasnippet
+;;https://www.emacswiki.org/emacs/yasnippet-config.el
+;; Completing point by some yasnippet key
 
-(yas-global-mode 1)
+
 
 
 
@@ -31,5 +36,7 @@
 ;; Let's have snippets in the auto-complete dropdown
 ;(add-to-list 'ac-sources 'ac-source-yasnippet)
 
-(require 'yasnippet)
+(yas-global-mode 1)
 
+(require 'yasnippet)
+(provide 'yasnippet_config)
