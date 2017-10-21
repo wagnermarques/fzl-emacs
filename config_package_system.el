@@ -12,6 +12,7 @@
                                         ;;;;;;;;;; NON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+					
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;    DEALING WITH FILES      ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -113,17 +114,20 @@
                                         highlight-indent-guides ;20170531.2054 dependency            Find file/directory and review Diff/Patch/Commit efficiently everywhere
                                         nose               ;20140520.948  available  melpa      Easy Python test running in Emacs
                                         
+
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; TYPESCRIPT PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                        
+                                        tide               ;20170303.1211 available  melpa      Typescript Interactive Development Environment
+                                        ob-typescript      ;20150804.530  available  melpa      org-babel functions for typescript evaluation
+                                        typescript-mode    ;20161130.1944 installed             Major mode for editing typescript
+                                        tss                ;20150913.708  available  melpa      provide a interface for auto-complete.el/flymake.el on typescript-mode.
                                         
-                                        ;;typescript resources
-                                        ;tide               ;20170303.1211 available  melpa      Typescript Interactive Development Environment
-
-                                        ;ob-typescript      ;20150804.530  available  melpa      org-babel functions for typescript evaluation
-
                                         ;https://github.com/josteink/ts-comint
                                         ;20161006.1034 available  melpa      Run a Typescript interpreter in an inferior process windowx.
                                         ;ts-comint          
-                                        ;tss                ;20150913.708  available  melpa      provide a interface for auto-complete.el/flymake.el on typescript-mode.
-                                        ;typescript-mode    ;20161130.1944 installed             Major mode for editing typescript
+                                        
+
 
                                         ;esqlite            ;20151206.406  available  melpa      Manipulate sqlite file from Emacs
                                         ;esqlite-helm       ;20151116.50   available  melpa      Define helm source for sqlite database
