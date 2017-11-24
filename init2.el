@@ -97,6 +97,13 @@
 (require 'find_files)
 
 
+;;programming languages
+;;java
+;;(require 'eclim_config) ;;Learn an fix some problems
+
+
+
+
 
 ;;B A S I C  C O D I N G   C O N F I G U R A T I O N S
 (require 'config_code_in_general)
@@ -105,19 +112,14 @@
 (require 'flycheck_config)
 
 
-;;ORG MODE CONFIG
-(require 'iimage_mode_config);; -- Display images in org mode
-;;TODO: Install slime and startup at this emacs startup
-;;(setq inferior-lisp-program "/opt/sbcl/bin/sbcl") ;;needed for org_mode lisp code blocks
-(require 'org_mode_config)
-;;(slime)
 
 
 
 ;;C O N F I G U R E    P R O G R A M M I N G     L A N G U A G E S
 ;;html
 (require 'config_simple_httpd)
-
+(fzl_log "PROGRAMMING: Configuring java and maven")
+(message "PROGRAMMING: Configuring java and maven")
 ;;java programming language
 (require 'java_config)
 (require 'maven_config)
@@ -127,6 +129,18 @@
 
 ;;Python
 (require 'config_elpy)
+
+
+
+
+
+
+;;ORG MODE CONFIG
+(require 'iimage_mode_config);; -- Display images in org mode
+;;TODO: Install slime and startup at this emacs startup
+;;(setq inferior-lisp-program "/opt/sbcl/bin/sbcl") ;;needed for org_mode lisp code blocks
+(require 'org_mode_config)
+;;(slime)
 
 
 

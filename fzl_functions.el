@@ -93,7 +93,7 @@
     (start-process
      "PROCESS-fzl-start-eclipse-modelling"
      "PROCESS-fzl-start-eclipse-modelling"
-      (concat **FZL_HOME** "bin/fzl_start_eclipse.sh")))
+      (concat **FZL_HOME** "/integrated/eclipse/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
 
 
 
@@ -171,6 +171,40 @@
   (shell-command "firefox http://www.google.com")
 );;(defun fzl_start_firefox_at_fzl_welcome_page
 
+;;;________________________________________
+;;;
+;;; tomcat8 functions
+;;;________________________________________
+(defun fzl-tomcat8_start_container()
+  (interactive)
+  (start-process
+   "PROCESS-tomcat8_open_manager"
+   "PROCESS-tomcat8_open_manager"   
+   "cd /run/media/wagner/51d54d26-34c8-4671-8da1-c12adc7a5a2c/wagnerdocri@gmail.com2/envs/env-dev/sources/Fedora-Dockerfiles/tomcat8 && ./docker-run.sh"))
+  
+(defun fzl-tomcat8-catalina-out()
+  (interactive)
+  (start-process
+   "PROCESS-tomcat8_catalina_out"
+   "PROCESS-tomcat8_catalina_out"
+   "docker "
+   " exec -it fzl_tomcat8 tail -f /opt/apache-tomcat-8.5.23/logs/catalina.out"))
+
+(defun fzl-tomcat8_open_manager()
+  (interactive)
+  (start-process
+   "PROCESS-tomcat8_open_manager"
+   "PROCESS-tomcat8_open_manager"   
+   "firefox"
+   "http://192.168.33.91:8080/manager/html"))
+
+
+;;;________________________________________
+;;;
+;;; Mariadb
+;;;________________________________________
+
+;;fzl-mariadb-start
 
 ;;;________________________________________
 ;;;

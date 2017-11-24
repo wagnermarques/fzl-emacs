@@ -45,9 +45,11 @@
       ["Nexus (Open in Firefox)"  (fzl-nexus-open-in-firefox)]
       ["Nexus (settings)"  (fzl-nexus-settings-xml)]
       ["Nexusk
- (online documentation)"  (shell-command " firefox https://books.sonatype.com/nexus-book/3.0/reference/index.html")]     
+ (online documentation)"  (shell-command " firefox https://books.sonatype.com/nexus-book/3.0/reference/index.html")]
       ["Nexus (start)"  (djcb-term-start-or-switch "mutt" t)])
      ("Eclipse"
+      
+      ["Eclim Eclipse Project Create"    (eclim-project-create)]
       ["Eclipse Java"    (djcb-term-start-or-switch "mc" t)]
       ["Eclipse Modelling (start)"  (fzl-start-eclipse-modeling)]
       ["Eclipse Report" (fzl-eclipse-reporting--start)]))
@@ -59,6 +61,13 @@
       ["ApacheDS (start)" (fzl-start-apacheds)]
       ["ApacheDS (stop)" (fzl-stop-apacheds)]
       ["ApacheDS Studio (start)" (fzl-start-apacheds-studio)])
+     ("Tomcat8"
+      ["Tomcat8 (start)"   (fzl-tomcat8_start_container)]
+      ["Tomcat8 (Manager)" (fzl-tomcat8_open_manager) ]
+      ["Tomcat8 (catalina-out)" (fzl-tomcat8-catalina-out)])
+     ("Mariadb"
+      ["Mariadb (start)" (fzl-mariadb-start)])
+     
      ("Exo"
       ["Exo (start)" (fzl-start-exo)]
       ["Exo (stop)" (fzl-stop-exo)]

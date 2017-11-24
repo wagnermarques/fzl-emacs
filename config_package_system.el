@@ -156,11 +156,17 @@
                                         ;clojure-snippets   ;20161024.16   available  melpa      Yasnippets for clojure
                                         ;common-lisp-snippets ;20161231.1557 available  melpa      Yasnippets for Common Lisp
                                         ;java-snippets
-                                        ;eclim
-                                        ;ac-emacs-eclim
-                                        ;company-emacs-eclim
-                                        ;company
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; J A V A                    ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        eclim
+                                        company-emacs-eclim
+                                        ac-emacs-eclim
+
+
+                                        dockerfile-mode
                                         ))
+  
   
 
   ;;ANOTHER INTERESINTG PACKAGES

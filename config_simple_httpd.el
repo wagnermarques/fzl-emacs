@@ -8,7 +8,7 @@
 (require 'simple-httpd)
 
 (require 'impatient-mode)
-
+(setq httpd-port 9191)
 (httpd-start)
 
 ;;start impatient-mode when visit html files
