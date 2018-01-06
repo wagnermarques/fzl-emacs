@@ -5,3 +5,6 @@
 	path = dockerfile-mode
 	url = https://github.com/spotify/dockerfile-mode.git
 
+[submodule "emacs-image-downloader"]
+	path = emacs-image-downloader
+	url = https://github.com/syohex/emacs-image-downloader.git

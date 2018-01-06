@@ -2,7 +2,17 @@
 
 ;;**GLOBAL_VARS** is all defined in  global_variables_setup.el file
 
-
+;;thanks: http://emacs-fu.blogspot.com.br/2008/12/running-console-programs-inside-emacs.html
+(defun djcb-term-start-or-switch (prg &optional use-existing)
+  "* run program PRG in a terminal buffer. If USE-EXISTING is non-nil "
+  " and PRG is already running, switch to that buffer instead of starting"
+  " a new instance."
+  (interactive)
+  (let ((bufname (concat "*" prg "*")))
+    (when (not (and use-existing
+                 (let ((buf (get-buffer bufname)))
+                   (and buf (buffer-name (switch-to-buffer bufname))))))
+      (ansi-term prg prg bufname))))
 
 ;;;________________________________________
 ;;;
@@ -69,7 +79,21 @@
    "firefox"
    "http://github.com"))
 
+(defun fzl-git-config-set-http-proxy()
+  ""
+  (start-process
+   "PROCESS-fzl-git-config-set-http-proxy"
+   "PROCESS-fzl-git-config-set-http-proxy"
+   "git"
+   "--global --set http.proxy http://wagner:nicolas1*@192.168.0.2:3128"))
 
+(defun fzl-git-config-UNset-http-proxy()
+  ""
+    (start-process
+   "PROCESS-fzl-git-config-UNset-http-proxy"
+   "PROCESS-fzl-git-config-UNset-http-proxy"
+   "git"
+   "--global --unset http.proxy"))
 
 (defun fzl_shell_command(CMD)
   "Like shell-command-to-string but save output in cmdOutput variable and returns its. (fzl_shell_command 'echo $(pwd)'"
@@ -88,12 +112,31 @@
 ;;;
 ;;; Eclipse
 ;;;________________________________________
+;;;osgi.instance.area {-data}
+;;;    the instance data location for this session.
+;;;    Plug-ins use this location to store their data. For example, the Resources plug-in uses this as the default location for projects (aka the workspace).
+;;;    See the section on locations for more details.
+;;;    https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fmisc%2Fruntime-options.html&anchor=osgiinstancearea
 (defun fzl-start-eclipse-modeling()
-    ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
-    (start-process
+  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+  (start-process
      "PROCESS-fzl-start-eclipse-modelling"
      "PROCESS-fzl-start-eclipse-modelling"
-      (concat **FZL_HOME** "/integrated/eclipse/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
+     (concat **FZL_HOME** "/integrated/eclipse/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
+  
+(defun fzl-start-eclipse-java-oxigen()
+  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+  (start-process
+     "PROCESS-fzl-start-eclipse-java-oxigen"
+     "PROCESS-fzl-start-eclipse-java-oxigen"
+     (concat **FZL_HOME** "/integrated/eclipse/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
+
+(defun fzl-start-eclipse-jee-java-oxigen()
+  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+  (start-process
+     "PROCESS-fzl-start-eclipse-java-oxigen"
+     "PROCESS-fzl-start-eclipse-java-oxigen"
+     (concat **FZL_HOME** "/integrated/eclipse/eclipse-jee-oxygen-2-linux-gtk-x86_64/eclipse")))
 
 
 

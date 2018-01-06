@@ -1,3 +1,4 @@
+
 (provide 'org_mode_config)
 
 ;;http://orgmode.org/worg/org-configs/org-customization-guide.html
@@ -26,11 +27,14 @@
 ;;TODO:How to enable slime automatically for lisp blocks?
 ;;for now lets use emacs-lisp :)
 (setq org-babel-python-command "python3") ;;needed for python3 interpreter
+
+(require 'ob-python)
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
    (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
-;;   (python . t)
+   (python . t)
 ;;   (ruby . t)
    (ditaa . t)
 ;;   (dot . t)
@@ -62,6 +66,14 @@
 (global-set-key (kbd "\et") 'org-toggle-iimage-in-org)
 
 
+;;;;;;;;;;;;;;;;;;Default directories for notes and website;;;;;;;;;;;;;;;;;
+;;http://www.i3s.unice.fr/~malapert/org/tips/emacs_orgmode.html
+(setq org-directory (expand-file-name **ORG-DIRECTORY**))
+(setq org-default-notes-file (concat org-directory "/default-org-notes.org"))
+
+(setq org-agenda-files '((concat org-directory "todos.org")
+                         (concat org-directory "events.org")
+                         (concat org-directory "default-org-notes.org"))
 
 ;;;;;;;;;;;;;;;;;;IIMAGE;;;;;;;;;;;;;;;;;
 ;; add the org file link format to the iimage mode regex
@@ -102,9 +114,9 @@
 ;(setq org-confirm-babel-evaluate nil)
 ;(setq org-src-fontify-natively t)
 ;(setq org-src-tab-acts-natively t)
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((lisp . t)))
+;;(org-babel-do-load-languages
+;; 'org-babel-load-languages
+;; '((lisp . t)))
 ;; '(emacs-lisp . t)
 ;; '(R . t)
 ;; '(java .t)

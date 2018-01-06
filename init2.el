@@ -123,6 +123,7 @@
 ;;java programming language
 (require 'java_config)
 (require 'maven_config)
+(require 'ant_config)
 
 ;;R programming language
 (require 'ess_config)

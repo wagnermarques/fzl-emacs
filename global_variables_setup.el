@@ -1,8 +1,11 @@
+;;; Package -- Summary:
+;;; Commentary:
+;;; Code:
 (provide 'global_variables_setup)
 
 ;;Disclaimer
 ;;We've been useing non final slash pattern
-(setq **DISK** "/run/media/wagner/51d54d26-34c8-4671-8da1-c12adc7a5a2c")
+(setq **DISK** "/home/wagner")
 
 (setq **EMACSINITFILE_HOME** (concat **DISK** "/wagnerdocri@gmail.com2/envs/env-dev/sources/emacsinitfile"))
 
@@ -10,9 +13,17 @@
 
 (setq **FZL_HOME_SERVER** (concat **DISK** "/wagnerdocri@gmail.com2/fzlbpms/fzlServer"))
 
-(setq **WKSP_MVN_PROJECTS** (concat **DISK** "/wagnerdocri@gmail.com2/envs/env-dev/mvnprojects"))
+(setq **WKSP_MVN_PROJECTS** (concat **DISK** "/wagnerdocri@gmail.com2/envs/env-dev/sources/mvnprojects"))
 
 (setq **ANDROID_HOME** (concat **FZL_HOME** "/integrated/android/Sdk"))
 
-(setq **M2_HOME** (concat **FZL_HOME** "/integrated/build/apache-maven-3.5.0"))
+;;; Choose java jdk version
+(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk1.8.0_151"))
+;(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk-9.0.1"))
+
+;;;BUILDING
+(setq **M2_HOME** (concat **FZL_HOME** "/integrated/build/apache-maven-3.5.2"))
+(setq **ANT_HOME** (concat **FZL_HOME** "/integrated/build/apache-ant-1.10.1"))
+
+(setq **ORG-DIRECTORY** (concat **FZL_HOME** "/integrated/emacs/org-mode/files"))
 

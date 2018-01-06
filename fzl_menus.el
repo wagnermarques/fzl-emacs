@@ -26,6 +26,7 @@
       ["fzlStudio/bin (TODO)" (fzl-speedbar-change-dir-to-fzlStudio-bin)]
       ["fzlServer/bin (TODO)" (fzl-speedbar-change-dir-to-fzlServer-bin)]
       )
+
      ("Logs"
       ["emacsinitfile.log (open)" (fzl-open-emacsinitfile-log)]
       ["fzlbpms.log (open)" (fzl-open-fzlbpms-log)]))
@@ -34,12 +35,20 @@
     ("fzlStudio"
      ("Emacs"
       ["Find file in project Esc-f (kbd \\ef)" (find-file-in-project)])
+
      ("R"
       ["Open R-Studio" (fzl-start-rstudio)])
+
      ("Android"
       ["Listar Pacotes Instalados e Disponiveis in Another Buffer (sdkmanager --list)" (fzl-android-sdkmanager-open    )])
+
      ("Maven"
       ["Maven (settings)"  (fzl-maven-settings)])
+
+     ("Git"
+      ["Git config --global set http.proxy"  (fzl-git-config-set-http-proxy)]
+      ["Git config --global UNSET http.proxy"  (fzl-git-config-UNset-http-proxy)])
+
      ("Nexus"
       ["Nexus (start)"  (fzl-start-nexus)]
       ["Nexus (Open in Firefox)"  (fzl-nexus-open-in-firefox)]
@@ -47,13 +56,15 @@
       ["Nexusk
  (online documentation)"  (shell-command " firefox https://books.sonatype.com/nexus-book/3.0/reference/index.html")]
       ["Nexus (start)"  (djcb-term-start-or-switch "mutt" t)])
+
      ("Eclipse"
-      
+      ;;http://www.eclipse.org/sirius/
+      ["Eclipse Sirius" (fzl-start-eclipse-sirius)]
       ["Eclim Eclipse Project Create"    (eclim-project-create)]
-      ["Eclipse Java"    (djcb-term-start-or-switch "mc" t)]
+      ["Eclipse  Jee Oxigen"    (fzl-start-eclipse-jee-java-oxigen)] ;;
       ["Eclipse Modelling (start)"  (fzl-start-eclipse-modeling)]
       ["Eclipse Report" (fzl-eclipse-reporting--start)]))
-  
+
      ;; http://emacs-fu.blogspot.com/2009/03/math-formulae-in-webpages.html
      ;; this submenu is only visible when in html-mode or html-helper-mode
     ("fzlServer"
