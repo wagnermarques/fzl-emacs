@@ -40,10 +40,13 @@
 ;;https://www.gnu.org/software/emacs/manual/html_node/elisp/Library-Search.html
 ;;https://www.gnu.org/software/emacs/manual/html_node/efaq/Changing-load_002dpath.html
 (setq **PWD** (file-name-directory load-file-name))
+(message **PWD**)
+
 (defun configure_load_path()
   (setq load-path
 	(append (list nil
 		      **PWD**
+		      (concat **PWD** "/web-mode")
 		      "~/emacs")
 		load-path)))
 (configure_load_path)
@@ -143,6 +146,18 @@
 (require 'org_mode_config)
 ;;(slime)
 
+
+
+;;;http://web-mode.org/
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 
 
 
