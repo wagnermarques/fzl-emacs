@@ -6,6 +6,10 @@
   '("FZLBPMS"
     
     ("Emacsinitfile"
+     ("simple httpd & impacient mode"
+      ["open http://localhost:9191"
+       (fzl-open-http-localhost-9191)])
+       
      ("Org-mode"
       ["Open org-mode cheat sheet in browser" (progn
                        (start-process

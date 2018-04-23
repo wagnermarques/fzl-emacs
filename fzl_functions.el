@@ -79,6 +79,14 @@
    "firefox"
    "http://github.com"))
 
+
+(defun fzl-open-http-localhost-9191()
+  (start-process
+   "PROCESS-fzl-open-http-localhost-9191"
+   "PROCESS-fzl-open-http-localhost-9191"
+   "firefox"
+   "http://localhost:9191"))
+
 (defun fzl-git-config-set-http-proxy()
   ""
   (start-process

@@ -12,8 +12,8 @@
 ;;https://www.emacswiki.org/emacs?interface=en
 
 ;;If behind a proxy just uncomment this line below an change accordingly
-;;(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
-;;			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
+(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
+			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
 
 
 ;;Entering the Debugger on an Error

@@ -1,3 +1,6 @@
+;;; package --- Summary
+;;; Code:
+;;; Commentary:
 
 (provide 'org_mode_config)
 
@@ -35,13 +38,16 @@
  '((emacs-lisp . t)
    (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
    (python . t)
-;;   (ruby . t)
+   (java . t)
    (ditaa . t)
+   ))
+;;   (ruby . t)
+
 ;;   (dot . t)
 ;;   (octave . t)
 ;;   (sqlite . t)
 ;;   (perl . t)
-   (java . t)
+
 ;;   (C . t)
 ;;   (awk . t)
 ;;   (js . t)
@@ -51,7 +57,7 @@
 ;;   (browser . t)
 ;;   (http . t)
 ;;   (R . t)  ;; to wokrs, just delete ob-R.elc from your emacs.d ->  https://github.com/syl20bnr/spacemacs/issues/4618 in my case: rm ./elpa/org-20171009/ob-R.elc
-   ))
+
 ;;(org-babel-do-load-languages
 ; 'org-babel-load-languages
 ; '(
@@ -73,7 +79,7 @@
 
 (setq org-agenda-files '((concat org-directory "todos.org")
                          (concat org-directory "events.org")
-                         (concat org-directory "default-org-notes.org"))
+                         (concat org-directory "default-org-notes.org")))
 
 ;;;;;;;;;;;;;;;;;;IIMAGE;;;;;;;;;;;;;;;;;
 ;; add the org file link format to the iimage mode regex
