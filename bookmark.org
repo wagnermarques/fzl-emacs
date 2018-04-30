@@ -1,0 +1,28 @@
+#+Title: Bookmark
+
+* Plataforma de pesquisa acadêmicas
+  
+  [[https://scholar.google.com.br/]]
+  http://www.cochranelibrary.com/
+  https://www.scielo20.org/
+  https://medlineplus.gov/
+  https://www.sciencedaily.com/
+  https://arxiv.org/
+  http://citeseerx.ist.psu.edu/index;jsessionid=9A72EE54B5D8BDFFFAD106EA6BC58B9B
+  https://login.webofknowledge.com/error/Error?PathInfo=%2F&Error=IPError
+  https://www.periodicos.capes.gov.br/?option=com_pcollection&mn=70&smn=79&cid=81
+  https://www.sciencedirect.com/
+  https://www.researchgate.net/directory/profiles
+  https://www.researchgate.net/
+  https://www.academia.edu/
+  http://gizmodo.uol.com.br/
+  https://www.livescience.com/
+  https://phys.org/
+  https://portugues.medscape.com/
+  https://www.nlm.nih.gov/mesh/
+  
+
+
+
+* 
+

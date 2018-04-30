@@ -6,7 +6,8 @@
 ;(elfeed :variables elfeed-enable-web-interface t)
 
 (setq elfeed-feeds
-      '("http://www.howardism.org/index.xml"     ;; My Blog
+      '("https://www.digitalhealth.net/feed/"    ;;Digital Health
+        "http://www.howardism.org/index.xml"     ;; My Blog
         "http://endlessparentheses.com/atom.xml" ;; Emacs Blog
         "http://www.masteringemacs.org/feed/"    ;; Emacs Blog
         "http://emacs-fu.blogspot.com/feeds/posts/default"

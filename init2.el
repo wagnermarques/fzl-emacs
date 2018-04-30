@@ -128,6 +128,9 @@
 (require 'maven_config)
 (require 'ant_config)
 
+(require 'sqlite3_config)
+(require 'hqsql_config)
+
 ;;R programming language
 (require 'ess_config)
 

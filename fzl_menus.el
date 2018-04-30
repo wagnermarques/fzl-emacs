@@ -20,7 +20,8 @@
      
      ("Shell"
       ["Open Shell in Maven Projects Workspaces" (fzl-shell-maven-projects-workspace)])
-     
+     ("Email Client Mutt"
+      ["Open mutt in ansi-term" (fzl-mutt)])
 
      ("Urls"
       ["github" (fzl-github-open)])

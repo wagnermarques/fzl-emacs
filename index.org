@@ -1,11 +1,27 @@
+#+Title: W E L C O M E    T O    E M A C S I N I T F I L E
 
-W E L C O M E    T O    E M A C S I N I T F I L E
+
+This emacs is for support development tasks e some another daily tasks
+
+keep in mind that I've been use fedora distribution
+
+The [[file:install-dev-packages.sh]] file presents the development packages that you should choose to install
+
+Beside development tasks, some academic tasks is considered, like
+latex, etc..
+
+The [[file:bookmark.org]] file has a collection of interesting links..
+
+* some of utils key bindins (shortcuts)
+  This shortcut keys is defined in [[file:fzl_keys.el]]
+
+  Esc+s -> open shell-mode. A bash terminal inside emacs
+  C-c s -> opens ansi-term 
+  Esc+a -> open org agenda list
+  Esc+t -> open todo list
 
 
-* Hi
-  This is a emacs customization for developers
-
-** Programming tools considered
+* Programming tools considered
    https://nodejs.org/en/
    http://yeoman.io/
    https://gruntjs.com/
@@ -77,7 +93,11 @@ W E L C O M E    T O    E M A C S I N I T F I L E
    
    http://karaf.apache.org/index.html
    
-
+** mutt
+   j: move to next unread email
+   k move to previous unread email
+   SPACE read current email
+   http://www.ucolick.org/%7Elharden/muttchart.html
 * tutorials
 ** execute code within org-mode
    just C-c C-c to evaluate the code

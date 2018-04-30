@@ -5,6 +5,26 @@
 #I am using fedora 22, change the command accordingle with your linux box
 
 
+#docker
+#https://developer.fedoraproject.org/tools/docker/docker-installation.html
+sudo dnf install docker
+sudo systemctl enable docker
+sudo groupadd docker && sudo gpasswd -a ${USER} docker && sudo systemctl restart docker
+newgrp docker
+
+
+
+#for daily taks
+sudo dnf install mutt
+
+
+
+#sqlite3
+#f27
+#https://developer.fedoraproject.org/tech/database/sqlite/about.html
+sudo dnf install sqlite sqlite-devel sqlite-tcl sqlite-jdbc
+sudo dnf install sqliteman #gui for sqlite
+
 #php
 dnf install php mod_suphp -y
 

@@ -2,17 +2,44 @@
 
 ;;**GLOBAL_VARS** is all defined in  global_variables_setup.el file
 
+;;;________________________________________
+;;;
+;;; shell utilities
+;;; 
+;;; 
+;;;________________________________________
+
+;;;SUPER UTILS FUNCTIONS
 ;;thanks: http://emacs-fu.blogspot.com.br/2008/12/running-console-programs-inside-emacs.html
-(defun djcb-term-start-or-switch (prg &optional use-existing)
-  "* run program PRG in a terminal buffer. If USE-EXISTING is non-nil "
-  " and PRG is already running, switch to that buffer instead of starting"
-  " a new instance."
+(defun fzl-run-prg-in-ansi-term (prg)
+  (ansi-term prg))
+
+(fzl-mutt()
+         (fzl-run-prg-in-ansi-term "/usr/bin/mutt"))
+
+
+
+
+
+
+(defun fzl-sqlite-open-in-shell-buffer()
   (interactive)
-  (let ((bufname (concat "*" prg "*")))
-    (when (not (and use-existing
-                 (let ((buf (get-buffer bufname)))
-                   (and buf (buffer-name (switch-to-buffer bufname))))))
-      (ansi-term prg prg bufname))))
+  (start-process
+   "ProcessName_FzlStartSqlite"
+   "BufferName__FzlStartSqlite"
+   "sqlite3"
+   (concat **FZL_HOME** "/integrated/dbs/sqlite")))
+
+
+(defun fzl-open-url-in-browser(url)
+  "Open url in browser"
+  (interactive "s")
+  (progn
+    (start-process
+     "ProcessNameForFzlOpenUrlInBroserFunction"
+     nil
+     "firefox"
+     url)))
 
 ;;;________________________________________
 ;;;
@@ -929,15 +956,6 @@
 
 
 
-
-(defun fzl-open-url-in-browser(url)
-  "Open url in browser"
-  (progn
-    (start-process
-     "ProcessNameForFzlOpenUrlInBroserFunction"
-     nil
-     "firefox"
-     url)))
 
 
 

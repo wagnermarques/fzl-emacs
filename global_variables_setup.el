@@ -7,9 +7,9 @@
 ;;We've been useing non final slash pattern
 (setq **DISK** "/home/wagner")
 
-(setq **EMACSINITFILE_HOME** (concat **DISK** "/wagnerdocri@gmail.com2/envs/env-dev/sources/emacsinitfile"))
+(setq **EMACSINITFILE_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile"))
 
-(setq **FZL_HOME** (concat **DISK** "/wagnerdocri@gmail.com2/fzlbpms/fzlStudio"))
+(setq **FZL_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/fzlbpms/fzlStudio"))
 
 (setq **FZL_HOME_SERVER** (concat **DISK** "/wagnerdocri@gmail.com2/fzlbpms/fzlServer"))
 
@@ -26,4 +26,8 @@
 (setq **ANT_HOME** (concat **FZL_HOME** "/integrated/build/apache-ant-1.10.1"))
 
 (setq **ORG-DIRECTORY** (concat **FZL_HOME** "/integrated/emacs/org-mode/files"))
+
+(setq **FZL_SQLLITE_HOME** (concat **FZL_HOME** "/integrated/dbs/sqlite"))
+(setq **FZL_HQSQL_HOME** (concat **FZL_HOME** "/integrated/dbs/hsqldb"))
+
 

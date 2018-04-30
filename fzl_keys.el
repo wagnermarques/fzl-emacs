@@ -24,7 +24,7 @@
 ;; This program is distributed in the hope that it will be useful, but
 ;; WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 ;; or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-;; for more details. http://www.gnu.org/copyleft/gpl.html  
+;; for more details. http://www.gnu.org/copyleft/gpl.html
 
 
 
@@ -37,11 +37,9 @@
 ;; 
 ;;
 ;;
-
-
 ;http://ergoemacs.org/emacs/keyboard_shortcuts.html
 
-
+;;; Code:
 (provide 'fzl_keys)
 
 (global-unset-key "\C-x\C-z")
@@ -57,10 +55,11 @@
 (define-key global-map (kbd "\er") 'eval-region) ;ESC r
 (define-key global-map (kbd "\eb") 'eval-buffer) ;ESC b
 (define-key global-map (kbd "\es") 'fzl_open_shell_in_a_buffer) ;ESC s
+(define-key global-map (kbd "C-c s") 'ansi-term)
 
 (define-key global-map (kbd "\em") 'make-directory) ;ESC m
 
-(define-key global-map (kbd "\ec") 'org-agenda-list)
+(define-key global-map (kbd "\ea") 'org-agenda-list)
 (define-key global-map (kbd "\et") 'org-todo-list)
 
 
