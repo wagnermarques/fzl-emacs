@@ -163,8 +163,9 @@
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 
 
-
-
+;;D E S K T O P    F U N C T I O N A L I T I E S
+;;Using rclone to syncing with google drive...
+(require 'config_rclone)
 
 
 ;(require 'reftex)    

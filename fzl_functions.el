@@ -14,8 +14,8 @@
 (defun fzl-run-prg-in-ansi-term (prg)
   (ansi-term prg))
 
-(fzl-mutt()
-         (fzl-run-prg-in-ansi-term "/usr/bin/mutt"))
+;;(fzl-mutt()
+;;         (fzl-run-prg-in-ansi-term "/usr/bin/mutt"))
 
 
 
@@ -47,6 +47,25 @@
 ;;; -process
 ;;;https://developer.android.com/studio/command-line/sdkmanager.html
 ;;;________________________________________
+
+(defun fzl-android-show-environment-variables()
+  (interactive)
+  (progn
+    (message ">>>")
+    (message ">>> Android relevant environment variables")
+    (message ">>> see: https://developer.android.com/studio/command-line/variables")
+    (message (concat ">>>" (concat "$USER=" (getenv "USER"))))
+    (message  (concat ">>>" (concat "$ANDROID_SDK_ROOT=" (getenv "ANDROID_SDK_ROOT"))))
+    ))
+
+(defun fzl-android-list-avds()
+  (interactive)
+  (start-process
+   "ProcessName-android--list-avds"
+   "BufferName-android--list-avds"
+   (concat **ANDROID_HOME** "/tools/android list avd")
+   ""
+  ))
 
 (defun fzl-android-sdkmanager-open()
   "open android sdk manager"
@@ -157,21 +176,21 @@
   (start-process
      "PROCESS-fzl-start-eclipse-modelling"
      "PROCESS-fzl-start-eclipse-modelling"
-     (concat **FZL_HOME** "/integrated/eclipse/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
+     (concat **FZL_HOME** "/integrated/ides/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
   
 (defun fzl-start-eclipse-java-oxigen()
   ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
   (start-process
      "PROCESS-fzl-start-eclipse-java-oxigen"
      "PROCESS-fzl-start-eclipse-java-oxigen"
-     (concat **FZL_HOME** "/integrated/eclipse/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
+     (concat **FZL_HOME** "/integrated/ides/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
 
 (defun fzl-start-eclipse-jee-java-oxigen()
   ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
   (start-process
      "PROCESS-fzl-start-eclipse-java-oxigen"
      "PROCESS-fzl-start-eclipse-java-oxigen"
-     (concat **FZL_HOME** "/integrated/eclipse/eclipse-jee-oxygen-2-linux-gtk-x86_64/eclipse")))
+     (concat **FZL_HOME** "/integrated/ides/eclipse-jee-oxygen-2-linux-gtk-x86_64/eclipse")))
 
 
 

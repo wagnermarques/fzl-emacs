@@ -3,6 +3,11 @@
 (require 'easymenu)
 
 (easy-menu-define djcb-menu global-map "fzlbpms-menu"
+  '("Remote Taks"
+     ("Sync Nuvem" ;; submenu
+       ["Rclone sync GDrive_wgn:/ 2 Desktop" rclone_sync_from_gdrive_to_desktop]
+       ["Rclone sync Desktop to GDrive_wgn" rclone_sync_from_desktop_to_gdrive])
+    )
   '("FZLBPMS"
     
     ("Emacsinitfile"
@@ -45,7 +50,9 @@
       ["Open R-Studio" (fzl-start-rstudio)])
 
      ("Android"
-      ["Listar Pacotes Instalados e Disponiveis in Another Buffer (sdkmanager --list)" (fzl-android-sdkmanager-open    )])
+      ["Mostra Variaveis de Ambiente" (fzl-android-show-environment-variables)]
+      ["Lista Avds (fzl-android-list-avds)" (fzl-android-list-avds)]
+      ["Listar Pacotes Instalados e Disponiveis in Another Buffer (sdkmanager --list)" (fzl-android-sdkmanager-open)])
 
      ("Maven"
       ["Maven (settings)"  (fzl-maven-settings)])

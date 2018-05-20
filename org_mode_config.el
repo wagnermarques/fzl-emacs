@@ -32,7 +32,8 @@
 (setq org-babel-python-command "python3") ;;needed for python3 interpreter
 
 (require 'ob-python)
-
+(require 'ob-lisp)
+(require 'ob-shell)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)

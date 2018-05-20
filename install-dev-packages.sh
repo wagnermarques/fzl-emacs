@@ -5,6 +5,8 @@
 #I am using fedora 22, change the command accordingle with your linux box
 
 
+sudo dnf install rclone
+
 #docker
 #https://developer.fedoraproject.org/tools/docker/docker-installation.html
 sudo dnf install docker
