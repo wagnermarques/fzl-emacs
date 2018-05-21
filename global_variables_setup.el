@@ -7,12 +7,6 @@
 ;;We've been useing non final slash pattern
 (setq **DISK** "/home/wagner")
 
-(setq **GDriveLocalRootDir** (concat **DISK** "/wagnerdocri@gmail.com3/GDrive"))
-
-;;run rclone config in order this configuration can work
-;;if you have been runned it befor, consult /home/$USER/.config/rclone/rclone.config
-(setq **rclone_remote_config_session**  "gdrive_wgn")
-
 (setq **EMACSINITFILE_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile"))
 
 (setq **FZL_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/fzlbpms/fzlStudio"))
@@ -36,4 +30,16 @@
 (setq **FZL_SQLLITE_HOME** (concat **FZL_HOME** "/integrated/dbs/sqlite"))
 (setq **FZL_HQSQL_HOME** (concat **FZL_HOME** "/integrated/dbs/hsqldb"))
 
+
+
+;;;D E S K T O P    F U N C T I O N A L I T I E S
+(setq **GDriveLocalRootDir** (concat **DISK** "/wagnerdocri@gmail.com3/GDrive"))
+
+;;run rclone config in order this configuration can work
+;;if you have been runned it befor, consult /home/$USER/.config/rclone/rclone.config
+(setq **rclone_remote_config_session**  "gdrive_wgn")
+
+;;;C O N T A I N E R S    F U N C T I O N A L I T I E S
+(setq **CONTAINERS_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/Fedora-Dockerfiles"))
+(setq **maven_container_home** (concat **CONTAINERS_HOME** "/maven"))
 

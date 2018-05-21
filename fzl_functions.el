@@ -183,7 +183,7 @@
   (start-process
      "PROCESS-fzl-start-eclipse-java-oxigen"
      "PROCESS-fzl-start-eclipse-java-oxigen"
-     (concat **FZL_HOME** "/integrated/ides/eclipse-java-oxygen-R-linux-gtk-x86_64/eclipse/eclipse")))
+     (concat **FZL_HOME** "/integrated/ides/eclipse-java-oxygen-3a-linux-gtk-x86_64/eclipse")))
 
 (defun fzl-start-eclipse-jee-java-oxigen()
   ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
@@ -212,7 +212,21 @@
       "PROCESS-firefox"
       "firefox"
       "http://localhost:8081/#browse/welcome"))));;(defun fzl_start_nexus()
+
+(defun fzl-containers-maven-open-nexus-in-browser()
+  (interactive)
+  (progn
+    (start-process
+     "PROCESS-fzl-containers-maven-open-nexus-in-browser"
+     "PROCESS-fzl-containers-maven-open-nexus-in-browser"
+     "firefox"
+     "http://localhost:8081/#browse/welcome")))
+
+(defun fzl-containers-maven-ansi-term-in-mvnprojects-dir()
+  (interactive)
+  (ansi-term "/bin/bash" (concat **maven_container_home** "/../data-dir-for-maven/mvnprojects")))
   
+
 (message (concat (concat (concat "cd '" **FZL_HOME**) "'") " && ./bin/fzl_start_nexus.sh"))
 (defun fzl-nexus-open-in-firefox()
   (start-process
@@ -409,9 +423,9 @@
     (set-window-buffer currentbuf newbuf)
     (shell newbuf)))
 
-(defun fzl-shell(shell_name)
-  (interactive "p\ncShell_name")
-  (message shell_name))
+(defun fzl-shell(workDir)
+  (let ((default-directory workDir))
+    (shell workDir)))
 
 
 

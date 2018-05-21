@@ -1,14 +1,26 @@
+;;; package --- Summary
+;;; Code:
+
+;;; Commentary:
+
 (provide 'fzl_menus)
 
 (require 'easymenu)
 
 (easy-menu-define djcb-menu global-map "fzlbpms-menu"
-  '("Remote Taks"
-     ("Sync Nuvem" ;; submenu
-       ["Rclone sync GDrive_wgn:/ 2 Desktop" rclone_sync_from_gdrive_to_desktop]
-       ["Rclone sync Desktop to GDrive_wgn" rclone_sync_from_desktop_to_gdrive])
-    )
   '("FZLBPMS"
+    
+    ("Containers" ;; submenu
+     ("maven"
+     ["maven: open nexus" fzl-containers-maven-open-nexus-in-browser]
+     ["maven: open mvn settings" fzl-containers-maven-open-mvn-settings-file]
+     ["maven: restart container" fzl-containers-maven-restart-container]
+     ["maven: shell at mvnprojects" (fzl-shell (concat **maven_container_home** "/../data-dir-for-maven/mvnprojects"))]))
+;     ["maven: shell at mvnprojects" fzl-shell]))
+    
+    ("Desktop" ;; submenu
+     ["Rclone sync GDrive_wgn:/ 2 Desktop" rclone_sync_from_gdrive_to_desktop]
+     ["Rclone sync Desktop to GDrive_wgn" rclone_sync_from_desktop_to_gdrive])
     
     ("Emacsinitfile"
      ("simple httpd & impacient mode"
@@ -74,6 +86,7 @@
       ["Eclipse Sirius" (fzl-start-eclipse-sirius)]
       ["Eclim Eclipse Project Create"    (eclim-project-create)]
       ["Eclipse  Jee Oxigen"    (fzl-start-eclipse-jee-java-oxigen)] ;;
+      ["Eclipse  Java Oxigen"    (fzl-start-eclipse-java-oxigen)]
       ["Eclipse Modelling (start)"  (fzl-start-eclipse-modeling)]
       ["Eclipse Report" (fzl-eclipse-reporting--start)]))
 
