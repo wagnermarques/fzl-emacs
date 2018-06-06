@@ -2,6 +2,7 @@
 
 ;;**GLOBAL_VARS** is all defined in  global_variables_setup.el file
 
+
 ;;;________________________________________
 ;;;
 ;;; shell utilities
@@ -21,6 +22,12 @@
 
 
 
+;;;________________________________________
+;;;
+;;; sqlite
+;;; 
+;;; 
+;;;________________________________________
 
 (defun fzl-sqlite-open-in-shell-buffer()
   (interactive)
@@ -40,6 +47,9 @@
      nil
      "firefox"
      url)))
+
+
+
 
 ;;;________________________________________
 ;;;
@@ -159,6 +169,25 @@
            0 -1))
     (message cmdOutput)))
 
+;;TODO...
+(defun fzl-az-login()
+
+  )
+
+
+;;;________________________________________
+;;;
+;;; nodejs
+;;; 
+;;; 
+;;;________________________________________
+;;https://docs.npmjs.com/cli/config
+(defun nodejs-npm-config-list()
+  (message "todo"))
+(defun fzl-containers-nodejs-npm-config-list()
+  (message "todo"))
+(defun fzl-containers-nodejs-sudo-npm-i-g-npm-to-update()
+  (message "todo"))
 
 
 
@@ -213,6 +242,15 @@
       "firefox"
       "http://localhost:8081/#browse/welcome"))));;(defun fzl_start_nexus()
 
+;;TODO
+(defun fzl-containers-maven-open-nexus-karaf-log()
+  (interactive)
+)
+;;TODO
+(defun fzl-containers-maven-open-nexus-log()
+  (interactive)
+)
+
 (defun fzl-containers-maven-open-nexus-in-browser()
   (interactive)
   (progn
@@ -222,9 +260,11 @@
      "firefox"
      "http://localhost:8081/#browse/welcome")))
 
+
 (defun fzl-containers-maven-ansi-term-in-mvnprojects-dir()
   (interactive)
-  (ansi-term "/bin/bash" (concat **maven_container_home** "/../data-dir-for-maven/mvnprojects")))
+  (let ((mvnprojects_dir (concat **maven_container_home** "/../data-dir-for-maven/mvnprojects"))                                
+        (ansi-term "/bin/bash" mvnprojects_dir))))
   
 
 (message (concat (concat (concat "cd '" **FZL_HOME**) "'") " && ./bin/fzl_start_nexus.sh"))
@@ -286,28 +326,36 @@
 ;;;
 ;;; tomcat8 functions
 ;;;________________________________________
-(defun fzl-tomcat8_start_container()
-  (interactive)
-  (start-process
-   "PROCESS-tomcat8_open_manager"
-   "PROCESS-tomcat8_open_manager"   
-   "cd /run/media/wagner/51d54d26-34c8-4671-8da1-c12adc7a5a2c/wagnerdocri@gmail.com2/envs/env-dev/sources/Fedora-Dockerfiles/tomcat8 && ./docker-run.sh"))
   
-(defun fzl-tomcat8-catalina-out()
+;;was predefined by myself that the container 8080 por is binded to 80
+(defun fzl-containers-tomcat8-tail-f-catalina-out()
   (interactive)
-  (start-process
-   "PROCESS-tomcat8_catalina_out"
-   "PROCESS-tomcat8_catalina_out"
-   "docker "
-   " exec -it fzl_tomcat8 tail -f /opt/apache-tomcat-8.5.23/logs/catalina.out"))
+    (start-process
+   "PROCESS-fzl-containers-tomcat8-tail-f-catalina-out"
+   "PROCESS-fzl-containers-tomcat8-tail-f-catalina-out"
+   "docker"
+   "exec"
+   "fzl_tomcat8"
+   "tail"
+   " -f "
+   "/opt/apache-tomcat-8.5.31/logs/catalina.out"))
 
-(defun fzl-tomcat8_open_manager()
+
+
+(defun fzl-containers-tomcat8-open-admin-in-browser()
   (interactive)
-  (start-process
-   "PROCESS-tomcat8_open_manager"
-   "PROCESS-tomcat8_open_manager"   
-   "firefox"
-   "http://192.168.33.91:8080/manager/html"))
+  (progn
+    (start-process
+     "PROCESS-fzl-containers-tomcat8-open-admin-in-browser"
+     "PROCESS-fzl-containers-tomcat8-open-admin-in-browser"
+     "firefox"
+     "http://localhost")))
+
+(defun fzl-containers-tomcat8-open-users-xml()
+  (interactive)
+  (progn))
+
+
 
 
 ;;;________________________________________

@@ -12,16 +12,27 @@
     
     ("Containers" ;; submenu
      ("maven"
-     ["maven: open nexus" fzl-containers-maven-open-nexus-in-browser]
-     ["maven: open mvn settings" fzl-containers-maven-open-mvn-settings-file]
-     ["maven: restart container" fzl-containers-maven-restart-container]
-     ["maven: shell at mvnprojects" (fzl-shell (concat **maven_container_home** "/../data-dir-for-maven/mvnprojects"))]))
-;     ["maven: shell at mvnprojects" fzl-shell]))
+      ["open nexus in browser" fzl-containers-maven-open-nexus-in-browser]
+      ["open mvn settings" fzl-containers-maven-open-mvn-settings-file]
+      ["restart container" fzl-containers-maven-restart-container]
+      ["shell at mvnprojects" (fzl-shell (concat **maven_container_home** "/../data-dir-for-maven/mvnprojects"))])
+     ("Nodejs"
+      ["npm config list" fzl-containers-nodejs-npm-config-list]
+      ["npm config list" fzl-containers-nodejs-npm-config-list]
+      ["sudo npm i -g npm to update" fzl-containers-nodejs-sudo-npm-i-g-npm-to-update]
+      ["shell at nodejs_projects" (fzl-shell (concat **maven_container_home** "/../data-dir-nodejs/node_projects"))])
+     ("Tomcat8"
+      ["open tomcat8 admin in browser" fzl-containers-tomcat8-open-admin-in-browser]
+      ["tail -f catalina.out" fzl-containers-tomcat8-tail-f-catalina-out]))
     
     ("Desktop" ;; submenu
+     ("Azure"
+     ["az login" fzl-az-login])
      ["Rclone sync GDrive_wgn:/ 2 Desktop" rclone_sync_from_gdrive_to_desktop]
-     ["Rclone sync Desktop to GDrive_wgn" rclone_sync_from_desktop_to_gdrive])
-    
+     ["Rclone sync Desktop to GDrive_wgn" rclone_sync_from_desktop_to_gdrive]
+     ("Nodejs"
+      ["List config (TODO)" nodejs-npm-config-list]))
+   
     ("Emacsinitfile"
      ("simple httpd & impacient mode"
       ["open http://localhost:9191"

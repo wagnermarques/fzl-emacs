@@ -15,7 +15,22 @@
 
 (setq **WKSP_MVN_PROJECTS** (concat **DISK** "/wagnerdocri@gmail.com2/envs/env-dev/sources/mvnprojects"))
 
-(setq **ANDROID_HOME** (concat **FZL_HOME** "/integrated/Android/Sdk"))
+
+(setq **GRADLE_HOME** (concat **FZL_HOME** "/integrated/build/gradle-4.6-rc-2"))
+(setenv "GRADLE_HOME" **GRADLE_HOME**)
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **GRADLE_HOME** "/bin")))
+
+;;ANDROID_HOME is depracated
+(setq **ANDROID_SDK_ROOT** (concat **FZL_HOME** "/integrated/Android/Sdk"))
+(setenv "ANDROID_SDK_ROOT" **ANDROID_SDK_ROOT**)
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/platform-tools")))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/tools")))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/tools/bin")))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/emulator")))
+
+;;ANDROID_EMULATOR_HOME is defined, it replaces the path of the '$HOME/.android'
+(setq **ANDROID_EMULATOR_HOME** (concat **FZL_HOME** "/integrated/.android"))
+(setenv "ANDROID_EMULATOR_HOME" **ANDROID_EMULATOR_HOME**)
 
 ;;; Choose java jdk version
 (setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk1.8.0_151"))
