@@ -33,11 +33,17 @@
 (setenv "ANDROID_EMULATOR_HOME" **ANDROID_EMULATOR_HOME**)
 
 ;;; Choose java jdk version
-(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk1.8.0_151"))
+(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk1.8.0_161"))
+(setenv "JAVA_HOME" **JAVA_HOME**)
+(setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **JAVA_HOME** "/bin"))))
 ;(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk-9.0.1"))
 
 ;;;BUILDING
 (setq **M2_HOME** (concat **FZL_HOME** "/integrated/build/apache-maven-3.5.3"))
+(message **M2_HOME**)
+(message **M2_HOME**)
+(message **M2_HOME**)
+(message **M2_HOME**)
 (setq **ANT_HOME** (concat **FZL_HOME** "/integrated/build/apache-ant-1.10.3"))
 
 (setq **ORG-DIRECTORY** (concat **FZL_HOME** "/integrated/emacs/org-mode/files"))

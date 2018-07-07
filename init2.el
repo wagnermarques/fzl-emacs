@@ -11,9 +11,11 @@
 ;;https://www.gnu.org/software/emacs/manual/
 ;;https://www.emacswiki.org/emacs?interface=en
 
+(message ">>>>>>>>>> [init2.el] starting running...")
+
 ;;If behind a proxy just uncomment this line below an change accordingly
-(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
-			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
+;(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
+;			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
 
 
 ;;Entering the Debugger on an Error
@@ -51,45 +53,67 @@
 		load-path)))
 (configure_load_path)
 
-
 ;;Before load .el files we need prevent some code requirments
+(message ">>>>>>>>>> [init2.el] requiring 'config_code_lisp")
 (require 'config_code_lisp) ;;none lisp coding cofigure in this file for now
 
 ;;create emacsinitfile.log file
 ;;and provide a fzlUtil/log function to write on it
+(message ">>>>>>>>>> [init2.el] 'config_logging")
 (require 'config_logging)
 
 
-;; S H E L L    S C R I P T S 
+
+;; S H E L L    S C R I P T S
+(message ">>>>>>>>>> ;; S H E L L    S C R I P T S")
 (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/")))
 
 
+
 ;;G L O B A L    V A R I A B L E S
+(message ">>>>>>>>>>;;G L O B A L    V A R I A B L E S")
 ;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
+(message ">>>>>>>>>> [init2.el] 'global_variables_setup")
 (require 'global_variables_setup)
 
+
 ;;I N S T A L L I N G    E M A C S    P A C K A G E S
+(message ">>>>>>>>>>;;I N S T A L L I N G    E M A C S    P A C K A G E S")
 ;;configure emacs packages repositories installing list of packages automatically
+(message ">>>>>>>>>> [init2.el] 'config_package_system")
 (require 'config_package_system)
 
+
 ;;S U P E R    U T I L S    F U N C T I O N S 
+(message ">>>>>>>>>>;;S U P E R    U T I L S    F U N C T I O N S" )
 ;;Some of my super utils functions, keys and menus
+(message ">>>>>>>>>> [init2.el] 'fzl_functions")
 (require 'fzl_functions)
+(message ">>>>>>>>>> [init2.el] 'fzl_keys")
 (require 'fzl_keys)
+(message ">>>>>>>>>> [init2.el] 'fzl_utils")
 (require 'fzl_utils)
+(message ">>>>>>>>>> [init2.el] 'fzl_menus")
 (require 'fzl_menus)
 
 
 ;;basic emacs functionalities
 ;;https://ftp.gnu.org/old-gnu/Manuals/emacs/html_node/emacs_181.html
+(message ">>>>>>>>>> [init2.el] 'iswitchb_config")
 (require 'iswitchb_config)
-(require 'config_buffers) ;;for now just inhibit emacs startup buffer 
+(message ">>>>>>>>>> [init2.el] 'config_buffers")
+(require 'config_buffers) ;;for now just inhibit emacs startup buffer
+(message ">>>>>>>>>> [init2.el] 'config_lines_columns_and_cursor_behaviour")
 (require 'config_lines_columns_and_cursor_behaviour)
+(message ">>>>>>>>>> [init2.el] 'config_general_emacs_behaviour")
 (require 'config_general_emacs_behaviour)
 
+(message ">>>>>>>>>> [init2.el] 'iedit_config")
 (require 'iedit_config) ;multiple cursor C
+(message ">>>>>>>>>> [init2.el] 'yasnippet_config")
 (require 'yasnippet_config)
 
+(message ">>>>>>>>>> [init2.el] 'speedbar_config")
 (require 'speedbar_config) ;;put a speedbar in confined buffer and opens it
 
 
@@ -97,6 +121,7 @@
 
 ;;open some interesting buffers at emacs starting up like
 ;;emacsinitfile.log and others
+(message ">>>>>>>>>> [init2.el] 'find_files")
 (require 'find_files)
 
 
@@ -109,9 +134,15 @@
 
 
 ;;B A S I C  C O D I N G   C O N F I G U R A T I O N S
+(message ">>>>>>>>>>;;B A S I C  C O D I N G   C O N F I G U R A T I O N S")
+(message ";;B A S I C  C O D I N G   C O N F I G U R A T I O N S");
+(message ">>>>>>>>>> [init2.el] 'config_code_in_general")
 (require 'config_code_in_general)
+(message ">>>>>>>>>> [init2.el] 'autocomplete_config")
 (require 'autocomplete_config)
+(message ">>>>>>>>>> [init2.el] 'cedet_config")
 (require 'cedet_config)
+(message ">>>>>>>>>> [init2.el] 'flycheck_config")
 (require 'flycheck_config)
 
 
@@ -119,22 +150,37 @@
 
 
 ;;C O N F I G U R E    P R O G R A M M I N G     L A N G U A G E S
-;;html
+;;html 
+(message ";;C O N F I G U R E    P R O G R A M M I N G     L A N G U A G E S")
+(message ";;html")
+
+
+(message ">>>>>>>>>> [init2.el] config_simple_httpd")
 (require 'config_simple_httpd)
+
 (fzl_log "PROGRAMMING: Configuring java and maven")
 (message "PROGRAMMING: Configuring java and maven")
 ;;java programming language
+(message ">>>>>>>>>> [init2.el] 'java_config")
 (require 'java_config)
+
+(message ">>>>>>>>>> [init2.el] 'maven_config")
 (require 'maven_config)
+(message ">>>>>>>>>> [init2.el] 'ant_config")
 (require 'ant_config)
 
+(message ">>>>>>>>>> [init2.el] 'sqlite3_config")
 (require 'sqlite3_config)
+
+(message ">>>>>>>>>> [init2.el] 'hqsql_config")
 (require 'hqsql_config)
 
 ;;R programming language
+(message ">>>>>>>>>> [init2.el] 'ess_config")
 (require 'ess_config)
 
 ;;Python
+(message ">>>>>>>>>> [init2.el] 'config_elpy")
 (require 'config_elpy)
 
 
@@ -143,15 +189,18 @@
 
 
 ;;ORG MODE CONFIG
+(message ">>>>>>>>>> [init2.el] 'iimage_mode_config")
 (require 'iimage_mode_config);; -- Display images in org mode
 ;;TODO: Install slime and startup at this emacs startup
 ;;(setq inferior-lisp-program "/opt/sbcl/bin/sbcl") ;;needed for org_mode lisp code blocks
+(message ">>>>>>>>>> [init2.el] 'org_mode_config")
 (require 'org_mode_config)
 ;;(slime)
 
 
 
 ;;;http://web-mode.org/
+(message ">>>>>>>>>> [init2.el] 'web-mode")
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
@@ -165,7 +214,9 @@
 
 ;;D E S K T O P    F U N C T I O N A L I T I E S
 ;;Using rclone to syncing with google drive...
+(message ">>>>>>>>>> [init2.el] 'config_rclone")
 (require 'config_rclone)
+
 
 
 ;(require 'reftex)    

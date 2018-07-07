@@ -1,6 +1,9 @@
 (provide 'find_files)
 
+(setq remote-machine-ip (getenv "FZL_REMOTE_MACHINE_IP"))
+
 (find-file (concat **EMACSINITFILE_HOME**  "/emacsinitfile.log"))
+(find-file (concat remote-machine-ip "/emacsinitfile.log"))
 ;(find-file (concat **EMACSINITFILE_HOME**  "/elfeed_config.el"))
 ;(find-file (concat **EMACSINITFILE_HOME**  "/autocomplete_installation.el"))
 ;(find-file (concat **EMACSINITFILE_HOME**  "/autocomplete_installation.sh"))

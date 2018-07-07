@@ -11,6 +11,8 @@
   '("FZLBPMS"
     
     ("Containers" ;; submenu
+     ("Logs"
+      ["Host: journalctl -u docker.service" fzl-journalctl-docker-service])
      ("maven"
       ["open nexus in browser" fzl-containers-maven-open-nexus-in-browser]
       ["open mvn settings" fzl-containers-maven-open-mvn-settings-file]
@@ -39,6 +41,7 @@
        (fzl-open-http-localhost-9191)])
        
      ("Org-mode"
+      ["Export Beamer" org-beamer-export-to-pdf]
       ["Open org-mode cheat sheet in browser" (progn
                        (start-process
                         "ProcessName=OrgModeCheetSheetInBrowser"

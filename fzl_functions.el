@@ -19,7 +19,21 @@
 ;;         (fzl-run-prg-in-ansi-term "/usr/bin/mutt"))
 
 
+;;;________________________________________
+;;;
+;;; docker
+;;; 
+;;; 
+;;;________________________________________
 
+(defun fzl-journalctl-docker-service()
+  (interactive)
+  (start-process
+   "ProcessName_Fzl-journalctl-docker-service"
+   "BufferName__Fzl-journalctl-docker-service"
+   "journalctl"
+   "-fu"
+   "docker.service"))
 
 
 ;;;________________________________________
@@ -89,8 +103,7 @@
 
 ;;;________________________________________
 ;;;
-;;; emacsinitfile
-;;;________________________________________
+;;; 
 
 (defun fzl-httpd-start-and-open-browser()
   (start-process
@@ -106,8 +119,8 @@
     (shell name)))
 
 
-(defun fzl-shell-maven-projects-workspace()  
-  (shell-dir "ShellDirInMvnProjectsWorkspace" **WKSP_MVN_PROJECTS**))
+(defun fzl-shell-maven-projects-workspace()
+    (shell-dir "ShellDirInMvnProjectsWorkspace" **WKSP_MVN_PROJECTS**))
   
 
 (defun fzl-speedbar-change-dir-to-emacsinitifle()
