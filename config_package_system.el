@@ -54,6 +54,9 @@
                                         
                                         ;the greate org-mode
                                         org
+
+                                        org-ref
+                                        
                                         ;org-plus-contrib
                                         ;;https://github.com/krisajenkins/ob-browser
                                         ob-browser
@@ -62,6 +65,7 @@
                                         ;;https://github.com/krisajenkins/ob-translate/blob/master/ob-translate.el
                                         ob-translate
 
+                                        
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;; BASIC PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

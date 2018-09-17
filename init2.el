@@ -1,16 +1,16 @@
-;; DISCLAIMER
-;; I have been use emacs for development with some devtools
-;; So there are a lot of global vars that define whare are these tools are in the disk
-;; There are not a main goal of emacs usability 
+;;; package --- Summary
 
-;; are there any effort to adapt this for windows
+;;; Commentary:
+;;; I have been use Emacs for development with some devtools
+;;; So there are a lot of global vars that define whare are these tools are in the disk
+;;; There are not a main goal of Emacs usability
+;;; are there any effort to adapt this for windows
+;;;some references
+;;;https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html
+;;;https://www.gnu.org/software/emacs/manual/
+;;;https://www.emacswiki.org/emacs?interface=en
 
-;;some references
-
-;;https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html
-;;https://www.gnu.org/software/emacs/manual/
-;;https://www.emacswiki.org/emacs?interface=en
-
+;;; Code:
 (message ">>>>>>>>>> [init2.el] starting running...")
 
 ;;If behind a proxy just uncomment this line below an change accordingly
@@ -31,7 +31,7 @@
 (defvar dayOfWeekendStr-dayOfMoutnInt-moutnInStr "%A %e %B")
 
 
-; maximize emacs window
+; maximize Emacs window
 (custom-set-variables
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
@@ -84,7 +84,7 @@
 (require 'config_package_system)
 
 
-;;S U P E R    U T I L S    F U N C T I O N S 
+;;S U P E R    U T I L S    F U N C T I O N S
 (message ">>>>>>>>>>;;S U P E R    U T I L S    F U N C T I O N S" )
 ;;Some of my super utils functions, keys and menus
 (message ">>>>>>>>>> [init2.el] 'fzl_functions")
@@ -150,7 +150,7 @@
 
 
 ;;C O N F I G U R E    P R O G R A M M I N G     L A N G U A G E S
-;;html 
+;;html
 (message ";;C O N F I G U R E    P R O G R A M M I N G     L A N G U A G E S")
 (message ";;html")
 
@@ -168,12 +168,6 @@
 (require 'maven_config)
 (message ">>>>>>>>>> [init2.el] 'ant_config")
 (require 'ant_config)
-
-(message ">>>>>>>>>> [init2.el] 'sqlite3_config")
-(require 'sqlite3_config)
-
-(message ">>>>>>>>>> [init2.el] 'hqsql_config")
-(require 'hqsql_config)
 
 ;;R programming language
 (message ">>>>>>>>>> [init2.el] 'ess_config")
@@ -219,7 +213,7 @@
 
 
 
-;(require 'reftex)    
+;(require 'reftex)
 
 ;;(require 'auctex)Debugger entered--Lisp error: (error "Required feature `auctex' was not provided")
 ;(require 'calendar_config)
@@ -269,7 +263,7 @@
      ;B U F F E R S   C O N F I G U R A T I O N S
 ;     (require 'org_mode_config)
 ;     (require 'config_buffers)
-;     (require 'config_minibuffer) 
+;     (require 'config_minibuffer)
 
 
      ;(fzlfn_print_fzl_variables_inventory)
