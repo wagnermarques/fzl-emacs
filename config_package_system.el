@@ -11,6 +11,10 @@
   (setq packages-to-be-installed-list '(;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;; NON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;https://github.com/politza/pdf-tools
+                                        ;;;Support library for PDF documents.
+                                        ;;;Issue M-x pdf-tools-install RET once
+                                        pdf-tools
 
 					
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -169,6 +173,7 @@
 
 
                                         dockerfile-mode
+					yaml-mode
                                         ))
   
   
@@ -186,7 +191,7 @@
   ;;solarized-theme
   ;;http://web-mode.org/ web-mode
   ;;https://github.com/bnbeckwith/writegood-mode writegood-mode 
-  ;;yaml-mode
+  
 
 
   

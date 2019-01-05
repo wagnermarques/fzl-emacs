@@ -177,6 +177,9 @@
 (message ">>>>>>>>>> [init2.el] 'config_elpy")
 (require 'config_elpy)
 
+;;Latex
+(message ">>>>>>>>>> [init2.el] 'config_latex")
+;;(require 'auctex_config)
 
 
 
@@ -210,6 +213,7 @@
 ;;Using rclone to syncing with google drive...
 (message ">>>>>>>>>> [init2.el] 'config_rclone")
 (require 'config_rclone)
+(require 'config_pdftools)
 
 
 

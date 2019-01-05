@@ -3,6 +3,19 @@
 ;;**GLOBAL_VARS** is all defined in  global_variables_setup.el file
 
 
+
+;;;________________________________________
+;;;
+;;; find-files as root
+;;; https://caiorss.github.io/Emacs-Elisp-Programming/Elisp_Snippets.html
+;;; 
+;;;________________________________________
+
+(defun fzl-find-file-as-root (fileNameToOpen) 
+  (find-file (concat "/sudo:root@localhost:"  fileNameToOpen)))
+(defun fzl-find-file-as-root-selinuxconfig()
+  (interactive)
+  (fzl-find-file-as-root "/etc/selinux/config"))
 ;;;________________________________________
 ;;;
 ;;; shell utilities
@@ -504,17 +517,17 @@
   (setq default-directory (concat *FZL_HOME* "/etc"))
   (speedbar-refresh))
 
-(defun fzl-bash-find-files-with-grep (dir, grepPattern)
-  "find dir -type f -exec grepPattern -l {} ';'"
-  (interactive "sdir a ser pesquisado: \nsgrepPattern: ")
-   (message (shell-command-to-string
-    (format "find %s -type f -exec grep %s {} ';' -printf '%%h\\n' | sort -u"))))
+;(defun fzl-bash-find-files-with-grep (dir, grepPattern)
+;  "find dir -type f -exec grepPattern -l {} ';'"
+;  (interactive "sdir a ser pesquisado: \nsgrepPattern: ")
+;   (message (shell-command-to-string
+;    (format "find %s -type f -exec grep %s {} ';' -printf '%%h\\n' | sort -u"))))
 
-(defun fzl-bash-find-files-by-name-pattern (dir, namePattern)
-  "find dir -type f -name '*namePattern'"
-  (interactive "sdir to be searched: \nsnamePattern: ")
-   (message (split-string (shell-command-to-string
-    (format "find %s -type f -name '*namePattern*'")))))
+;(defun fzl-bash-find-files-by-name-pattern (dir, namePattern)
+;  "find dir -type f -name '*namePattern'"
+;  (interactive "sdir to be searched: \nsnamePattern: ")
+;   (message (split-string (shell-command-to-string
+;    (format "find %s -type f -name '*namePattern*'")))))
 
 ;;eclipse modelling
 (defun fzl-eclipse-modeling--start()

@@ -1,11 +1,12 @@
-
 #!/bin/bash
 
-#Run it or some parts to install programming languages in you linux
-#I am using fedora 22, change the command accordingle with your linux box
+sudo dnf install \
+     make automake autoconf gcc gcc-c++ \
+     ImageMagick libpng-devel zlib-devel poppler-glib-devel \
+     rclone \
+     docker \
+     mutt 
 
-
-sudo dnf install rclone
 
 #docker
 #https://developer.fedoraproject.org/tools/docker/docker-installation.html
