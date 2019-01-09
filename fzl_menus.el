@@ -9,10 +9,10 @@
 
 (easy-menu-define djcb-menu global-map "HOST"
   '("HOST"
-
     ("Config" ;;submenu
      ("Etc"
-      ["selinux config" fzl-find-file-as-root-selinuxconfig]))))
+      ["/etc/selinux/config" fzl-find-file-as-root-selinuxconfig]
+))))
 
 
 (easy-menu-define djcb-menu global-map "fzlbpms-menu"

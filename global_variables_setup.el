@@ -5,6 +5,7 @@
 
 ;;Disclaimer
 ;;We've been useing non final slash pattern
+;;FZLBPMS PATHS (Fzlbpms is just a directory with several development tools)
 (setq **DISK** "/home/wagner")
 
 (setq **EMACSINITFILE_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile"))
@@ -13,15 +14,28 @@
 
 (setq **FZL_HOME_SERVER** (concat **DISK** "/wagnerdocri@gmail.com2/fzlbpms/fzlServer"))
 
-(setq **WKSP_MVN_PROJECTS** (concat **DISK** "/wagnerdocri@gmail.com2/envs/env-dev/sources/mvnprojects"))
+;;;JAVA ENRIRONMENT VARIABLES
+(setq **JAVA_HOME** "/home/wagner/PROGSATIVOS/jdk1.8.0_191")
+(setenv "JAVA_HOME" **JAVA_HOME**)
+(setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **JAVA_HOME** "/bin"))))
 
-
+;;GRADLE ENVIRONMENT VARIABLES
 (setq **GRADLE_HOME** (concat **FZL_HOME** "/integrated/build/gradle-4.6-rc-2"))
 (setenv "GRADLE_HOME" **GRADLE_HOME**)
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **GRADLE_HOME** "/bin")))
 
+;;;MAVEN ENVIROMENT VARIABLES
+(setq **WKSP_MVN_PROJECTS** (concat **DISK** "/wagnerdocri@gmail.com2/envs/env-dev/sources/mvnprojects"))
+(setq **M2_HOME** (concat **FZL_HOME** "/integrated/build/apache-maven-3.6.0"))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **M2_HOME** "/bin")))
+
+;;;ANT
+(setq **ANT_HOME** (concat **FZL_HOME** "/integrated/build/apache-ant-1.10.5"))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANT_HOME** "/bin")))
+
+;;ANDROID ENVIRONMENT VARIABLES
 ;;ANDROID_HOME is depracated
-(setq **ANDROID_SDK_ROOT** (concat **FZL_HOME** "/integrated/Android/Sdk"))
+(setq **ANDROID_SDK_ROOT** "/home/wagner/PROGSATIVOS/androidSdk")
 (setenv "ANDROID_SDK_ROOT" **ANDROID_SDK_ROOT**)
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/platform-tools")))
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/tools")))
@@ -29,28 +43,24 @@
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/emulator")))
 
 ;;ANDROID_EMULATOR_HOME is defined, it replaces the path of the '$HOME/.android'
-(setq **ANDROID_EMULATOR_HOME** (concat **FZL_HOME** "/integrated/.android"))
+(setq **ANDROID_EMULATOR_HOME** (concat **FZL_HOME** "/integrated/android/android_emulators"))
 (setenv "ANDROID_EMULATOR_HOME" **ANDROID_EMULATOR_HOME**)
 
-;;; Choose java jdk version
-(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk1.8.0_161"))
-(setenv "JAVA_HOME" **JAVA_HOME**)
-(setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **JAVA_HOME** "/bin"))))
-;(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk-9.0.1"))
+;;;EMACS
+;;https://orgmode.org/worg/org-configs/org-customization-guide.html
+(setq **ORG-DIRECTORY** (concat **FZL_HOME** "/integrated/emacs/org-directory"))
 
-;;;BUILDING
-(setq **M2_HOME** (concat **FZL_HOME** "/integrated/build/apache-maven-3.5.3"))
-(message **M2_HOME**)
-(message **M2_HOME**)
-(message **M2_HOME**)
-(message **M2_HOME**)
-(setq **ANT_HOME** (concat **FZL_HOME** "/integrated/build/apache-ant-1.10.3"))
+;;;SQLITE
+(setq **FZL_SQLITE_HOME** (concat **FZL_HOME** "/integrated/db/sqlite-tools-linux-x86-3260000"))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") **FZL_SQLITE_HOME**))
 
-(setq **ORG-DIRECTORY** (concat **FZL_HOME** "/integrated/emacs/org-mode/files"))
+;;;HSQLDB
+(setq **FZL_HQSQL_HOME** (concat **FZL_HOME** "/integrated/db/hsqldb"))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **FZL_HQSQL_HOME** "/bin")))
 
-(setq **FZL_SQLLITE_HOME** (concat **FZL_HOME** "/integrated/dbs/sqlite"))
-(setq **FZL_HQSQL_HOME** (concat **FZL_HOME** "/integrated/dbs/hsqldb"))
-
+;;;SQUIRREL SQL
+(setq **FZL_SQUIRRELSQL_HOME** (concat **FZL_HOME** "/integrated/db/squirrelsql-3.9.0-standard"))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") **FZL_SQUIRRELSQL_HOME**))
 
 
 ;;;D E S K T O P    F U N C T I O N A L I T I E S

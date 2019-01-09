@@ -11,11 +11,15 @@
 ;;; 
 ;;;________________________________________
 
-(defun fzl-find-file-as-root (fileNameToOpen) 
+(defun fzl-find-file-as-root (fileNameToOpen)
+  "Utils func to open files as root, Provide FILENAMETOOPEN as full path."
   (find-file (concat "/sudo:root@localhost:"  fileNameToOpen)))
+
 (defun fzl-find-file-as-root-selinuxconfig()
+  "Opens /etc/selinux/config file as root."
   (interactive)
   (fzl-find-file-as-root "/etc/selinux/config"))
+
 ;;;________________________________________
 ;;;
 ;;; shell utilities
