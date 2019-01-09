@@ -4,8 +4,11 @@
 
 (provide 'org_mode_config)
 
-;;http://orgmode.org/worg/org-configs/org-customization-guide.html
+;;Do not evaluate babel block codes during exportation process
+;;each block codes needs be executed with C-c C-c before exportation
+(setq org-export-babel-evaluate nil)
 
+;;http://orgmode.org/worg/org-configs/org-customization-guide.html
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -112,7 +115,7 @@
 ;;;;;;;;;;;;;;;;;;PHANTONJS;;;;;;;;;;;;;;;;;
 ;;babel browser phantom dependency
 ;;https://github.com/krisajenkins/ob-browser
-(add-to-list 'exec-path "/run/media/wagner/51d54d26-34c8-4671-8da1-c12adc7a5a2c/wagnerdocri@gmail.com2/envs/env-dev/sources/emacsinitfile/node_modules/")
+;;(add-to-list 'exec-path "/run/media/wagner/51d54d26-34c8-4671-8da1-c12adc7a5a2c/wagnerdocri@gmail.com2/envs/env-dev/sources/emacsinitfile/node_modules/")
 ;(setenv "PATH" (mapconcat 'identity exec-path ":"))
 
 

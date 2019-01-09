@@ -66,8 +66,6 @@
 
 ;; S H E L L    S C R I P T S
 (message ">>>>>>>>>> ;; S H E L L    S C R I P T S")
-(shell-command "chmod +x *.sh")
-install-os-packages.sh
 
 
 ;;G L O B A L    V A R I A B L E S
