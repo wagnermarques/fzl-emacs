@@ -44,6 +44,7 @@
    (python . t)
    (java . t)
    (ditaa . t)
+   (R . t)
    ))
 ;;   (ruby . t)
 
@@ -110,7 +111,21 @@
   
   (call-interactively 'iimage-mode))
 
+;; Easy Templates
+;; https://emacs.stackexchange.com/questions/34651/how-can-i-create-custom-org-mode-templates
+;; https://orgmode.org/manual/Easy-templates.html
+(add-to-list 'org-structure-template-alist
+             '("textSession" "* write tile here
+                      #+BIND: org-export-use-babel nil
+                      :PROPERTY:
+                      :someAnotherProperty:"))	
 
+(add-to-list 'org-structure-template-alist
+             '("sR" "
+   #+NAME                     
+   #+BEGIN_SRC R :sessions s1 :results output :exports bouth  
+      #starts code
+   #+END_SRC"))	
 
 ;;;;;;;;;;;;;;;;;;PHANTONJS;;;;;;;;;;;;;;;;;
 ;;babel browser phantom dependency

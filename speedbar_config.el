@@ -1,6 +1,7 @@
-;http://emacswiki.org/emacs/SpeedBar
-;http://www.delorie.com/gnu/docs/elisp-manual-21/elisp_201.html
-;http://www.mygooglest.com/fni/dot-emacs.html
+;;http://www.gnu.org/software/emacs/manual/html_node/speedbar/index.html#Top
+;;http://emacswiki.org/emacs/SpeedBar
+;;http://www.delorie.com/gnu/docs/elisp-manual-21/elisp_201.html
+;;http://www.mygooglest.com/fni/dot-emacs.html
 
 
 (provide 'speedbar_config)
@@ -13,6 +14,7 @@
 ;ref uteis
 ;http://www.mygooglest.com/fni/dot-emacs.html
 
+
 ;speed bar "show all files" por padrao
 ;ref: http://stackoverflow.com/questions/2220005/how-do-i-enable-speedbar-to-display-all-types-of-files
 (custom-set-variables
@@ -20,12 +22,9 @@
 )
 
 
-;speed bar "show all files" por padrao
-;ref: http://stackoverflow.com/questions/2220005/how-do-i-enable-speedbar-to-display-all-types-of-files
-(custom-set-variables
- '(speedbar-show-unknown-files t))
-
-
+;(setq speedbar-show-all t)
+(setq speedbar-directory-unshown-regexp
+      "^\\(\\.\\.*$\\)\\'")
 
 
 ;;SPEEDBAR

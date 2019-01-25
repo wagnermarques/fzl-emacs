@@ -1,7 +1,6 @@
-
 [submodule "ESS"]
 	path = ESS
 	url = https://github.com/emacs-ess/ESS.git
-[submodule "dockerfile-mode"]
-	path = dockerfile-mode
-	url = https://github.com/spotify/dockerfile-mode.git
+[submodule "web-mode"]
+	path = web-mode
+	url = https://github.com/fxbois/web-mode.git

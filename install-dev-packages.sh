@@ -1,39 +1,29 @@
 #!/bin/bash
 
-sudo dnf install \
-     make automake autoconf gcc gcc-c++ \
-     ImageMagick libpng-devel zlib-devel poppler-glib-devel \
-     rclone \
-     docker \
-     mutt 
-
-
 #docker
 #https://developer.fedoraproject.org/tools/docker/docker-installation.html
-sudo dnf install docker
-sudo systemctl enable docker
-sudo groupadd docker && sudo gpasswd -a ${USER} docker && sudo systemctl restart docker
-newgrp docker
-
-
+dnf install -y git docker
+systemctl enable docker
+#groupadd docker && sudo gpasswd -a ${USER} docker && sudo systemctl restart docker
+#newgrp docker
 
 #for daily taks
-sudo dnf install mutt
+dnf install -y mutt rclone ImageMagick
 
 
+#general packages
 
-#sqlite3
-#f27
-#https://developer.fedoraproject.org/tech/database/sqlite/about.html
-sudo dnf install sqlite sqlite-devel sqlite-tcl sqlite-jdbc
-sudo dnf install sqliteman #gui for sqlite
+     
+
+#sqlite3 I am using a binary downloaded - see global_variables_setup.el
 
 #php
 dnf install php mod_suphp -y
 
-#C/C++
-dnf install kernel-devel kernel-headers gcc gcc-c++ -y
-dnf groupinstall "C Development Tools and Libraries"
+#C/C++ (I just a begginer.. so lets the basics and more  tools)
+dnf install kernel-devel kernel-headers -y
+dnf install -y make automake autoconf gcc gcc-c++ libpng-devel zlib-devel poppler-glib-devel
+dnf groupinstall -y "C Development Tools and Libraries"
 
 #phyton 
 #https://matplotlib.org/users/index.html
@@ -41,37 +31,42 @@ dnf groupinstall "C Development Tools and Libraries"
 #jedi is a an awesome autocompletion/static analysis library for Python #https://github.com/davidhalter/jedi
 #Elpy, the Emacs Lisp Python Environment #https://github.com/jorgenschaefer/elpy
 #rope, a python refactoring library #https://github.com/python-rope/rope
-pip3 install elpy rope jedi 
-pip3 install matplotlib -y
+pip3 install -y elpy rope jedi 
+pip3 install -y matplotlib
 
 #ruby
+#https://developer.fedoraproject.org/tech/languages/ruby/ror-installation.html
+dnf install -y ruby-devel zlib-devel
 gem install rubocop ruby-lint
+gem install rails
 
 #javascript
 dnf install nodejs npm -y
 npm install phantomjs -y #to render html in org-mode
+npm install eslint -y
 
 
 
 #latex (install manually) (change the installation dir acordingly your needs)
-wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-tar xvzf install-tl-unx.tar.gz --directory /home/wagner/wagnerdocri@gmail.com2/PROGSATIVOS/
-mv ./install-dev-packages-latex-config.sh /etc/profile.d/
-yum install perl-Tk -y #texlive dep
-echo "which pdflatex..."
-which pdflatex
+#https://fedoramagazine.org/fedora-classroom-latex-101-beginners/
+#https://ask.fedoraproject.org/en/question/128525/installing-texlive-in-fedora-29/
+dnf install texlive-scheme-full texlive-latex texlive-bibtex --enablerepo=updates-testing
 
 #R
 dnf install R -y #R.x86_64 : A language for data analysis and graphics
 
-
+#PYTHON
+#https://fedoralovespython.org/
+#https://developer.fedoraproject.org/tech/languages/python/scipy.html
+#http://developer-portal.github.io/contributing/
+#https://developer.fedoraproject.org/tech/languages/python/micropython.html
+#https://fedoramagazine.org/python-3-7-now-available-in-fedora/
+dnf install python3-numpy python3-scipy python3-matplotlib python3-ipython python3-pandas python3-sympy notebook
 #LINTERS FOR FLYCKEC USE
 #lit for python
 pip install pylint -y
 pip3 install pylint -y
 
-#lint  for javascript
-npm install eslint -y
 
 #lint for typescript
 #https://palantir.github.io/tslint/
@@ -79,13 +74,7 @@ npm install eslint -y
 npm install typescript -g -y
 npm install tslint -g -y
 
-
-#azure cli
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'
-sudo yum install azure-cli
-
-#References
-#http://www.flycheck.org/manual/latest/Quickstart.html
+#TRAVIS
+#https://docs.travis-ci.com/user/tutorial/
 
 
