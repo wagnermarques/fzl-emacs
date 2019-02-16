@@ -13,6 +13,8 @@
 ;;; Code:
 (message ">>>>>>>>>> [init2.el] starting running...")
 
+(require 'cl)
+
 ;;If behind a proxy just uncomment this line below an change accordingly
 ;(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
 ;			   ("http" . "wagner:nicolas1*@192.168.0.2:3128")))
@@ -52,10 +54,6 @@
 		      "~/emacs")
 		load-path)))
 (configure_load_path)
-
-;;Before load .el files we need prevent some code requirments
-(message ">>>>>>>>>> [init2.el] requiring 'config_code_lisp")
-(require 'config_code_lisp) ;;none lisp coding cofigure in this file for now
 
 ;;create emacsinitfile.log file
 ;;and provide a fzlUtil/log function to write on it
@@ -97,8 +95,9 @@
 
 ;;basic emacs functionalities
 ;;https://ftp.gnu.org/old-gnu/Manuals/emacs/html_node/emacs_181.html
-(message ">>>>>>>>>> [init2.el] 'iswitchb_config")
-(require 'iswitchb_config)
+;;(require 'iswitchb_config)
+;;changed in helm favor
+
 (message ">>>>>>>>>> [init2.el] 'config_buffers")
 (require 'config_buffers) ;;for now just inhibit emacs startup buffer
 (message ">>>>>>>>>> [init2.el] 'config_lines_columns_and_cursor_behaviour")
@@ -114,8 +113,8 @@
 (message ">>>>>>>>>> [init2.el] 'speedbar_config")
 (require 'speedbar_config) ;;put a speedbar in confined buffer and opens it
 
-
-
+(require 'config_abbrev)
+(require 'config_helm)
 
 ;;open some interesting buffers at emacs starting up like
 ;;emacsinitfile.log and others

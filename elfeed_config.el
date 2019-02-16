@@ -1,4 +1,11 @@
-(provide 'elfeed_config)
+;;; package --- Summary
+;;; Code:
+;;; Commentary:
+;;https://github.com/remyhonig/elfeed-org
+
+(require 'cl-lib)
+;; -*- coding: utf-8; lexical-binding: t; -*-
+
 
 ;;http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
 ;;https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Btools/elfeed
@@ -40,5 +47,8 @@
 ;  :init     (define-key personal-global-map (kbd "r") 'elfeed))
 
 
-;https://github.com/remyhonig/elfeed-org
+
+
+(provide 'elfeed_config)
+;;; elfeed_config.el ends here
 

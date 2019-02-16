@@ -4,14 +4,17 @@
 ;https://github.com/jney/yasnippet/blob/master/doc/snippet-organization.rst
 ;http://capitaomorte.github.com/yasnippet/snippet-organization.html#loading-snippets
 ;https://github.com/jney/yasnippet-js-mode
+;;https://www.emacswiki.org/emacs/Yasnippet
+;;https://www.emacswiki.org/emacs/yasnippet-config.el
+;;
+;;https://joaotavora.github.io/yasnippet/snippet-development.html
+
+;; Completing point by some yasnippet key
 
 ;;; Comentary:
 ;;; Code:
 (fzl_log "yasnippet_config.el loaded sucessfully!!!")
 
-;;https://www.emacswiki.org/emacs/Yasnippet
-;;https://www.emacswiki.org/emacs/yasnippet-config.el
-;; Completing point by some yasnippet key
 
 
 

@@ -15,7 +15,8 @@
                                         ;;;Support library for PDF documents.
                                         ;;;Issue M-x pdf-tools-install RET once
                                         pdf-tools
-
+                                        helm
+					helm-firefox
 					
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;    DEALING WITH FILES      ;;;;;;;;;;;;;;;;
@@ -31,7 +32,6 @@
                                         ;ido
                                         ;elpy depends on idomenu
                                         idomenu ;20141123.1320 available  melpa      imenu tag selection a la ido
-
 
                                         ;https://github.com/auto-complete/popup-el
                                         ;elpy depends on popup
@@ -111,7 +111,6 @@
 					;cl-lib             ;            1.0           built-in   Common Lisp extensions for Emacs
                                         
 					
-
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;; PYTHON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

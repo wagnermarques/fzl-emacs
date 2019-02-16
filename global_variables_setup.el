@@ -20,7 +20,7 @@
 (setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **JAVA_HOME** "/bin"))))
 
 ;;GRADLE ENVIRONMENT VARIABLES
-(setq **GRADLE_HOME** (concat **FZL_HOME** "/integrated/build/gradle-4.6-rc-2"))
+(setq **GRADLE_HOME** (concat **FZL_HOME** "/integrated/build/gradle-5.1.1"))
 (setenv "GRADLE_HOME" **GRADLE_HOME**)
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **GRADLE_HOME** "/bin")))
 

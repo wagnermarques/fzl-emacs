@@ -1,6 +1,5 @@
 (provide 'config_general_emacs_behaviour)
 
-
 (scroll-bar-mode -1)
 
 ;will allow you to type just "y" instead of "yes" when you exit.
@@ -93,8 +92,8 @@ auto-mode-alist))
 (set-cursor-color "red")
 (set-mouse-color "white")
 
-(set-background-color "white") 
-(set-foreground-color "black")
+(set-background-color "black") 
+(set-foreground-color "white")
 
 
 ;http://www.djcbsoftware.nl/dot-emacs.html

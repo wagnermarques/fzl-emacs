@@ -1,5 +1,12 @@
-(provide 'config_eclipse)
+;;; package --- Summary
+
+;;; Commentary:
 ;;https://github.com/senny/emacs-eclim
+
+;;; Code:
+
+(require 'cl-lib)
+;; -*- coding: utf-8; lexical-binding: t; -*-
 
 (custom-set-variables
  '(eclim-eclipse-dirs '(**ECLIPSE_MODELING_HOME**))) ;;'(eclim-executable "~/nonStandard/eclipse/eclim"))
@@ -38,3 +45,5 @@
 (require 'eclimd)
 ;;(start-eclimd)
 
+(provide 'config_eclipse)
+;;; config_eclipse.el ends here

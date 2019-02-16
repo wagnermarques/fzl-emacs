@@ -105,11 +105,9 @@
 
      ("Eclipse"
       ;;http://www.eclipse.org/sirius/
-      ["Eclipse Sirius" (fzl-start-eclipse-sirius)]
-      ["Eclim Eclipse Project Create"    (eclim-project-create)]
-      ["Eclipse  Jee Oxigen"    (fzl-start-eclipse-jee-java-oxigen)] ;;
-      ["Eclipse  Java Oxigen"    (fzl-start-eclipse-java-oxigen)]
-      ["Eclipse Modelling (start)"  (fzl-start-eclipse-modeling)]
+      ["Eclipse Jee"    (fzl-start-eclipse-jee)] ;;
+      ["Eclipse Java"    (fzl-start-eclipse-java)]
+      ["Eclipse Modelling"  (fzl-start-eclipse-modeling)]
       ["Eclipse Report" (fzl-eclipse-reporting--start)]))
 
      ;; http://emacs-fu.blogspot.com/2009/03/math-formulae-in-webpages.html
