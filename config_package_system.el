@@ -164,11 +164,14 @@
                                         ;common-lisp-snippets ;20161231.1557 available  melpa      Yasnippets for Common Lisp
                                         ;java-snippets
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;;;;;;;;;; J A V A                    ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; J A V A / Kotlin / Groove / Gradle                   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         eclim
                                         company-emacs-eclim
                                         ac-emacs-eclim
+
+                                        groovy-mode
+                                        kotlin-mode
 
 
                                         dockerfile-mode

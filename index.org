@@ -5,12 +5,13 @@ This emacs is for support development tasks e some another daily tasks
 
 keep in mind that I've been use fedora distribution
 
-The [[file:install-dev-packages.sh]] file presents the development packages that you should choose to install
+To use this emacs configuracion you should tell the path os
+development tools in global_variables_setup.el
 
-Beside development tasks, some academic tasks is considered, like
-latex, etc..
+And start your emacs with a acommand like:  emacs -q l emacsinitfile_cloned_dir/init2.el
 
-The [[file:bookmark.org]] file has a collection of interesting links..
+The [[file:install-dev-packages.sh]] contains the packages that will be
+installed
 
 * some of utils key bindins (shortcuts)
   This shortcut keys is defined in [[file:fzl_keys.el]]

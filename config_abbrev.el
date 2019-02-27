@@ -15,7 +15,7 @@
   '(
 
     ;;lisp coding
-    ("startLispCode"
+    ("lispFileHeader"
      ";;; package --- Summary
 
 ;;; Commentary:

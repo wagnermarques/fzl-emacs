@@ -178,7 +178,8 @@
 (message ">>>>>>>>>> [init2.el] 'config_latex")
 ;;(require 'auctex_config)
 
-
+;;Android
+(require 'config_androiddev)
 
 
 

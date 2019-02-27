@@ -62,6 +62,9 @@
 (define-key global-map (kbd "\ea") 'org-agenda-list)
 (define-key global-map (kbd "\et") 'org-todo-list)
 
+(define-key global-map (kbd "C-c C-a C-b") 'fzl-android-proj-gradlew-build)
+(define-key global-map (kbd "C-c C-a C-r") 'fzl-android-proj-gradlew-install-and-run)
+(define-key global-map (kbd "C-c C-a C-d") 'fzl-android-adb-devices)
 
 ;;handling files
 (global-set-key (kbd "\ef") 'find-file-in-project)

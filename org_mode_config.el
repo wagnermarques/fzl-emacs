@@ -88,9 +88,9 @@
 
 ;;;;;;;;;;;;;;;;;;IIMAGE;;;;;;;;;;;;;;;;;
 ;; add the org file link format to the iimage mode regex
-(add-to-list 'iimage-mode-image-regex-alist
-(cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
-(setq org-image-actual-width nil) ;;Resize image with #+ATTR_ORG: :width 50
+;(add-to-list 'iimage-mode-image-regex-alist
+;(cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
+;(setq org-image-actual-width nil) ;;Resize image with #+ATTR_ORG: :width 50
 
 ;; add a hook so we can display images on load
 (add-hook 'org-mode-hook '(lambda () (org-turn-on-iimage-in-org)))
@@ -123,7 +123,7 @@
 
 (add-to-list 'org-structure-template-alist
              '("sR" "
-   #+NAME                     
+   #+NAME:                     
    #+BEGIN_SRC R :session s1 :results output :exports both  
       #starts code
    #+END_SRC"))	
@@ -131,7 +131,7 @@
 
 (add-to-list 'org-structure-template-alist
              '("sShell" "
-   #+NAME                     
+   #+NAME:                     
    #+BEGIN_SRC shell :session s1 :results output :exports both
       #starts code
    #+END_SRC"))	
