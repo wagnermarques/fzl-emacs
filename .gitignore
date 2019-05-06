@@ -54,3 +54,6 @@ semanticdb
 node_modules
 ./ESS
 ./dockerfile-mode
+
+muttrc
+mutt_account.com.gmail.wagnerdocri

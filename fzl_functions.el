@@ -14,7 +14,6 @@
 ;;; https://caiorss.github.io/Emacs-Elisp-Programming/Elisp_Snippets.html
 ;;; 
 ;;;________________________________________
-
 (defun fzl-find-file-as-root (fileNameToOpen)
   "Utils func to open files as root, Provide FILENAMETOOPEN as full path."
   (find-file (concat "/sudo:root@localhost:"  fileNameToOpen)))
@@ -36,9 +35,25 @@
 (defun fzl-run-prg-in-ansi-term (prg)
   (ansi-term prg))
 
-;;(fzl-mutt()
-;;         (fzl-run-prg-in-ansi-term "/usr/bin/mutt"))
+(defun fzl-mutt()
+  "mutt email client withing ansi-term"
+         (fzl-run-prg-in-ansi-term "/usr/bin/mutt"))
 
+(defun fzl-html2pdf(htmlUrl)
+  (interactive "shtmlUrl")
+  "convert html to pdf file"
+  (setq lastPartOfUrl (string-reverse (car (split-string (string-reverse htmlUrl) "/"))))
+  (setq fName (concat lastPartOfUrl ".pdf"))
+  (start-process
+   "ProcessName_fzl-html2pdf"
+   "ProcessName_fzl-html2pdf"
+   "wkhtmltopdf"
+   htmlUrl
+   fName)
+  (switch-to-buffer "ProcessName_fzl-html2pdf"))
+
+
+  
 
 ;;;________________________________________
 ;;;
@@ -83,6 +98,14 @@
      "firefox"
      url)))
 
+(defun fzl-open-buffer-file-in-browser()
+  "Open buffer file in browser"
+  (interactive)
+  (start-process
+   "ProcessName-fzl-open-buffer-file-in-browser"
+   nil
+   "firefox"
+   (concat "file://" buffer-file-name)))
 
 
 
@@ -503,6 +526,19 @@
   (interactive)
   (message (concat **M2_HOME** "/conf/settings.xml"))
   (find-file (concat **M2_HOME** "/conf/settings.xml")))
+
+
+;;;;________________________________________
+;;;
+;;; DOCKER
+;;; 
+;;; 
+;;;________________________________________
+(defun fzl-docker-service()
+  "open docker-service systemd unit file"
+  (interactive)
+  (fzl-find-file-as-root "/usr/lib/systemd/system/docker.service"))
+
 
 
 ;;;;________________________________________

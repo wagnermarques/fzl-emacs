@@ -7,7 +7,8 @@
 ;;; https://github.com/ananthakumaran/tide/blob/master/README.md
 (provide 'tide_config)
 
-
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
 
 (defun setup-tide-mode ()
   (interactive)

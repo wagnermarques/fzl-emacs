@@ -14,9 +14,15 @@
                                         ;;;https://github.com/politza/pdf-tools
                                         ;;;Support library for PDF documents.
                                         ;;;Issue M-x pdf-tools-install RET once
+                                        command-log-mode   ;  20160413.447  available  melpa      log keyboard commands to buffer
                                         pdf-tools
                                         helm
 					helm-firefox
+
+                                        company-restclient ;20151202.1201 available  melpa      company-mode completion back-end for restclient-mode
+                                        ob-restclient           ;20180904.709  available  melpa      org-babel functions for restclient-mode
+                                        restclient         ;        20190122.942  available  melpa      An interactive HTTP client for Emacs
+                                        restclient-test    ;   20180106.2046 available  melpa      Run tests with restclient.el
 					
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;    DEALING WITH FILES      ;;;;;;;;;;;;;;;;
@@ -77,6 +83,8 @@
                                         ;eieio              ;1.4           built-in   Enhanced Implementation of Emacs Interpreted Objects
                                         ;eieio-core         ;1.4           built-in   Core implementation for eieio
                                         ;ede                ;1.2           built-in   Emacs Development Environment gloss
+
+                                        
                                         slime                            ;20170828.451  available  melpa      Superior Lisp Interaction Mode for Emacs
                                         auto-complete
                                         
@@ -88,6 +96,71 @@
                                         ;;[f3] 'flymake-display-err-menu-for-current-line)
                                         ;;[f4] 'flymake-goto-next-error)
                                         flycheck
+                                        flycheck           ;20190425.816  available  melpa      On-the-fly syntax checking
+                                        flycheck-cask      ;20160928.926  available  melpa      Cask support in Flycheck
+                                        
+                                        flycheck-clang-analyzer ;20180917.1425 available  melpa      Integrate Clang Analyzer with flycheck
+                                        flycheck-clang-tidy ;20171024.808  available  melpa      Flycheck syntax checker using clang-tidy
+                                        flycheck-clangcheck ;20150712.710  available  melpa      A Flycheck checker difinition for ClangCheck.
+                                        flycheck-clj-kondo ;20190410.1515 available  melpa      Add clj-kondo linter to flycheck
+                                        flycheck-clojure   ;20180721.1412 available  melpa      Flycheck: Clojure support
+                                        flycheck-color-mode-line ;20171122.707  available  melpa      Change mode line color with Flycheck status
+                                        
+                                        flycheck-css-colorguard ;20161031.1122 available  melpa      Detect similar colors in CSS
+                                        flycheck-cstyle    ;20160905.2341 available  melpa      Integrate cstyle with flycheck
+                                        
+                                        flycheck-gradle    ;20190315.234  available  melpa      Flycheck extension for Gradle.
+                                        flycheck-inline    ;20190320.1611 available  melpa      Display Flycheck errors inline
+                                        flycheck-irony     ;20180604.2152 available  melpa      Flycheck: C/C++ support via Irony
+                                        flycheck-joker     ;20180913.504  available  melpa      Add Clojure syntax checker (via Joker) to flycheck
+                                        flycheck-kotlin    ;20170122.1137 available  melpa      Support kotlin in flycheck
+                                        flycheck-package   ;20161111.2251 available  melpa      A Flycheck checker for elisp package authors
+                                        flycheck-phpstan   ;20190227.1642 available  melpa      Flycheck integration for PHPStan
+                                        flycheck-popup-tip ;20170812.2351 available  melpa      Display Flycheck error messages using popup.el
+                                        flycheck-pos-tip   ;20180610.1615 available  melpa      Display Flycheck errors in GUI tooltips
+                                        flycheck-pycheckers ;20190409.2335 available  melpa      multiple syntax checker for Python, using Flycheck
+                                        flycheck-pyflakes  ;20170330.2311 available  melpa      Support pyflakes in flycheck
+                                        flycheck-pyre      ;20190215.1222 available  melpa      Support Pyre in flycheck
+                                        
+                                        flycheck-rtags     ;20180619.824  available  melpa      RTags Flycheck integration.
+                                        flycheck-soar      ;20181106.852  available  melpa      Analyze the SQL statements using mi soar.
+                                        
+                                        flycheck-tip       ;20171020.1048 available  melpa      Show flycheck/flymake errors by tooltip
+                                        flycheck-title     ;20170216.2346 available  melpa      show flycheck errors in the frame title
+                                        flycheck-yamllint  ;20170325.1735 available  melpa      Flycheck integration for YAMLLint
+                                        
+                                        ;flymake            ;1.0.5         available  gnu        A universal on-the-fly syntax checker
+                                        
+                                        ;flymake-cppcheck   ;20140415.1257 available  melpa      Flymake work with Cppcheck for C/C++
+                                        ;flymake-css        ;20170723.146  available  melpa      Flymake support for css using csslint
+                                        
+                                        ;flymake-diagnostic-at-point ;20180815.1004 available  melpa      Display flymake diagnostics at point
+                                        
+                                        ;flymake-eslint     ;20190412.346  available  melpa      A Flymake backend for Javascript using eslint
+                                        ;flymake-gjshint    ;20130327.1232 available  melpa      A flymake handler for javascript using both jshint and gjslint
+                                        
+                                        ;flymake-google-cpplint ;20140205.1325 available  melpa      Help to comply with the Google C++ Style Guide
+                                        ;flymake-gradle     ;20190315.233  available  melpa      Flymake extension for Gradle.
+                                        
+                                        ;flymake-jshint     ;20140319.2200 available  melpa      making flymake work with JSHint
+                                        ;flymake-jslint     ;20170723.146  available  melpa      A flymake handler for javascript using jslint
+                                        ;flymake-json       ;20180511.911  available  melpa      A flymake handler for json using jsonlint
+                                        ;flymake-ktlint     ;20180831.346  available  melpa      Flymake extension for Ktlint.
+                                        ;flymake-less       ;20151111.738  available  melpa      Flymake handler for LESS stylesheets (lesscss.org)
+                                        
+                                        ;flymake-php        ;20170723.146  available  melpa      A flymake handler for php-mode files
+                                        ;flymake-phpcs      ;20140713.631  available  melpa      making flymake work with PHP CodeSniffer
+                                        ;flymake-puppet     ;20170801.554  available  melpa      Flymake handler using puppet-lint
+                                        ;flymake-python-pyflakes ;20170723.146  available  melpa      A flymake handler for python-mode files using pyflakes (or flake8)
+                                        
+                                        ;flymake-ruby       ;20170723.146  available  melpa      A flymake handler for ruby-mode files
+                                        
+                                        ;flymake-sass       ;20170723.146  available  melpa      Flymake handler for sass and scss files
+                                        ;flymake-shell      ;20170723.146  available  melpa      A flymake syntax-checker for shell scripts
+                                        ;flymake-shellcheck ;20181214.24   available  melpa      A bash/sh Flymake backend powered by ShellCheck
+                                        
+                                        ;flymake-vnu        ;20181128.216  available  melpa      Flymake extension for the v.Nu HTML validator.
+                                        ;flymake-yaml       ;20130423.1548 available  melpa      A flymake handler for YAML
 
 
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -149,7 +222,13 @@
                                         ;org-ref
                                         ;org-plus-contrib
                                         ;reftex
-                                        ;php-mode
+                                          ac-php ;            20190424.222  available  melpa      Auto Completion source for PHP.
+                                          ac-php-core ;       20190424.1017 available  melpa      The core library of the ac-php.
+  company-php        ;20190424.222  available  melpa      A company back-end for PHP.
+  company-phpactor   ;20190403.216  available  melpa      company-mode backend for Phpactor
+  flycheck-phpstan   ;20190227.1642 available  melpa      Flycheck integration for PHPStan
+  
+                                        php-mode
                                         ;markdown-mode
 
                                         

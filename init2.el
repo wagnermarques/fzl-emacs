@@ -1,14 +1,14 @@
 ;;; package --- Summary
 
 ;;; Commentary:
-;;; I have been use Emacs for development with some devtools
-;;; So there are a lot of global vars that define whare are these tools are in the disk
+;;; I have been use Emacs for development with some anothers devtools
+;;; So there are a lot of global vars that define whare are these tools home are in the disk
 ;;; There are not a main goal of Emacs usability
 ;;; are there any effort to adapt this for windows
-;;;some references
-;;;https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html
-;;;https://www.gnu.org/software/emacs/manual/
-;;;https://www.emacswiki.org/emacs?interface=en
+;;; some references
+;;; https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html
+;;; https://www.gnu.org/software/emacs/manual/
+;;; https://www.emacswiki.org/emacs?interface=en
 
 ;;; Code:
 (message ">>>>>>>>>> [init2.el] starting running...")
@@ -25,12 +25,13 @@
 (setq debug-on-error t)
 
 
+
 ;;Some startup global variables
-(setq emacs-startup-init-timestamp (current-time))
-(defvar times-stamp-format-pattern "%a %b %d %H:%M:%S %Z %Y")
-(defvar date-format-pattern "%a %b %d %H:%M:%S %Z %Y")
-(defvar time-format-pattern "%a %b %d %H:%M:%S %Z %Y")
-(defvar dayOfWeekendStr-dayOfMoutnInt-moutnInStr "%A %e %B")
+;(setq emacs-startup-init-timestamp (current-time))
+;(defvar times-stamp-format-pattern "%a %b %d %H:%M:%S %Z %Y")
+;(defvar date-format-pattern "%a %b %d %H:%M:%S %Z %Y")
+;(defvar time-format-pattern "%a %b %d %H:%M:%S %Z %Y")
+;(defvar dayOfWeekendStr-dayOfMoutnInt-moutnInStr "%A %e %B")
 
 
 ; maximize Emacs window
@@ -151,6 +152,8 @@
 (message ";;C O N F I G U R E    P R O G R A M M I N G     L A N G U A G E S")
 (message ";;html")
 
+;;typescript
+(require 'tide_config)
 
 (message ">>>>>>>>>> [init2.el] config_simple_httpd")
 (require 'config_simple_httpd)
@@ -183,7 +186,7 @@
 
 
 
-;;ORG MODE CONFIG
+;; O R G   M O D E    C O N F I G
 (message ">>>>>>>>>> [init2.el] 'iimage_mode_config")
 (require 'iimage_mode_config);; -- Display images in org mode
 ;;TODO: Install slime and startup at this emacs startup
@@ -191,6 +194,7 @@
 (message ">>>>>>>>>> [init2.el] 'org_mode_config")
 (require 'org_mode_config)
 ;;(slime)
+
 
 
 
@@ -212,8 +216,12 @@
 (message ">>>>>>>>>> [init2.el] 'config_rclone")
 (require 'config_rclone)
 (require 'config_pdftools)
+(require 'elfeed_config)
 
-
+;;mutt email client
+(require 'mutt_config)
+    (server-start)
+    (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 
 ;(require 'reftex)
 
@@ -240,7 +248,7 @@
 ;(require 'config_eclipse)
 
 
-;(require 'elfeed_config)
+
 
 
 

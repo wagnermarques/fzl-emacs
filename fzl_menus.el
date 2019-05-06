@@ -91,6 +91,9 @@
      ("Maven"
       ["Maven (settings)"  (fzl-maven-settings)])
 
+     ("Docker"
+      ["docker.service file"  (fzl-docker-service)])
+
      ("Git"
       ["Git config --global set http.proxy"  (fzl-git-config-set-http-proxy)]
       ["Git config --global UNSET http.proxy"  (fzl-git-config-UNset-http-proxy)])

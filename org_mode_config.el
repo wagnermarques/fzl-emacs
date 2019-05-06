@@ -45,6 +45,7 @@
    (java . t)
    (ditaa . t)
    (R . t)
+   (restclient . t)
    ))
 ;;   (ruby . t)
 
@@ -88,9 +89,10 @@
 
 ;;;;;;;;;;;;;;;;;;IIMAGE;;;;;;;;;;;;;;;;;
 ;; add the org file link format to the iimage mode regex
-;(add-to-list 'iimage-mode-image-regex-alist
-;(cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
-;(setq org-image-actual-width nil) ;;Resize image with #+ATTR_ORG: :width 50
+;;(add-to-list 'iimage-mode-image-regex-alist
+;;(cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
+;;https://emacs.stackexchange.com/questions/26363/downscaling-inline-images-in-org-mode
+(setq org-image-actual-width nil) ;;Resize image with #+ATTR_ORG: :width 50
 
 ;; add a hook so we can display images on load
 (add-hook 'org-mode-hook '(lambda () (org-turn-on-iimage-in-org)))
@@ -130,12 +132,30 @@
 
 
 (add-to-list 'org-structure-template-alist
+             '("sRestclient" "
+   #+NAME:    
+   #+BEGIN_SRC restclient :session s1 :results output :exports both  
+      #starts code
+     POST --header 'Content-Type: application/json' 
+     http://localhost:8081/service/rest/v1/script
+   #+END_SRC"))	
+
+
+(add-to-list 'org-structure-template-alist
              '("sShell" "
    #+NAME:                     
    #+BEGIN_SRC shell :session s1 :results output :exports both
       #starts code
    #+END_SRC"))	
 
+(add-to-list 'org-structure-template-alist
+             '("img" "
+   #+NAME:figX                     
+   #+CAPTION: figX
+   #+attr_ORG: :width 500px
+   #+attr_html: :width 500px
+   #+attr_latex: :width 500px
+   [[./imgs/XXX]]"))	
 
 
 

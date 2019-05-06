@@ -1,5 +1,8 @@
 ;;; Package -- Summary:
 ;;; Commentary:
+;; this file sets some path to define some dev tools location
+;; this file update the path environment variable too
+
 ;;; Code:
 (provide 'global_variables_setup)
 
@@ -8,7 +11,10 @@
 ;;FZLBPMS PATHS (Fzlbpms is just a directory with several development tools)
 (setq **DISK** "/home/wagner")
 
+;;there are some strategic commands in bin directory
 (setq **EMACSINITFILE_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile"))
+(setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **EMACSINITFILE_HOME** "/bin"))))
+(shell-command "chmod +x ./bin/*.sh")
 
 (setq **FZL_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/fzlbpms/fzlStudio"))
 
@@ -72,7 +78,9 @@
 ;;if you have been runned it befor, consult /home/$USER/.config/rclone/rclone.config
 (setq **rclone_remote_config_session**  "gdrive_wgn")
 
+
 ;;;C O N T A I N E R S    F U N C T I O N A L I T I E S
 (setq **CONTAINERS_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/Fedora-Dockerfiles"))
 (setq **maven_container_home** (concat **CONTAINERS_HOME** "/maven"))
+
 

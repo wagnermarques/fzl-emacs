@@ -1,4 +1,11 @@
-(provide 'config_general_emacs_behaviour)
+;;; package --- Summary
+
+;;; Commentary:
+
+;;; Code:
+
+(require 'cl-lib)
+;; -*- coding: utf-8; lexical-binding: t; -*-
 
 (scroll-bar-mode -1)
 
@@ -7,11 +14,11 @@
 
 ;http://www.emacswiki.org/emacs/StickyModifiers
 ;From the documentation:
-;This means that you can release the modifier key before pressing down 
+;This means that you can release the modifier key before pressing down 
 ;the key that you wish to be modified. 
 ;Although this is non-standard behavior, it is recommended because 
 ;it reduces the strain on your hand, thus reducing the incidence of the dreaded 
-;Emacs-pinky syndrome.
+;Emacs-pinky syndrome.
 (setq modifier-keys-are-sticky t)
 
 ;will make ctrl, shift, alt "sticky" in xemacs.
@@ -21,7 +28,7 @@
 (setq message-log-max 512) ;will reduce the number of messages that appear in the "*Messages*" window to 512.
 
 ;will make the display of date and time persistent.
-(setq display-time-day-and-date t) (display-time) 
+;(setq display-time-day-and-date t) (display-time) 
 
 ;will highlight region between point and mark.
 (transient-mark-mode t) 
@@ -58,8 +65,6 @@ auto-mode-alist))
 
 
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;t y p e - b r e a k
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -70,7 +75,7 @@ auto-mode-alist))
 ;  This is a minor mode, but it is global to all buffers by default.
 ;A negative prefix argument disables this mode.
 ;No argument or any non-negative argument enables it.
-(type-break-mode -1)
+;(type-break-mode)
 
 ;http://lists.gnu.org/archive/html/emacs-pretest-bug/2005-01/msg00085.html
 ; Allow type-break-file-name to be nil and if so, don't use
@@ -78,9 +83,7 @@ auto-mode-alist))
 ;(type-break-file-name nil)
 
 ;http://repo.or.cz/w/emacs.git/blob/HEAD:/lisp/type-break.el
-(setq type-break-query-mode nil)
-
-
+;(setq type-break-query-mode nil)
 
 
 
@@ -106,7 +109,6 @@ auto-mode-alist))
 
 (setq cua-enable-cua-keys nil)           ;; only for rectangles
 (cua-mode t)
-
 
 
 
@@ -160,10 +162,8 @@ auto-mode-alist))
 ;(setq backup-directory-alist '((".*" . (concat *FZL_HOME* "/backups/emacs/autosaved_files/"))))
 ;(setq backup-directory-alist `(("." . *fzl-backup-dir*))) FIXME
 
-
-(setq backup-directory-alist `(("." . "~/PROGSATIVOS/fzlbpms/backup/emacs/autosaved_files")))
-
-
+;;where emacs will put ~ backup files
+(setq backup-directory-alist `(("." . "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile/backup-directory")))
 
 
 
@@ -183,13 +183,9 @@ auto-mode-alist))
 (add-hook 'text-mode-hook
      '(lambda () (auto-fill-mode 1)))
 
-
-
-
 ;;________________________________________________________________
 ;;    Handle files with mixed UNIX and DOS line endings.
 ;;________________________________________________________________
-
 (defun remove-dos-eol ()
   "Do not use '^M' in files containing mixed UNIX and DOS line endings."
   (interactive)
@@ -214,6 +210,7 @@ auto-mode-alist))
 ; (interactive)
 ; (flyspell-mode 1))
 ; (flyspell-mode 0))
+
 
 
 
@@ -290,7 +287,7 @@ auto-mode-alist))
 (setq default-major-mode 'text-mode) ;will make text-mode default.
 ;(global-font-lock-mode t t) ;means that we want fontification in all modes.
 ;(setq font-lock-maximum-decoration t) ;denotes our interest in maximum possible fontification.
-(type-break-mode) ;get intermittent messages to stop typing
+
 
 ;(setq enable-recursive-minibuffers t) ;; allow recursive editing in minibuffer
 ;(resize-minibuffer-mode 1)            ;; minibuffer gets resized if it becomes too big
@@ -350,12 +347,10 @@ auto-mode-alist))
 
 
 
-
 ;;________________________________________________________________
 ;;  
 ;;  EMACS HOOKS
 ;;________________________________________________________________
-
 
 
 ;;from https://www.emacswiki.org/emacs/ShellMode
@@ -379,11 +374,5 @@ auto-mode-alist))
 
 
 
-
-
-
-
-
-
-
-
+(provide 'config_general_emacs_behaviour)
+;;; this_file_name.el ends here

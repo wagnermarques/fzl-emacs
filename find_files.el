@@ -6,6 +6,8 @@
 
 (find-file (concat **EMACSINITFILE_HOME**  "/index.org"))
 (find-file "config_abbrev.el")
+(find-file "org_mode_config.el")
+
 (find-file (concat **EMACSINITFILE_HOME**  "/emacsinitfile.log"))
 (find-file (concat **EMACSINITFILE_HOME**  "/elfeed_config.el"))
 ;(find-file (concat **EMACSINITFILE_HOME**  "/autocomplete_installation.el"))
