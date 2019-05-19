@@ -43,6 +43,7 @@
 ;;ANDROID_HOME is depracated
 (setq **ANDROID_STUDIO_PROJECTS_DIR** "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/AndroidStudioProjects/")
 
+(setq **ANDROID_STUDIO_HOME** "/home/wagner/PROGSATIVOS/android-studio")
 (setq **ANDROID_SDK_ROOT** "/home/wagner/PROGSATIVOS/androidSdk")
 (setenv "ANDROID_SDK_ROOT" **ANDROID_SDK_ROOT**)
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/platform-tools")))

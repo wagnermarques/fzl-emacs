@@ -36,6 +36,7 @@
 ;; credits in http://emacs.stackexchange.com/questions/13005/is-there-a-decent-log-viewing-mode-for-large-log-files
 ;; TODO: Incluide .out files to rever tomcat catalina.out log file
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-tail-mode))
+(add-to-list 'auto-mode-alist '("\_log\\'" . auto-revert-tail-mode))
 
 (defun fzl-hook-for-auto-revert-tail-mode ()
   (end-of-buffer)

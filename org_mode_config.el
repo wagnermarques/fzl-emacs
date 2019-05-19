@@ -132,6 +132,21 @@
 
 
 (add-to-list 'org-structure-template-alist
+             '("sHTML" "
+   #+NAME:                     
+   #+BEGIN_SRC html :session s1 :results output :exports both  
+      #starts code
+
+   #+END_SRC
+
+   #+NAME:
+   #+BEGIN_EXPORT html
+   
+   #+END_EXPORT"
+               ))	
+
+
+(add-to-list 'org-structure-template-alist
              '("sRestclient" "
    #+NAME:    
    #+BEGIN_SRC restclient :session s1 :results output :exports both  

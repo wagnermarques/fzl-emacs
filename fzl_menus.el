@@ -17,7 +17,8 @@
 
 (easy-menu-define djcb-menu global-map "fzlbpms-menu"
   '("FZLBPMS"
-    
+    ("Utils"
+     ["wkhtmltopdf" fzl-html2pdf])
     ("Containers" ;; submenu
      ("Logs"
       ["Host: journalctl -u docker.service" fzl-journalctl-docker-service])
@@ -84,6 +85,7 @@
       ["Open R-Studio" (fzl-start-rstudio)])
 
      ("Android"
+      ["Start Android Studio" (fzl-start-android-studio)]
       ["Mostra Variaveis de Ambiente" (fzl-android-show-environment-variables)]
       ["Lista Avds (fzl-android-list-avds)" (fzl-android-list-avds)]
       ["Listar Pacotes Instalados e Disponiveis in Another Buffer (sdkmanager --list)" (fzl-android-sdkmanager-open)])
@@ -91,8 +93,11 @@
      ("Maven"
       ["Maven (settings)"  (fzl-maven-settings)])
 
-     ("Docker"
-      ["docker.service file"  (fzl-docker-service)])
+     ("Systemd Services"
+      ["docker.service file"  (fzl-docker-service)]
+      ["docker-storage-setup file"  (fzl-docker-storage-setup)]
+      ["mariadb.service file"  (fzl-mariadb-service)]
+      )
 
      ("Git"
       ["Git config --global set http.proxy"  (fzl-git-config-set-http-proxy)]

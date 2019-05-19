@@ -49,8 +49,8 @@
    "ProcessName_fzl-html2pdf"
    "wkhtmltopdf"
    htmlUrl
-   fName)
-  (switch-to-buffer "ProcessName_fzl-html2pdf"))
+   (concat "./generated-artifacts/wkhtmltopdf" fName)
+   (switch-to-buffer "ProcessName_fzl-html2pdf")))
 
 
   
@@ -108,7 +108,6 @@
    (concat "file://" buffer-file-name)))
 
 
-
 ;;;________________________________________
 ;;;
 ;;; android sdk
@@ -131,9 +130,22 @@
   (start-process
    "ProcessName-android--list-avds"
    "BufferName-android--list-avds"
-   (concat **ANDROID_HOME** "/tools/android list avd")
+   "emulator "
+   "-list-avds"
+   )
+  (switch-to-buffer "BufferName-android--list-avds")
+  )
+
+(defun fzl-start-android-studio()
+  (interactive)
+  (start-process
+   "ProcessName-fzl-start-android-studio"
+   "BufferName-fzl-start-android-studio"
+   (concat **ANDROID_STUDIO_HOME** "/bin/studio.sh")
    ""
-  ))
+   )
+  (switch-to-buffer "BufferName-fzl-start-android-studio")
+  )
 
 (defun fzl-android-sdkmanager-open()
   "open android sdk manager"
@@ -530,7 +542,7 @@
 
 ;;;;________________________________________
 ;;;
-;;; DOCKER
+;;; SYSTEMD SERVICES
 ;;; 
 ;;; 
 ;;;________________________________________
@@ -539,6 +551,15 @@
   (interactive)
   (fzl-find-file-as-root "/usr/lib/systemd/system/docker.service"))
 
+(defun fzl-docker-storage-setup()
+  "open docker-storage-setup file"
+  (interactive)
+  (fzl-find-file-as-root "/etc/sysconfig/docker-storage-setup"))
+
+(defun fzl-mariadb-service()
+  "open docker-service systemd unit file"
+  (interactive)
+  (fzl-find-file-as-root "/usr/lib/systemd/system/mariadb.service"))
 
 
 ;;;;________________________________________

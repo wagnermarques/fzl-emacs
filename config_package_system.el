@@ -83,7 +83,7 @@
                                         ;eieio              ;1.4           built-in   Enhanced Implementation of Emacs Interpreted Objects
                                         ;eieio-core         ;1.4           built-in   Core implementation for eieio
                                         ;ede                ;1.2           built-in   Emacs Development Environment gloss
-
+                                        magit                              ;markdown-mode marmalade nodejs-repl nrepl o-blog org paredit 
                                         
                                         slime                            ;20170828.451  available  melpa      Superior Lisp Interaction Mode for Emacs
                                         auto-complete
@@ -263,7 +263,7 @@
   ;;ac-slime auto-complet autopair clojure-mode clojure-test- coffee-mode
   ;;csharp-mode deft erlang feature-mode haml-mode
   ;;haskell-mode htmlize
-  ;; magit markdown-mode marmalade nodejs-repl nrepl o-blog org paredit 
+
   ;;php-mode puppet-mode
   ;;restclient
   ;;rvm scala-mode
