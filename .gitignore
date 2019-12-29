@@ -53,7 +53,7 @@ tramp
 *.pdf
 semanticdb
 node_modules
-./ESS
+**/**/ESS
 ./dockerfile-mode
 
 muttrc
