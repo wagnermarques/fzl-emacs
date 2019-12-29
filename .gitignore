@@ -55,6 +55,7 @@ semanticdb
 node_modules
 **/**/ESS
 **/**/org-ref
+**/**/web-mode
 
 ./dockerfile-mode
 
