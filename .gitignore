@@ -54,6 +54,8 @@ tramp
 semanticdb
 node_modules
 **/**/ESS
+**/**/org-ref
+
 ./dockerfile-mode
 
 muttrc
