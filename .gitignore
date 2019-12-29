@@ -1,3 +1,10 @@
+#sub modules and external subprojects
+node_modules
+**/**/ESS
+**/**/org-ref
+**/**/web-mode
+
+
 # -*- mode: gitignore; -*-
 #ref.: https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
 credentials.org
@@ -52,10 +59,6 @@ tramp
 *.class
 *.pdf
 semanticdb
-node_modules
-**/**/ESS
-**/**/org-ref
-**/**/web-mode
 
 ./dockerfile-mode
 

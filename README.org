@@ -1,0 +1,44 @@
+#+Title:emacsinitfile
+#+Subtitle: yet another (emacs customization)
+
+* Introduction
+  The emacs is the most customized tools, indeed. This customization
+  is runned at emacs initialization process
+  https://www.gnu.org/software/emacs/manual/html_node/eintr/Emacs-Initialization.html
+
+  This is another customization to my needs.
+
+  Maybe my needs is almost the same your needs.
+
+  I use emacs for development in java, javascript and other languages
+  ecosystems.
+
+* customization goals  
+
+  The intent of emacsinitfile project is customize emacs to support development source code within the
+  presence of another tools that compose a enviroment development
+  environment.
+  
+  My dreamed final goal is to support my own BPMS project.
+
+  With several fantastic peace of software together like nexus, maven, eclipse and some framework the main intent is to provide a bpms plataform to develope softwares.
+
+
+* usage
+  
+  There are a lot of interesting feature in this customization. To
+  make a trial.... Make it at your own risk.
+  
+  This will work just in linux. I've been used with fedora, but i
+  believe will work with another distributions. No effor are made to
+  port to windows.
+  
+  
+   #+NAME:                     
+   #+BEGIN_SRC shell :session s1 :results output :exports both
+     cd /home/$USER
+     git clone https://github.com/wagnermarques/emacsinitfile.git
+     cd /home/$USER/emacsinitfile && emacs -q -l init2.el
+   #+END_SRC
+
+
