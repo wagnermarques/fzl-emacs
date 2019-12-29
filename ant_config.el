@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(fzl_log "maven_config.el loaded sucessfully!!!")
+(fzl/log "maven_config.el loaded sucessfully!!!")
 (message "maven_config.el loaded sucessfully!!!")
 
 ;;**DEV_TOOLS_BASEDIR** defined in global_variables_setup.el *

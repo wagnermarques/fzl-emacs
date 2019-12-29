@@ -1,4 +1,4 @@
-(fzl_log "autocomplete_config.el loaded sucessfully!")
+(fzl/log "autocomplete_config.el loaded sucessfully!")
 (provide 'autocomplete_config)
 
 

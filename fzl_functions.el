@@ -23,6 +23,53 @@
   (interactive)
   (fzl-find-file-as-root "/etc/selinux/config"))
 
+
+
+;;;________________________________________
+;;;
+;;; integrations
+;;; KARAF
+;;; 
+;;; 
+;;;________________________________________
+(defun fzl-karaf-karaf-out()
+  "Opens karaf.log file."
+  (find-file (concat **KARAF_HOME** "/data/log/karaf.log"))
+  )
+
+
+;;;________________________________________
+;;;
+;;; integrations
+;;; Bonita Studio
+;;; 
+;;; 
+;;;________________________________________
+
+(defun fzl-bonita-studio-tomcat-logs-dir()
+  "Opens dired at tomcat logs dir."
+  (dired "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/SIN5009WithBonitasoft/tomcat/server/logs")
+  )
+
+(defun fzl-bonita-studio-tomcat-metadata-tomcat-log()
+  "Open .metadata/tomcat.log."
+  (find-file
+   "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/SIN5009WithBonitasoft/.metadata/tomcat.log")
+  )
+  
+
+
+;;;________________________________________
+;;;
+;;; integrations
+;;; Jekyll exportation
+;;; 
+;;; 
+;;;________________________________________
+
+
+
+
 ;;;________________________________________
 ;;;
 ;;; shell utilities
@@ -142,6 +189,7 @@
    "ProcessName-fzl-start-android-studio"
    "BufferName-fzl-start-android-studio"
    (concat **ANDROID_STUDIO_HOME** "/bin/studio.sh")
+   ;;(concat **ANDROID_STUDIO_HOME** "/bin/idea.sh")
    ""
    )
   (switch-to-buffer "BufferName-fzl-start-android-studio")
@@ -243,8 +291,8 @@
   (start-process
      "PROCESS-fzl-start-eclipse-java-oxigen"
      "PROCESS-fzl-start-eclipse-java-oxigen"
-     (concat **FZL_HOME** "/integrated/ides/eclipse-jee-oxygen-2-linux-gtk-x86_64/eclipse")))
-
+     (concat **FZL_HOME** "/integrated/ides/eclipse-jee-2018-12-R-linux-gtk-x86_64/eclipse")))
+                                            
 
 
 ;;;________________________________________
@@ -534,7 +582,7 @@
 ;;; 
 ;;;________________________________________
 (defun fzl-maven-settings()
-  "open maven settings.xml"
+  "Open maven settings.xml."
   (interactive)
   (message (concat **M2_HOME** "/conf/settings.xml"))
   (find-file (concat **M2_HOME** "/conf/settings.xml")))
@@ -542,10 +590,16 @@
 
 ;;;;________________________________________
 ;;;
-;;; SYSTEMD SERVICES
+;;; Config Files
 ;;; 
 ;;; 
 ;;;________________________________________
+(defun fzl-open-gradle-properties-file()
+  "open ~/.gradle/gradle-properties"
+  (interactive)
+  (find-file "~/.gradle/gradle.properties")
+  )
+
 (defun fzl-docker-service()
   "open docker-service systemd unit file"
   (interactive)
@@ -555,6 +609,17 @@
   "open docker-storage-setup file"
   (interactive)
   (fzl-find-file-as-root "/etc/sysconfig/docker-storage-setup"))
+
+(defun fzl-open-ifcfg-enp2s0-file()
+  "open docker-storage-setup file"
+  (interactive)
+  (fzl-find-file-as-root "/etc/sysconfig/network-scripts/ifcfg-enp2s0"))
+
+(defun fzl-open-resolv-conf-file()
+  "open docker-storage-setup file"
+  (interactive)
+  (fzl-find-file-as-root "/etc/resolv.conf"))
+
 
 (defun fzl-mariadb-service()
   "open docker-service systemd unit file"

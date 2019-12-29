@@ -4,3 +4,6 @@
 [submodule "web-mode"]
 	path = web-mode
 	url = https://github.com/fxbois/web-mode.git
+[submodule "org-ref"]
+	path = org-ref
+	url = https://github.com/wagnermarques/org-ref.git

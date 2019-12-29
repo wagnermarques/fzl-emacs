@@ -41,8 +41,50 @@
     
     ;;Org mode files
     ("orgFileHeader" "#+Title:
-#+Subtitle")
+#+Subtitle:")
 
+    ("imgConfig"     
+"#+CAPTION: Weight space
+#+attr_html: 
+#+ATTR_HTML: :width 100px :alt altStr :title titleStr :align center
+#+attr_latex: :width 100px
+#+ATTR_ORG: :width 100px"
+     )
+     
+    ("equ" "
+  \\begin{equation} \\label{eq:str1}
+
+  \\end{equation}
+")
+    
+    ;;Org mode files for jekyll
+    ("jekyllPost"
+"#+TITLE: PostTitleHere
+#+AUTHOR: Wagner
+#+JEKYLL_LAYOUT: home
+#+JEKYLL_POST_EXCERPT: PostExcerpt
+#+JEKYLL_CATEGORY: aulas
+#+JEKYLL_PERMALINK:/aulas/:title
+#+JEKYLL_DATE: {{ page.date }}"
+)
+
+
+    ;;Org mode files
+    ("planodeaula" "* Tema
+* Objetivo
+* Duração
+* Pré-Requisitos
+** Conhecimentos Prévios
+** Recursos
+
+* Procedimento didatico
+* Exercicios e Atividades de Reflexão/Fixação
+* Avaliação
+* Referencias
+
+")
+
+    
     ("utf8" "-*- coding: utf-8 -*-" )
 
     ;; regex

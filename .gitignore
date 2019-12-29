@@ -1,5 +1,6 @@
 # -*- mode: gitignore; -*-
 #ref.: https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
+credentials.org
 *temp*
 *.log
 *log
@@ -56,4 +57,5 @@ node_modules
 ./dockerfile-mode
 
 muttrc
+mutt_account* #this kind of file containst private data 
 mutt_account.com.gmail.wagnerdocri

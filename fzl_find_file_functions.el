@@ -1,4 +1,12 @@
-(provide 'fzl_find_file_functions)
+;;; package --- Summary
+
+;;; Commentary:
+
+;;; Code:
+
+(require 'cl-lib)
+;; -*- coding: utf-8; lexical-binding: t; -*-
+
 
 (defun fzl-open-bookmark-emacs-configuration-files()
   "open-initel-file"
@@ -18,3 +26,5 @@
 ;(fzl-open-yasnippet-el)
 ;(fzl-open-find_file_functions)
 
+;;; this_file_name.el ends here
+(provide 'fzl_find_file_functions)

@@ -1,6 +1,6 @@
 (provide 'java_config)
 
-(fzl_log "java_config loaded sucessfully!!!")
+(fzl/log "java_config loaded sucessfully!!!")
 
 ;;all **GLOBAL_VARIABLES** is defined in global_variables_setup.el *
 

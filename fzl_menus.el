@@ -90,13 +90,21 @@
       ["Lista Avds (fzl-android-list-avds)" (fzl-android-list-avds)]
       ["Listar Pacotes Instalados e Disponiveis in Another Buffer (sdkmanager --list)" (fzl-android-sdkmanager-open)])
 
-     ("Maven"
-      ["Maven (settings)"  (fzl-maven-settings)])
-
-     ("Systemd Services"
+     ("Config files"
+      ["Maven Settings: " (concat **M2_HOME** "/conf/settings.xml")  (fzl-maven-settings)]
+      ["Git config: ~/.gitconfig" (find-file "~/.gitconfig")]
       ["docker.service file"  (fzl-docker-service)]
       ["docker-storage-setup file"  (fzl-docker-storage-setup)]
       ["mariadb.service file"  (fzl-mariadb-service)]
+      ["~/.gradle/gradle.properties file"  (fzl-open-gradle-properties-file)]
+      ["/etc/sysconfig/network-scripts/ifcfg-enp2s0"  (fzl-open-ifcfg-enp2s0-file)]
+      ["/etc/resolv.conf"  (fzl-open-resolv-conf-file)]
+      )
+
+     ("Log files"
+      ["Bonita Tomcat Embedded Server Logs " (fzl-bonita-studio-tomcat-logs-dir)]
+      ["Bonita Tomcat .metadata/tomcat.log " (fzl-bonita-studio-tomcat-metadata-tomcat-log)]
+      ["**KARAF_HOME**/data/log/karaf.log" (fzl-karaf-karaf-out)]
       )
 
      ("Git"

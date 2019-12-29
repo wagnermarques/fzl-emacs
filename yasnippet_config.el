@@ -13,7 +13,7 @@
 
 ;;; Comentary:
 ;;; Code:
-(fzl_log "yasnippet_config.el loaded sucessfully!!!")
+(fzl/log "yasnippet_config.el loaded sucessfully!!!")
 
 
 

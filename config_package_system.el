@@ -14,15 +14,20 @@
                                         ;;;https://github.com/politza/pdf-tools
                                         ;;;Support library for PDF documents.
                                         ;;;Issue M-x pdf-tools-install RET once
-                                        command-log-mode   ;  20160413.447  available  melpa      log keyboard commands to buffer
+                                        command-log-mode   ;20160413.447  available  melpa      log keyboard commands to buffer
                                         pdf-tools
                                         helm
 					helm-firefox
 
+                                        ox-jekyll-md
+                                        ;org2jekyll got problems
+					;easy-jekyll got problems
+					;jekyll-modes got problems
+                                        
                                         company-restclient ;20151202.1201 available  melpa      company-mode completion back-end for restclient-mode
-                                        ob-restclient           ;20180904.709  available  melpa      org-babel functions for restclient-mode
-                                        restclient         ;        20190122.942  available  melpa      An interactive HTTP client for Emacs
-                                        restclient-test    ;   20180106.2046 available  melpa      Run tests with restclient.el
+                                        ob-restclient      ;20180904.709  available  melpa      org-babel functions for restclient-mode
+                                        restclient         ;20190122.942  available  melpa      An interactive HTTP client for Emacs
+                                        restclient-test    ;20180106.2046 available  melpa      Run tests with restclient.el
 					
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;    DEALING WITH FILES      ;;;;;;;;;;;;;;;;
@@ -62,9 +67,8 @@
                                         elfeed-web         ;1.1.0         available  marmalade  web interface to Elfeed
                                         elfeed-web         ;20160904.1131 available  melpa      web interface to Elfeed
                                         
-                                        ;the greate org-mode
+                                        ;the great org-mode
                                         org
-
                                         org-ref
                                         
                                         ;org-plus-contrib
@@ -224,24 +228,19 @@
                                         ;reftex
                                           ac-php ;            20190424.222  available  melpa      Auto Completion source for PHP.
                                           ac-php-core ;       20190424.1017 available  melpa      The core library of the ac-php.
-  company-php        ;20190424.222  available  melpa      A company back-end for PHP.
-  company-phpactor   ;20190403.216  available  melpa      company-mode backend for Phpactor
-  flycheck-phpstan   ;20190227.1642 available  melpa      Flycheck integration for PHPStan
+					  company-php        ;20190424.222  available  melpa      A company back-end for PHP.
+					  company-phpactor   ;20190403.216  available  melpa      company-mode backend for Phpactor
+					  flycheck-phpstan   ;20190227.1642 available  melpa      Flycheck integration for PHPStan
   
-                                        php-mode
-                                        ;markdown-mode
-
+                                          php-mode
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; ARDUINO PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        arduino-mode        ;      20180509.36   available  melpa      Major mode for editing Arduino code.
+                                        ;company-arduino     ;   20160306.1739 available  melpa      company-mode for Arduino
                                         
-                                        ;gist
 
-                                        ;el-autoyas         ;20120918.617  available  melpa      Automatically create Emacs-Lisp Yasnippets
-                                        ;yatemplate         ;20161108.1305 available  melpa      File templates with yasnippet
-                                        ;java-snippets      ;20160626.1952 installed             Yasnippets for Java
-                                        ;angular-snippets   ;20140513.2223 available  melpa      Yasnippets for AngularJS
-                                        ;auto-yasnippet     ;20160925.225  available  melpa      Quickly create disposable yasnippets
-                                        ;clojure-snippets   ;20161024.16   available  melpa      Yasnippets for clojure
-                                        ;common-lisp-snippets ;20161231.1557 available  melpa      Yasnippets for Common Lisp
-                                        ;java-snippets
+					  
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;; J A V A / Kotlin / Groove / Gradle                   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -255,6 +254,23 @@
 
                                         dockerfile-mode
 					yaml-mode
+					soap-client ;https://github.com/alex-hhh/emacs-soap-client
+
+                                        ;markdown-mode
+
+                                        
+                                        ;gist
+
+                                        ;el-autoyas         ;20120918.617  available  melpa      Automatically create Emacs-Lisp Yasnippets
+                                        ;yatemplate         ;20161108.1305 available  melpa      File templates with yasnippet
+                                        ;java-snippets      ;20160626.1952 installed             Yasnippets for Java
+                                        ;angular-snippets   ;20140513.2223 available  melpa      Yasnippets for AngularJS
+                                        ;auto-yasnippet     ;20160925.225  available  melpa      Quickly create disposable yasnippets
+                                        ;clojure-snippets   ;20161024.16   available  melpa      Yasnippets for clojure
+                                        ;common-lisp-snippets ;20161231.1557 available  melpa      Yasnippets for Common Lisp
+                                        ;java-snippets
+
+					
                                         ))
   
   
@@ -294,7 +310,7 @@
   
   
   (defun prelude-packages-installed-p ()
-    (loop for p in packages-to-be-installed-list
+    (cl-loop for p in packages-to-be-installed-list
 	  when (not (package-installed-p p)) do (return nil)
 	  finally (return t)))
 

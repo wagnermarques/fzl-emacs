@@ -1,19 +1,22 @@
 ;;; package --- Summary
-
-;;; Commentary:
+;;; this is a another init.el file
 ;;; I have been use Emacs for development with some anothers devtools
 ;;; So there are a lot of global vars that define whare are these tools home are in the disk
-;;; There are not a main goal of Emacs usability
-;;; are there any effort to adapt this for windows
-;;; some references
-;;; https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html
-;;; https://www.gnu.org/software/emacs/manual/
-;;; https://www.emacswiki.org/emacs?interface=en
+;;; There are not any effort to adapt this for windows
+;;; this repository can be found in
+;;; https://github.com/wagnermarques/emacsinitfile
+
+;;; Commentary:
+;;; this init.el load serveral elisp files to configure a Emacs instance
 
 ;;; Code:
+
+(require 'cl-lib)
+;; -*- coding: utf-8; lexical-binding: t; -*-
+
 (message ">>>>>>>>>> [init2.el] starting running...")
 
-(require 'cl)
+;(require 'cl)
 
 ;;If behind a proxy just uncomment this line below an change accordingly
 ;(setq url-proxy-services '(("no_proxy" . "work\\\\.com")
@@ -44,17 +47,32 @@
 ;;https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Libraries.html
 ;;https://www.gnu.org/software/emacs/manual/html_node/elisp/Library-Search.html
 ;;https://www.gnu.org/software/emacs/manual/html_node/efaq/Changing-load_002dpath.html
-(setq **PWD** (file-name-directory load-file-name))
-(message **PWD**)
+;(setq **PWD** "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile")
+;(message **PWD**)
+;
+;(setq load-path
+;      (append (list nil
+;		    **PWD**
+;		    (concat **PWD** "/web-mode")
+;		    "~/emacs")
+;	      load-path))
+(add-to-list 'load-path "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile")
+(add-to-list 'load-path "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile/web-mode")
+(add-to-list 'load-path "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile/org-ref")
+(add-to-list 'load-path "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile/ESS")
 
-(defun configure_load_path()
-  (setq load-path
-	(append (list nil
-		      **PWD**
-		      (concat **PWD** "/web-mode")
-		      "~/emacs")
-		load-path)))
-(configure_load_path)
+(add-to-list 'load-path "~/emacs")
+
+
+;;G L O B A L    V A R I A B L E S
+;;this is loaded as son as possible here, just after add-to-list
+;;serveral another files loaded needs this global variables
+(message ">>>>>>>>>>;;G L O B A L    V A R I A B L E S")
+;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
+(message ">>>>>>>>>> [init2.el] 'global_variables_setup")
+(require 'global_variables_setup)
+
+
 
 ;;create emacsinitfile.log file
 ;;and provide a fzlUtil/log function to write on it
@@ -65,13 +83,6 @@
 
 ;; S H E L L    S C R I P T S
 (message ">>>>>>>>>> ;; S H E L L    S C R I P T S")
-
-
-;;G L O B A L    V A R I A B L E S
-(message ">>>>>>>>>>;;G L O B A L    V A R I A B L E S")
-;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
-(message ">>>>>>>>>> [init2.el] 'global_variables_setup")
-(require 'global_variables_setup)
 
 
 ;;I N S T A L L I N G    E M A C S    P A C K A G E S
@@ -158,7 +169,7 @@
 (message ">>>>>>>>>> [init2.el] config_simple_httpd")
 (require 'config_simple_httpd)
 
-(fzl_log "PROGRAMMING: Configuring java and maven")
+(fzl/log "PROGRAMMING: Configuring java and maven")
 (message "PROGRAMMING: Configuring java and maven")
 ;;java programming language
 (message ">>>>>>>>>> [init2.el] 'java_config")
@@ -193,6 +204,14 @@
 ;;(setq inferior-lisp-program "/opt/sbcl/bin/sbcl") ;;needed for org_mode lisp code blocks
 (message ">>>>>>>>>> [init2.el] 'org_mode_config")
 (require 'org_mode_config)
+(require 'org_ref_config.el)
+;;Debugger entered--Lisp error:
+;; (error "Required feature `auctex' was not provided")
+;;(require 'auctex)
+
+(require 'ox-jekyll-md)
+;(require 'org_mode_publish_config)
+
 ;;(slime)
 
 
@@ -220,12 +239,12 @@
 
 ;;mutt email client
 (require 'mutt_config)
-    (server-start)
-    (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
+(server-start)
+(add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 
 ;(require 'reftex)
 
-;;(require 'auctex)Debugger entered--Lisp error: (error "Required feature `auctex' was not provided")
+
 ;(require 'calendar_config)
 
 
