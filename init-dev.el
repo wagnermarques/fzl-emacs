@@ -22,8 +22,4 @@
 (require 'init-common)
 
 
-;(switch-to-buffer "emacsinitfile.log")
-;(split-window-right)
-(switch-to-buffer "*Messages*")
-
 ;;; this_init-dev.el ends here

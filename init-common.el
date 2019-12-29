@@ -16,7 +16,6 @@
 (message " ### init-common.el loaded sucessfully!!!")
 
 
-
 ;;Entering the Debugger on an Error
 ;;https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_node/elisp_225.html
 (setq debug-on-error t)
@@ -44,16 +43,32 @@
 (message " ### requiring 'config_logging")
 (require 'config_logging)
 (fzl/log "(require 'config_logging).. was required at last line sucessfully if you are reading this line...")
-(fzl/log "(require 'config_logging).. was required at last line sucessfully if you are reading this line...")
-(fzl/log "(require 'config_logging).. was required at last line sucessfully if you are reading this line...")
-(fzl/log "(require 'config_logging).. was required at last line sucessfully if you are reading this line...")
-(fzl/log "(require 'config_logging).. was required at last line sucessfully if you are reading this line...")
 
+
+;;I N S T A L L I N G    E M A C S    P A C K A G E S
+(message " ### I N S T A L L I N G    E M A C S    P A C K A G E S")
+;;configure emacs packages repositories installing list of packages automatically
+(require 'config_package_system)
 
 
 (message " ### requiring 'config_buffers")
 ;; for now just inhibit default startup emacs help buffer
 (require 'config_buffers) ;;for now just inhibit emacs startup buffer
+
+
+;;to see the messages during emacs initiazlization
+(switch-to-buffer "*Messages*")
+
+
+(message " ### 'speedbar_config")
+(require 'speedbar_config) ;;put a speedbar in confined buffer and opens it
+
+(message " ### 'fzl_keys")
+;; define keybindings
+(require 'fzl_keys)
+
+(require 'config_abbrev)
+(require 'config_helm)
 
 
 (provide 'init-common)

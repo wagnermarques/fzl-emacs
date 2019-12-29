@@ -3,15 +3,18 @@
 
 This emacs is for support development tasks e some another daily tasks
 
-keep in mind that I've been use fedora distribution
-
-To use this emacs configuracion you should tell the path os
-development tools in global_variables_setup.el
-
-And start your emacs with a acommand like:  emacs -q l emacsinitfile_cloned_dir/init2.el
-
-The [[file:install-dev-packages.sh]] contains the packages that will be
-installed
+* key binds bookmark
+** general 
+   
+** helm
+   | *key binding* | *function*          | *Desc*                |
+   | C-x b         | helm-buffers-list   | lista buffers         |
+   | C-x r b       | heml-bookmarks      | helm bookmark         |
+   | C-x r x       | M-x                 |                       |
+   | M-y           | helm-show-kill-ring | area de transferencia |
+   | C-x C-f       | helm-find-files     | open or create file   |
+   |               |                     |                       |
+     
 
 * some of utils key bindins (shortcuts)
   This shortcut keys is defined in [[file:fzl_keys.el]]

@@ -1,49 +1,10 @@
-;;; evt_keys.el --- keys facilitate use of emacs
+;;; package --- Summary
 
-;; Emacs Lisp Archive Entry
-;; Filename: fzl_keys.el
-;; Version: 0.0   (or RCS/CVS *Revision*)
-;; Keywords: fzlbpms emacs .emacs
-;; Author: wagner franca marques
-;; Maintainer: wagner franca marques
-;; Created: 2013-12-12
-;; Description: init.el for svtbpms customization
-;; URL: not yet
-;; Compatibility: emacs 24
-
-
-
-
-;; COPYRIGHT NOTICE
-;;
-;; This program is free software; you can redistribute it and/or modify it
-;; under the terms of the GNU General Public License as published by the Free
-;; Software Foundation; either version 2 of the License, or (at your option)
-;; any later version.
-;;
-;; This program is distributed in the hope that it will be useful, but
-;; WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-;; or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-;; for more details. http://www.gnu.org/copyleft/gpl.html
-
-
-
-
-;;; Install:
-
-;; 
-;; put this file in you site-lisp and require it
-;; (require 'fzl_keys)
-;; 
-;;
-;;
-;http://ergoemacs.org/emacs/keyboard_shortcuts.html
+;;; Commentary:
 
 ;;; Code:
-(provide 'fzl_keys)
 
 (global-unset-key "\C-x\C-z")
-
 
 ;;http://www.emacswiki.org/emacs/RyanSpringerDotEmacs
 ;; shift + arrow key = switch to window
@@ -81,3 +42,5 @@
 ;(global-set-key (kbd "\e\ec") 'calendar)         ;calendar
 
 
+(provide 'fzl_keys)
+;;; fzl_keys.el ends here

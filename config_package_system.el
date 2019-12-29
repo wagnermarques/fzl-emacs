@@ -3,7 +3,7 @@
 ;;http://ergoemacs.org/emacs/emacs_package_system.html
 ;;http://stackoverflow.com/questions/10092322/how-to-automatically-install-emacs-packages-by-specifying-a-list-of-package-name
 
-;;(log (concat (expand-file-name "./config_package_system.el") " --> loaded sucessfully"))
+(fzl/log (concat (expand-file-name "./config_package_system.el") " --> loaded sucessfully"))
 
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -14,16 +14,10 @@
                                         ;;;https://github.com/politza/pdf-tools
                                         ;;;Support library for PDF documents.
                                         ;;;Issue M-x pdf-tools-install RET once
-                                        command-log-mode   ;20160413.447  available  melpa      log keyboard commands to buffer
                                         pdf-tools
                                         helm
 					helm-firefox
 
-                                        ox-jekyll-md
-                                        ;org2jekyll got problems
-					;easy-jekyll got problems
-					;jekyll-modes got problems
-                                        
                                         company-restclient ;20151202.1201 available  melpa      company-mode completion back-end for restclient-mode
                                         ob-restclient      ;20180904.709  available  melpa      org-babel functions for restclient-mode
                                         restclient         ;20190122.942  available  melpa      An interactive HTTP client for Emacs

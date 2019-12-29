@@ -15,7 +15,6 @@
   "Log STR in emacsinitfile.log."
   (progn
     (setq cmd (concat  (concat "echo '### " str) (concat "' >> " (concat  **EMACSINITFILE_HOME** "/emacsinitfile.log"))))
-    (message cmd)
     (shell-command-to-string cmd)
     (message str)))
 
