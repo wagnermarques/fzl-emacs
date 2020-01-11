@@ -1,9 +1,12 @@
-[submodule "ESS"]
-	path = ESS
+[submodule "submodules/ESS"]
+	path = submodules/ESS
 	url = https://github.com/emacs-ess/ESS.git
-[submodule "web-mode"]
-	path = web-mode
+[submodule "submodules/web-mode"]
+	path = submodules/web-mode
 	url = https://github.com/fxbois/web-mode.git
-[submodule "org-ref"]
-	path = org-ref
+[submodule "submodules/org-ref"]
+	path = submodules/org-ref
 	url = https://github.com/wagnermarques/org-ref.git
+[submodule "submodules/rtags"]
+	path = submodules/rtags
+	url = https://github.com/Andersbakken/rtags.git

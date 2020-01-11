@@ -1,8 +1,11 @@
 #sub modules and external subprojects
 node_modules
-**/**/ESS
-**/**/org-ref
-**/**/web-mode
+
+
+#----submodules
+submodules/*
+
+
 
 
 # -*- mode: gitignore; -*-

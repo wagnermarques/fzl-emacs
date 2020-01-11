@@ -1,0 +1,23 @@
+#+TITLE: PostTitleHere
+#+AUTHOR: Wagner
+#+JEKYLL_LAYOUT: home
+#+JEKYLL_POST_EXCERPT: PostExcerpt
+#+JEKYLL_CATEGORY: aulas
+#+JEKYLL_PERMALINK:/aulas/:title
+#+JEKYLL_DATE: {{ page.date }}
+
+
+
+* sessao1 do post
+  asdfasdf
+  asdfasdf
+
+* sessao2 do post
+  asf
+  asdf
+  asfd
+
+
+
+
+
