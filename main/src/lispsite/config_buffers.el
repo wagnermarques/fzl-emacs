@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(fzl/log "config_buffers.el file loaded sucessfully!!!")
+;;(fzl/log "config_buffers.el file loaded sucessfully!!!")
 
 ;; turn off welcome screen
 (setq inhibit-startup-message t)

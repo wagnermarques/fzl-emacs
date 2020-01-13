@@ -3,7 +3,6 @@
 ;;; Commentary:
 ;;; http://tuhdo.github.io/helm-intro.html
 
-(require 'cl-lib)
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
 

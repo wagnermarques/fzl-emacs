@@ -68,3 +68,4 @@ semanticdb
 muttrc
 mutt_account* #this kind of file containst private data 
 mutt_account.com.gmail.wagnerdocri
+submodulesOld/*

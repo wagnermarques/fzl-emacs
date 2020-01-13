@@ -1,46 +1,20 @@
 (setq **thisFileDir** (getenv "PWD"))
+(setq **lispsiteDir** (concat **thisFileDir** "/main/src/lispsite"))
+(setq **testssiteDir** (concat **thisFileDir** "/main/src/testssite"))
 
-;; when we need to test packages
-;; we need a brand new ~/.emacs.d without installed packages
-;; in some cases, we will want to install packages and test if the package was installed
-;; this is the case we need a brand new ~/.emacs.d
-(defun resetDotEmacsDir()
-  (shell-command "rm -rf /home/wagner/.emacs.d/ && mkdir -p ~/.emacs.d/"))
-
-;;"add-node-modules-path"
-(setq *pkgName* "eclim")
+(add-to-list 'load-path **lispsiteDir**)
+(add-to-list 'load-path **testssiteDir**)
 
 
-;;https://melpa.org/#/getting-started
-(defun configureRepositories()
-  (require 'package)
+;;test if automatically installing process is working correctly
+(require 'test-packages-installed)
 
-  (setq package-archives '(("gnu"  "https://elpa.gnu.org/packages/")
-			   ("marmalade"  "http://marmalade-repo.org/packages")
-			   ("melpa"  "http://melpa.org/packages/")))
- ) 
-;  (package-initialize)
-;  (package-list-packages)
-  ;(package-refresh-contents)
- ; (package-install *pkgName*))
+;;test load load path
+;(require 'test-load-path)
 
-(defun ert-test-if-package-is-instaled-fixture (body)  
-  (unwind-protect ;https://www.gnu.org/software/emacs/manual/html_node/elisp/Cleanups.html
-      (progn
-        (resetDotEmacsDir)
-        (configureRepositories)
-        ;(package-install *pkgName*)
-        (load "./fzl_utils_package.el")
-        ;(require 'package)
-        ;(package-initialize)
-        (funcall body))
-    (unload-feature 'package)))
-
-
-(ert-deftest ert-test-if-package-is-instaled()
-  (ert-test-package-is-instaled-fixture
-   (lambda ()
-     (should (eql (package-installed-p *pkgName*) nil)))))
+;;test if devtools is present
+;;test if os path is configured for each devtool present
+(require 'test-devtools-presence)
 
 
 ;(ert-deftest ert-test-mismatch ()

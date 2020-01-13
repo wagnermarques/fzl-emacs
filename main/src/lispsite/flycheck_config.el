@@ -1,5 +1,3 @@
-(provide 'flycheck_config)
-
 ;;http://www.flycheck.org/en/latest/user/quickstart.html
 ;;https://www.gnu.org/software/emacs/manual/html_node/flymake/Installing-Flymake.html
 ;;http://www.flycheck.org/en/latest/user/installation.html
@@ -18,4 +16,4 @@
 (global-set-key [f3] 'flymake-display-err-menu-for-current-line)
 (global-set-key [f4] 'flymake-goto-next-error)
 
-
+(provide 'flycheck_config)

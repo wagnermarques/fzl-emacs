@@ -1,5 +1,11 @@
-(fzl/log "autocomplete_config.el loaded sucessfully!")
-(provide 'autocomplete_config)
+;;; package --- Summary
+
+;;; Commentary:
+;;https://www.emacswiki.org/emacs/AutoComplete
+
+;;; Code:
+;;(fzl/log "autocomplete_config.el loaded sucessfully!")
+;; -*- coding: utf-8; lexical-binding: t; -*-
 
 
 (require 'auto-complete)
@@ -8,21 +14,21 @@
 
 
 ;;from: https://emacs.stackexchange.com/questions/22556/auto-complete-c-headers-just-works-with-c-no-result-with-c
-(defun fzl:ac-ac-header-init()
-  (require 'auto-complete-c-headers)
-  (add-to-list 'ac-sources 'ac-source-c-headers)
-  (setq achead:include-directories
-        (append '("/usr/include/c++/4.8"
-                  "/usr/include/x86_64-linux-gnu/c++/4.8"
-                  "/usr/include/c++/4.8/backward"
-                  "/usr/lib/gcc/x86_64-linux-gnu/4.8/include"
-                  "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"
-                  "/usr/include/x86_64-linux-gnu")
-                achead:include-directories)))
-(add-hook 'c++-mode-hook 'fzl:ac-ac-header-init)
-(add-hook 'c-mode-hook 'fzl:ac-ac-header-init)
-  
+(defun fzl/ac-ac-header-init()
+  "Depends on to install auto-complete-c-headers."
 
+  (require 'auto-complete-c-headers)
+
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  (setq achead:include-directories ;;sudo ls -l /usr/include/        
+        (append '("/usr/include/c++/8"
+                  "/usr/include/c++/8/backward"
+                  "/usr/include/c++/8/debug")
+                achead:include-directories)))
+
+(add-hook 'c++-mode-hook 'fzl/ac-ac-header-init)
+(add-hook 'c-mode-hook 'fzl/ac-ac-header-init)
+  
 
 ;;https://www.youtube.com/watch?v=HTUE03LnaXA
 ;(defun fzl:ac-ac-header-init()
@@ -66,4 +72,6 @@
 ;(setq auto-complete-nxml-automatic-p nil)
 
 
+(provide 'autocomplete_config)
+;;; autocomplete_config.el ends here
 

@@ -4,8 +4,6 @@
 ;;http://ergoemacs.org/emacs/emacs_abbrev_mode.html
 
 ;;; Code:
-
-(require 'cl-lib)
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 ;; sample use of abbrev
 
@@ -43,7 +41,7 @@
     ("orgFileHeader" "#+Title:
 #+Subtitle:")
 
-    ("imgConfig"     
+    ("orgImgConfig"     
 "#+CAPTION: Weight space
 #+attr_html: 
 #+ATTR_HTML: :width 100px :alt altStr :title titleStr :align center
@@ -58,7 +56,7 @@
 ")
     
     ;;Org mode files for jekyll
-    ("jekyllPost"
+    ("orgJekyllPost"
 "#+TITLE: PostTitleHere
 #+AUTHOR: Wagner
 #+JEKYLL_LAYOUT: home
@@ -70,7 +68,7 @@
 
 
     ;;Org mode files
-    ("planodeaula" "* Tema
+    ("orgPlanodeaula" "* Tema
 * Objetivo
 * Duração
 * Pré-Requisitos
@@ -78,7 +76,7 @@
 ** Recursos
 
 * Procedimento didatico
-* Exercicios e Atividades de Reflexão/Fixação
+* Exercicioos e Atividades de Reflexão/Fixação
 * Avaliação
 * Referencias
 
