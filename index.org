@@ -24,7 +24,7 @@ This emacs is for support development tasks e some another daily tasks
    orgPlanoDeAula
 
 ** helm
-   (global-set-key (kbd "C-x r b") 'helm-bookmarks)
+   (global-sget-key (kbd "C-x r b") 'helm-bookmarks)
    (global-set-key (kbd "M-y") 'helm-show-kill-ring)
    (global-set-key (kbd "C-x b") 'helm-buffers-list)
    (global-set-key (kbd "C-x r x") 'helm-M-x)
@@ -66,6 +66,11 @@ This emacs is for support development tasks e some another daily tasks
 
    se for dar um push, use P
 
+
+   pra dar um git rm --cached em um arquivo especifico, da um i na
+   linha dele qdo o arquivo esta na sessao de status staged como new file
+
+Behind the scenes, it does 
 
 ** Projectile
 
