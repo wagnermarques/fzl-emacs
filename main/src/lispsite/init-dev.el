@@ -35,7 +35,6 @@
 
 ;;; B A S I C  W R I T E   C O N F I G U R A T I O N S
 (require 'config_abbrev)
-(require 'config_abbrev)
 (require 'config_helm)
 
 ;;; B A S I C  C O D I N G   C O N F I G U R A T I O N S
@@ -53,6 +52,9 @@
 ;; but a simpler is configured in this file required autocomplete_config.el
 (require 'autocomplete_config)
 
+;; yasnippet uses ac-sources defined by autocomplete
+;; so needs to be here, after autocomplete_config.el loaded
+(require 'yasnippet_config)
 
 
 (require 'flycheck_config)

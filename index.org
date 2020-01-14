@@ -2,8 +2,6 @@
 
 This emacs is for support development tasks e some another daily tasks
 
-
-
 * Emacs features
 ** abbrev
    https://www.emacswiki.org/emacs/AbbrevMode
@@ -24,6 +22,8 @@ This emacs is for support development tasks e some another daily tasks
    orgPlanoDeAula
 
 ** helm
+   https://github.com/emacs-helm/helm
+
    (global-sget-key (kbd "C-x r b") 'helm-bookmarks)
    (global-set-key (kbd "M-y") 'helm-show-kill-ring)
    (global-set-key (kbd "C-x b") 'helm-buffers-list)
@@ -94,6 +94,10 @@ Behind the scenes, it does
    basico para codigo c e nao testei mas tambem aponta pros headers do
    c++ para biblioteca standard
 
+** yasnipets
+   https://www.emacswiki.org/emacs/Yasnippet
+   https://joaotavora.github.io/yasnippet/
+   
 
 * Emacs External Dev Tools
 ** java tools
@@ -178,6 +182,7 @@ Behind the scenes, it does
   
 ** magit
    https://magit.vc/manual/
+
 
 * key binds bookmark
 ** general 
@@ -351,7 +356,7 @@ Behind the scenes, it does
   
 
 * TODOLIST
-** melhorar configuracao de autocomplete e navegacao de codigo
+** TODO melhorar configuracao de autocomplete e navegacao de codigo
    https://exceptionshub.com/code-browsing-refactoring-auto-completion-in-emacs.html
    https://stackoverflow.com/questions/12922526/tags-for-emacs-relationship-between-etags-ebrowse-cscope-gnu-global-and-exub
    por enquanto auto-complete-c-headers tá resolvendo o basico par
@@ -360,6 +365,8 @@ Behind the scenes, it does
    usar, etgs, gtags, company, etc...
    o semantic do cedet ta ativado, mas tem que ativar pra cada major mode
 
+** TODO Fechar automaticamente buffer helm apos selecao
+   https://github.com/emacs-helm/helm/issues/2251
 
 * ANOTS
 ** exoplataform

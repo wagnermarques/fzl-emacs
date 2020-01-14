@@ -18,7 +18,7 @@
                                       ;;;;;;;;;; NON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                       helm
-
+                                      
                                       ;;;https://github.com/politza/pdf-tools
                                       ;;;Support library for PDF documents.
                                       ;;;Issue M-x pdf-tools-install RET once
@@ -98,8 +98,8 @@
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;; BASIC PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        popup ;             20160709.729  dependency            Visual Popup User Interface
-                                      
+                                        popup               ;20160709.729  dependency            Visual Popup User Interface
+                                        ac-helm                        ;20160319.233  available  melpa      Helm interface for auto-complete
                                         ;cedet              ;2.0           built-in   Setup CEDET environment
                                         ;eieio              ;1.4           built-in   Enhanced Implementation of Emacs Interpreted Objects
                                         ;eieio-core         ;1.4           built-in   Core implementation for eieio
@@ -113,14 +113,14 @@
                                         auto-complete-c-headers
 
                                         yasnippet
-                                        ;el-autoyas         ;20120918.617  available  melpa      Automatically create Emacs-Lisp Yasnippets
-                                        ;yatemplate         ;20161108.1305 available  melpa      File templates with yasnippet
-                                        ;java-snippets      ;20160626.1952 installed             Yasnippets for Java
-                                        ;angular-snippets   ;20140513.2223 available  melpa      Yasnippets for AngularJS
-                                        ;auto-yasnippet     ;20160925.225  available  melpa      Quickly create disposable yasnippets
-                                        ;clojure-snippets   ;20161024.16   available  melpa      Yasnippets for clojure
-                                        ;common-lisp-snippets ;20161231.1557 available  melpa      Yasnippets for Common Lisp
-                                        ;java-snippets
+                                        yatemplate         ;20161108.1305 available  melpa      File templates with yasnippet
+                                        java-snippets      ;20160626.1952 installed             Yasnippets for Java
+                                        angular-snippets   ;20140513.2223 available  melpa      Yasnippets for AngularJS
+                                        auto-yasnippet     ;20160925.225  available  melpa      Quickly create disposable yasnippets
+                                        clojure-snippets   ;20161024.16   available  melpa      Yasnippets for clojure
+                                        common-lisp-snippets ;20161231.1557 available  melpa      Yasnippets for Common Lisp
+                                        java-snippets
+                                        el-autoyas         ;20120918.617  available  melpa      Automatically create Emacs-Lisp Yasnippets
                                         
                                         flycheck           ;20190425.816  available  melpa      On-the-fly syntax checking
                                         flycheck-tip       ;20171020.1048 available  melpa      Show flycheck/flymake errors by tooltip
@@ -162,37 +162,6 @@
                                         ;flycheck-title     ;20170216.2346 available  melpa      show flycheck errors in the frame title
                                         
                                         
-                                        ;flymake            ;1.0.5         available  gnu        A universal on-the-fly syntax checker
-                                        ;flymake-cppcheck   ;20140415.1257 available  melpa      Flymake work with Cppcheck for C/C++
-                                        ;flymake-css        ;20170723.146  available  melpa      Flymake support for css using csslint
-                                        ;flymake-diagnostic-at-point ;20180815.1004 available  melpa      Display flymake diagnostics at point
-                                        ;flymake-eslint     ;20190412.346  available  melpa      A Flymake backend for Javascript using eslint
-                                        ;flymake-gjshint    ;20130327.1232 available  melpa      A flymake handler for javascript using both jshint and gjslint
-                                        
-                                        ;flymake-google-cpplint ;20140205.1325 available  melpa      Help to comply with the Google C++ Style Guide
-                                        ;flymake-gradle     ;20190315.233  available  melpa      Flymake extension for Gradle.
-                                        
-                                        ;flymake-jshint     ;20140319.2200 available  melpa      making flymake work with JSHint
-                                        ;flymake-jslint     ;20170723.146  available  melpa      A flymake handler for javascript using jslint
-                                        ;flymake-json       ;20180511.911  available  melpa      A flymake handler for json using jsonlint
-                                        ;flymake-ktlint     ;20180831.346  available  melpa      Flymake extension for Ktlint.
-                                        ;flymake-less       ;20151111.738  available  melpa      Flymake handler for LESS stylesheets (lesscss.org)
-                                        
-                                        ;flymake-php        ;20170723.146  available  melpa      A flymake handler for php-mode files
-                                        ;flymake-phpcs      ;20140713.631  available  melpa      making flymake work with PHP CodeSniffer
-                                        ;flymake-puppet     ;20170801.554  available  melpa      Flymake handler using puppet-lint
-                                        ;flymake-python-pyflakes ;20170723.146  available  melpa      A flymake handler for python-mode files using pyflakes (or flake8)
-                                        
-                                        ;flymake-ruby       ;20170723.146  available  melpa      A flymake handler for ruby-mode files
-                                        
-                                        ;flymake-sass       ;20170723.146  available  melpa      Flymake handler for sass and scss files
-                                        ;flymake-shell      ;20170723.146  available  melpa      A flymake syntax-checker for shell scripts
-                                        ;flymake-shellcheck ;20181214.24   available  melpa      A bash/sh Flymake backend powered by ShellCheck
-                                        
-                                        ;flymake-vnu        ;20181128.216  available  melpa      Flymake extension for the v.Nu HTML validator.
-                                        ;flymake-yaml       ;20130423.1548 available  melpa      A flymake handler for YAML
-
-
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;; HTML PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -235,16 +204,16 @@
                                         
                                         ;https://github.com/josteink/ts-comint
                                         ;20161006.1034 available  melpa      Run a Typescript interpreter in an inferior process windowx.
-                                        ;ts-comint          
+                                        ;ts-comint
                                         
 
 
                                         ;eslint-fix         ;20160819.36   available  melpa      Fix JavaScript files using ESLint
-                                        ;ess                ;20170118.232  available  melpa      Emacs Speaks Statistics
-                                        ;ess-R-data-view    ;20130509.458  available  melpa      Data viewer for GNU R
-                                        ;ess-R-object-popup ;20130302.336  available  melpa      popup description of R object
-                                        ;ess-smart-equals   ;20150201.2201 available  melpa      better smart-assignment with =-key in R and S
-                                        ;ess-view           ;20160309.1315 available  melpa      View R dataframes in a spreadsheet software
+                                        ess                ;20170118.232  available  melpa      Emacs Speaks Statistics
+                                        ess-R-data-view    ;20130509.458  available  melpa      Data viewer for GNU R
+                                        ess-R-object-popup ;20130302.336  available  melpa      popup description of R object
+                                        ess-smart-equals   ;20150201.2201 available  melpa      better smart-assignment with =-key in R and S
+                                        ess-view           ;20160309.1315 available  melpa      View R dataframes in a spreadsheet software
                                         ;auctex
                                         ;ebib
                                         ;org-ref
@@ -282,10 +251,7 @@
 					;soap-client ;https://github.com/alex-hhh/emacs-soap-client
 
                                         ;markdown-mode
-
-                                        
                                         ;gist
-
                                         ))
 
 (fzl/install-list-of-packages packages-to-be-installed-list)
