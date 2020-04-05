@@ -1,3 +1,5 @@
+
+;;http://shallowsky.com/blog/linux/editors/graphics-in-emacs.html
 (provide 'iimage_mode_config)
 
 ;http://floatsolutions.com/blog/2010/10/displaying-inline-images-in-emacs-org-mode/

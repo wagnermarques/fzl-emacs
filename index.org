@@ -1,6 +1,4 @@
- #+Title: W E L C O M E    T O    E M A C S I N I T F I L E
-
-This emacs is for support development tasks e some another daily tasks
+#+Title: W E L C O M E    T O    E M A C S I N I T F I L E
 
 * Emacs features
 ** abbrev
@@ -24,7 +22,7 @@ This emacs is for support development tasks e some another daily tasks
 ** helm
    https://github.com/emacs-helm/helm
 
-   (global-sget-key (kbd "C-x r b") 'helm-bookmarks)
+   (global-set-key (kbd "C-x r b") 'helm-bookmarks)
    (global-set-key (kbd "M-y") 'helm-show-kill-ring)
    (global-set-key (kbd "C-x b") 'helm-buffers-list)
    (global-set-key (kbd "C-x r x") 'helm-M-x)
@@ -133,6 +131,13 @@ Behind the scenes, it does
    ;;;C O N T A I N E R S    F U N C T I O N A L I T I E S
    (setq **CONTAINERS_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/Fedora-Dockerfiles"))
    (setq **maven_container_home** (concat **CONTAINERS_HOME** "/maven"))
+   
+
+* Org Mode
+  (global-set-key (kbd "\et") 'org-toggle-iimage-in-org)
+** Exportando 
+   ox-html.el
+   https://orgmode.org/manual/Exporting.html
    
 
 * integrated

@@ -38,8 +38,13 @@
 )
     
     ;;Org mode files
-    ("orgFileHeader" "#+Title:
-#+Subtitle:")
+    ("orgFileHeader" "#+Title: ATitle
+#+Subtitle:
+#+EXPORT_FILE_NAME: filename2.html
+#+LANGUAGE: pt-BR
+#+EXCLUDE_TAGS: noexport
+try C-c C-e # (org-export-dispatch)
+")
 
     ("orgImgConfig"     
 "#+CAPTION: Weight space

@@ -119,16 +119,20 @@
  (online documentation)"  (shell-command " firefox https://books.sonatype.com/nexus-book/3.0/reference/index.html")]
       ["Nexus (start)"  (djcb-term-start-or-switch "mutt" t)])
 
-     ("Eclipse"
-      ;;http://www.eclipse.org/sirius/
-      ["Eclipse Jee"    (fzl-start-eclipse-jee)] ;;
-      ["Eclipse Java"    (fzl-start-eclipse-java)]
-      ["Eclipse Modelling"  (fzl-start-eclipse-modeling)]
-      ["Eclipse Report" (fzl-eclipse-reporting--start)]))
+     ("IDES"
+      ["Camunda modeller" (fzl/start-camunda-modeller)] ;;
+      ["Eclipse Jee"    (fzl/start-eclipse-jee)] ;;
+      ["Eclipse Java"    (fzl/start-eclipse-java)]
+      ["Eclipse Modelling"  (fzl/start-eclipse-modeling)]
+      ["Eclipse Report" (fzl/eclipse-reporting--start)]))
 
      ;; http://emacs-fu.blogspot.com/2009/03/math-formulae-in-webpages.html
      ;; this submenu is only visible when in html-mode or html-helper-mode
     ("fzlServer"
+     ("Camunda Server"
+      ["fzl/ls-camunda-server-deployed-apps" (fzl/ls-camunda-server-deployed-apps)]
+      ["ApacheDS (stop)" (fzl-stop-apacheds)]
+      ["ApacheDS Studio (start)" (fzl-start-apacheds-studio)])
      ("ApacheDs"
       ["ApacheDS (start)" (fzl-start-apacheds)]
       ["ApacheDS (stop)" (fzl-stop-apacheds)]

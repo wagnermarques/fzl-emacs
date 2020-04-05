@@ -14,23 +14,35 @@
 (setq **DISK** "/home/wagner")
 
 ;;there are some strategic commands in bin directory
-(setq **EMACSINITFILE_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/emacsinitfile"))
+(setq **EMACSINITFILE_HOME** (concat **DISK** "/envs/env-dev/sources/emacsinitfile"))
 (setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **EMACSINITFILE_HOME** "/bin"))))
-(shell-command "chmod +x ./bin/*.sh")
+(shell-command "chmod +x ./bin/*.sh") ;makes ./bin files executable
 
 (setq **EMACSINITFILE_LISPSITE** (concat **EMACSINITFILE_HOME** "/main/src/lispsite"))
 (setq **EMACSINITFILE_TESTSSITE** (concat **EMACSINITFILE_HOME** "/main/src/testssite"))
+
 
 ;;P A T H S
 (setq **auto-save-file-name-transforms-dir** (concat **EMACSINITFILE_HOME** "/var/auto-save/"))
 (setq **backup-directory-alist-dir** (concat **EMACSINITFILE_HOME** "/var/backup"))
 (setq **tramp-backup-directory-alist** (concat **EMACSINITFILE_HOME** "/var/backup"))
 
+;;orgmode publish paths
+(setq **SOMEWRITENS_HOME** (concat **DISK** "/envs/env-dev/sources/somewritings"))
+(setq **org-publish-project-base-directory-4-jekyll-html-export** (concat **SOMEWRITENS_HOME** "/planosdeaulas"))
+(setq **org-publish-project-publishing-directory-4-jekyll-html-export** (concat **SOMEWRITENS_HOME** "/var/publishing-directory/planosdeaulas"))
+(setq **org-publish-project-base-directory-4-aws-s3-planosdeaulas** (concat **SOMEWRITENS_HOME** "/planosdeaulas"))
+(setq **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas** (concat **SOMEWRITENS_HOME** "/var/publishing-directory/planosdeaulas"))
+
+
+;;SOURCES
+(setq **SIN5009WithCamundaDir** "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/SIN5009WithCamunda")
+
 
 ;;; D E V   T O O L S   H O M E
 ;;; FZL_HOME
 (setq **FZL_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/fzlbpms/fzlStudio"))
-(setq **FZL_HOME_SERVER** (concat **DISK** "/wagnerdocri@gmail.com2/fzlbpms/fzlServer"))
+(setq **FZL_HOME_SERVER** (concat **DISK** "/wagnerdocri@gmail.com3/fzlbpms/fzlServer"))
 
 ;;;JAVA ENRIRONMENT VARIABLES
 (setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk1.8.0_201"))
@@ -51,8 +63,8 @@
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANT_HOME** "/bin")))
 
 
-(setq **KARAF_HOME** (concat **FZL_HOME_SERVER** "integrated/apache-karaf-4.2.7"))
-
+(setq **KARAF_HOME** (concat **FZL_HOME_SERVER** "/integrated/apache-karaf-4.2.7"))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **KARAF_HOME** "/bin")))
 
 ;;ANDROID ENVIRONMENT VARIABLES
 ;;ANDROID_HOME is depracated

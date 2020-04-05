@@ -8,6 +8,20 @@
 (require 'cl-lib)
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
+
+
+;;;________________________________________
+;;;
+;;; FZLServer functions
+;;;________________________________________
+;;;TODO fix ssh without password
+(defun fzl/camunda-server-ls-deployed-apps()
+  (start-process
+   "PROCESS-ls-camunda-server-deployed-apps"
+   "PROCESS-ls-camunda-server-deployed-apps"
+   "ssh sin5009@45.79.225.175 \"ls -l /home/sin5009/fzlbpms/integrated/camunda_bpm/server/apache-tomcat-9.0.24/webapps/\""))
+
+
 ;;;________________________________________
 ;;;
 ;;; find-files as root
@@ -265,33 +279,41 @@
 
 ;;;________________________________________
 ;;;
-;;; Eclipse
+;;; IDES
 ;;;________________________________________
 ;;;osgi.instance.area {-data}
 ;;;    the instance data location for this session.
 ;;;    Plug-ins use this location to store their data. For example, the Resources plug-in uses this as the default location for projects (aka the workspace).
 ;;;    See the section on locations for more details.
 ;;;    https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fmisc%2Fruntime-options.html&anchor=osgiinstancearea
-(defun fzl-start-eclipse-modeling()
-  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+(defun fzl/start-camunda-modeller()
+  "Open camunda modeller."
   (start-process
-     "PROCESS-fzl-start-eclipse-modelling"
-     "PROCESS-fzl-start-eclipse-modelling"
-     (concat **FZL_HOME** "/integrated/ides/eclipse-modeling-2018-12-R-linux-gtk-x86_64/eclipse")))
-  
-(defun fzl-start-eclipse-java()
-  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
-  (start-process
-     "PROCESS-fzl-start-eclipse-java-oxigen"
-     "PROCESS-fzl-start-eclipse-java-oxigen"
-     (concat **FZL_HOME** "/integrated/ides/eclipse-java-oxygen-3a-linux-gtk-x86_64/eclipse")))
+   "PROCESS-fzl/start-camunda-modeller"
+   "PROCESS-fzl/start-camunda-modeller"
+   (concat **FZL_HOME** "/integrated/ides/camunda-modeler-3.5.0-linux-x64/camunda-modeler")))
 
-(defun fzl-start-eclipse-jee()
+
+(defun fzl/start-eclipse-modeling()
+  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+  (start-process
+     "PROCESS-fzl-start-eclipse-modelling"
+     "PROCESS-fzl-start-eclipse-modelling"
+     (concat **FZL_HOME** "/integrated/ides/eclipse-modeling-2019-12-R-linux-gtk/eclipse")))
+  
+(defun fzl/start-eclipse-java()
   ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
   (start-process
      "PROCESS-fzl-start-eclipse-java-oxigen"
      "PROCESS-fzl-start-eclipse-java-oxigen"
-     (concat **FZL_HOME** "/integrated/ides/eclipse-jee-2018-12-R-linux-gtk-x86_64/eclipse")))
+     (concat **FZL_HOME** "/integrated/ides/eclipse-java-2019-12-R-linux-gtk/eclipse")))
+
+(defun fzl/start-eclipse-jee()
+  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+  (start-process
+     "PROCESS-fzl-start-eclipse-java-oxigen"
+     "PROCESS-fzl-start-eclipse-java-oxigen"
+     (concat **FZL_HOME** "/integrated/ides/eclipse-jee-2019-12-R-linux-gtk/eclipse")))
                                             
 
 

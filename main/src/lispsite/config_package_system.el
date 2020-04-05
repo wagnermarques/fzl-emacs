@@ -76,18 +76,22 @@
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;           O R G  M O D E   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;org
-                                        ;org-ref
+                                        org
+                                        org-ref
                                         
-                                        ;org-plus-contrib
-                                        ;;https://github.com/krisajenkins/ob-browser
-                                        ;ob-browser
-                                        ;;https://github.com/zweifisch/ob-http
-                                        ;ob-http
-                                        ;;https://github.com/krisajenkins/ob-translate/blob/master/ob-translate.el
-                                        ;ob-translate
+                                        org-plus-contrib
 
-                                      
+                                        ;;https://github.com/krisajenkins/ob-browser
+                                        ob-browser
+
+                                        ;;https://github.com/zweifisch/ob-http
+                                        ob-http
+
+                                        ;;https://github.com/krisajenkins/ob-translate/blob/master/ob-translate.el
+                                        ob-translate
+
+                                        ob-restclient
+                                        
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;          D A T A B A S E         ;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -226,7 +230,13 @@
 					;company-phpactor   ;20190403.216  available  melpa      company-mode backend for Phpactor
 					;flycheck-phpstan   ;20190227.1642 available  melpa      Flycheck integration for PHPStan
   
-                                        ;php-mode
+
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;               P H P        ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        php-mode
+
+
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;; ARDUINO PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -245,9 +255,30 @@
                                         ;groovy-mode
                                         ;kotlin-mode
 
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;             DOCKER         ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-                                        ;dockerfile-mode
-					;yaml-mode
+                                        docker                 ;20191222.939  available  melpa      Emacs interface to Docker
+
+                                        ;;https://github.com/Silex/docker-api.el
+                                        docker-api             ;20160525.720  available  melpa      Emacs interface to the Docker API
+
+                                        ;;https://stackoverflow.com/questions/16840409/how-to-list-containers-in-docker
+                                        ;;https://stackoverflow.com/questions/27083182/running-emacs-in-a-docker-container
+                                        ;;https://stackoverflow.com/questions/27083182/running-emacs-in-a-docker-container?noredirect=1
+                                        ;;https://stackoverflow.com/questions/57081352/docker-command-line-to-switch-to-running-linux-containers-on-windows-core-machin
+                                        ;;https://dev.to/bosko/docker-cli-emacs-package-53e7
+                                        ;;https://www.aquasec.com/wiki/display/containers/Docker+CLI+Commands
+                                        docker-cli             ;20190524.1624 available  melpa      Running various commands in docker containers
+
+                                        ;;https://github.com/meqif/docker-compose-mode
+                                        docker-compose-mode    ;20180324.1752 available  melpa      Major mode for editing docker-compose files
+
+                                        ;;https://github.com/emacs-pe/docker-tramp.el
+                                        docker-tramp           ;20170207.325  available  melpa      TRAMP integration for docker containers
+                                        dockerfile-mode
+					yaml-mode
 					;soap-client ;https://github.com/alex-hhh/emacs-soap-client
 
                                         ;markdown-mode
