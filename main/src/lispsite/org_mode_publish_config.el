@@ -3,7 +3,6 @@
 ;;; Commentary:
 
 ;;; Code:
-
 (require 'cl-lib)
 (require 'ox)
 (require 'ox-html)
@@ -13,6 +12,13 @@
 
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
+
+(message (concat ":base-directory->"  **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
+(shell-command (concat "ls -l " **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
+(message (concat ":publishing-directory->"  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
+(shell-command (concat "ls -l "  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
+
+
 ;; just for htmlJekyll backend
 ;; this conf configure_jekyll_front_matter function
 ;; put the jekyll front matter as a html preambule
@@ -21,47 +27,42 @@
              'configure_jekyll_front_matter)
 
 (setq org-publish-project-alist
-      '(
-        ;;The static component just copies files (and their folders) from :base-directory to :publishing-directory without changing them. Thus let's tell Org-mode to use the function org-publish-attachment
-        ("org-static"
-         :base-directory "~/org/"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-         :publishing-directory "~/public_html/"
+      '(("jekyll-html-export" ;; settings for export as jekyll post
+         :base-directory **org-publish-project-publishing-directory-4-jekyll-html-export**
+         :base-extension "org"
+         :publishing-directory **org-publish-project-base-directory-4-jekyll-html-export**
          :recursive t
-         :publishing-function org-publish-attachment
-         )
+         :publishing-function org-htmlJekyll-export-to-html
+         :section-numbers nil
+         :with-toc nil
+         :auto-index nil
+         :auto-preamble nil
+         :auto-postamble nil
+         :headline-levels 4
+         :auto-sitemap nil
+         :html-extension "html"
+         :body-only t
+         :html-preamble-format html-preamble-as-jekyll-front-matter)
         
-        ("jekyll-html-export" ;; settings for export as jekyll post
-           :base-directory **org-publish-project-publishing-directory-4-jekyll-html-export**
-           :base-extension "org"
-           :publishing-directory **org-publish-project-base-directory-4-jekyll-html-export**
-           :recursive t
-           :publishing-function org-htmlJekyll-export-to-html
-           :section-numbers nil
-           :with-toc nil
-           :auto-index nil
-           :auto-preamble nil
-           :auto-postamble nil
-           :headline-levels 4
-           :auto-sitemap nil
-           :html-extension "html"
-           :body-only t
-           :html-preamble-format html-preamble-as-jekyll-front-matter)
-          
         ("aws-s3-planosdeaulas"
-           :base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
-           :publishing-directory **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|org"
-           :publishing-function org-html-publish-to-html
-           :headline-levels 4
-           :auto-preamble t
-           :recursive t
-           )
-        
-        ("aws-s3-planosdeaulas-org-static"
-         :base-directory **org-publish-project--base-directory-4-aws-s3-planosdeaulas**
+         ;;:base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
+         :base-directory "/home/wagner/envs/env-dev/sources/somewritings/planosdeaulas"
+         ;;:publishing-directory **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**
+         :publishing-directory "/home/wagner/envs/env-dev/sources/somewritings/var/publishing-directory/planosdeaulas"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|org"
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4
+         :auto-preamble t
+         :recursive t
+         )
+
+        ;;The static component just copies files (and their folders) from :base-directory to :publishing-directory without changing them. Thus let's tell Org-mode to use the function org-publish-attachment
+        ("aws-s3-planosdeaulas-org-static"         
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-         :publishing-directory **org-publish-project--publishing-directory-4-aws-s3-planosdeaulas**
+         ;;:base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
+         :base-directory "/home/wagner/envs/env-dev/sources/somewritings/planosdeaulas"
+         ;;:publishing-directory  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**
+         :publishing-directory  "/home/wagner/envs/env-dev/sources/somewritings/var/publishing-directory/planosdeaulas"
          :recursive t
          :publishing-function org-publish-attachment
          )
@@ -161,18 +162,16 @@
 ;;https://pank.eu/blog/blog-setup.html
 (defun configure_jekyll_front_matter (output backend info)
   "Configure Jekyll front matter after jekyllHtmlPost publish backend.  OUTPUT BACKEND INFO."
-
+  (message "##### (defun configure_jekyll_front_matter (output backend info)....")
   (if (org-export-derived-backend-p backend 'jekyllHtmlPost)
-      (message (concat "jekyllHtmlPost backend was issued..." 'jekyllHtmlPost))
       (let ((frontMatter (format "---\ntitle: %s\nauthor: %s\nlayout: %s\ndate: %s\n---\n"
-                                (org-export-data (or (plist-get info :title) "?Title?") info)
-                                (org-export-data (or (plist-get info :author) "?author?") info)
-                                (org-export-data (or (plist-get info :jekyl_layout) "home") info) ;;fixme: provide :jekyll_layout org file
-                                (org-export-data (or (plist-get info :date) (format-time-string "%Y-%m-%d")) info)
-                                )))
-        (concat frontMatter output))
-  );if;
-)
+                                 (org-export-data (or (plist-get info :title) "?Title?") info)
+                                 (org-export-data (or (plist-get info :author) "?author?") info)
+                                 (org-export-data (or (plist-get info :jekyl_layout) "home") info) ;;fixme: provide :jekyll_layout org file
+                                 (org-export-data (or (plist-get info :date) (format-time-string "%Y-%m-%d")) info)
+                                 )))
+        (concat frontMatter output)));if;
+  )
 
 
 ;;https://pank.eu/blog/blog-setup.html
