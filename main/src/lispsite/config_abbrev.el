@@ -126,14 +126,34 @@ try C-c C-e # (org-export-dispatch)
 
 #+END_SRC")
 
-       ("orgSrcElisp" "
-#+NAME: elispXXX
-#+BEGIN_SRC elisp :session s1 :results output :exports both
+      ("orgSrcC" "
+#+NAME: xx
+#+HEADER: :includes <stdio.h>
+#+BEGIN_SRC C++ :session s1 :results output :exports both
+     printf(\"%d\\n\", 1+2);
+#+END_SRC")
+
+      
+      ("orgSrcJava" "
+#+NAME:
+#+HEADER: :classname NomeDaClasse
+#+BEGIN_SRC java :session s1 :results output :exports both
+
+#+END_SRC")
+      ("javamainmethod" "public static void main(String[] args){
+
+}")
+      ("sysout" "System.out.println();")
+           
+
+      ("orgSrcSql" "
+#+NAME:
+#+BEGIN_SRC sql :session s1 :results output :exports both
 
 #+END_SRC")
 
-        ("orgSrcElisp" "
-#+NAME:
+       ("orgSrcElisp" "
+#+NAME: elispXXX
 #+BEGIN_SRC elisp :session s1 :results output :exports both
 
 #+END_SRC")

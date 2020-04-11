@@ -99,6 +99,7 @@
 (require 'ob-python)
 (require 'ob-lisp)
 (require 'ob-shell)
+(require 'ob-java)
 ;(require 'restclient)
 
 (org-babel-do-load-languages
@@ -110,6 +111,7 @@
    (ditaa . t)
    (R . t)
    (sqlite . t)
+   (C . t)
    ))
 ;;   (restclient . t)
 ;;   (ruby . t)
