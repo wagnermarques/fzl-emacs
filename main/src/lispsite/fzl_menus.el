@@ -50,7 +50,7 @@
        (fzl-open-http-localhost-9191)])
        
      ("Org-mode"
-      ["Export Beamer" org-beamer-export-to-pdf]
+      ["Export Beamer" fzl-orgmode-export-beamer-to-pdf]
       ["Open org-mode cheat sheet in browser" (progn
                        (start-process
                         "ProcessName=OrgModeCheetSheetInBrowser"

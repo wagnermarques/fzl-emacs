@@ -6,6 +6,7 @@
 
 (defconst emacs-start-time (current-time))
 
+
 ;;;all data format goes here, not sparced in emacs-mode-configurations.el files
 ;;http://orgmode.org/manual/Custom-time-format.html
 ;;http://unix.stackexchange.com/questions/103941/custom-date-format-in-emacs-org-mode

@@ -9,11 +9,13 @@
 
 (clear-abbrev-table global-abbrev-table)
 
+
+;;; this_file_name.el ends here template
 (define-abbrev-table 'global-abbrev-table
   '(
 
     ;;lisp coding
-    ("lispFileHeader"
+    ("fileHeaderLisp"
      ";;; package --- Summary
 
 ;;; Commentary:
@@ -37,8 +39,8 @@
 ;;;________________________________________"
 )
     
-    ;;Org mode files
-    ("orgFileHeader" "#+Title: ATitle
+    ;;org File Header
+    ("fileHeaderOrg" "#+Title: ATitle
 #+Subtitle:
 #+EXPORT_FILE_NAME: filename2.html
 #+LANGUAGE: pt-BR
@@ -46,9 +48,10 @@
 try C-c C-e # (org-export-dispatch)
 ")
 
-    ("orgImgConfig"     
-"#+CAPTION: Weight space
-#+attr_html: 
+    ;;;org Img Config
+    ("orgImgConfig" "
+#+CAPTION: Weight space
+#+attr_html:
 #+ATTR_HTML: :width 100px :alt altStr :title titleStr :align center
 #+attr_latex: :width 100px
 #+ATTR_ORG: :width 100px"
@@ -75,24 +78,81 @@ try C-c C-e # (org-export-dispatch)
     ;;Org mode files
     ("orgPlanodeaula" "* Tema
 * Objetivo
-* Dura√ß√£o
-* Pr√©-Requisitos
-** Conhecimentos Pr√©vios
+* DuraÁ„o
+* PrÈ-Requisitos
+** Conhecimentos PrÈvios
 ** Recursos
 
 * Procedimento didatico
-* Exercicioos e Atividades de Reflex√£o/Fixa√ß√£o
-* Avalia√ß√£o
+* Exercicioos e Atividades de Reflex„o/FixaÁ„o
+* AvaliaÁ„o
 * Referencias
 
 ")
-
     
+     ("orgSrcR"  "
+#+NAME:
+#+BEGIN_SRC R :session s1 :results output :exports both
+
+#+END_SRC")
+
+     ("orgSrcHTML" "
+#+NAME:
+#+BEGIN_SRC html :session s1 :results output :exports both
+
+#+END_SRC
+
+#+NAME:
+#+BEGIN_EXPORT html
+  
+#+END_EXPORT"
+     )
+
+     ("orgSrcRestclient" "
+#+NAME:
+#+BEGIN_SRC restclient :session s1 :results output :exports both
+   POST --header 'Content-Type: application/json'  http://localhost:8081/service/rest/v1/script
+#+END_SRC")
+
+     ("orgSrcShell" "
+#+NAME:
+#+BEGIN_SRC shell :session s1 :results output :exports both
+
+#+END_SRC")
+
+      ("orgSrcSql" "
+#+NAME:
+#+BEGIN_SRC sql :session s1 :results output :exports both
+
+#+END_SRC")
+
+       ("orgSrcElisp" "
+#+NAME: elispXXX
+#+BEGIN_SRC elisp :session s1 :results output :exports both
+
+#+END_SRC")
+
+        ("orgSrcElisp" "
+#+NAME:
+#+BEGIN_SRC elisp :session s1 :results output :exports both
+
+#+END_SRC")
+
+        ("img" "
+#+NAME:figX
+#+CAPTION: figX
+#+attr_ORG: :width 500px
+#+attr_html: :width 500px
+#+attr_latex: :width 500px
+[[./imgs/XXX]]")
+
+    ;;;setupUtf8
     ("utf8" "-*- coding: utf-8 -*-" )
 
-    ;; regex
+    ;;; REGEX Alfanumeric
     ("rxAlphanumeric" "\\([A-Za-z0-9]+\\)" )
 
+    ;;;horizontal line
     ("hr" "--------------------------------------------------" )
     
  ))

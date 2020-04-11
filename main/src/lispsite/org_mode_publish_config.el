@@ -46,10 +46,10 @@
         
         ("aws-s3-planosdeaulas"
          ;;:base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
-         :base-directory "/home/wagner/envs/env-dev/sources/somewritings/planosdeaulas"
+         :base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
          ;;:publishing-directory **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**
-         :publishing-directory "/home/wagner/envs/env-dev/sources/somewritings/var/publishing-directory/planosdeaulas"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|org"
+         :publishing-directory **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**
+         :base-extension "org"
          :publishing-function org-html-publish-to-html
          :headline-levels 4
          :auto-preamble t

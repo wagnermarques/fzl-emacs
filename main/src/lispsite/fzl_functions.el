@@ -9,6 +9,22 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
 
+;;;;________________________________________
+;;;
+;;; org-mode
+;;; 
+;;; 
+;;;________________________________________
+
+;;https://orgmode.org/manual/Beamer-export-commands.html#Beamer-export-commands
+;;funciona porque uso essa funcao como item de menu
+;;com o buffer que quero exportar aberto
+(defun fzl-orgmode-export-beamer-to-pdf()
+  (interactive)
+  (org-beamer-export-to-pdf))
+
+
+
 
 ;;;________________________________________
 ;;;
@@ -684,3 +700,5 @@
                                                                    
 (provide 'fzl_functions)
 ;;; fzl_functions.el ends here
+
+

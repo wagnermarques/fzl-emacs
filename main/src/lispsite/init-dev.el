@@ -8,6 +8,20 @@
 (message " ### init-dev.el loaded sucessfully!!!")
 
 
+;;;
+;;; encoding ;;;;
+;;;https://stackoverflow.com/questions/6021862/force-emacs-to-use-a-particular-encoding-if-and-only-if-that-causes-no-trouble
+(defun enforce-coding-system-priority ()
+  (let ((pref (car (coding-system-priority-list)))
+        (list (find-coding-systems-region (point-min) (point-max))))
+    (when (or (memq 'undecided list) (memq pref list))
+      (setq buffer-file-coding-system pref))))
+
+(add-hook 'before-save-hook 'enforce-coding-system-priority)
+
+(prefer-coding-system 'iso-8859-1)
+
+
 ;;load files in this same el file dir
 (setq *thisFileDir* (getenv "PWD"))
 (add-to-list 'load-path *thisFileDir*)
@@ -44,14 +58,9 @@
 (require 'org_mode_publish_config)
  
 
-;;; B A S I C  C O D I N G   C O N F I G U R A T I O N S
-(message " ### B A S I C  C O D I N G   C O N F I G U R A T I O N S")
-
-
 ;;;
 ;;; highlight matching parentheses next to cursor
 (require 'config_code_in_general)
-
 
 
 ;;S U P E R    U T I L S    F U N C T I O N S
@@ -77,9 +86,10 @@
 (require 'yasnippet_config)
 (require 'flycheck_config)
 
-;;(require 'rtags_config)
 
+;;(require 'rtags_config)
 (find-file (concat **EMACSINITFILE_HOME** "/index.org"))
-(find-file (concat **EMACSINITFILE_HOME** "/main/src/lispsite/org_mode_publish_config.el"))
+(find-file (concat **EMACSINITFILE_HOME** "/main/src/lispsite/config_abbrev.el"))
+
 
 ;;; this_init-dev.el ends here
