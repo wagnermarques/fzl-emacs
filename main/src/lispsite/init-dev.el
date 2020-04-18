@@ -92,4 +92,7 @@
 (find-file (concat **EMACSINITFILE_HOME** "/main/src/lispsite/config_abbrev.el"))
 
 
+;;Python coding
+(require 'config_elpy)
+
 ;;; this_init-dev.el ends here

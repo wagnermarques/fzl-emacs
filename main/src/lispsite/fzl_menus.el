@@ -12,7 +12,11 @@
     ("Config" ;;submenu
      ("Etc"
       ["/etc/selinux/config" fzl-find-file-as-root-selinuxconfig]
-))))
+      ["/etc/ansible/hosts" fzl-find-file-as-root-ansible-hosts]
+      ["/etc/ansible/a" fzl-find-file-as-root-ansible-cfg]
+      )
+
+     )))
 
 
 (easy-menu-define djcb-menu global-map "fzlbpms-menu"

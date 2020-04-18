@@ -12,3 +12,5 @@ dnf install texlive-scheme-full
 #instalar binarios necessarios
 #java,ruby,python,node,docker etc...
 
+#programming with python
+#sudo dnf install python-tools

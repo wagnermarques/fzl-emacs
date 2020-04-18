@@ -48,6 +48,10 @@
 try C-c C-e # (org-export-dispatch)
 ")
 
+    ("orgIncludeImg" "#+INCLUDE: ./imgs")
+    ("orgIncludeHtmlFile" "#+INCLUDE: ./fil.html :src html :lines \"x-y\"")
+
+    
     ;;;org Img Config
     ("orgImgConfig" "
 #+CAPTION: Weight space
@@ -89,9 +93,11 @@ try C-c C-e # (org-export-dispatch)
 * Referencias
 
 ")
-    
+     ;;https://orgmode.org/manual/Environment-of-a-Code-Block.html
      ("orgSrcR"  "
 #+NAME:
+#+HEADER: :file myplot.png
+#+HEADER: :dir .
 #+BEGIN_SRC R :session s1 :results output :exports both
 
 #+END_SRC")

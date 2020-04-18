@@ -190,9 +190,12 @@
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;; PYTHON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+                                        elpy                                ;20200329.1830 available  melpa      Emacs Python Development Environment
+                                        ac-python             ;         20110519      available  marmalade  Simple Python Completion Source for Auto-Complete
+                                        
                                         ;https://github.com/jorgenschaefer/pyvenv
                                         ;pyvenv             ;20170826.812  available  melpa      Python virtual environment interface
-                                        ;elpy
                                         ;fuzzy              ;20150729.2037 available  melpa      Fuzzy Matching
                                         ;highlight-indent-guides ;20170531.2054 dependency            Find file/directory and review Diff/Patch/Commit efficiently everywhere
                                         ;nose               ;20140520.948  available  melpa      Easy Python test running in Emacs

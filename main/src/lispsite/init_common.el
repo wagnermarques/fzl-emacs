@@ -31,7 +31,8 @@
 (setq initial-frame-alist '((fullscreen . maximized)))
 
 ;;autosave and backaup dir
-(setq auto-save-file-name-transforms '( (".*" "../../../var/auto-save" t)))
+;;(setq auto-save-file-name-transforms '(
+;;                                        (".*" (concat **EMACSINITFILE_HOME** "/var/auto-save") t )))
 
 ;;https://www.emacswiki.org/emacs/BackupDirectory
 (setq
@@ -54,7 +55,7 @@
 ;;like .log and _log and may some others if configure
 ;;when this files is opened in a buffer is showed like tail -f
 ;;it'is nice to open and watch log files
-(require 'config_logging) ;;needs to be esclude from auto-save-file-name-transforms
+(require 'config_logging) ;;needs to be exclude from auto-save-file-name-transforms
 (fzl/log "(require 'config_logging).. was required at last line sucessfully if you are reading this line...")
 
 

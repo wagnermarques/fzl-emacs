@@ -41,7 +41,9 @@
 
 ;;; D E V   T O O L S   H O M E
 ;;; FZL_HOME
-(setq **FZL_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/fzlbpms/fzlStudio"))
+(setq **FZL_HOME** (concat **DISK** "/fzlbpms/fzlStudio"))
+(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **FZL_HOME** "/bin")))
+
 (setq **FZL_HOME_SERVER** (concat **DISK** "/wagnerdocri@gmail.com3/fzlbpms/fzlServer"))
 
 ;;;JAVA ENRIRONMENT VARIABLES
@@ -93,7 +95,7 @@
 
 
 ;;;SQLITE
-(setq **FZL_SQLITE_HOME** (concat **FZL_HOME** "/integrated/db/sqlite-tools-linux-x86-3260000"))
+(setq **FZL_SQLITE_HOME** (concat **FZL_HOME** "/integrated/db/sqlite-tools-linux-x86-3310100"))
 (setenv "PATH" (concat (concat (getenv "PATH") ":") **FZL_SQLITE_HOME**))
 
 

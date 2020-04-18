@@ -12,6 +12,6 @@
 (setq elpy-rpc-backend "jedi")
 
              
-(pyvenv-activate "./var/myPyenv")
+;;(pyvenv-activate "./var/myPyenv")
 
 (elpy-enable)
