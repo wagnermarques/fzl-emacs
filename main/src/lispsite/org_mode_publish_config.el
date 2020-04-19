@@ -13,9 +13,9 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
 
-(message (concat ":base-directory->"  **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
+(message (concat "###:base-directory->"  **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
 (shell-command (concat "ls -l " **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
-(message (concat ":publishing-directory->"  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
+(message (concat "###:publishing-directory->"  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
 (shell-command (concat "ls -l "  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
 
 
@@ -32,7 +32,7 @@
          :base-extension "org"
          :publishing-directory **org-publish-project-base-directory-4-jekyll-html-export**
          :recursive t
-         :publishing-function org-htmlJekyll-export-to-html
+         :publishing-function org-twbs-publish-to-html
          :section-numbers nil
          :with-toc nil
          :auto-index nil
@@ -43,21 +43,20 @@
          :html-extension "html"
          :body-only t
          :html-preamble-format html-preamble-as-jekyll-front-matter)
-        
+
+        ;;;https://github.com/marsmining/ox-twbs
         ("aws-s3-planosdeaulas"
-         ;;:base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
-         :base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
-         ;;:publishing-directory **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**
-         :publishing-directory **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**
+         :base-directory       "/home/wagner/envs/env-dev/sources/somewritings/planosdeaulas"
+         :publishing-directory "/home/wagner/envs/env-dev/sources/somewritings/var/publishing-directory/planosdeaulas"
          :base-extension "org"
-         :publishing-function org-html-publish-to-html
+         :publishing-function org-twbs-publish-to-html
          :headline-levels 4
          :auto-preamble t
          :recursive t
          )
 
         ;;The static component just copies files (and their folders) from :base-directory to :publishing-directory without changing them. Thus let's tell Org-mode to use the function org-publish-attachment
-        ("aws-s3-planosdeaulas-org-static"         
+        ("aws-s3-planosdeaulas-org-static"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
          ;;:base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
          :base-directory "/home/wagner/envs/env-dev/sources/somewritings/planosdeaulas"

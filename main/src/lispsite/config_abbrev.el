@@ -49,6 +49,7 @@ try C-c C-e # (org-export-dispatch)
 ")
 
     ("orgIncludeImg" "#+INCLUDE: ./imgs")
+    ("orgIncludeImg" "#+INCLUDE: ./imgs")
     ("orgIncludeHtmlFile" "#+INCLUDE: ./fil.html :src html :lines \"x-y\"")
 
     

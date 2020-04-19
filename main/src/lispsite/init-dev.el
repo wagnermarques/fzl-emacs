@@ -55,7 +55,9 @@
 (require 'config_abbrev)
 (require 'config_helm)
 (require 'org_mode_config)
+;(require 'org_mode_publish_backend_jquerymobile)
 (require 'org_mode_publish_config)
+
  
 
 ;;;

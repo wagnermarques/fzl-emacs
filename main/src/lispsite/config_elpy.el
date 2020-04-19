@@ -14,4 +14,12 @@
              
 ;;(pyvenv-activate "./var/myPyenv")
 
+;;https://stackoverflow.com/questions/22239451/emacs-fix-tab-indentation-for-python
+(add-hook 'python-mode-hook
+      (lambda ()
+        (setq indent-tabs-mode nil)
+        (setq python-indent 4)
+        (setq tab-width 4))
+      (untabify (point-min) (point-max)))
+
 (elpy-enable)

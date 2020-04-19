@@ -1,5 +1,4 @@
-c#+Title: W E L C O M E    T O    E M A C S I N I T F I L EPx
-
+#+Title: W E L C O M E    T O    E M A C S I N I T F I L E
 * Emacs features
 ** abbrev
    https://www.emacswiki.org/emacs/AbbrevMode
