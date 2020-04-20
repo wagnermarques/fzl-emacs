@@ -1,3 +1,4 @@
+
 ;;; package --- Summary
 
 ;;; Commentary:
@@ -40,18 +41,40 @@
 )
     
     ;;org File Header
-    ("fileHeaderOrg" "#+Title: ATitle
-#+Subtitle:
-#+EXPORT_FILE_NAME: filename2.html
+    ("fileHeaderOrg" "
+#+TITLE: TheTitle
+#+SUBTITLE: TheSubTitle
+#+DESCRIPTION:
+#+KEYWORDS:
+#+EXPORT_FILE_NAME:
 #+LANGUAGE: pt-BR
 #+EXCLUDE_TAGS: noexport
+#+AUTHOR:    wagner
+#+EMAIL:     wagner.marques3@etec.sp.gov.br
+#+DATE:
+
+
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:https://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:
+#+LINK_HOME:
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_THEME: Rochester [height=20pt]
+#+BEAMER_FRAME_LEVEL: 2
 try C-c C-e # (org-export-dispatch)
 ")
 
     ("orgIncludeImg" "#+INCLUDE: ./imgs")
+    ("orgIncludeOrgFile" "#+INCLUDE: ./x/asdf.org")
     ("orgIncludeImg" "#+INCLUDE: ./imgs")
     ("orgIncludeHtmlFile" "#+INCLUDE: ./fil.html :src html :lines \"x-y\"")
-
+    ("orgLink" "[[./x/asdf.org][lknName]]")
     
     ;;;org Img Config
     ("orgImgConfig" "

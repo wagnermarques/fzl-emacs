@@ -11,10 +11,13 @@
 (windmove-default-keybindings)
 
 ;(define-key global-map (kbd "\e\er") 'eval-region) ;ESC ESC r
-;(define-key global-map (kbd "\e\eb") 'eval-buffer) ;ESC ESC b
 
 (define-key global-map (kbd "\er") 'eval-region) ;ESC r
-(define-key global-map (kbd "\eb") 'eval-buffer) ;ESC b
+
+(define-key global-map (kbd "\eb") 'org-beamer-export-to-pdf); ESC b
+;(define-key global-map (kbd "\er") 'revert-buffer); ESC b
+
+
 (define-key global-map (kbd "\es") 'fzl_open_shell_in_a_buffer) ;ESC s
 (define-key global-map (kbd "C-c s") 'ansi-term)
 
@@ -40,7 +43,5 @@
 
 
 ;(global-set-key (kbd "\e\ec") 'calendar)         ;calendar
-
-
 (provide 'fzl_keys)
 ;;; fzl_keys.el ends here
