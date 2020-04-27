@@ -16,7 +16,7 @@
 ;;there are some strategic commands in bin directory
 (setq **EMACSINITFILE_HOME** (concat **DISK** "/envs/env-dev/sources/emacsinitfile"))
 (setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **EMACSINITFILE_HOME** "/bin"))))
-(shell-command "chmod +x ./bin/*.sh") ;makes ./bin files executable
+(shell-command (concat "chmod +x " (concat **EMACSINITFILE_HOME** "/bin/*.sh"))) ;makes ./bin files executable
 
 (setq **EMACSINITFILE_LISPSITE** (concat **EMACSINITFILE_HOME** "/main/src/lispsite"))
 (setq **EMACSINITFILE_TESTSSITE** (concat **EMACSINITFILE_HOME** "/main/src/testssite"))

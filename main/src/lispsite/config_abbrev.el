@@ -1,4 +1,3 @@
-
 ;;; package --- Summary
 
 ;;; Commentary:
@@ -40,15 +39,16 @@
 ;;;________________________________________"
 )
     
-    ;;org File Header
+
     ("fileHeaderOrg" "
-#+TITLE: TheTitle
+#+TITLE: TheTitleHere
 #+SUBTITLE: TheSubTitle
 #+DESCRIPTION:
 #+KEYWORDS:
 #+EXPORT_FILE_NAME:
 #+LANGUAGE: pt-BR
 #+EXCLUDE_TAGS: noexport
+#+EXPORT_EXCLUDE_TAGS: noexport
 #+AUTHOR:    wagner
 #+EMAIL:     wagner.marques3@etec.sp.gov.br
 #+DATE:
@@ -57,33 +57,66 @@
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:https://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
-#+EXPORT_EXCLUDE_TAGS: noexport
+
 #+LINK_UP:
 #+LINK_HOME:
 
+#+OPTIONS: H:2 toc:t
+
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+LATEX_HEADER: \\usepackage[margin=0.5in]{geometry}
+
+")
+
+    ("fileHeaderOrgBeamer" "
+#+TITLE: TheTitleHere
+#+SUBTITLE: TheSubTitle
+#+DESCRIPTION:
+#+KEYWORDS:
+#+EXPORT_FILE_NAME:
+#+LANGUAGE: pt-BR
+#+EXCLUDE_TAGS: noexport
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+AUTHOR:    wagner
+#+EMAIL:     wagner.marques3@etec.sp.gov.br
+#+DATE:
+
+
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:https://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+
+#+LINK_UP:
+#+LINK_HOME:
+
+#+OPTIONS: H:2 toc:t
 
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [bigger]
-#+BEAMER_THEME: Rochester [height=20pt]
-#+BEAMER_FRAME_LEVEL: 2
-try C-c C-e # (org-export-dispatch)
-")
+#+BEAMER_THEME: Copenhagen [height=20pt]
+#+BEAMER_FRAME_LEVEL: 1
 
-    ("orgIncludeImg" "#+INCLUDE: ./imgs")
+#+BEAMER_HEADER: \\subtitle{Document subtitle}
+#+BEAMER_HEADER: \\institute[INST]{Etec Zona Leste\\\\url{https://eteczonaleste.com.br/}}
+#+BEAMER_HEADER: \\titlegraphic{\\includegraphics[height=1.5cm]{InstLogo}}
+#+BEAMER_HEADER: \\author{\\texorpdfstring{Prof Wagner França\\newline\\url{wagner.marques3@etec.sp.gov.br}}{Prof Wagner Franca}} % BAD ORDER XXX
+")
+    
     ("orgIncludeOrgFile" "#+INCLUDE: ./x/asdf.org")
-    ("orgIncludeImg" "#+INCLUDE: ./imgs")
     ("orgIncludeHtmlFile" "#+INCLUDE: ./fil.html :src html :lines \"x-y\"")
     ("orgLink" "[[./x/asdf.org][lknName]]")
     
     ;;;org Img Config
-    ("orgImgConfig" "
-#+CAPTION: Weight space
-#+attr_html:
-#+ATTR_HTML: :width 100px :alt altStr :title titleStr :align center
-#+attr_latex: :width 100px
-#+ATTR_ORG: :width 100px"
-     )
+    ("orgImg" "
+#+CAPTION: Site do Nodejs
+#+ATTR_HTML: :width 600px :alt altStr :title titleStr :align center
+#+attr_latex: :width 150px
+#+ATTR_LATEX: :height 8cm :placement [!htpb]
+#+ATTR_LATEX: :options angle=0
+#+ATTR_LATEX: :caption \bicaption{HeadingA}{HeadingB}
+#+ATTR_ORG: :width 100px
+[[file:./imgs/imgname.png]]")
      
     ("equ" "
   \\begin{equation} \\label{eq:str1}
@@ -104,8 +137,8 @@ try C-c C-e # (org-export-dispatch)
 
 
     ;;Org mode files
-    ("orgPlanodeaula" "* Tema
-* Objetivo
+    ("orgPlanoDeAula" "* Tema
+* Justificativa e Objetivos
 * Duração
 * Pré-Requisitos
 ** Conhecimentos Prévios
@@ -126,6 +159,16 @@ try C-c C-e # (org-export-dispatch)
 
 #+END_SRC")
 
+     
+     ("orgSrcC++"  "
+#+NAME:
+#+HEADER: :file myplot.png
+#+HEADER: :dir .
+#+BEGIN_SRC C++ :session s1 :results output :exports both
+  printf(\"%d\\n\", 1+2);
+#+END_SRC")
+
+     
      ("orgSrcHTML" "
 #+NAME:
 #+BEGIN_SRC html :session s1 :results output :exports both
@@ -156,20 +199,19 @@ try C-c C-e # (org-export-dispatch)
 
 #+END_SRC")
 
-      ("orgSrcC" "
-#+NAME: xx
-#+HEADER: :includes <stdio.h>
-#+BEGIN_SRC C++ :session s1 :results output :exports both
-     printf(\"%d\\n\", 1+2);
-#+END_SRC")
-
       
       ("orgSrcJava" "
 #+NAME:
-#+HEADER: :classname NomeDaClasse
+#+HEADER: :classname Main
 #+BEGIN_SRC java :session s1 :results output :exports both
-
+  public class Main{
+    public static void main(String args[]){
+      System.out.println(\"asdf\");
+    }
+  }
 #+END_SRC")
+
+      
       ("javamainmethod" "public static void main(String[] args){
 
 }")
