@@ -250,13 +250,13 @@
                                         ;rtags                             ;20190410.1615 dependency            A front-end for rtags
 					  
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;;;;;;;;;; J A V A / Kotlin / Groove / Gradle                   ;;;;;;;;;;;;;;;;
+                                        ;;;;;;;;;; J A V A / Kotlin / Groovy / Gradle                   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;eclim
                                         ;company-emacs-eclim
                                         ;ac-emacs-eclim
-
-                                        ;groovy-mode
+                                        groovy-mode                  ;20191031.2256 available  melpa      Major mode for Groovy source files
+                                        gradle-mode                  ;20150313.1905 available  melpa      Gradle integration with Emacs' compile
                                         ;kotlin-mode
 
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

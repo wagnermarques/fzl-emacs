@@ -1,5 +1,6 @@
 #sub modules and external subprojects
 node_modules
+**/**/credentials*
 
 default-workspace/*
 semanticdb/*

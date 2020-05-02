@@ -82,6 +82,14 @@
 (require 'autocomplete_config)
 
 
+;; GROOVY AND GRADLE (are still not working when build.gradle opens)
+(autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
+(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\.build" . groovy-mode))
+(add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
+(require 'gradle_config)
+
+
 ;; yasnippet uses ac-sources defined by autocomplete
 ;; so needs to be here, after autocomplete_config.el loaded
 ;;
