@@ -1,5 +1,13 @@
-#+Title: readme for lispsite/data/stdlib-changes
-#+Subtitle: explicacao para a existencia deste diretorio
+#+Title: emacsinitfile
+#+Subtitle: yet another customization for emacs
+
+* Apresentacao
+  
+  Utilizo
+
+* dir lispsite/data/stdlib-changes
+
+explicacao para a existencia deste diretorio
 
 O pacote abaixo:
 

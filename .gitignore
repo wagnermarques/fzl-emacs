@@ -1,7 +1,7 @@
 #sub modules and external subprojects
 node_modules
 **/**/credentials*
-
+/home/wagner/fzlbpms/ansible/roles/aws_ec2_create/vars/*
 default-workspace/*
 semanticdb/*
 
