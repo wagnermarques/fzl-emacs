@@ -7,7 +7,6 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 (message " ### init-dev.el loaded sucessfully!!!")
 
-
 ;;;
 ;;; encoding ;;;;
 ;;;https://stackoverflow.com/questions/6021862/force-emacs-to-use-a-particular-encoding-if-and-only-if-that-causes-no-trouble
@@ -48,6 +47,8 @@
 ;;
 ;;
 (require 'init_common)
+
+(require 'config_proxy)
 (require 'config_package_system)
 
 
