@@ -49,7 +49,7 @@
 ;;
 (require 'init_common)
 (require 'config_package_system)
-
+(require 'config_newsticker)
 
 ;;; B A S I C  W R I T E   C O N F I G U R A T I O N S
 (require 'config_abbrev)

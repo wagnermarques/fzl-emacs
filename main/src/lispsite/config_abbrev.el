@@ -14,6 +14,98 @@
 (define-abbrev-table 'global-abbrev-table
   '(
 
+    ;;php with laravel
+    ("html5Blade"
+     "<!DOCTYPE html>
+<html lang=\"{{ str_replace('_', '-', app()->getLocale()) }}\">
+    <head>
+        <meta charset=\"utf-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+
+        <title>PAGE TITLE</title>
+
+        <!-- Fonts -->
+        <link href=\"https://fonts.googleapis.com/css?family=Nunito:200,600\" rel=\"stylesheet\">
+
+        <!-- Styles -->
+        <style>
+            html, body {
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Nunito', sans-serif;
+                font-weight: 200;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .full-height {
+                height: 100vh;
+            }
+
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+
+            .position-ref {
+                position: relative;
+            }
+
+            .top-right {
+                position: absolute;
+                right: 10px;
+                top: 18px;
+            }
+
+            .content {
+                text-align: center;
+            }
+
+            .title {
+                font-size: 42px;
+            }
+
+            .m-b-md {
+                margin-top: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class=\"flex-center position-ref full-height\">
+            @if (Route::has('xxx'))
+                <div class=\"top-right links\">
+                    @auth
+                        <h1>AUTH FOI TRUE</h1>
+                        <a href=\"{{ url('/xxxx') }}\">Home</a>
+                    @else
+                        <h1>AUTH FOI FALSE</h1>
+                        <a href=\"{{ route('yyyyy') }}\">Login</a>
+
+                        @if (Route::has('register'))
+                            <a href=\"{{ route('register') }}\">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
+
+            <div class=\"content\">
+                <div class=\"title m-b-md\">
+                    PAGE TITLE GRANDE
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>
+
+")
+    
+    
+    ;;shellscript
+    ("fileHeaderShellScript"
+     "#!/bin/bash")
+    
     ;;lisp coding
     ("fileHeaderLisp"
      ";;; package --- Summary
@@ -104,12 +196,18 @@
 ")
     
     ("orgIncludeOrgFile" "#+INCLUDE: ./x/asdf.org")
+    ("orgIncludeJsFile" "#+INCLUDE: ./fil.js :src js :lines \"x-y\"")
     ("orgIncludeHtmlFile" "#+INCLUDE: ./fil.html :src html :lines \"x-y\"")
+    ("orgIncludeSqlFile" "#+INCLUDE: ./fil.sql :src sql :lines \"x-y\"")
+    ("orgIncludePhpFile" "#+INCLUDE: ./fil.php :src php :lines \"x-y\"")
+    ("orgIncludeCFile" "#+INCLUDE: ./fil.c :src c :lines \"x-y\"")
+    ("orgIncludeXMLFile" "#+INCLUDE: ./fil.xml :src xml :lines \"x-y\"")
+    
     ("orgLink" "[[./x/asdf.org][lknName]]")
     
     ;;;org Img Config
     ("orgImg" "
-#+CAPTION: Site do Nodejs
+#+CAPTION: Image Caption
 #+ATTR_HTML: :width 600px :alt altStr :title titleStr :align center
 #+attr_latex: :width 150px
 #+ATTR_LATEX: :height 8cm :placement [!htpb]
@@ -139,18 +237,117 @@
     ;;Org mode files
     ("orgPlanoDeAula" "* Tema
 * Justificativa e Objetivos
-* Duração
-* Pré-Requisitos
-** Conhecimentos Prévios
+* Duracao
+* Pre-Requisitos
+** Conhecimentos Previos
 ** Recursos
 
 * Procedimento didatico
-* Exercicioos e Atividades de Reflexão/Fixação
-* Avaliação
+* Exercicioos e Atividades de Reflexao/Fixacao
+* Avaliacao
 * Referencias
 
 ")
-     ;;https://orgmode.org/manual/Environment-of-a-Code-Block.html
+    ;;https://orgmode.org/manual/Environment-of-a-Code-Block.html
+            
+     ("orgSrcE"  "
+#+NAME:
+#+BEGIN_EXAMPLE
+
+#+END_EXAMPLE")
+
+     
+     ("orgSrcSqlite"  "
+refs:
+   https://www.orgmode.org/worg/org-contrib/babel/header-args.html
+   https://orgmode.org/manual/Using-Header-Arguments.html
+
+#+name: sqlite-populate-test
+#+header: :results replace
+#+header: :dir ~/temp/
+#+header: :db test-sqlite.db
+#+begin_src sqlite
+  create table entregas(
+     nome varchar(50),
+     Sobrenome varchar(50),
+     email varchar(100),
+     forum varchar(2),
+     quest integer,
+     linkgithub varchar(2));
+
+   insert into emtregas ...;
+#+end_src
+")
+
+         ("orgSrcSqliteCmd"  "
+refs:
+   https://sqlite.org/cli.html
+
+#+header: :dir /home/wagner/fzlbpms/data/sqlite
+#+header: :db etec-BDIII-Sem1-entregas.db
+#+name: sqlite command line
+#+header: :colnames yes
+#+header: :var tbName=\"tbAbc\" n=10 bkname=\"etec-BDIII-Sem1-entregas-bk\"
+#+begin_src sqlite
+  #on|off
+  .headers on
+
+  #ascii|column|csv|html|insert|line|list|quote|tabs|tcl
+  .mode html
+
+
+  #Output for the next SQL command only to FILE
+  # (-e|-x|FILE)
+  #.once
+  
+  #Send output to FILE or stdout if FILE is omitted
+  #.output
+
+
+  #.databases
+  #.dbconfig
+
+  #.backup $bkname
+  #.restore ?DB? FILE       Restore content of DB (default \"main\") from FILE
+  
+  #?TABLE?          List names of tables matching LIKE pattern TABLE
+  .tables
+#+end_src
+
+")
+
+     ("orgSrcSqliteImportOrgTable"  "
+refs:
+   https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-sqlite.html
+
+
+#+header: :dir /home/wagner/fzlbpms/data/sqlite
+#+header: :db etec-BDIII-Sem1-entregas.db
+#+name: Etec-BDIII-Sem1-entregas
+#+header: :colnames yes
+#+header: BDIII-Sem1-entregas
+#+header: :var tbName=\"entregas\" orgtable=\"entregas\" n=10
+#+begin_src sqlite
+  drop table if exists $tbName;
+
+  create table $tbName(
+      nome varchar(30),
+      Sobrenome varchar(30),
+      forum varchar(2),
+      quest integer,
+      linkDeProjeto varchar(200),
+      comentarios varchar(200));
+
+    .mode csv $tbName
+    .import $orgtable $tbName
+
+    .tables
+#+end_src
+
+
+")
+
+    
      ("orgSrcR"  "
 #+NAME:
 #+HEADER: :file myplot.png
@@ -166,6 +363,29 @@
 #+HEADER: :dir .
 #+BEGIN_SRC C++ :session s1 :results output :exports both
   printf(\"%d\\n\", 1+2);
+#+END_SRC")
+
+
+     ("orgSrcC"  "
+#+NAME:
+#+HEADER: :file myplot.png
+#+HEADER: :dir .
+#+BEGIN_SRC C :session s1 :results output :exports both
+  printf(\"%d\\n\", 1+2);
+#+END_SRC")
+     
+
+     ("orgSrcJs"  "
+#+NAME:
+#+BEGIN_SRC js :session s1 :results output :exports code
+  
+#+END_SRC")
+
+     
+     ("orgSrcPhp"  "
+#+NAME:
+#+BEGIN_SRC php :session s1 :results output :exports code
+  
 #+END_SRC")
 
      
