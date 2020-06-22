@@ -37,6 +37,33 @@
 
 
 
+;;;;;;;;;;;;;;;;;;O R G   L I N K S;;;;;;;;;;;;;;;;;
+;;
+;;
+;;
+;;https://endlessparentheses.com/embedding-youtube-videos-with-org-mode-links.html
+(defvar yt-iframe-format
+  ;; You may want to change your width and height.
+  (concat "<iframe width=\"440\""
+          " height=\"335\""
+          " src=\"https://www.youtube.com/embed/%s\""
+          " frameborder=\"0\""
+          " allowfullscreen>%s</iframe>"))
+
+(org-add-link-type
+ "yt"
+ (lambda (handle)
+   (browse-url
+    (concat "https://www.youtube.com/embed/"
+            handle)))
+ (lambda (path desc backend)
+   (cl-case backend
+     (html (format yt-iframe-format
+                   path (or desc "")))
+     (latex (format "\href{%s}{%s}"
+                    path (or desc "video"))))))
+
+
 ;;;;;;;;;;;;;;;;;;IIMAGE;;;;;;;;;;;;;;;;;
 ;; add the org file link format to the iimage mode regex
 ;;(add-to-list 'iimage-mode-image-regex-alist
@@ -73,7 +100,7 @@
 ;;https://orgmode.org/worg/org-tutorials/org-jekyll.html
 ;;
 
-;;UNDERSCORE 
+;;UNDERSCORE
 ;;https://emacs.stackexchange.com/questions/10549/org-mode-how-to-export-underscore-as-underscore-instead-of-highlight-in-html
 ;;https://stackoverflow.com/questions/8395036/make-org-ignore-underscores-when-exporting-to-html
 (setq org-export-with-sub-superscripts nil)

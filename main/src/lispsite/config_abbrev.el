@@ -241,7 +241,10 @@
 * Pre-Requisitos
 ** Conhecimentos Previos
 ** Recursos
-
+** Recomendacoes
+   Leia de boa, sem ansiedade...
+   Nao deixe de perguntar pro prof qdo tiver duvidas ok?
+   Visite os links da referencia pra conhece-los, pelo menos
 * Procedimento didatico
 * Exercicioos e Atividades de Reflexao/Fixacao
 * Avaliacao
