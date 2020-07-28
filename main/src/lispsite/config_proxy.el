@@ -10,6 +10,6 @@
 (setq url-http-proxy-basic-auth-storage
     (list (list "http://wagner:nicolas1*@192.168.0.2:3128/"
             (cons "Input your LDAP UID !"
-                  (base64-encode-string "LOGIN:PASSWORD")))))
+                  (base64-encode-string "wagner:nicolas1*")))))
 
 (provide 'config_proxy)

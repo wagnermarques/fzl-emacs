@@ -30,21 +30,6 @@
 
 (setq initial-frame-alist '((fullscreen . maximized)))
 
-;;autosave and backaup dir
-;;(setq auto-save-file-name-transforms '(
-;;                                        (".*" (concat **EMACSINITFILE_HOME** "/var/auto-save") t )))
-
-;;https://www.emacswiki.org/emacs/BackupDirectory
-(setq
-   backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-    '(("." . "../../../var/backup"))
-   delete-old-versions t
-   kept-new-versions 2
-   kept-old-versions 1
-   version-control nil)
-
-;(setq tramp-backup-directory-alist '((".*"  "../../../var/backup")))
 
 
 ;;create emacsinitfile.log file
@@ -56,7 +41,7 @@
 ;;when this files is opened in a buffer is showed like tail -f
 ;;it'is nice to open and watch log files
 (require 'config_logging) ;;needs to be exclude from auto-save-file-name-transforms
-(fzl/log "(require 'config_logging).. was required at last line sucessfully if you are reading this line...")
+
 
 
 (message " ### requiring 'config_buffers")
