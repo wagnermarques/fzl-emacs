@@ -7,6 +7,9 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 (message " ### init-dev.el loaded sucessfully!!!")
 
+;;acentos
+(set-input-mode nil nil 1)
+;(standard-display-european t) 
 ;;;
 ;;; encoding ;;;;
 ;;;https://stackoverflow.com/questions/6021862/force-emacs-to-use-a-particular-encoding-if-and-only-if-that-causes-no-trouble

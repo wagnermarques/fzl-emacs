@@ -21,6 +21,8 @@
 ;;http://www.i3s.unice.fr/~malapert/org/tips/emacs_orgmode.html
 ;;https://orgmode.org/worg/org-configs/org-customization-guide.html
 ;;http://www.i3s.unice.fr/~malapert/org/tips/emacs_orgmode.html
+(message "**EMACSINITFILE_HOME**:")
+(message **EMACSINITFILE_HOME**)
 (setq org-directory (concat **EMACSINITFILE_HOME** "/org-directory"))
 
 (setq org-default-notes-file (concat org-directory "/default-org-notes.org"))
@@ -125,14 +127,14 @@
 
 (require 'ob-python)
 (require 'ob-lisp)
-(require 'ob-shell)
+;;(require 'ob-shell)
 (require 'ob-java)
 ;(require 'restclient)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
-   (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
+;;   (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
    (python . t)
    (java . t)
    (ditaa . t)
@@ -167,14 +169,4 @@
 
 
 (provide 'org_mode_config)
-
-
-
-
-
-
-
-
-
-
 

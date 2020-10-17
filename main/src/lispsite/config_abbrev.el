@@ -404,6 +404,14 @@ refs:
 #+END_EXPORT"
      )
 
+     ("orgSrcXML" "
+#+NAME:
+#+BEGIN_SRC xml :session s1 :results output :exports code
+
+#+END_SRC"
+     )
+
+
      ("orgSrcRestclient" "
 #+NAME:
 #+BEGIN_SRC restclient :session s1 :results output :exports both

@@ -76,23 +76,23 @@
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;           O R G  M O D E   ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        org
-                                        org-ref
+                                        ;org
+                                        ;org-ref
                                         
-                                        org-plus-contrib
+                                        ;org-plus-contrib
 
                                         ;;https://github.com/krisajenkins/ob-browser
-                                        ob-browser
+                                        ;ob-browser
 
                                         ;;https://github.com/zweifisch/ob-http
-                                        ob-http
+                                        ;ob-http
 
                                         ;;https://github.com/krisajenkins/ob-translate/blob/master/ob-translate.el
-                                        ob-translate
+                                        ;ob-translate
 
-                                        ob-restclient
+                                        ;ob-restclient
 
-                                        ox-twbs
+                                        ;ox-twbs
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;          D A T A B A S E         ;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -193,7 +193,7 @@
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
                                         elpy                                ;20200329.1830 available  melpa      Emacs Python Development Environment
-                                        ac-python             ;         20110519      available  marmalade  Simple Python Completion Source for Auto-Complete
+                                        ;ac-python             ;         20110519      available  marmalade  Simple Python Completion Source for Auto-Complete
                                         
                                         ;https://github.com/jorgenschaefer/pyvenv
                                         ;pyvenv             ;20170826.812  available  melpa      Python virtual environment interface
@@ -217,11 +217,11 @@
 
 
                                         ;eslint-fix         ;20160819.36   available  melpa      Fix JavaScript files using ESLint
-                                        ess                ;20170118.232  available  melpa      Emacs Speaks Statistics
-                                        ess-R-data-view    ;20130509.458  available  melpa      Data viewer for GNU R
-                                        ess-R-object-popup ;20130302.336  available  melpa      popup description of R object
-                                        ess-smart-equals   ;20150201.2201 available  melpa      better smart-assignment with =-key in R and S
-                                        ess-view           ;20160309.1315 available  melpa      View R dataframes in a spreadsheet software
+                                        ;ess                ;20170118.232  available  melpa      Emacs Speaks Statistics
+                                        ;ess-R-data-view    ;20130509.458  available  melpa      Data viewer for GNU R
+                                        ;ess-R-object-popup ;20130302.336  available  melpa      popup description of R object
+                                        ;ess-smart-equals   ;20150201.2201 available  melpa      better smart-assignment with =-key in R and S
+                                        ;ess-view           ;20160309.1315 available  melpa      View R dataframes in a spreadsheet software
                                         ;auctex
                                         ;ebib
                                         ;org-ref
