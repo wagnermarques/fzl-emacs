@@ -38,8 +38,6 @@
   "PKGLIST is a list of packages. Install all packages if it is not installed yet."  
   )
 
-<<<<<<< HEAD
-
 (defun fzl/org-feed-config()
   "Configure org-feed-config. Code from:https://melpa.org/#/getting-started"
 
@@ -52,8 +50,6 @@
     (package-initialize)
     ))
     
-=======
->>>>>>> c676bfcb2ead2fb287f5453fd4d621c264e77044
 (provide 'fzl_utils_package)
   
 ;;https://www.gnu.org/software/emacs/manual/html_node/emacs/Package-Installation.html

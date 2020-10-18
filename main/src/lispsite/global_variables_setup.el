@@ -6,7 +6,7 @@
 ;;; Code:
 (print "===> global_variable_setup.el was loaded sucessfully!!!")
 
-(setq **DISK** "/home/wagner");
+(setq **DISK** "/home/wagner")
 (setq **EMACSINITFILE_HOME** (concat **DISK** "/fzlbpms/emacsinitfile"))
 (setq **EMACSINITFILE_LISPSITE** (concat **EMACSINITFILE_HOME** "/main/src/lispsite"))
 (setq **EMACSINITFILE_TESTSSITE** (concat **EMACSINITFILE_HOME** "/main/src/testssite"))
@@ -58,10 +58,9 @@
 ;;ANDROID SDK  ENVIRONMENT VARIABLES
 ;;ANDROID_HOME is depracated
 (setq **ANDROID_STUDIO_PROJECTS_DIR** "/home/wagner/wagnerdocri@gmail.com/progsativos/AndroidStudioProjects/")
-(setq **ANDROID_SDK_ROOT** (concat **FZL_STUDIO** "/integrated/android/androidSdk")
+(setq **ANDROID_SDK_ROOT** (concat **FZL_STUDIO** "/integrated/android/androidSdk"))
 
 (setenv "ANDROID_SDK_ROOT" **ANDROID_SDK_ROOT**)
-(setenv "ANDROID_SDK_HOME" **ANDROID_SDK_ROOT**)
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/platform-tools")))
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/tools")))
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **ANDROID_SDK_ROOT** "/tools/bin")))
