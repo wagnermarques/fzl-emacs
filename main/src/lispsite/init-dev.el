@@ -20,7 +20,6 @@
       (setq buffer-file-coding-system pref))))
 
 (add-hook 'before-save-hook 'enforce-coding-system-priority)
-
 (prefer-coding-system 'iso-8859-1)
 
 
@@ -50,7 +49,6 @@
 ;;
 ;;
 (require 'init_common)
-
 (require 'config_proxy)
 (require 'config_package_system)
 (require 'config_newsticker)

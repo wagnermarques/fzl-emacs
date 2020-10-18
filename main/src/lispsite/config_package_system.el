@@ -10,9 +10,7 @@
 ;;http://ergoemacs.org/emacs/emacs_package_system.html
 ;;http://stackoverflow.com/questions/10092322/how-to-automatically-install-emacs-packages-by-specifying-a-list-of-package-name
 ;;(fzl/log (concat (expand-file-name "./config_package_system.el") " --> loaded sucessfully"))
-
 (require 'fzl_utils_package)
-
 
 (setq packages-to-be-installed-list '(;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                       ;;;;;;;;;; NON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;

@@ -23,11 +23,11 @@
      ("https" . "192.168.0.2:3128")))
 
 (setq url-http-proxy-basic-auth-storage
-    (list (list "192.168.0.2:3128"
-                (cons "Input your LDAP UID !"
-                      (base64-encode-string "wagner:nicolas1*")))))
-                      
-(skip-chars-forward "HTTP/")        ; Skip HTTP Version
-(skip-chars-forward "http/")        ; Skip HTTP Version
+      (list (list "192.168.0.2:3128"
+                  (cons "Input your LDAP UID !"
+                        (base64-encode-string "wagner:nicolas1*")))))
+
+;;(skip-chars-forward "HTTP/")        ; Skip HTTP Version
+;;(skip-chars-forward "http/")        ; Skip HTTP Version
 
 (provide 'config_proxy)

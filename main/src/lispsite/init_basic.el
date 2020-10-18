@@ -13,8 +13,4 @@
 ;;https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_node/elisp_225.html
 (setq debug-on-error t)
 
-;;the **EMACSINITFILE_LISPSITE** variable is defined in global_variables_setup.el loaded by init-dev.el
-(add-to-list 'load-path **EMACSINITFILE_LISPSITE**)
-
-
 (provide 'init_basic)
