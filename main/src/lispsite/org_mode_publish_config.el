@@ -13,10 +13,10 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
 
-(message (concat "###:base-directory->"  **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
-(shell-command (concat "ls -l " **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
-(message (concat "###:publishing-directory->"  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
-(shell-command (concat "ls -l "  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
+;;(message (concat "###:base-directory->"  **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
+;;(shell-command (concat "ls -l " **org-publish-project-base-directory-4-aws-s3-planosdeaulas**))
+;;(message (concat "###:publishing-directory->"  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
+;;(shell-command (concat "ls -l "  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**))
 
 
 ;; just for htmlJekyll backend
