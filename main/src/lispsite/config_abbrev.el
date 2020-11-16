@@ -443,11 +443,13 @@ refs:
 #+END_SRC")
 
       
-      ("javamainmethod" "public static void main(String[] args){
+      ("pvsm" "public static void main(String[] args){
 
 }")
+
       ("sysout" "System.out.println();")
-           
+
+      ("orgFn" "[fn:]")
 
       ("orgSrcSql" "
 #+NAME:
@@ -478,7 +480,11 @@ refs:
     ;;;horizontal line
     ("hr" "--------------------------------------------------" )
     
- ))
+    )
+
+  );;(define-abbrev-table 'global-abbrev-table'(
+
+
 
 (set-default 'abbrev-mode t)
 

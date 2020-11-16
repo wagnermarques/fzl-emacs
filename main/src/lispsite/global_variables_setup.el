@@ -25,6 +25,13 @@
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **FZL_HOME** "/bin")))
 
 
+;; org-mode configuration path
+;;https://emacs.stackexchange.com/questions/19391/can-t-set-directory-for-org-mode-capture
+;;https://orgmode.org/worg/org-configs/org-customization-guide.html
+
+(setq **org-directory** (concat **FZL_HOME** "/emacs/org-directory"))
+
+
 
 ;; [todo] orgmode publish paths integration
 

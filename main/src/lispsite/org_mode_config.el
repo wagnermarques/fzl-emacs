@@ -3,8 +3,11 @@
 ;;; Commentary:
 
 ;;; Code:
+(fzl/log "[org_mode_config.el] Loaded sucessfully!!!")
 
+(require 'org);; -- ensure org variables exists to be customized
 (require 'ox-org)
+(require 'fzl_utils_files)
 
 ;; O R G   M O D E    C O N F I G
 (require 'iimage_mode_config);; -- Display images in org mode
@@ -21,14 +24,19 @@
 ;;http://www.i3s.unice.fr/~malapert/org/tips/emacs_orgmode.html
 ;;https://orgmode.org/worg/org-configs/org-customization-guide.html
 ;;http://www.i3s.unice.fr/~malapert/org/tips/emacs_orgmode.html
-(message "**EMACSINITFILE_HOME**:")
-(message **EMACSINITFILE_HOME**)
-(setq org-directory (concat **EMACSINITFILE_HOME** "/org-directory"))
+(setq org-directory **org-directory**)
 
 (setq org-default-notes-file (concat org-directory "/default-org-notes.org"))
-(setq org-agenda-files '((concat org-directory "todos.org")
-                         (concat org-directory "events.org")
-                         (concat org-directory "default-org-notes.org")))
+(fzl-create-empty-file-if-no-exists org-default-notes-file)
+(fzl-create-empty-file-if-no-exists (concat org-directory "/todos.org"))
+(fzl-create-empty-file-if-no-exists (concat org-directory "/events.org"))
+(fzl-create-empty-file-if-no-exists (concat org-directory "/default-org-notes.org"))
+
+
+(setq org-agenda-files '((concat org-directory "/todos.org")
+                         (concat org-directory "/events.org")
+                         (concat org-directory "/default-org-notes.org")))
+
 
 (fzl/log (concat "[org_mode_config.el] => org-directory = " org-directory))
 
