@@ -33,9 +33,9 @@
 (fzl-create-empty-file-if-no-exists (concat org-directory "/default-org-notes.org"))
 
 
-(setq org-agenda-files '((concat org-directory "/todos.org")
-                         (concat org-directory "/events.org")
-                         (concat org-directory "/default-org-notes.org")))
+;(setq org-agenda-files '((concat org-directory "/todos.org")
+;                         (concat org-directory "/events.org")
+;                         (concat org-directory "/default-org-notes.org")))
 
 
 (fzl/log (concat "[org_mode_config.el] => org-directory = " org-directory))

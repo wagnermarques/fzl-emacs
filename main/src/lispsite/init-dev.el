@@ -108,4 +108,8 @@
 ;;Python coding
 (require 'config_elpy)
 
+
+;;por 80800
+(require 'config_simple_o)
+
 ;;; this_init-dev.el ends here

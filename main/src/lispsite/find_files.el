@@ -7,9 +7,9 @@
   "find-file in **EMACSINITFILE_HOME** directory with just the filename"
   (find-file (concat **EMACSINITFILE_HOME**  fileName)))
 
-(fzl-fzl-find-file  "/index.org"))
-(fzl-find-file "config_abbrev.el")
-(fzl-find-file "org_mode_config.el")
+(fzl-find-file  "/index.org")
+(fzl-find-file "/config_abbrev.el")
+(fzl-find-file "/org_mode_config.el")
 
 (fzl-find-file (concat **EMACSINITFILE_HOME**  "/emacsinitfile.log"))
 (fzl-find-file (concat **EMACSINITFILE_HOME**  "/elfeed_config.el"))

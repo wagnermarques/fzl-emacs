@@ -15,20 +15,41 @@
 (setq packages-to-be-installed-list '(;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                       ;;;;;;;;;; NON PROGRAMMING PACKAGES   ;;;;;;;;;;;;;;;;
                                       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                      helm
+                                      ;helm
                                       
                                       ;;;https://github.com/politza/pdf-tools
                                       ;;;Support library for PDF documents.
                                       ;;;Issue M-x pdf-tools-install RET once
                                       ;;pdf-tools
-
+                                      
                                       ;;helm-firefox
+                                      
+                                      ;;company-restclient ;20151202.1201 available  melpa      company-mode completion back-end for restclient-mode
 
-                                        ;company-restclient ;20151202.1201 available  melpa      company-mode completion back-end for restclient-mode
-                                        ;ob-restclient      ;20180904.709  available  melpa      org-babel functions for restclient-mode
-                                        ;restclient         ;20190122.942  available  melpa      An interactive HTTP client for Emacs
-                                        ;restclient-test    ;20180106.2046 available  melpa      Run tests with restclient.el
-					
+                                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                      ;;;;;;;;;;:::::::       ORG-MODE      ;;;;;;;;;;;;;;;;
+                                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                      ;;https://github.com/krisajenkins/ob-browser
+                                      ob-browser
+
+                                      ;;ob-restclient      ;20180904.709  available  melpa      org-babel functions for restclient-mode
+                                      ;;restclient         ;20190122.942  available  melpa      An interactive HTTP client for Emacs
+                                      ;;restclient-test    ;20180106.2046 available  melpa      Run tests with restclient.el
+                                      ;;org
+                                      ;;org-ref                                        
+                                      ;;org-plus-contrib
+
+                                      ;;https://github.com/zweifisch/ob-http
+                                      ob-http
+
+                                      ;;https://github.com/krisajenkins/ob-translate/blob/master/ob-translate.el
+                                      ;;ob-translate
+
+                                      ob-restclient
+
+                                      ;;ox-twbs
+
+                                      
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;    DEALING WITH FILES      ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -53,7 +74,7 @@
                                         ;https://github.com/skeeto/emacs-web-server
                                         ;elpy dependes on it and many others
                                         ;TODO: define config_simple-httpd.el file
-                                        ;simple-httpd       ;20170125.1910 dependency            pure elisp HTTP server
+                                        simple-httpd       ;20170125.1910 dependency            pure elisp HTTP server
                                         
                                         ;https://www.youtube.com/watch?v=jNa3axo40qM
                                         ;https://www.emacswiki.org/emacs/Iedit
@@ -71,26 +92,6 @@
                                         
 
                                         
-                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;;;;;;;;;;           O R G  M O D E   ;;;;;;;;;;;;;;;;
-                                        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;org
-                                        ;org-ref
-                                        
-                                        ;org-plus-contrib
-
-                                        ;;https://github.com/krisajenkins/ob-browser
-                                        ;ob-browser
-
-                                        ;;https://github.com/zweifisch/ob-http
-                                        ;ob-http
-
-                                        ;;https://github.com/krisajenkins/ob-translate/blob/master/ob-translate.el
-                                        ;ob-translate
-
-                                        ;ob-restclient
-
-                                        ;ox-twbs
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;          D A T A B A S E         ;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -257,10 +258,10 @@
                                         gradle-mode                  ;20150313.1905 available  melpa      Gradle integration with Emacs' compile
                                         ;kotlin-mode
 
+                                        
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;             DOCKER         ;;;;;;;;;;;;;;;;
                                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
                                         docker                 ;20191222.939  available  melpa      Emacs interface to Docker
 
                                         ;;https://github.com/Silex/docker-api.el

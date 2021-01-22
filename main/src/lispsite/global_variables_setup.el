@@ -7,7 +7,9 @@
 (print "===> global_variable_setup.el was loaded sucessfully!!!")
 
 (setq **DISK** "/home/wagner")
-(setq **EMACSINITFILE_HOME** (concat **DISK** "/fzlbpms/emacsinitfile"))
+
+
+(setq **EMACSINITFILE_HOME** (concat **DISK** "/fzlbpms/submodules/emacsinitfile"))
 (setq **EMACSINITFILE_LISPSITE** (concat **EMACSINITFILE_HOME** "/main/src/lispsite"))
 (setq **EMACSINITFILE_TESTSSITE** (concat **EMACSINITFILE_HOME** "/main/src/testssite"))
 (setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **EMACSINITFILE_HOME** "/bin"))))
@@ -16,10 +18,29 @@
 
 ;; fzlbpms integration
 ;; [todo] check if FZL_HOME environment variabel is setted if not use hard coded one
-(setq **FZL_HOME** (getenv "FZL_HOME"))
-(setq **FZL_HOME** "/home/wagner/fzlbpms")
+;;(setq **FZL_HOME** (getenv "FZL_HOME"))
+(setq **FZL_HOME** (concat **DISK** "/fzlbpms"))
+(message (concat "[global_variables_setup.el] **FZL_HOME** = " **FZL_HOME**))
+
 (setq **FZL_SERVER** (concat **FZL_HOME** "/fzlServer"))
 (setq **FZL_STUDIO** (concat **FZL_HOME** "/fzlStudio"))
+(message (concat "[global_variables_setup.el] **FZL_SERVER** = " **FZL_SERVER**))
+(message (concat "[global_variables_setup.el] **FZL_STUDIO** = " **FZL_STUDIO**))
+
+(setenv "FZL_STUDIO" **FZL_STUDIO**)
+(setenv "FZL_SERVER" **FZL_SERVER**)
+(message (concat "[global_variables_setup.el] echo $FZL_STUDIO = " (getenv "FZL_STUDIO")))
+(message (concat "[global_variables_setup.el] echo $FZL_SERVER = " (getenv "FZL_SERVER")))
+
+;; the first httpd_root dir is get from EMCAS_SIMPLE_HTTPD_ROOT environment variable
+;; if its nil, we user default one in **EMACSINITFILE_HOME**
+(if (equal "" (getenv "EMACS_SIMPLE_HTTPD_ROOT"))
+    (progn
+      (setq **config_simple_httpd_root** (getenv "EMACS_SIMPLE_HTTPD_ROOT"))
+      (message (concat "**config_simple_httpd_root** (setted by environment variable) = " **config_simple_httpd_root**)))
+  (progn
+    (setq **config_simple_httpd_root** (concat **EMACSINITFILE_HOME** "/httpd-root"))
+    (message (concat "**config_simple_httpd_root** (using default) = " **config_simple_httpd_root**))))
 
 ;; [todo] check if FZL_HOME environment variable is setted if not warn user about it
 (setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **FZL_HOME** "/bin")))
@@ -40,7 +61,7 @@
 
 
 ;;;JAVA ENRIRONMENT VARIABLES
-(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk1.8.0_251"))
+(setq **JAVA_HOME** (concat **FZL_HOME** "/integrated/jdks/jdk-14.0.2"))
 (setenv "JAVA_HOME" **JAVA_HOME**)
 (setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **JAVA_HOME** "/bin"))))
 

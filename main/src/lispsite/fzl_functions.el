@@ -633,15 +633,20 @@
 ;;; 
 ;;;________________________________________
 (defun fzl-open-gradle-properties-file()
-  "open ~/.gradle/gradle-properties"
+  "Open ~/.gradle/gradle-properties."
   (interactive)
   (find-file "~/.gradle/gradle.properties")
   )
 
 (defun fzl-docker-service()
-  "open docker-service systemd unit file"
+  "Open docker-service systemd unit file."
   (interactive)
   (fzl-find-file-as-root "/usr/lib/systemd/system/docker.service"))
+
+(defun fzl-ansible-service()
+  "Open docker-service systemd unit file."
+  (interactive)
+  (fzl-find-file-as-root "/etc/ansible/ansible.cfg"))
 
 (defun fzl-docker-storage-setup()
   "open docker-storage-setup file"

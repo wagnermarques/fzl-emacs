@@ -103,6 +103,7 @@
       ["~/.gradle/gradle.properties file"  (fzl-open-gradle-properties-file)]
       ["/etc/sysconfig/network-scripts/ifcfg-enp2s0"  (fzl-open-ifcfg-enp2s0-file)]
       ["/etc/resolv.conf"  (fzl-open-resolv-conf-file)]
+      ["ansible.cfg file"  (fzl-ansible-service)]
       )
 
      ("Log files"
