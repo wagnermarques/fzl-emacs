@@ -174,7 +174,7 @@
                                         ;TODO: Opens htmlized file in html buffer for C-c C-v usage
                                         ;htmlize ;           20161211.1019 available  melpa      Convert buffer text and decorations to HTML.
 
-                                        ;impatient-mode
+                                        impatient-mode     ;20200723.2117 available  melpa      Serve buffers live over HTTP
                                         ;https://melpa.org/#/impatient-mode
                                         ;https://www.youtube.com/watch?v=mnfPRLlsXqU
                                         ;https://www.youtube.com/watch?v=QV6XVyXjBO8&feature=youtu.be

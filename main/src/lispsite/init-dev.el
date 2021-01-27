@@ -13,14 +13,22 @@
 ;;;
 ;;; encoding ;;;;
 ;;;https://stackoverflow.com/questions/6021862/force-emacs-to-use-a-particular-encoding-if-and-only-if-that-causes-no-trouble
-(defun enforce-coding-system-priority ()
-  (let ((pref (car (coding-system-priority-list)))
-        (list (find-coding-systems-region (point-min) (point-max))))
-    (when (or (memq 'undecided list) (memq pref list))
-      (setq buffer-file-coding-system pref))))
+;;;https://emacs.stackexchange.com/questions/50572/org-babel-results-with-accented-characters
+(setq locale-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
 
-(add-hook 'before-save-hook 'enforce-coding-system-priority)
-(prefer-coding-system 'iso-8859-1)
+;;(defun enforce-coding-system-priority ()
+;;  (let ((pref (car (coding-system-priority-list)))
+;;        (list (find-coding-systems-region (point-min) (point-max))))
+;;    (when (or (memq 'undecided list) (memq pref list))
+;;      (setq buffer-file-coding-system pref))))
+
+;;(add-hook 'before-save-hook 'enforce-coding-system-priority)
+;;(prefer-coding-system 'iso-8859-1)
 
 
 ;;load files in this same el file dir
@@ -51,6 +59,7 @@
 (require 'init_common)
 (require 'config_proxy)
 (require 'config_package_system)
+(require 'config_backups)
 (require 'config_newsticker)
 
 ;;; B A S I C  W R I T E   C O N F I G U R A T I O N S
@@ -110,6 +119,6 @@
 
 
 ;;por 80800
-(require 'config_simple_o)
+(require 'config_simple_httpd)
 
 ;;; this_init-dev.el ends here
