@@ -39,4 +39,4 @@
       kept-old-versions 2)   ; and some old ones, too      
 
 
-(provide 'config_backup)
+(provide 'config_backups)

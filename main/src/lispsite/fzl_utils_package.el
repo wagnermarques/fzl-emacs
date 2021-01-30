@@ -3,6 +3,10 @@
 (print "===> fzl_utils_package.el loaded sucessfully!!!")
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+<<<<<<< HEAD
+=======
+			 ;("marmalade" . "http://marmalade-repo.org/packages/")
+>>>>>>> 4c050d62d69d7a269f21582dd32f5b2fd5405be8
 			 ("org" . "http://orgmode.org/elpa/")
 			 ("melpa" . "https://melpa.org/packages/")))
 

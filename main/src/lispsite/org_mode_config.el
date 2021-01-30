@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 ;;; Code:
-(fzl/log "[org_mode_config.el] Loaded sucessfully!!!")
+;;;(fzl/log "[org_mode_config.el] Loaded sucessfully!!!")
 
 (require 'org);; -- ensure org variables exists to be customized
 (require 'ox-org)
@@ -38,7 +38,7 @@
 ;                         (concat org-directory "/default-org-notes.org")))
 
 
-(fzl/log (concat "[org_mode_config.el] => org-directory = " org-directory))
+;;(fzl/log (concat "[org_mode_config.el] => org-directory = " org-directory))
 
 ;;http://orgmode.org/worg/org-configs/org-customization-guide.html
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
@@ -142,7 +142,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
-;;   (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
+   (shell . t) ;;http://thread.gmane.org/gmane.emacs.orgmode/102877
    (python . t)
    (java . t)
    (ditaa . t)
