@@ -49,7 +49,7 @@
 ;;
 ;;
 (require 'init_common)
-(require 'config_proxy)
+;;(require 'config_proxy)
 (require 'config_package_system)
 (require 'config_newsticker)
 
@@ -110,6 +110,6 @@
 
 
 ;;por 80800
-(require 'config_simple_o)
+(require 'config_simple_httpd)
 
 ;;; this_init-dev.el ends here
