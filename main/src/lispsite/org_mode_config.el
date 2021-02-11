@@ -149,6 +149,7 @@
    (R . t)
    (sqlite . t)
    (C . t)
+   (dot . t)
    ))
 ;;   (restclient . t)
 ;;   (ruby . t)

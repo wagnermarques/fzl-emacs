@@ -51,7 +51,8 @@
 ;;https://orgmode.org/worg/org-configs/org-customization-guide.html
 
 (setq **org-directory** (concat **FZL_HOME** "/emacs/org-directory"))
-
+(setq **aws-s3-planosdeaulas_publish_project_base-directory** (concat **FZL_HOME** "/submodules/somewritings/planosdeaulas"))
+(setq **aws-s3-planosdeaulas_publishing-directory** (concat **FZL_HOME** "/emacs/org-publishing-directory/aws-s3-planosdeaulas"))
 
 
 ;; [todo] orgmode publish paths integration

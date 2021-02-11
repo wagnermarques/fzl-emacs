@@ -110,7 +110,7 @@
 
 ;;(require 'rtags_config)
 (find-file (concat **EMACSINITFILE_HOME** "/index.org"))
-(find-file "/home/wagner/envs/env-dev/sources/somewritings/var/publishing-directory/planosdeaulas/index.html")
+(find-file (concat (getenv "FZLBPMS_HOME") "/emacs/org-publishing-directory/aws-s3-planosdeaulas"))
 (find-file (concat **EMACSINITFILE_HOME** "/main/src/lispsite/config_abbrev.el"))
 
 

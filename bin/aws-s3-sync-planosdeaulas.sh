@@ -1,2 +1,2 @@
 #!/bin/bash
-aws s3 sync /home/wagner/envs/env-dev/sources/somewritings/var/publishing-directory/planosdeaulas/  s3://www.planosdeaulas.com.br --acl public-read
+aws s3 sync "$FZLBPMS_HOME/emacs/org-publishing-directory/aws-s3-planosdeaulas"  s3://www.planosdeaulas.com.br --acl public-read

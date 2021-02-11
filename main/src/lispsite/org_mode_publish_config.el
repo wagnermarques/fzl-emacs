@@ -8,7 +8,7 @@
 (require 'ox-html)
 (require 'ox-publish)
 (require 'format-spec)
-(eval-when-compile (require 'cl) (require 'table nil 'noerror))
+
 
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
@@ -26,13 +26,15 @@
 (add-to-list 'org-export-filter-final-output-functions
              'configure_jekyll_front_matter)
 
+;;TODO use **org-publish-project-publishing-directory-4-jekyll-html-export** and
+;; **org-publish-project-base-directory-4-jekyll-html-export**
 (setq org-publish-project-alist
       '(("jekyll-html-export" ;; settings for export as jekyll post
-         :base-directory **org-publish-project-publishing-directory-4-jekyll-html-export**
+         :base-directory "/home/wagner/fzlbpms/submodules/somewritings/planosdeaulas"
          :base-extension "org"
-         :publishing-directory **org-publish-project-base-directory-4-jekyll-html-export**
+         :publishing-directory ""
          :recursive t
-         :publishing-function org-twbs-publish-to-html
+         :publishing-function org-html-publish-to-html
          :section-numbers nil
          :with-toc nil
          :auto-index nil
@@ -46,10 +48,10 @@
 
         ;;;https://github.com/marsmining/ox-twbs
         ("aws-s3-planosdeaulas"
-         :base-directory       "/home/wagner/envs/env-dev/sources/somewritings/planosdeaulas"
-         :publishing-directory "/home/wagner/envs/env-dev/sources/somewritings/var/publishing-directory/planosdeaulas"
+         :base-directory       "/home/wagner/fzlbpms/submodules/somewritings/planosdeaulas"
+         :publishing-directory "/home/wagner/fzlbpms/emacs/org-publishing-directory/aws-s3-planosdeaulas"
          :base-extension "org"
-         :publishing-function org-twbs-publish-to-html
+         :publishing-function org-html-publish-to-html
          :headline-levels 4
          :auto-preamble t
          :recursive t
@@ -59,9 +61,9 @@
         ("aws-s3-planosdeaulas-org-static"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
          ;;:base-directory **org-publish-project-base-directory-4-aws-s3-planosdeaulas**
-         :base-directory "/home/wagner/envs/env-dev/sources/somewritings/planosdeaulas"
+         :base-directory "/home/wagner/fzlbpms/submodules/somewritings/planosdeaulas"
          ;;:publishing-directory  **org-publish-project-publishing-directory-4-aws-s3-planosdeaulas**
-         :publishing-directory  "/home/wagner/envs/env-dev/sources/somewritings/var/publishing-directory/planosdeaulas"
+         :publishing-directory  "/home/wagner/fzlbpms/emacs/org-publishing-directory/aws-s3-planosdeaulas"
          :recursive t
          :publishing-function org-publish-attachment
          )
