@@ -1,4 +1,4 @@
-;;; package --- Summary
+ ;;; package --- Summary
 
 ;;; Commentary:
 ;;http://ergoemacs.org/emacs/emacs_abbrev_mode.html

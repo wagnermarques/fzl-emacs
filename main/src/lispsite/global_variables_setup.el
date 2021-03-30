@@ -8,13 +8,12 @@
 
 (setq **DISK** "/home/wagner")
 
-
 (setq **EMACSINITFILE_HOME** (concat **DISK** "/fzlbpms/submodules/emacsinitfile"))
-(setq **EMACSINITFILE_LISPSITE** (concat **EMACSINITFILE_HOME** "/main/src/lispsite"))
-(setq **EMACSINITFILE_TESTSSITE** (concat **EMACSINITFILE_HOME** "/main/src/testssite"))
+(setq **EMACSINITFILE_TESTS_LISPSITE** (concat **EMACSINITFILE_HOME** "/main/src/testssite"))
 (setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **EMACSINITFILE_HOME** "/bin"))))
 (shell-command (concat "chmod +x " (concat **EMACSINITFILE_HOME** "/bin/*.sh"))) ;makes ./bin files executable
 
+(setq **fzlbpms/SUBMODULES_HOME** (concat **EMACSINITFILE_HOME** "/submodules"))
 
 ;; fzlbpms integration
 ;; [todo] check if FZL_HOME environment variabel is setted if not use hard coded one

@@ -7,8 +7,8 @@ default-workspace/*
 semanticdb/*
 
 #----submodules
-submodules/*
-submodulesOld/*
+#submodules/*
+
 
 
 

@@ -9,7 +9,8 @@
 
 ;;acentos
 (set-input-mode nil nil 1)
-;(standard-display-european t) 
+
+;;(standard-display-european t) 
 ;;;
 ;;; encoding ;;;;
 ;;;https://stackoverflow.com/questions/6021862/force-emacs-to-use-a-particular-encoding-if-and-only-if-that-causes-no-trouble
@@ -20,6 +21,19 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+
+
+;;
+;;
+;; Defining load-path
+;; The main goal is to centralize all instructions that
+;; define load-path directories here, in this session code
+;; If you see the several module configuration files in this lisp site
+;; you will se, for exemple, ess_config.el. The pattern is that the ess_config.el
+;; and any other module config file in this lisp site will not configure
+;; load path letting this tasks to be done here in this session
+;; 
+;;
 
 ;;(defun enforce-coding-system-priority ()
 ;;  (let ((pref (car (coding-system-priority-list)))
@@ -41,16 +55,16 @@
 ;;after ir we load global vars the defines another paths of interests as global vars
 (add-to-list 'load-path *thisFileDir*)
 
-
 ;;this file defines serveral path or interest as global vars
 ;;as **EMACSINITFILE_LISPSITE** the are used below, for example
 ;; global vars in code are the prefixed and postfixed  with **, like **MY_GLOBAL_VAR_NAME**
 (require 'global_variables_setup)
 
-(add-to-list 'load-path (concat **EMACSINITFILE_LISPSITE** "/web-mode"))
-(add-to-list 'load-path (concat **EMACSINITFILE_LISPSITE** "/rtags/src"))
-(add-to-list 'load-path (concat **EMACSINITFILE_LISPSITE** "/org-ref"))
-(add-to-list 'load-path (concat **EMACSINITFILE_LISPSITE** "/ESS"))
+;;remembering emacsinitfile/main/src/lispsite
+(add-to-list 'load-path (concat **fzlbpms/SUBMODULES_HOME** "/web-mode"))
+(add-to-list 'load-path (concat **fzlbpms/SUBMODULES_HOME** "/rtags/src"))
+(add-to-list 'load-path (concat **fzlbpms/SUBMODULES_HOME** "/org-ref"))
+(add-to-list 'load-path (concat **fzlbpms/SUBMODULES_HOME** "/ess/lisp"))
 
 
 ;;
@@ -66,6 +80,8 @@
 (require 'config_abbrev)
 (require 'config_helm)
 (require 'org_mode_config)
+(require 'ess_config)
+
 ;(require 'org_mode_publish_backend_jquerymobile)
 (require 'org_mode_publish_config)
 

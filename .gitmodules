@@ -7,3 +7,6 @@
 [submodule "submodules/rtags"]
 	path = submodules/rtags
 	url = https://github.com/Andersbakken/rtags.git
+[submodule "submodules/ess"]
+	path = submodules/ess
+	url = https://github.com/emacs-ess/ESS.git
