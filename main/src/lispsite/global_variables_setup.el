@@ -13,7 +13,8 @@
 (setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **EMACSINITFILE_HOME** "/bin"))))
 (shell-command (concat "chmod +x " (concat **EMACSINITFILE_HOME** "/bin/*.sh"))) ;makes ./bin files executable
 
-(setq **fzlbpms/SUBMODULES_HOME** (concat **EMACSINITFILE_HOME** "/submodules"))
+(defvar **fzlbpms/SUBMODULES_HOME** (concat **EMACSINITFILE_HOME** "/submodules")
+  "The emacsinitifle has git submodules and **fzlbpms/SUBMODULES_HOME** sets common submodules directory.")
 
 ;; fzlbpms integration
 ;; [todo] check if FZL_HOME environment variabel is setted if not use hard coded one
