@@ -1,4 +1,4 @@
- ;;; package --- Summary
+;;; package --- Summary
 
 ;;; Commentary:
 ;;http://ergoemacs.org/emacs/emacs_abbrev_mode.html
@@ -419,8 +419,15 @@ refs:
 #+END_SRC")
 
      ("orgSrcShell" "
+
+#+NAME: parseShellAnsiColorCharacters
+#+BEGIN_SRC elisp :session s1 :var data=""  :results silent  :exports node
+  (print (ansi-color-apply data))
+#+END_SRC
+
+
 #+NAME:
-#+BEGIN_SRC shell :session s1 :results output :exports both
+#+BEGIN_SRC shell :session s1 :results output :exports both :post parseShellAnsiColorCharacters(data=*this*)
 
 #+END_SRC")
 
