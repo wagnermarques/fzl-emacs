@@ -71,7 +71,7 @@
 ;;
 ;;
 (require 'init_common)
-;;(require 'config_proxy)
+(require 'config_proxy)
 (require 'config_package_system)
 (require 'config_backups)
 (require 'config_newsticker)

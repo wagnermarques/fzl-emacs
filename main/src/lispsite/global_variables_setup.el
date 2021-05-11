@@ -6,10 +6,10 @@
 ;;; Code:
 (print "===> global_variable_setup.el was loaded sucessfully!!!")
 
-(setq **DISK** "/home/wagner")
-
-(setq **EMACSINITFILE_HOME** (concat **DISK** "/fzlbpms/submodules/emacsinitfile"))
+(defvar this_elisp_file_dir (getenv "PWD"))
+(defvar **EMACSINITFILE_HOME** (concat this_elisp_file_dir "/../../.."))
 (setq **EMACSINITFILE_TESTS_LISPSITE** (concat **EMACSINITFILE_HOME** "/main/src/testssite"))
+
 (setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **EMACSINITFILE_HOME** "/bin"))))
 (shell-command (concat "chmod +x " (concat **EMACSINITFILE_HOME** "/bin/*.sh"))) ;makes ./bin files executable
 
@@ -18,8 +18,7 @@
 
 ;; fzlbpms integration
 ;; [todo] check if FZL_HOME environment variabel is setted if not use hard coded one
-;;(setq **FZL_HOME** (getenv "FZL_HOME"))
-(setq **FZL_HOME** (concat **DISK** "/fzlbpms"))
+(setq **FZL_HOME** (getenv "FZL_HOME"))
 (message (concat "[global_variables_setup.el] **FZL_HOME** = " **FZL_HOME**))
 
 (setq **FZL_SERVER** (concat **FZL_HOME** "/fzlServer"))
@@ -50,6 +49,10 @@
 ;;https://emacs.stackexchange.com/questions/19391/can-t-set-directory-for-org-mode-capture
 ;;https://orgmode.org/worg/org-configs/org-customization-guide.html
 
+;;TODO
+;;if org-directory does not exists emacs will try to create it
+;;but sometimes there are not permission
+;;needs to test about it and to decide what to do in this case
 (setq **org-directory** (concat **FZL_HOME** "/emacs/org-directory"))
 (setq **aws-s3-planosdeaulas_publish_project_base-directory** (concat **FZL_HOME** "/submodules/somewritings/planosdeaulas"))
 (setq **aws-s3-planosdeaulas_publishing-directory** (concat **FZL_HOME** "/emacs/org-publishing-directory/aws-s3-planosdeaulas"))
