@@ -421,7 +421,8 @@ refs:
      ("orgSrcShell" "
 
 #+NAME: parseShellAnsiColorCharacters
-#+BEGIN_SRC elisp :session s1 :var data=""  :results silent  :exports node
+#+BEGIN_SRC elisp :session s1 :var data=\"\"  :results silent  :exports node
+>>>>>>> 09df9ed (unstable changes)
   (print (ansi-color-apply data))
 #+END_SRC
 

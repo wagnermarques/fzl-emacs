@@ -6,6 +6,7 @@
 ;;; Code:
 (print "===> global_variable_setup.el was loaded sucessfully!!!")
 
+
 (defvar this_elisp_file_dir (getenv "PWD"))
 (defvar **EMACSINITFILE_HOME** (concat this_elisp_file_dir "/../../.."))
 (setq **EMACSINITFILE_TESTS_LISPSITE** (concat **EMACSINITFILE_HOME** "/main/src/testssite"))

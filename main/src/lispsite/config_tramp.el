@@ -5,5 +5,5 @@
 (setq tramp-default-method "ssh")
 
 
-(provide "config_tramp)
+(provide 'config_tramp)
 ;;; config_tramp ends here
