@@ -24,8 +24,15 @@
 ;;http://www.i3s.unice.fr/~malapert/org/tips/emacs_orgmode.html
 ;;https://orgmode.org/worg/org-configs/org-customization-guide.html
 ;;http://www.i3s.unice.fr/~malapert/org/tips/emacs_orgmode.html
-
-(setq org-directory **org-directory**)
+(boundp '**org-directory**)
+(if (boundp '**org-directory**)
+    (progn
+      (setq org-directory **org-directory**)
+      (message (concat "**org-directory** = " **org-directory**))
+      (message (concat "org-directory = " org-directory)))
+  (progn
+    (message "[org_mode_config.el] **org-directory** is not defined")
+    (message (concat "[org_mode_config.el] org-directory = " org-directory))))
 
 (setq org-default-notes-file (concat org-directory "/default-org-notes.org"))
 (fzl-create-empty-file-if-no-exists org-default-notes-file)
