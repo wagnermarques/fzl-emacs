@@ -2,7 +2,7 @@
 #+Subtitle: yet another (emacs customization)
 
 
-This is a README.org of the basic-config branch.
+This is a README.org of the main branch.
 
 * About
 
@@ -10,7 +10,7 @@ This is an another emacs customization .el files that runs at emacs initializati
 
 We knows that customization depends a lot of what you need from emacs.
 
-So I divided the work in branchs. 
+So I divided the work in branchs.
 
 * basic-config
   I think is the most common configuration. Basic it is a defaults sanitize
