@@ -1,17 +1,4 @@
-#+Title: W E L C O M E    T O    E M A C S I N I T F I L E
-
-* tasks
-** TODO very if web-mode are working propertly
-   (add-to-list 'load-path (concat **EMACSINITFILE_LISPSITE** "/web-mode"))
-** TODO verify c/c++ autocomplete with rtags
-   (add-to-list 'load-path (concat **EMACSINITFILE_LISPSITE** "/rtags/src"))
-** TODO test if org-ref are working properly
-   (add-to-list 'load-path (concat **EMACSINITFILE_LISPSITE** "/org-ref"))
-** TODO verify if ESS are working properly
-   (add-to-list 'load-path (concat **EMACSINITFILE_LISPSITE** "/ESS"))
-
-
-
+#+Title:  E M A C S I N I T F I L E Project
 
 
 * Emacs features

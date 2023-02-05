@@ -1,7 +1,0 @@
-#+TITLE:Git Commands
-
-* update and init submodules
-
-#+BEGIN_SRC sh :results output
-git submodule update --init --recursive
-#+END_SRC

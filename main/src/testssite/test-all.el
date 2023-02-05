@@ -1,22 +1,3 @@
-(setq **thisFileDir** (getenv "PWD"))
-(setq **lispsiteDir** (concat **thisFileDir** "/main/src/lispsite"))
-(setq **testssiteDir** (concat **thisFileDir** "/main/src/testssite"))
-
-(add-to-list 'load-path **lispsiteDir**)
-(add-to-list 'load-path **testssiteDir**)
-
-
-;;test if automatically installing process is working correctly
-(require 'test-packages-installed)
-
-;;test load load path
-;(require 'test-load-path)
-
-;;test if devtools is present
-;;test if os path is configured for each devtool present
-(require 'test-devtools-presence)
-
-
 ;(ert-deftest ert-test-mismatch ()
 ;  (should (eql (cl-mismatch "" "") nil))
 ;  (should (eql (cl-mismatch "" "a") 0))

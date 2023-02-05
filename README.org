@@ -1,44 +1,30 @@
 #+Title:emacsinitfile
 #+Subtitle: yet another (emacs customization)
 
-* Introduction
-  The emacs is the most customized tools, indeed. This customization
-  is runned at emacs initialization process
-  https://www.gnu.org/software/emacs/manual/html_node/eintr/Emacs-Initialization.html
 
-  This is another customization to my needs.
+This is a README.org of the basic-config branch.
 
-  Maybe my needs is almost the same your needs.
+* About
 
-  I use emacs for development in java, javascript and other languages
-  ecosystems.
+This is an another emacs customization .el files that runs at emacs initialization[Fn:1]
 
-* customization goals  
+We knows that customization depends a lot of what you need from emacs.
 
-  The intent of emacsinitfile project is customize emacs to support development source code within the
-  presence of another tools that compose a enviroment development
-  environment.
-  
+So I divided the work in branchs. 
+
+* basic-config
+  I think is the most common configuration. Basic it is a defaults sanitize
+
+* basic-developer-config
+  To edit most common developer language
+
+* full customization
+
+  The goal is combine features of previos configuration.
+    
   My dreamed final goal is to support my own BPMS project.
 
   With several fantastic peace of software together like nexus, maven, eclipse and some framework the main intent is to provide a bpms plataform to develope softwares.
 
 
-* usage
-  
-  There are a lot of interesting feature in this customization. To
-  make a trial.... Make it at your own risk.
-  
-  This will work just in linux. I've been used with fedora, but i
-  believe will work with another distributions. No effor are made to
-  port to windows.
-  
-  
-   #+NAME:                     
-   #+BEGIN_SRC shell :session s1 :results output :exports both
-     cd /home/$USER
-     git clone https://github.com/wagnermarques/emacsinitfile.git
-     cd /home/$USER/emacsinitfile && emacs -q -l init2.el
-   #+END_SRC
-
-
+[fn:1]  https://www.gnu.org/software/emacs/manual/html_node/eintr/Emacs-Initialization.html
