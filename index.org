@@ -1,6 +1,6 @@
 #+Title:  E M A C S I N I T F I L E Project
 
-
+ 
 * Emacs features
 ** abbrev
    https://www.emacswiki.org/emacs/AbbrevMode
@@ -36,6 +36,9 @@
    M-x woman to use man on emacs
    M-x whitespace-mode to enable or disable spaces/tab non printable viewer
 
+
+* Emacs org-mode fetures
+<s
 
 * Emacs Internal Dev Tools
 ** magit
@@ -134,6 +137,8 @@ Behind the scenes, it does
    (setq **maven_container_home** (concat **CONTAINERS_HOME** "/maven"))
    
 
+
+
 * Org Mode
   (global-set-key (kbd "\et") 'org-toggle-iimage-in-org)
 ** Exportando 
@@ -141,6 +146,8 @@ Behind the scenes, it does
    https://orgmode.org/manual/Exporting.html
    
 
+* Org Mode Features
+<e
 * integrated
 ** talend
   http://talendforge.org/forum

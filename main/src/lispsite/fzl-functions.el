@@ -5,8 +5,15 @@
 
 ;;; Code:
 
-(require 'cl-lib)
-;; -*- coding: utf-8; lexical-binding: t; -*-
+;;; Open dired at a specific dir
+(defun fzl-dired-open-dir (&optional dir)
+  "Open dired at DIR if it is specified, or at the default directory otherwise."
+  (interactive "DOpen Dired at directory: ")
+  (setq default-directory "/run/media/wgn/nfts/env-Projetos")
+  (setq _directory (or dir default-directory))
+  (dired _directory))
+
+(global-set-key (kbd "C-c d") 'fzl-dired-open-dir)
 
 
 ;;;;________________________________________
@@ -156,13 +163,13 @@
 ;;; 
 ;;;________________________________________
 
-(defun fzl-sqlite-open-in-shell-buffer()
-  (interactive)
-  (start-process
-   "ProcessName_FzlStartSqlite"
-   "BufferName__FzlStartSqlite"
-   "sqlite3"
-   (concat **FZL_HOME** "/integrated/dbs/sqlite")))
+;(defun fzl-sqlite-open-in-shell-buffer()
+;  (interactive)
+;  (start-process
+;   "ProcessName_FzlStartSqlite"
+;   "BufferName__FzlStartSqlite"
+;   "sqlite3"
+;   (concat **FZL_HOME** "/integrated/dbs/sqlite")))
 
 
 (defun fzl-open-url-in-browser(url)
@@ -302,34 +309,34 @@
 ;;;    Plug-ins use this location to store their data. For example, the Resources plug-in uses this as the default location for projects (aka the workspace).
 ;;;    See the section on locations for more details.
 ;;;    https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fmisc%2Fruntime-options.html&anchor=osgiinstancearea
-(defun fzl/start-camunda-modeller()
-  "Open camunda modeller."
-  (start-process
-   "PROCESS-fzl/start-camunda-modeller"
-   "PROCESS-fzl/start-camunda-modeller"
-   (concat **FZL_HOME** "/integrated/ides/camunda-modeler-3.5.0-linux-x64/camunda-modeler")))
+;(defun fzl/start-camunda-modeller()
+;  "Open camunda modeller."
+;  (start-process
+;   "PROCESS-fzl/start-camunda-modeller"
+;   "PROCESS-fzl/start-camunda-modeller"
+;   (concat **FZL_HOME** "/integrated/ides/camunda-modeler-3.5.0-linux-x64/camunda-modeler")))
 
 
-(defun fzl/start-eclipse-modeling()
-  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
-  (start-process
-     "PROCESS-fzl-start-eclipse-modelling"
-     "PROCESS-fzl-start-eclipse-modelling"
-     (concat **FZL_HOME** "/integrated/ides/eclipse-modeling-2019-12-R-linux-gtk/eclipse")))
+;(defun fzl/start-eclipse-modeling()
+;  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+;  (start-process
+;     "PROCESS-fzl-start-eclipse-modelling"
+;     "PROCESS-fzl-start-eclipse-modelling"
+;     (concat **FZL_HOME** "/integrated/ides/eclipse-modeling-2019-12-R-linux-gtk/eclipse")))
   
-(defun fzl/start-eclipse-java()
-  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
-  (start-process
-     "PROCESS-fzl-start-eclipse-java-oxigen"
-     "PROCESS-fzl-start-eclipse-java-oxigen"
-     (concat **FZL_HOME** "/integrated/ides/eclipse-java-2019-12-R-linux-gtk/eclipse")))
+;(defun fzl/start-eclipse-java()
+;  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+;  (start-process
+;     "PROCESS-fzl-start-eclipse-java-oxigen"
+;     "PROCESS-fzl-start-eclipse-java-oxigen"
+;     (concat **FZL_HOME** "/integrated/ides/eclipse-java-2019-12-R-linux-gtk/eclipse")))
 
-(defun fzl/start-eclipse-jee()
-  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
-  (start-process
-     "PROCESS-fzl-start-eclipse-java-oxigen"
-     "PROCESS-fzl-start-eclipse-java-oxigen"
-     (concat **FZL_HOME** "/integrated/ides/eclipse-jee-2019-12-R-linux-gtk/eclipse")))
+;(defun fzl/start-eclipse-jee()
+;  ;;(start-process-shell-command "PROCESS-start-eclipse-modeling" (concat **FZL_HOME** "bin/fzl_start_eclipse.sh"))))
+;  (start-process
+;     "PROCESS-fzl-start-eclipse-java-oxigen"
+;     "PROCESS-fzl-start-eclipse-java-oxigen"
+;     (concat **FZL_HOME** "/integrated/ides/eclipse-jee-2019-12-R-linux-gtk/eclipse")))
                                             
 
 
@@ -377,7 +384,7 @@
         (ansi-term "/bin/bash" mvnprojects_dir))))
   
 
-(message (concat (concat (concat "cd '" **FZL_HOME**) "'") " && ./bin/fzl_start_nexus.sh"))
+;(message (concat (concat (concat "cd '" **FZL_HOME**) "'") " && ./bin/fzl_start_nexus.sh"))
 (defun fzl-nexus-open-in-firefox()
   (start-process
    "PROCESS-fzl-nexus-open-in-firefox"
@@ -522,32 +529,32 @@
 
 
 
-(defun fzl-start-exo()
-  "https://www.exoplatform.com/docs/public/index.jsp?topic=%2FPLF43%2FPLFUserGuide.GettingStarted.html"
-  (progn
-    ;;(split-window-below)
-    (fzl-exo-platform-log)    
-    (start-process
-     "PROCESSfzl-start-exo-process"
-     "PROCESSfzl-start-exo-process"
-     (concat **FZL_HOME_SERVER** "bin/fzl-exo-run.sh"))))
+;(defun fzl-start-exo()
+;  "https://www.exoplatform.com/docs/public/index.jsp?topic=%2FPLF43%2FPLFUserGuide.GettingStarted.html"
+;  (progn
+;    ;;(split-window-below)
+;    (fzl-exo-platform-log)    
+;    (start-process
+;     "PROCESSfzl-start-exo-process"
+;     "PROCESSfzl-start-exo-process"
+;     (concat **FZL_HOME_SERVER** "bin/fzl-exo-run.sh"))))
 
-(defun fzl-stop-exo()
-    (progn
-    ;;(split-window-below)
-    (fzl-exo-platform-log)    
-    (start-process
-     "PROCESSfzl-stop-exo-process"
-     "PROCESSfzl-stop-exo-process"
-     (concat **FZL_HOME_SERVER** "bin/fzl-exo-stop.sh"))))
+;(defun fzl-stop-exo()
+;    (progn
+;    ;;(split-window-below)
+;    (fzl-exo-platform-log)    
+;    (start-process
+;     "PROCESSfzl-stop-exo-process"
+;     "PROCESSfzl-stop-exo-process"
+;     (concat **FZL_HOME_SERVER** "bin/fzl-exo-stop.sh"))))
 
 
-(defun fzl-exo-open-in-browser()
-  (start-process
-   "PROCESS-fzl-exo-open-in-browser"
-   "PROCESS-fzl-exo-open-in-browser"
-   "firefox"
-   "http://localhost:8080/portal/"))
+;(defun fzl-exo-open-in-browser()
+;  (start-process
+;   "PROCESS-fzl-exo-open-in-browser"
+;   "PROCESS-fzl-exo-open-in-browser"
+;   "firefox"
+;   "http://localhost:8080/portal/"))
 
 ;;EXO_DATA_DIR=/mnt/nfs/shared/exo/data
 ;;The property exo.base.url is used to generate links in some cases,
@@ -595,11 +602,11 @@
 
 
 
-(defun fzl-set-default-directory-to-FZL_HOME-etc() 
-  'set default directory to FZL_HOME etc' 
-  (interactive)
-  (setq default-directory (concat *FZL_HOME* "/etc"))
-  (speedbar-refresh))
+;(defun fzl-set-default-directory-to-FZL_HOME-etc() 
+;  'set default directory to FZL_HOME etc' 
+;  (interactive)
+;  (setq default-directory (concat *FZL_HOME* "/etc"))
+;  (speedbar-refresh))
 
 ;(defun fzl-bash-find-files-with-grep (dir, grepPattern)
 ;  "find dir -type f -exec grepPattern -l {} ';'"
@@ -703,7 +710,7 @@
 
 
                                                                    
-(provide 'fzl_functions)
+(provide 'fzl-functions)
 ;;; fzl_functions.el ends here
 
 
