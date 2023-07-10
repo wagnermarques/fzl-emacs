@@ -1,0 +1,1 @@
+(message (getenv "CHAT_GPT_AUTH_TOKEN"))

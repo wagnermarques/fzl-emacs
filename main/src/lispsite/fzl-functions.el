@@ -13,7 +13,26 @@
   (setq _directory (or dir default-directory))
   (dired _directory))
 
-(global-set-key (kbd "C-c d") 'fzl-dired-open-dir)
+
+(defun fzl-list-major-modes-active-current-buffer ()
+  "List the major mode active in the current buffer using Helm."
+  (interactive)
+  (helm :sources (helm-build-sync-source "Major Modes"
+                   :candidates (list (format "%s (%s)" mode-name major-mode))
+                   :action (helm-make-actions
+                            "Copy Mode Name" #'kill-new))))
+
+(defun fzl-list-active-modes-in-current-buffer ()
+  "List all active modes in the current buffer in a new buffer."
+  (interactive)
+  (let ((modes (buffer-local-value 'minor-mode-list (current-buffer))))
+    (with-help-window "*Active Modes*"
+      (with-current-buffer "*Active Modes*"
+        (dolist (mode modes)
+          (princ (format "%s\n" mode)))))))
+
+
+;;(global-set-key (kbd "C-c d") 'fzl-dired-open-dir)
 
 
 ;;;;________________________________________

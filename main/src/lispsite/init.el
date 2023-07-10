@@ -24,10 +24,17 @@
 
 ;;changing some emacs defaults
 (require 'defaults)
+(provide 'defaults-keys) 
+(provide 'defaults-higligth)
 (require 'defaults-window)
 (require 'window-helpers)
 
+(require 'dotenv-config)
+(require 'helm-config)
+(require 'speedbar-config)
+
 (require 'shortcuts)
+(require 'abbrev-config)
 
 ;;;fzl-utils
 (require 'fzl-functions) ;;TODO to revise all functions and shared in coding-respective-language file
@@ -35,12 +42,20 @@
 
 
 ;;coding
+(require 'magit-config)
 (require 'autocomplete)
+(require 'coding-shellscript)
 (require 'coding-R)
 (require 'coding-php)
 (require 'coding-java)
+(require 'coding-groovy)
 (require 'coding-javascript)
 (require 'coding-kotlin)
+(require 'coding-dockerfile)
+(require 'coding-sql)
+;;coding hooks
+(require 'hooks-prog-mode)
+
 
 
 ;;editing yml files
@@ -60,6 +75,15 @@
 
 ;;data analisys
 (require 'data-analisys-ess)
+
+
+;; ides
+(require 'fzl-ides-netbeans)
+(require 'fzl-ides-eclipse)
+
+
+;;infra and os
+(require 'fzl-util-docker)
 
 
 ;;programming languages integrations

@@ -1,0 +1,33 @@
+#Refs
+#https://platform.openai.com/docs/introduction/key-concepts
+#https://platform.openai.com/docs/api-reference
+
+# Global vars
+:ver = v1
+:authKey = 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
+:model = gpt-3.5-turbo
+:base_url = https://api.openai.com
+
+
+# Get vi models
+GET  :base_url/:ver/models 
+Authorization: Bearer :authKey
+Content-Type: application/json
+
+
+# Get model
+GET https://api.openai.com/v1/models/gpt-3.5-turbo
+Authorization: Bearer :authKey
+Content-Type: application/json
+
+
+# Get Completion
+:completion_content = << how to parse json with elisp?
+POST :base_url/:ver/chat/completions
+Authorization: Bearer :authKey
+Content-Type: application/json
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [{"role": "user", "content": "Hello!"}]
+}
+

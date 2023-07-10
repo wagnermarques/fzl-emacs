@@ -72,6 +72,27 @@
 ;credits for this line:http://stackoverflow.com/questions/5135209/show-hidden-files-in-speedbar
 (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
 
+
+(defun fzl-speedbar-set-directory-to-default-directory ()
+  "Set Speedbar directory to Emacs default directory."
+  (interactive)
+  (setq speedbar-directory-unshown-regexp
+        (concat "^\\("
+                (regexp-quote default-directory)
+                "\\|$\\)"))
+  (speedbar-refresh)
+  (speedbar-get-focus))
+
+(defun fzl-speedbar-set-directory-to-emacsinitel-home-lispsite ()
+  "Change the Speedbar directory to emacsinitel lispsite."
+  (interactive)
+  (setq speedbar-directory "/media/wagner/nfts/env-Projetos/emacsinitfile/main/src/lispsite/")
+  (speedbar-refresh)
+  (speedbar-get-focus))
+
+(global-set-key (kbd "C-c 1") 'fzl-speedbar-set-directory-to-default-directory)
+(global-set-key (kbd "C-c 2") 'fzl-speedbar-set-directory-to-emacsinitel-home-lispsite)
+
 ;;SPEEDBAR
 ;https://sites.google.com/site/xiangyangsite/home/linux-unix/emacs/speedbar-in-one-frame
 ;(require 'tramp)
@@ -117,5 +138,5 @@
 
 
 
-(provide 'speedbar_config)
+(provide 'speedbar-config)
 ;;; speedbar_config.el ends here

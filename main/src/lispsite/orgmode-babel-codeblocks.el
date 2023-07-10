@@ -19,6 +19,7 @@
  'org-babel-load-languages
  '((emacs-lisp . nil)
    (shell . t)
+   (sqlite . t)
    (R . t)))
 
 ;(use-package ob-sh

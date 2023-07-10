@@ -7,45 +7,73 @@
 
 (message "==>default.el loaded sucessfully!!!")
 
+
+
 (setq-default lexical-binding t)
 
-;;; auto save backup files to ~/.emacs.d/auto-save-list
-(setq backup-directory-alist
-      `((".*" . ,(expand-file-name "~/.emacs.d/auto-save-list/"))))
+;; despite C-w is defined by default
+;; I like to use this to kill buffers
+(global-set-key (kbd "C-w") 'kill-this-buffer)
+
 
 ;;;desabilitando aquela pagina inicial do emacs, legal mas desecess�ria
 (setq inhibit-startup-message t)
 
 
+;;This can switch the main menu on or off.
+(menu-bar-mode 0)
+
+
 ;will allow you to type just "y" instead of "yes" when you exit.
 (fset 'yes-or-no-p 'y-or-n-p)
 
+
 (load-theme 'manoj-dark)
 
-;http://www.emacswiki.org/emacs/StickyModifiers
-;From the documentation:
-;This means that you can release the modifier key before pressing down
-;the key that you wish to be modified.
-;Although this is non-standard behavior, it is recommended because
-;it reduces the strain on your hand, thus reducing the incidence of the dreaded
-;Emacs-pinky syndrome.
+
+;;; auto save backup files to ~/.emacs.d/auto-save-list
+;;; (https://www.emacswiki.org/emacs/AutoSave
+(auto-save-mode t)
+(setq backup-directory-alist
+      `((".*" . ,(expand-file-name "~/.emacs.d/auto-save-list/"))))
+
+
+;;ace-window
+;;allow to change buffer window but choose its number after M-o shurtcut
+(use-package ace-window
+  :ensure t)
+(global-set-key (kbd "M-o") 'ace-window)
+
+
+
+;;http://www.emacswiki.org/emacs/StickyModifiers
+;;From the documentation:
+;;This means that you can release the modifier key before pressing down
+;;the key that you wish to be modified.
+;;Although this is non-standard behavior, it is recommended because
+;;it reduces the strain on your hand, thus reducing the incidence of the dreaded
+;;Emacs-pinky syndrome.
 (setq modifier-keys-are-sticky t)
 
-;will make ctrl, shift, alt "sticky" in xemacs.
-;(Does anybody know how to do this in emacs?)
-;With sticky-keys, you dont have to hold down the ctrl/shift/alt key and another key simultaneosly.
-;For example, to type ctrl-a, you'd have to tap on the 'ctrl'-key, followed by a tap on the 'a'-key. This feature is useful for folks with sore wrists/hands.
+
+;;will make ctrl, shift, alt "sticky" in xemacs.
+;;(Does anybody know how to do this in emacs?)
+;;With sticky-keys, you dont have to hold down the ctrl/shift/alt key and another key simultaneosly.
+;;For example, to type ctrl-a, you'd have to tap on the 'ctrl'-key, followed by a tap on the 'a'-key. This feature is useful for folks with sore wrists/hands.
 (setq message-log-max 512) ;will reduce the number of messages that appear in the "*Messages*" window to 512.
 
-;will make the display of date and time persistent.
-;(setq display-time-day-and-date t) (display-time)
-;will highlight region between point and mark.
-(transient-mark-mode t)
 
-;will highlight during query.
+;;will make the display of date and time persistent.
+;;(setq display-time-day-and-date t) (display-time)
+;;will highlight region between point and mark.
+;;(transient-mark-mode t)
+
+
+;;will highlight during query.
 (setq query-replace-highlight t)
 
-;highlight incremental search
+
+;;highlight incremental search
 (setq search-highlight t)
 
 
@@ -128,7 +156,7 @@
 (global-set-key [delete] 'delete-char)
 
 
-;ativa numero de linhas nos buffers
+;;ativa numero de linhas nos buffers
 (global-linum-mode 1)
 
 ;ativa numero da coluna
@@ -142,13 +170,15 @@
 
 ;; Ativa a quebra automatica de linhas para todos os modos. Para desativ�-la,
 ;; substitua "1" por "0", na linha abaixo.
-;;(add-hook 'text-mode-hook
-;;     '(lambda () (auto-fill-mode 1)))
+(add-hook 'text-mode-hook
+     '(lambda () (auto-fill-mode 1)))
 
 ;; Se a quebra automatica de linhas estiver ativada, as linhas s�o
 ;; quebradas se ultrapassarem a coluna 70.
 (setq fill-column 70)
 
+
+;;https://www.emacswiki.org/emacs/ShowWhiteSpace
 
 
 (provide 'defaults)
