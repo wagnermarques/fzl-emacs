@@ -22,7 +22,7 @@
   (interactive)
   (let ((buffer-name "*fzl-status-docker-ps*"))
     (with-output-to-temp-buffer buffer-name
-      (shell-command "docker ps -a " buffer-name))))
+      (shell-command "sudo docker ps -a " buffer-name))))
 
   
   

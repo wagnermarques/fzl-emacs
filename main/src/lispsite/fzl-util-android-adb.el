@@ -4,15 +4,27 @@
 
 ;;; Code:
 
-(require 'cl-lib)
-;; -*- coding: utf-8; lexical-binding: t; -*-
+(setq _ANDROID_SDK_ROOT_ "/home/wgn/mnt/ext4/PROGSATIVOS/Android/SdkFull")
 
-;;https://stackoverflow.com/questions/2592095/how-do-i-create-an-empty-file-in-emacs
-(defun fzl-create-empty-file-if-no-exists(filePath)
-  "Touch a file witn FILEPATH parameter."
-  (if (file-exists-p filePath)
-      (message (concat  "File " (concat filePath " already exists")))
-    (with-temp-buffer (write-file filePath))))
+(defun setup-android-environment ()
+  "Set up Android development environment variables."
+  (interactive)
+  (let ((android-sdk-root _ANDROID_SDK_ROOT_))
+    (setq process-environment
+          (append (list (concat "ANDROID_HOME=" android-sdk-root)
+                        (concat "ANDROID_SDK_ROOT=" android-sdk-root)
+                        (concat "PATH=" android-sdk-root "tools:" android-sdk-root "platform-tools")))
+                  process-environment)))
+(setup-android-environment)
 
-(provide 'fzl_utils_files)
+
+(defun fzl-adb-devices()
+  "Run SQuirreL SQL Client and show the logs in a buffer."
+(interactive)
+ (shell-command (concat "ls " "-la")))
+
+(global-set-key (kbd "C-c C-f C-a C-d") #'fzl-squirelsql-start)
+
+
+(provide 'fzl-util-android-adb)
 ;;; this_file_name.el ends here

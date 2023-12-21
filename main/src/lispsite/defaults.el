@@ -5,30 +5,27 @@
 
 ;;; Code:
 
-(message "==>default.el loaded sucessfully!!!")
+;; Enable CUA mode
+;;(cua-mode t)
 
-
-
+;; Set keybindings for copy and paste
+;;(global-set-key (kbd "C-c") 'cua-copy-region)
+;;(global-set-key (kbd "C-v") 'cua-paste)
 (setq-default lexical-binding t)
+
 
 ;; despite C-w is defined by default
 ;; I like to use this to kill buffers
-(global-set-key (kbd "C-w") 'kill-this-buffer)
+(global-set-key (kbd "C-q") 'kill-this-buffer)
 
 
 ;;;desabilitando aquela pagina inicial do emacs, legal mas desecess�ria
 (setq inhibit-startup-message t)
 
 
-;;This can switch the main menu on or off.
-(menu-bar-mode 0)
-
-
 ;will allow you to type just "y" instead of "yes" when you exit.
 (fset 'yes-or-no-p 'y-or-n-p)
 
-
-(load-theme 'manoj-dark)
 
 
 ;;; auto save backup files to ~/.emacs.d/auto-save-list
@@ -36,13 +33,6 @@
 (auto-save-mode t)
 (setq backup-directory-alist
       `((".*" . ,(expand-file-name "~/.emacs.d/auto-save-list/"))))
-
-
-;;ace-window
-;;allow to change buffer window but choose its number after M-o shurtcut
-(use-package ace-window
-  :ensure t)
-(global-set-key (kbd "M-o") 'ace-window)
 
 
 
@@ -128,7 +118,7 @@
 
 ;(require 'auto-show) (auto-show-mode 1) (setq-default auto-show-mode t) ;load auto-show (shows lines when cursor moves to right of long line).
 ;(auto-show-make-point-visible) ;will position the cursor to end of output in shell mode.
-					;(auto-show-make-point-visible) ;will position cursor to end of output in shell mode automatically.
+;(auto-show-make-point-visible) ;will position cursor to end of output in shell mode automatically.
 
 ;will highlight region between point and mark.
 (transient-mark-mode t)
@@ -150,17 +140,7 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 
-; Moving cursor down at bottom scrolls only a single line, not half page
-(setq scroll-step 1)
-(setq scroll-conservatively 5)
 (global-set-key [delete] 'delete-char)
-
-
-;;ativa numero de linhas nos buffers
-(global-linum-mode 1)
-
-;ativa numero da coluna
-(column-number-mode 1)
 
 
 ;;________________________________________________________________
@@ -168,7 +148,8 @@
 ;;  http://marc.info/?l=tex-br&m=122278754619960
 ;;________________________________________________________________
 
-;; Ativa a quebra automatica de linhas para todos os modos. Para desativ�-la,
+;; Ativa a quebra automatica de linhas para todos os modos.
+;;Para desativ�-la,
 ;; substitua "1" por "0", na linha abaixo.
 (add-hook 'text-mode-hook
      '(lambda () (auto-fill-mode 1)))
@@ -179,6 +160,5 @@
 
 
 ;;https://www.emacswiki.org/emacs/ShowWhiteSpace
-
 
 (provide 'defaults)

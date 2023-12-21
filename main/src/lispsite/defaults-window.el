@@ -5,15 +5,12 @@
 
 ;;; Code:
 
-(message "==>default-window.el loaded sucessfully!!!")
-
-(scroll-bar-mode -1)
-
+;; Setting some colors
 (set-cursor-color "red")
 (set-mouse-color "white")
-
 (set-background-color "black")
 (set-foreground-color "white")
+(load-theme 'manoj-dark)
 
 
 ;http://www.djcbsoftware.nl/dot-emacs.html
@@ -22,14 +19,47 @@
 (tool-bar-mode -1)                         ;; turn-off toolbar
 
 
-;; Permanent display of line and column numbers is handy.
-(setq-default line-number-mode 't)
-(setq-default column-number-mode 't)
+;; Moving cursor down at bottom scrolls only a single line, not half page
+(setq scroll-step 1)
+(setq scroll-conservatively 5)
+
+
+;;ativa numero de linhas nos buffers e colunas
+(global-linum-mode 1)
+(column-number-mode 1)
+
+
+;;ace-window
+;;allow to change buffer window but choose its number after M-o shurtcut
+(use-package ace-window
+  :ensure t)
+(global-set-key (kbd "M-o") 'ace-window)
+
 
 (global-set-key (kbd "M-<down>") 'shrink-window)
 (global-set-key (kbd "M-<up>") 'enlarge-window)
 (global-set-key (kbd "M-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "M-<right>") 'enlarge-window-horizontally)
+
+
+;;TODO FIX
+(defun fzl-buffer-show-messages-in-bottom ()
+  "Reorganize windows to show *Messages* buffer at the bottom."
+  (interactive)
+  (let* ((speedbar-window (get-buffer-window (speedbar-buffer))))
+    ;; Split the current window horizontally
+    (split-window-horizontally)
+    ;; Move to the newly created window
+    (other-window 1)
+    ;; Show *Messages* buffer in the current window
+    (switch-to-buffer "*Messages*")
+    ;; Move back to the original speedbar window
+    (select-window speedbar-window)
+    ;; Adjust the window configurations
+    (balance-windows)
+    ;; Resize the *Messages* window to be larger
+    (enlarge-window (- (window-height) 10))))
+
 
 
 (provide 'defaults-window)

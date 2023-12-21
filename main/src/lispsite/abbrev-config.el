@@ -11,6 +11,9 @@
 (define-abbrev-table 'global-abbrev-table
   '(
 
+    ("monologgerrr"
+     "Monologger::getInstance()->debug(\"[com_nead_academicmanager/filename.php] class classname methodname {...\");")
+    
     ;;php with laravel
     ("html5Blade"
      "<!DOCTYPE html>
@@ -36,7 +39,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 100vh;oo
             }
 
             .flex-center {
@@ -262,10 +265,10 @@ refs:
    https://www.orgmode.org/worg/org-contrib/babel/header-args.html
    https://orgmode.org/manual/Using-Header-Arguments.html
 
-#+name: sqlite-populate-test
+#+name: blkname
 #+header: :results replace
-#+header: :dir ~/temp/
-#+header: :db test-sqlite.db
+#+header: :dir /home/wgn/mnt/ext4/env-Projects/emacs/emacsinitfile/main/src/lispsite/
+#+header: :db sqlite.db
 #+begin_src sqlite
   create table entregas(
      nome varchar(50),
@@ -347,7 +350,16 @@ refs:
 
 ")
 
-    
+
+     ("orgSrcLatex"  "
+#+NAME:
+#+HEADER: :file myplot.png
+#+HEADER: :dir .
+#+BEGIN_SRC R :session s1 :results output :exports both
+
+#+END_SRC")
+
+     
      ("orgSrcR"  "
 #+NAME:
 #+HEADER: :file myplot.png
@@ -445,6 +457,12 @@ refs:
       System.out.println(\"asdf\");
     }
   }
+#+END_SRC")
+      
+      ("orgSrcDot" "
+#+NAME: 
+#+BEGIN_SRC dot :file outputFile.svg :session s1 :results output :exports both
+Digraph G {}
 #+END_SRC")
 
       

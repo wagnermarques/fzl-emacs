@@ -6,6 +6,18 @@
   :ensure t)
 
 
+;;TODO: fix it
+;; the first httpd_root dir is get from EMCAS_SIMPLE_HTTPD_ROOT environment variable
+;; if its nil, we user default one in **EMACSINITFILE_HOME**
+;;(if (equal "" (getenv "EMACS_SIMPLE_HTTPD_ROOT"))
+;;    (progn
+;;      (setq **config_simple_httpd_root** (getenv "EMACS_SIMPLE_HTTPD_ROOT"))
+;;      (message (concat "**config_simple_httpd_root** (setted by environment variable) = " **config_simple_httpd_root**)))
+;;  (progn
+;;    (setq **config_simple_httpd_root** (concat **EMACSINITFILE_HOME** "/httpd-root"))
+;;    (message (concat "**config_simple_httpd_root** (using default) = " **config_simple_httpd_root**))))
+
+
 (provide 'coding-javascript)
 ;;  buster-snippets                20151125.1010  available    melpa    Yasnippets for the Buster javascript testing framework
 ;;  conkeror-minor-mode            20150114.1604  available    melpa    Mode for editing conkeror javascript files.

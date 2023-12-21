@@ -28,3 +28,55 @@ So I divided the work in branchs.
 
 
 [fn:1]  https://www.gnu.org/software/emacs/manual/html_node/eintr/Emacs-Initialization.html
+
+* Shortcuts interessantes
+|         | C-q     | Fecha buffer              |
+| orgmode | C-c C-, | insere template de codigo |
+|         |         |                           |
+
+* Premisses of this emacsinitfile configurations
+** preserve original emacs shortkeys
+** get the emacs as developer ide
+
+* *Todo*
+** TODO shellscript to put some snippets in right direcotry
+   write yasnippets-snippets-setup.sh script and provide some automation
+** TODO any editing text file should be possible
+*** TODO shotcut to move lines up and down
+*** TODO shortcut to kill line at any point of the line
+    C-k kill the line content after the cursor
+    
+** TODO Botton of the windows buffers
+   All ides have the botton window toggled with shell, logs etc areas
+   Emacs have a nice features to organize buffers so...   
+*** TODO A short key to toogle message buffer in botton of all other buffers
+(defun fzl-buffer-show-messages-in-bottom ()
+A short key to toogle message buffer below all buffer despite any
+buffers opened
+
+*** TODO A short key to toogle terminal buffer in botton of all other buffers
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Shell.html
+- the terminal can be: eshell, term, ansi-term, shell
+- SHow result of async shell executions not in any buffer in any
+  place, but at the botton of all buffers
+Close this buffer does liberate the windos space for other buffers
+
+** TODO Speedbar shoud be toggled and be placed left or right side of the screen
+- A shortkey to toogle speedbar
+- A shortkey to change speedbar location in the screen
+** TODO Open any .log file should behavior as tail -f
+** TODO Study *Emacs General Variables*  and check its applications
+https://www.gnu.org/software//emacs/manual/html_node/emacs/General-Variables.html
+
+
+
+
+#+begin_groovy :exports code
+#+end_groovy
+#+begin_src emacs-lisp :results output :exports both :wrap EXAMPLE
+#+end_src
+
+
+
+#+begin_groovy :exports code
+#+end_groovy

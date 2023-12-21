@@ -6,6 +6,46 @@
 ;;; Code:
 
 ;;; Open dired at a specific dir
+
+;;;BASIC FUNCTIONS AS TEMPLATE PATTERN FOR OTHER FUNCTIONS
+(defun fzl-start-process(pName buffName strCmd)
+  "Starts a process and show a buffer with the process output."
+  (start-process-shell-command pName buffName (concat "setsid -w nohup " strCmd))
+  (switch-to-buffer strCmd))
+
+
+(defun fzl-shell-command(CMD)
+  "Like shell-command-to-string but save output in cmdOutput variable and returns its. (fzl_shell_command 'echo $(pwd)'"
+  (interactive)
+  (progn
+    (setq cmdOutput
+          (substring 
+           (shell-command-to-string CMD) 
+           0 -1))
+    (message cmdOutput)))
+
+
+
+
+
+
+
+;; EXTERNAL PROGRAMS (SERVERS)
+
+
+;; EXTERNAL PROGRAMS (DESKTOP)
+;; TELEGRAM
+(defun fzl-telegram-start()
+  (interactive)
+  (let* ((cmd (concat (getenv "TELEGRAM_HOME") "/Telegram"))
+         (pName "FzlTelegramProcess")
+         (buffName "FzlTelegramBuff"))
+    (fzl-start-process pName buffName cmd)))
+
+
+    
+
+
 (defun fzl-dired-open-dir (&optional dir)
   "Open dired at DIR if it is specified, or at the default directory otherwise."
   (interactive "DOpen Dired at directory: ")
@@ -298,15 +338,6 @@
    "firefox"
    "http://localhost:9191"))
 
-(defun fzl_shell_command(CMD)
-  "Like shell-command-to-string but save output in cmdOutput variable and returns its. (fzl_shell_command 'echo $(pwd)'"
-  (interactive)
-  (progn
-    (setq cmdOutput
-          (substring 
-           (shell-command-to-string CMD) 
-           0 -1))
-    (message cmdOutput)))
 
 
 ;;;________________________________________
@@ -668,6 +699,11 @@
   "Open docker-service systemd unit file."
   (interactive)
   (fzl-find-file-as-root "/usr/lib/systemd/system/docker.service"))
+
+
+(defun fzl-find-file-as-root--lxde-rc-xml()
+  (interactive)
+  (fzl-find-file-as-root "/home/wgn/.config/openbox/lxde-rc.xml"))
 
 (defun fzl-ansible-service()
   "Open docker-service systemd unit file."

@@ -67,7 +67,7 @@
   (when (eq speedbar-buffer (window-buffer right-window)) (set-window-buffer right-window (next-buffer)))
   (set-window-dedicated-p right-window nil)
   )
-(global-set-key "\C-x1" 'reset-window-config)
+(global-set-key (kbd "\C-x1") 'reset-window-config)
 
 ;credits for this line:http://stackoverflow.com/questions/5135209/show-hidden-files-in-speedbar
 (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")

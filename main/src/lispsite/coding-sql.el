@@ -23,12 +23,12 @@
 
 ;;sql tooling
 ;;sql clients
-(setq _SQUIREL_SQL_HOME_ "/media/wgn/ext4/PROGSATIVOS/db-clients/squirrelsql-4.6.0-optional")
+(setq _SQUIREL_SQL_HOME_ (concat (getenv "HOME") "/mnt/ext4/PROGSATIVOS/db-ides/squirrelsql-4.6.0-optional"))
 
 (defun fzl-squirelsql-start()
   "Run SQuirreL SQL Client and show the logs in a buffer."
   (interactive)
-  (let* ((squirrel-sql-home "/media/wgn/ext4/PROGSATIVOS/db-ides/squirrelsql-4.6.0-optional")
+  (let* ((squirrel-sql-home _SQUIREL_SQL_HOME_)
          (squirrel-sql-sh (concat squirrel-sql-home "/squirrel-sql.sh"))
          (buffer-name "*SQuirreL SQL Logs*"))
     (with-current-buffer (get-buffer-create buffer-name)
@@ -38,6 +38,16 @@
       (term-char-mode))))
 
 (global-set-key (kbd "C-c s") #'fzl-squirelsql-start)
+
+
+;;;SQLITE
+;;(setq **FZL_SQLITE_HOME** (concat **FZL_HOME** "/integrated/db/sqlite-tools-linux-x86-3310100"))
+;;(setenv "PATH" (concat (concat (getenv "PATH") ":") **FZL_SQLITE_HOME**))
+
+
+;;;HSQLDB
+;;(setq **FZL_HQSQL_HOME** (concat **FZL_HOME** "/integrated/db/hsqldb"))
+;;(setenv "PATH" (concat (concat (getenv "PATH") ":") (concat **FZL_HQSQL_HOME** "/bin")))
 
 
 (provide 'coding-sql)
