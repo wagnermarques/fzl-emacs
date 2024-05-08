@@ -31,7 +31,7 @@
 ;;this setup-environment-variable is to controlling some of them
 ;;to manipulate emacs external environment variable use
 ;;.env controlled but (require dotenv-config) below
-(require 'setup-environment-variables)
+;;;;;;(require 'setup-environment-variables)
 
 
 ;; changins some emacs defaults
