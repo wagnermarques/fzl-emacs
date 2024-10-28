@@ -49,29 +49,29 @@
 
 
 ;;coding code
-(require 'coding-) ;;define some common basic coding features
+;;(require 'coding-) ;;define some common basic coding features
 
 (require 'coding-dockerfile)
-(require 'coding-yml)
+;;(require 'coding-yml)
 
 (require 'coding-php)
 (require 'coding-java)
-(require 'coding-typescript)
+;;(require 'coding-typescript)
 
 
 (require 'coding-shellscript)
-(require 'coding-shellscript-yasnippet-config)
+;;(require 'coding-shellscript-yasnippet-config)
 
 (require 'coding-R)
-(require 'coding-android)
+;;(require 'coding-android)
 (require 'coding-groovy)
 (require 'coding-javascript)
-(require 'coding-kotlin)
+;;(require 'coding-kotlin)
 (require 'coding-sql)
 
-(require 'coding-graphviz-dot)
+;;(require 'coding-graphviz-dot)
 
-(require 'magit-config)
+;;(require 'magit-config)
 
 ;;coding hooks
 (require 'hooks-prog-mode)
@@ -94,21 +94,21 @@
 
 
 ;; ides
-(require 'fzl-ides-netbeans)
-(require 'fzl-ides-eclipse)
-(require 'fzl-ides-androidstudio)
-(require 'fzl-ides-vscode)
+;(require 'fzl-ides-netbeans)
+;(require 'fzl-ides-eclipse)
+;(require 'fzl-ides-androidstudio)
+;(require 'fzl-ides-vscode)
 
 
 ;;infra and os
 (require 'fzl-util-docker)
-(require 'fzl-util-karaf)
+;;(require 'fzl-util-karaf)
 
 
 ;;;fzl-utils requried by others functions
 (require 'fzl-functions) ;;TODO to revise all functions and shared in coding-respective-language file
-(require 'fzl-util-tail-f)
-(require 'fzl-menus)
+;;(require 'fzl-util-tail-f)
+(require 'fzl_menus)
 
-(require 'emacs-onstart)
+;(require 'emacs-onstart)
 ;;programming languages integrations

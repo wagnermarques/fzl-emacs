@@ -50,7 +50,7 @@
 (speedbar-set-timer 1)
 (set-window-buffer left-window "SPEEDBAR")
 (set-window-dedicated-p left-window t)
-(toggle-read-only) ; HACK, REQUIRED for Tramp to work ????
+;;(toggle-read-only) ; HACK, REQUIRED for Tramp to work ???? enable when use tramp
 (select-window right-window)
 (defun select-right-window () (select-window right-window))
 ;(defun reset-window-config () (interactive)
