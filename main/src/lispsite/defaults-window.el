@@ -25,7 +25,7 @@
 
 
 ;;ativa numero de linhas nos buffers e colunas
-(global-linum-mode 1)
+(global-display-line-numbers-mode 1)
 (column-number-mode 1)
 
 
