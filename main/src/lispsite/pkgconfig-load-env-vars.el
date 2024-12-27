@@ -5,7 +5,7 @@
 (use-package load-env-vars
   :ensure t)
 
-(defvar fzl-dotenv-filename ".env"
+(defvar fzl-dotenv-filename "dot_env"
   "The name of the .env file.")
 
 (defun fzl-find-dotenv-nearest ()
@@ -23,4 +23,4 @@
 
 (fzl-dotenv-variables-setup)
 
-(provide 'dotenv-config)
+(provide 'pkgconfig-load-env-vars)

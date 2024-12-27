@@ -1,4 +1,4 @@
-;;; package --- Summary
+;; package --- Summary
 
 ;;; Commentary:
 ;;this file change some Emacs defauls
@@ -8,24 +8,20 @@
 ;; Enable CUA mode
 ;;(cua-mode t)
 
-;; Set keybindings for copy and paste
-;;(global-set-key (kbd "C-c") 'cua-copy-region)
-;;(global-set-key (kbd "C-v") 'cua-paste)
-(setq-default lexical-binding t)
-
+;; Maximizar janela do Emacs ao iniciar
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; despite C-w is defined by default
 ;; I like to use this to kill buffers
 (global-set-key (kbd "C-q") 'kill-this-buffer)
 
 
-;;;desabilitando aquela pagina inicial do emacs, legal mas desecess�ria
+;;;desabilitando aquela pagina inicial do emacs, legal mas desnecessaria
 (setq inhibit-startup-message t)
 
 
 ;will allow you to type just "y" instead of "yes" when you exit.
 (fset 'yes-or-no-p 'y-or-n-p)
-
 
 
 ;;; auto save backup files to ~/.emacs.d/auto-save-list
@@ -154,11 +150,11 @@
 (add-hook 'text-mode-hook
      '(lambda () (auto-fill-mode 1)))
 
-;; Se a quebra automatica de linhas estiver ativada, as linhas s�o
+;; Se a quebra automatica de linhas estiver ativada, as linhas são
 ;; quebradas se ultrapassarem a coluna 70.
 (setq fill-column 70)
 
 
 ;;https://www.emacswiki.org/emacs/ShowWhiteSpace
 
-(provide 'defaults)
+(provide 'config-emacs-defaults)
