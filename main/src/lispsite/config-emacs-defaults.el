@@ -8,6 +8,9 @@
 ;; Enable CUA mode
 ;;(cua-mode t)
 
+(require 'config-emacs-defaults-highlight)
+(require 'config-emacs-defaults-window)
+
 ;; Maximizar janela do Emacs ao iniciar
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -67,8 +70,9 @@
 ;F O N T S
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq fontHeight (string-to-number (getenv "FZLEMACS_TEXT_ZOOM_INITIAL")))
 ;http://www.emacswiki.org/emacs/SetFonts
-(set-face-attribute 'default (selected-frame) :height 80)
+(set-face-attribute 'default (selected-frame) :height fontHeight)
 
 ;http://www.gnu.org/software/emacs/manual/html_node/emacs/Font-Lock.html
 ;means that we want fontification in all modes.
@@ -106,7 +110,7 @@
  ;will introduce spaces instead of tabs by default.
 (setq-default indent-tabs-mode nil)
 
- ;will trucate lines if they are too long. (OBSERVAR PRA VER SE PERMANECE COM ESSA CONF)
+;will trucate lines if they are too long. (OBSERVAR PRA VER SE PERMANECE COM ESSA CONF)
 (setq-default truncate-lines t)
 
 ;will trucate even when screen is split into multiple windows.

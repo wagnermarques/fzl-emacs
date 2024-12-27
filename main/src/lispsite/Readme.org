@@ -5,11 +5,61 @@
   
   Mais uma customização do emacs 
 
-* Coisas que eu acho legais nessa customização
+* configure arquivo dot_env pra definir variáveis de ambiente
 
-  | C-c s | mostra speedbar à esquerda do buffer    |
-  | C-c m | mostra buffer messages abaixo do buffer |
-  |       |                                         |
+** teclas de atalhos
+   Bom o pessoal mais acostumado com emacs podem ter sugestoes até
+   melhores que essas mas fica a vontade pra contribuir... :))
+
+| C-b | Mostra speedbar à esquerda | 
+
+   Estilo vscode mas precisa ver o porquê nao tá abrindo os buffer ao clicar no arquivo no speedbar 
+
+| C-c m | Mostra o buffer *messages* abaixo do buffer que tem o foco |
+
+    Isso interessa porque as vezes a gente quer ver o que tá
+    aparecendo no buffer de mensagens do emacs e assim fica bem fácil
+    
+| C-c i d |
+    Mostra o IBuffer no frame de cima e o dired do diretório corrente
+    do emacs no frame de baixo
+
+| C-c g r | fzl-ide-feat-grep-region-string-to-new-buffer |
+
+| M-o         | ace-window   |
+| Shift-Up    | change frame |
+| Shift-Down  | change frame |
+| Shift-Left  | change frame |
+| Shift-Right | change frame |
+|             |              |
+
+| Esc-r | eval-region              |
+| Esc-b | org-beamer-export-to-pdf |
+| C-c s | ansi-term                |
+| Esc-m | make-directory           |
+| Esc-a | org-agenda-list          |
+| Esc-t | org-todo-list            |
+|       |                          |
+
+
+| M-Down  | shrink-window               |
+| M-Down  | enlarge-window              |
+| M-Left  | shrink-indow-horizontally   |
+| M-Right | enlarge-window-horizontally |
+| C-q     | Kill Buffer                 |
+
+| C-x C-z | desabilitado |
+|         |              |
+
+
+** Pérolas do emacs
+*** Gravas Macro[fn:1]
+F3 inicia gravação da macro
+F4 Pára a gravação da macro, F4 de novo pra executa-la
+
+
+** paths
+
 
   dá pra mudar as teclas de atalho modificando o arquivo dot_env
 
@@ -22,5 +72,6 @@
 | magit         |         4.1.3 | available | nongnu | A Git porcelain inside Emacs           |   |
 | magit         | 20241219.2012 | available | melpa  | A Git porcelain inside Emacs           |   |
 
-
+* Refs
+[fn:1] https://www.gnu.org/software/emacs/manual/html_node/emacs/Basic-Keyboard-Macro.html
 

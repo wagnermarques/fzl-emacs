@@ -5,7 +5,7 @@
 ;;;  -*- lexical-binding: t -*-
 
 (setq debug-on-error t)
-
+(require 'edebug)
 
 ;; configuring emacs load-path
 ;; add this file dir to load-path
@@ -39,15 +39,34 @@
 ;;this setup-environment-variable is to controlling some of them
 ;;to manipulate emacs external environment variable use
 ;;.env controlled but (require dotenv-config) below
+
 (require 'config-emacs-environment-variables) ;;this file calls pkgconfig-load-vars
+
+;; config-emacs-defaults files loads
+;; config-emacs-defaults-highlight.el
+;; config-emacs-defaults-window.el
 (require 'config-emacs-defaults)
 (require 'config-emacs-windows-and-frames)
 (require 'config-mode-dired) 
 (require 'config-mode-ibuffer)
 (require 'config-theme)
 (require 'pkgconfig-magit)
-(require 'hook-emacs-startup)
+(require 'fzl-views-strategies)
+(require 'fzl-emacs-hooks-startup)
+(require 'fzl-ide-feat-grep)
+(require 'fzl-ide-feat-keys)
+(require 'fzl-ide-feat-menus)
 
+
+;;abre alguns buffers de interesse
+(fzl/view/open-this-buffers)
+
+;;escolhe uma estrategia de view
+(fzl/view/open-ibuffer-and-dired)
+
+
+;;(open_dot_env_defined_buffers)
+;;(teste)
 
 
 ;;(require 'fzl_menus)

@@ -1,4 +1,3 @@
-
 (print "===> windows-and-frames loaded sucessfully")
 (print (getenv "FZLEMACS_KEY_SHOW_WINDOW_SPEEDBAR_AT_LEFT"))
 
@@ -18,9 +17,6 @@
 
 ;;C-c m to show the message buffer
 (global-set-key (kbd (getenv "FZLEMACS_KEY_SHOW_WINDOW_MESSAGE_BUFFER_AT_BOTTON")) 'fzl/show-messages-buffer-at-bottom)
-
-;; Hook to display the *Messages* buffer after startup
-(add-hook 'emacs-startup-hook 'fzl/show-messages-buffer-at-bottom)
 
 
 
