@@ -1,3 +1,10 @@
+(defun fzl/grep-recursive-in-current-dir()
+  "Perform grep string ignorecase recursive"
+  (interactive)
+  (let ((currDir current-dir)
+        (grepCmd "grep -r -n -i")
+        (shell-command grepCmd))))
+
 (defun fzl-ide-feat-grep-region-string-to-new-buffer ()
   "Obtém uma string a partir de uma região selecionada no buffer, executa grep -r -i e lista os resultados em um novo buffer temporário."
   (interactive)

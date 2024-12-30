@@ -36,12 +36,6 @@
 (global-set-key (kbd "M-o") 'ace-window)
 
 
-(global-set-key (kbd "M-<down>") 'shrink-window)
-(global-set-key (kbd "M-<up>") 'enlarge-window)
-(global-set-key (kbd "M-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "M-<right>") 'enlarge-window-horizontally)
-
-
 ;;TODO FIX
 (defun fzl-buffer-show-messages-in-bottom ()
   "Reorganize windows to show *Messages* buffer at the bottom."

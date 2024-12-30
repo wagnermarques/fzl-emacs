@@ -21,7 +21,7 @@
 
 
 ;;;SPEEDBAR AT THE LEFT OF THE FRAME
-(defun fzl/show-speedbar-on-left ()
+(defun fzl/buffers/show-speedbar-on-left ()
   "Open the speedbar in a frame on the left."
   (interactive)
   (let ((speedbar-buffer (get-buffer "*SPEEDBAR*")))
@@ -36,9 +36,8 @@
           (set-frame-width frame 30))))))
 
 ;; Optional: Bind the function to a key combination
-(global-set-key (kbd (getenv "FZLEMACS_KEY_SHOW_WINDOW_SPEEDBAR_AT_LEFT")) 'fzl/show-speedbar-on-left)
+(global-set-key (kbd (getenv "FZLEMACS_KEY_SHOW_WINDOW_SPEEDBAR_AT_LEFT")) 'fzl/buffers/show-speedbar-on-left)
 
 
 
 (provide 'config-emacs-windows-and-frames)
-

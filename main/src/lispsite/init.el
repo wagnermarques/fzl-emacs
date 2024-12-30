@@ -20,17 +20,6 @@
 ;;(require 'config-proxy)
 
 
-;;this is needed to install packages
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-
-;;from hereafter we can use use-package to install and configure emacs packages
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 
 
 ;;this environment variables configured are defined in emacs process
@@ -40,8 +29,11 @@
 ;;to manipulate emacs external environment variable use
 ;;.env controlled but (require dotenv-config) below
 
+(require 'pkgconfig-usepackage);; the use-package is need by other lisp module like 'config-emacs-environment-variables below
 (require 'config-emacs-environment-variables) ;;this file calls pkgconfig-load-vars
-
+(require 'pkgconfig-all-the-icons)
+(require 'pkgconfig-treemacs)
+;;(require 'pgkconfig-all-the-icons)
 ;; config-emacs-defaults files loads
 ;; config-emacs-defaults-highlight.el
 ;; config-emacs-defaults-window.el
@@ -50,13 +42,19 @@
 (require 'config-mode-dired) 
 (require 'config-mode-ibuffer)
 (require 'config-theme)
-(require 'pkgconfig-magit)
 (require 'fzl-views-strategies)
-(require 'fzl-emacs-hooks-startup)
+(require 'fzl-emacs-hooks-startup) 
 (require 'fzl-ide-feat-grep)
 (require 'fzl-ide-feat-keys)
 (require 'fzl-ide-feat-menus)
 
+(require 'pkgconfig-magit)
+
+(require 'pkgconfig-company)
+(require 'coding-lang-lisp)
+
+
+(require 'config-mode-orgmode)
 
 ;;abre alguns buffers de interesse
 (fzl/view/open-this-buffers)

@@ -15,7 +15,7 @@
 ;(setenv "PATH" (concat (getenv "PATH") (concat ":" (concat **EMACSINITFILE_HOME** "/bin"))))
 ;(shell-command (concat "chmod +x " (concat **EMACSINITFILE_HOME** "/bin/*.sh"))) ;makes ./bin files executable
 
-(defun fzl/print-environment-variables ()
+(defun fzl/emacs-env-variables-print-all ()
   "Print all relevant Emacs environment variables to the *Messages* buffer."
   (interactive)
   (mapc (lambda (env)
