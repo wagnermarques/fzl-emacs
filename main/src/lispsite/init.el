@@ -19,8 +19,12 @@
 ;;if you behind a proxy uncomment this line
 ;;(require 'config-proxy)
 
+
 ;;install usepackage package
 (require 'pkgconfig-usepackage);; the use-package is need by other lisp module like 'config-emacs-environment-variables below
+
+(require 'config-emacs-defaults-language)
+
 
 ;;this environment variables configured are defined in emacs process
 ;;in emacs a lot of variables have special meaning as below
@@ -43,12 +47,12 @@
 
 (require 'config-emacs-defaults)
 (require 'config-emacs-windows-and-frames)
-(require 'config-mode-dired) 
+(require 'config-mode-dired)
 (require 'config-mode-ibuffer)
 (require 'config-theme)
 
 (require 'fzl-views-strategies)
-(require 'fzl-emacs-hooks-startup) 
+(require 'fzl-emacs-hooks-startup)
 (require 'fzl-ide-feat-grep)
 (require 'fzl-ide-feat-keys)
 (require 'fzl-ide-feat-menus)
@@ -63,6 +67,10 @@
 
 (require 'config-mode-orgmode)
 (require 'config-buffer-for--logs)
+
+(require 'pkgconfig-copilot)
+
+
 ;;abre alguns buffers de interesse
 (fzl/view/open-this-buffers)
 

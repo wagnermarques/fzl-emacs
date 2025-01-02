@@ -22,4 +22,4 @@
           (message "%s" env))
         process-environment))
 
-(provide 'config-emacs-environment-variables)
+(provide 'config-emacs-environment-variables) 

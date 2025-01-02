@@ -3,25 +3,25 @@
 
 * Apresentacao
   
-  Mais uma customização do emacs 
+  Mais uma customizaÃƒÂ§ÃƒÂ£o do emacs 
 
-* configure arquivo dot_env pra definir variáveis de ambiente
+* configure arquivo dot_env pra definir variÃƒÂ¡veis de ambiente
 
 ** teclas de atalhos
-   Bom o pessoal mais acostumado com emacs podem ter sugestoes até
+   Bom o pessoal mais acostumado com emacs podem ter sugestoes atÃƒÂ©
    melhores que essas mas fica a vontade pra contribuir... :))
 
-| C-b | Mostra speedbar à esquerda | 
+| C-b | Mostra speedbar ÃƒÂ  esquerda | 
 
-   Estilo vscode mas precisa ver o porquê nao tá abrindo os buffer ao clicar no arquivo no speedbar 
+   Estilo vscode mas precisa ver o porquÃƒÂª nao tÃƒÂ¡ abrindo os buffer ao clicar no arquivo no speedbar 
 
 | C-c m | Mostra o buffer *messages* abaixo do buffer que tem o foco |
 
-    Isso interessa porque as vezes a gente quer ver o que tá
-    aparecendo no buffer de mensagens do emacs e assim fica bem fácil
+    Isso interessa porque as vezes a gente quer ver o que tÃƒÂ¡
+    aparecendo no buffer de mensagens do emacs e assim fica bem fÃƒÂ¡cil
     
 | C-c i d |
-    Mostra o IBuffer no frame de cima e o dired do diretório corrente
+    Mostra o IBuffer no frame de cima e o dired do diretÃƒÂ³rio corrente
     do emacs no frame de baixo
 
 | C-c g r | fzl-ide-feat-grep-region-string-to-new-buffer |
@@ -52,20 +52,18 @@
 |         |              |
 
 
-** Pérolas do emacs
+** PÃƒÂ©rolas do emacs
 *** Gravas Macro[fn:1]
-F3 inicia gravação da macro
-F4 Pára a gravação da macro, F4 de novo pra executa-la
+F3 inicia gravaÃƒÂ§ÃƒÂ£o da macro
+F4 PÃƒÂ¡ra a gravaÃƒÂ§ÃƒÂ£o da macro, F4 de novo pra executa-la
 
 
 ** paths
 
 
-  dá pra mudar as teclas de atalho modificando o arquivo dot_env
+  dÃƒÂ¡ pra mudar as teclas de atalho modificando o arquivo dot_env
 
-* Emacs modes  ajustados nessa configuração básica
-
-
+* Emacs modes  ajustados nessa configuraÃƒÂ§ÃƒÂ£o bÃƒÂ¡sica
 * Packages Installed
 
 | load-env-vars | 20180511.2210 | installed |        | Load environment variables from files. |   |
@@ -74,8 +72,6 @@ F4 Pára a gravação da macro, F4 de novo pra executa-la
 | treemacs      |               |           |        |                                        |   |
 
 * treemacs 
-
-
 * orgmode
 ** Babel
 
@@ -86,6 +82,17 @@ F4 Pára a gravação da macro, F4 de novo pra executa-la
 | fzl-org-babel-list-result-options | mostra buffer com :result value options |
 |                                   |                                         |
 
+
+
+  copilot                        20241228.436   available    melpa    An unofficial Copilot plugin
+  copilot-chat                   20241210.2034  available    melpa    Copilot chat interface
+
+* copilot
+
+| C-c C-c | to clear the Copilot overlay.  |
+| C-c C-l | to log in to Copilot.          |
+| C-c C-i | to install the Copilot server. |
+|         |                                |
 
 * Refs
 [fn:1] https://www.gnu.org/software/emacs/manual/html_node/emacs/Basic-Keyboard-Macro.html

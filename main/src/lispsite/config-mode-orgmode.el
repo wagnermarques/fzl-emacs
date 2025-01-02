@@ -13,10 +13,11 @@
 ;; Prevent Org from running Babel code during export
 (setq org-export-use-babel nil)
 
-
 (require 'config-mode-orgmode-babel)
 (require 'config-mode-orgmode-babel-shell)
 (require 'config-mode-orgmode-babel-php)
+(require 'config-mode-orgmode-babel-sql)
 (require 'config-mode-orgmode-tags)
+
 (provide 'config-mode-orgmode)
  
