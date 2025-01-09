@@ -23,6 +23,7 @@
 ;;install usepackage package
 (require 'pkgconfig-usepackage);; the use-package is need by other lisp module like 'config-emacs-environment-variables below
 
+;; config-emacs-defaults-language nao ta funcionando legal ainda
 (require 'config-emacs-defaults-language)
 
 
@@ -33,6 +34,8 @@
 ;;to manipulate emacs external environment variable use
 ;;.env controlled but (require dotenv-config) below
 (require 'config-emacs-environment-variables) ;;this file calls pkgconfig-load-vars
+
+(require 'config-langtool)
 
 ;;some util functions
 (require 'fzl-util-shell)
@@ -46,12 +49,21 @@
 
 
 (require 'config-emacs-defaults)
-(require 'config-emacs-windows-and-frames)
+
+
 (require 'config-mode-dired)
 (require 'config-mode-ibuffer)
 (require 'config-theme)
 
+;;;;;;;;;;;;;;;;;
+;;controlling emacs buffers
+;;;;;;;;;;;;;;;;;
 (require 'fzl-views-strategies)
+
+;;this makes .log files buffer works as tail -f its contents
+(require 'config-buffer-for--logs)
+
+
 (require 'fzl-emacs-hooks-startup)
 (require 'fzl-ide-feat-grep)
 (require 'fzl-ide-feat-keys)
@@ -64,12 +76,20 @@
 (require 'coding-lang-php)
 (require 'coding-lang-shellscript)
 
+;;its is the basic for angular
+(require 'coding-lang-typescript)
 
+
+
+;;its specific format for angular
+
+;;orgmode configuration
 (require 'config-mode-orgmode)
-(require 'config-buffer-for--logs)
+
 
 (require 'pkgconfig-copilot)
 
+(require 'personal-config)
 
 ;;abre alguns buffers de interesse
 (fzl/view/open-this-buffers)

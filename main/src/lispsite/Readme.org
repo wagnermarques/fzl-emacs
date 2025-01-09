@@ -1,23 +1,23 @@
 #+Title: emacsinitfile
 #+Subtitle: yet another customization for emacs
 
-* Apresentacao
+* Apresentação
   
-  Mais uma customizaÃ§Ã£o do emacs 
+  Mais uma customização do emacs 
 
-* configure arquivo dot_env pra definir variÃ¡veis de ambiente
+* configure arquivo dot_env pra definir variáveis de ambiente
 
 ** teclas de atalhos
-   Bom o pessoal mais acostumado com emacs podem ter sugestoes atÃ©
+   Bom o pessoal mais acostumado com emacs podem ter sugestões
    melhores que essas mas fica a vontade pra contribuir... :))
 
-| C-b | Mostra speedbar Ã  esquerda | 
+| C-b | Mostra speedbar à esquerda  | 
 
-   Estilo vscode mas precisa ver o porquÃª nao tÃ¡ abrindo os buffer ao clicar no arquivo no speedbar 
+Estilo vscode mas precisa ver o porquê nao tá abrindo os buffer ao clicar no arquivo no speedbar 
 
 | C-c m | Mostra o buffer *messages* abaixo do buffer que tem o foco |
 
-    Isso interessa porque as vezes a gente quer ver o que tÃ¡
+Isso interessa porque as vezes a gente quer ver o que tÃ¡
     aparecendo no buffer de mensagens do emacs e assim fica bem fÃ¡cil
     
 | C-c i d |
@@ -61,9 +61,9 @@ F4 PÃ¡ra a gravaÃ§Ã£o da macro, F4 de novo pra executa-la
 ** paths
 
 
-  dÃ¡ pra mudar as teclas de atalho modificando o arquivo dot_env
+dá pra mudar as teclas de atalho modificando o arquivo dot_env
 
-* Emacs modes  ajustados nessa configuraÃ§Ã£o bÃ¡sica
+* Emacs modes ajustados nessa configuraÃ§Ã£o bÃ¡sica
 * Packages Installed
 
 | load-env-vars | 20180511.2210 | installed |        | Load environment variables from files. |   |
@@ -94,9 +94,16 @@ F4 PÃ¡ra a gravaÃ§Ã£o da macro, F4 de novo pra executa-la
 | C-c C-i | to install the Copilot server. |
 |         |                                |
 
+* Os Dependencies
+** inteliphense
+   npm install inteliphesence (Corrigir aqui)
+** planuml[fn:1]
+   sudo apt-get install plantuml
+
+
 * Refs
 [fn:1] https://www.gnu.org/software/emacs/manual/html_node/emacs/Basic-Keyboard-Macro.html
-
+https://github.com/skuro/plantuml-mode
 #+begin_src shell :results output
 #+begin_src shell :session s1 :exports both :results output
 #+end_src

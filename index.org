@@ -1,7 +1,11 @@
 #+Title:  E M A C S I N I T F I L E Project
 
  
-* Emacs features
+* Emacs features after this customization
+
+** edebug
+
+
 ** abbrev
    https://www.emacswiki.org/emacs/AbbrevMode
    

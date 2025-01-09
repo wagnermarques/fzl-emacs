@@ -14,6 +14,7 @@
 (setq org-export-use-babel nil)
 
 (require 'config-mode-orgmode-babel)
+(require 'config-mode-orgmode-babel-plantuml)
 (require 'config-mode-orgmode-babel-shell)
 (require 'config-mode-orgmode-babel-php)
 (require 'config-mode-orgmode-babel-sql)

@@ -66,3 +66,5 @@
 (set-language-environment "Brazilian Portuguese")
 
 (provide 'config-emacs-defaults-language)
+;;(set-default-coding-systems 'utf-8) 
+;;(setq default-buffer-file-coding-system 'utf-8) 

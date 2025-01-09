@@ -1,3 +1,4 @@
+(print "pkgconfig-usepackage running...")
 ;; Certifique-se de ter o use-package instalado
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
