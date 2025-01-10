@@ -3,7 +3,7 @@
 
 * Apresentação
   
-  Mais uma customização do emacs 
+Mais uma customização do emacs 
 
 * configure arquivo dot_env pra definir variáveis de ambiente
 
@@ -11,7 +11,7 @@
    Bom o pessoal mais acostumado com emacs podem ter sugestões
    melhores que essas mas fica a vontade pra contribuir... :))
 
-| C-b | Mostra speedbar à esquerda  | 
+| C-b | Mostra speedbar à esquerda |
 
 Estilo vscode mas precisa ver o porquê nao tá abrindo os buffer ao clicar no arquivo no speedbar 
 
@@ -99,6 +99,36 @@ dá pra mudar as teclas de atalho modificando o arquivo dot_env
    npm install inteliphesence (Corrigir aqui)
 ** planuml[fn:1]
    sudo apt-get install plantuml
+
+
+
+* coding
+* degugin
+** php (yii2 project)
+1. starts the yii2 project with php yii serve
+2. put <?php phpinfo()?> int main.php
+   detect that the  php.ini used is /etc/php/8.3/cli/php.ini (xubuntu)
+3. the xdebu must be installed and in php.ini must have this
+
+   #+begin_src ini :exports code
+     [xdebug]
+zend_extension = /path/to/xdebug.so
+xdebug.mode = debug
+xdebug.start_with_request = yes
+xdebug.client_port = 9003
+xdebug.log = /path/to/xdebug.log
+      #+end_src
+
+4. open a php file and set it up some breakpoint 
+‘dap-breakpoint-toggle’ with M-x da-b-t
+
+5. starts dap-debug and choose XDebug template
+   M-x dap-debug
+
+6. to stop debug
+   - M-x dap-disconnect - Terminates the debugging session.
+   - M-x dap-disconnect - Disconnects the debugger.
+   - M-x dap-ui-hide - Closes the debugger UI elements.
 
 
 * Refs
