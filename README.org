@@ -2,9 +2,9 @@
 #+Subtitle: yet another (emacs customization)
 
 
-* Básico do emacs
+* BÃ¡sico do emacs
 
-** descobrir quais teclas de atalho esta associada e qual função
+** descobrir quais teclas de atalho esta associada e qual funÃ§Ã£o
 C-h w RET nomedafuncao
 
 A partir de entao vc ao colocar o foco em um arquivo o treemacs vai
@@ -15,7 +15,7 @@ abrir o aquivo stilo pre-visualizacao
 ** TODO shellscript to put some snippets in right direcotry
    write yasnippets-snippets-setup.sh script and provide some automation
 ** TODO any editing text file should be possible
-*** TODO shotcut to move lines up and down
+*** TODO shortcut to move lines up and down
 *** TODO shortcut to kill line at any point of the line
     C-k kill the line content after the cursor
     
@@ -39,6 +39,13 @@ Close this buffer does liberate the windos space for other buffers
 - A shortkey to change speedbar location in the screen
 ** TODO Open any .log file should behavior as tail -f
 ** TODO Study *Emacs General Variables*  and check its applications
+
+#+name: 
+#+begin_src python :session s1 :exports both :results graphics file output :file boxplot.svg
+
+#+end_src
+
+
 https://www.gnu.org/software//emacs/manual/html_node/emacs/General-Variables.html
 
 

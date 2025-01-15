@@ -17,6 +17,10 @@
 (require 'config-mode-orgmode-babel-plantuml)
 (require 'config-mode-orgmode-babel-shell)
 (require 'config-mode-orgmode-babel-php)
+
+;;https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html
+(require 'config-mode-orgmode-babel-python)
+
 (require 'config-mode-orgmode-babel-sql)
 (require 'config-mode-orgmode-tags)
 
