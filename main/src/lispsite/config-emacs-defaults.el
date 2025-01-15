@@ -161,4 +161,10 @@
 
 ;;https://www.emacswiki.org/emacs/ShowWhiteSpace
 
+
+;;solve Debugger entered--Lisp error: (excessive-lisp-nesting 1601) allowable depth for nested calls.
+;;to open python project with pylsp server
+(setq max-lisp-eval-depth 3000)  ; Increase from the default 800
+(setq max-specpdl-size 10000)    ; Increase from the default 1000
+
 (provide 'config-emacs-defaults)

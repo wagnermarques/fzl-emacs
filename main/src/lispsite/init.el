@@ -79,7 +79,7 @@
 ;;its is the basic for angular
 (require 'coding-lang-typescript)
 
-
+(require 'coding-lang-python)
 
 ;;its specific format for angular
 
