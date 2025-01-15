@@ -1,4 +1,4 @@
-#+Title: emacsinitfile
+#+Title: emacsinitfile 
 #+Subtitle: yet another customization for emacs
 
 * Apresentação
@@ -94,7 +94,7 @@ dá pra mudar as teclas de atalho modificando o arquivo dot_env
 | C-c C-i | to install the Copilot server. |
 |         |                                |
 
-* Os Dependencies
+* TODO Os Dependencies
 ** inteliphense
    npm install inteliphesence (Corrigir aqui)
 ** planuml[fn:1]
@@ -103,6 +103,12 @@ dá pra mudar as teclas de atalho modificando o arquivo dot_env
 
 
 * coding
+** python with lsp pyright
+#+begin_src shell
+  
+#+end_src
+https://microsoft.github.io/pyright/#/installation
+
 * degugin
 ** php (yii2 project)
 1. starts the yii2 project with php yii serve

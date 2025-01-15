@@ -40,11 +40,6 @@ Close this buffer does liberate the windos space for other buffers
 ** TODO Open any .log file should behavior as tail -f
 ** TODO Study *Emacs General Variables*  and check its applications
 
-#+name: 
-#+begin_src python :session s1 :exports both :results graphics file output :file boxplot.svg
-
-#+end_src
-
 
 https://www.gnu.org/software//emacs/manual/html_node/emacs/General-Variables.html
 

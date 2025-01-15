@@ -5,7 +5,6 @@
                          (electric-indent-mode 1)
                          (lsp)))) ; Enable auto-indentation and LSP
 
-
 (use-package lsp-mode
   :ensure t
   :commands lsp
@@ -24,4 +23,13 @@
   :config
   (setq company-idle-delay 0.2)) ; Adjust idle delay as needed
 
+(use-package lsp-pyright
+  :ensure t
+  :after lsp-mode
+  :init
+  (setq lsp-pyright-multi-root nil) ; Optional: disable multi-root support
+  :config
+  (setq lsp-pyright-python-executable-cmd "python3")) ; Ensure the correct Python executable is used
+
 (provide 'coding-lang-python)
+
