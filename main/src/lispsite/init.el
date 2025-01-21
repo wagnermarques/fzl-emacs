@@ -24,7 +24,7 @@
 (require 'pkgconfig-usepackage);; the use-package is need by other lisp module like 'config-emacs-environment-variables below
 
 ;; config-emacs-defaults-language nao ta funcionando legal ainda
-(require 'config-emacs-defaults-language)
+;;(require 'config-emacs-defaults-language)
 
 
 ;;this environment variables configured are defined in emacs process
@@ -34,6 +34,35 @@
 ;;to manipulate emacs external environment variable use
 ;;.env controlled but (require dotenv-config) below
 (require 'config-emacs-environment-variables) ;;this file calls pkgconfig-load-vars
+
+;;which-key is a package to show keybindings in a popup
+(use-package which-key
+  :ensure t
+  :config
+  (progn
+    (setq which-key-idle-delay 0.5)
+    (setq which-key-idle-secondary-delay 0.5)
+    (setq which-key-popup-type 'side-window)
+    (setq which-key-side-window-location 'bottom)
+    (setq which-key-side-window-max-width 0.33)
+    (setq which-key-side-window-max-height 0.33)
+    (setq which-key-max-description-length 50)
+    (setq which-key-max-display-columns nil)
+    (setq which-key-show-remaining-keys t)
+    (setq which-key-sort-order 'which-key-key-order-alpha)
+    (setq which-key-allow-imprecise-window-fit t)
+    (setq which-key-allow-evil-operators t)
+    (setq which-key-allow-evil-leader t)
+    (setq which-key-allow-evil-normal-state t)
+    (setq which-key-allow-evil-motion-state t)
+    (setq which-key-allow-evil-visual-state t)
+    (setq which-key-allow-evil-insert-state t)
+    (setq which-key-allow-evil-replace-state t)
+    (setq which-key-allow-evil-operator-state t)
+    (setq which-key-allow-multiple-replacements t)
+    (setq which-key-allow-undefined-keys t)
+    (setq which-key-echo-keystrokes 0.02)
+    (setq which-key-highlighted-command-list '())))
 
 (require 'config-langtool)
 
@@ -46,7 +75,7 @@
 ;;and restart emacs with this configuration to completelly reintall all-the-icons
 (require 'pkgconfig-all-the-icons)
 (require 'pkgconfig-treemacs)
-
+(require 'pkgconfig-ess)
 
 (require 'config-emacs-defaults)
 
@@ -54,6 +83,8 @@
 (require 'config-mode-dired)
 (require 'config-mode-ibuffer)
 (require 'config-theme)
+
+
 
 ;;;;;;;;;;;;;;;;;
 ;;controlling emacs buffers
@@ -96,6 +127,24 @@
 
 ;;escolhe uma estrategia de view
 (fzl/view/open-ibuffer-and-dired)
+
+
+;; Set default coding system to UTF-8
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
+;; If you use Windows
+(setq locale-coding-system 'utf-8)
+
+;; For older Emacs versions
+(unless (boundp 'buffer-file-coding-system)
+  (defvar buffer-file-coding-system 'utf-8))
+
+;; If you use a graphical interface
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 
 ;;(open_dot_env_defined_buffers)
