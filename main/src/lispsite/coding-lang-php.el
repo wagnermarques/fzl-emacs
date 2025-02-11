@@ -1,10 +1,5 @@
 (setq phpDebugJs "/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS/vscode-plugins/vscode-php-debug/out/phpDebug.js")
 
-;; Install use-package if not already installed
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 ;; Configuração do lsp-mode com PHP
 (use-package lsp-mode
   :ensure t

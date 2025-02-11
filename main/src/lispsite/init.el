@@ -76,7 +76,7 @@
 (require 'pkgconfig-all-the-icons)
 (require 'pkgconfig-treemacs)
 (require 'pkgconfig-ess)
-
+(require 'pkgconfig-helm)
 (require 'config-emacs-defaults)
 
 
@@ -103,6 +103,7 @@
 (require 'pkgconfig-magit)
 
 (require 'pkgconfig-company)
+(require 'coding-lang-server-provider-docker)
 (require 'coding-lang-lisp)
 (require 'coding-lang-php)
 (require 'coding-lang-shellscript)
@@ -119,8 +120,9 @@
 
 
 (require 'pkgconfig-copilot)
-
+(require 'pkgconfig-undo-tree)
 (require 'personal-config)
+
 
 ;;abre alguns buffers de interesse
 (fzl/view/open-this-buffers)
@@ -146,6 +148,32 @@
 ;; If you use a graphical interface
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
+
+;; working with special files and dirs
+(defvar fzl-special-files
+  '("/media/wgn/EnvsBk/__devenv__/fzl-emacs/main/src/lispsite"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Tasks.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Dates.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Diary.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Contacts.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Projects.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Ideas.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Books.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Places.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__Shopping.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/__WorkinOn.org"
+    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/_0_Notes/"
+    "/media/wgn/EnvsBk/Documentos_Pess_Wgn_Pgtos/"
+))
+
+(defun fzl-open-special-file ()
+  "Prompt to select a file from `fzl-special-files` and open it."
+  (interactive)
+  (let ((file (completing-read "Select file: " fzl-special-files)))
+    (when file
+      (find-file file))))
+
+(global-set-key (kbd "M-f") 'fzl-open-special-file)
 
 ;;(open_dot_env_defined_buffers)
 ;;(teste)
