@@ -1,11 +1,52 @@
 #+Title:  E M A C S I N I T F I L E Project
 
- 
+
+* Todo
+** TODO mudar tecla de mudar de window pq conflita com prioridade do todo
+** TODO teclas do word (cua mode)
+   + shortcut to move lines up and down
+   + shortcut to kill line at any point of the line
+   + selecionar igual o word
+   + copy paste igual ao word
+** TODO yasnippets for programming languages and texts
+   write yasnippets-snippets-setup.sh script and provide some automation
+** TODO any editing text file should be possible
+    
+** VALIDATE A short key to toogle message buffer in botton of all other buffers
+** TODO A short key to toogle terminal buffer in botton of all other buffers
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Shell.html
+- the terminal can be: eshell, term, ansi-term, shell
+- SHow result of async shell executions not in any buffer in any
+  place, but at the botton of all buffers
+Close this buffer does liberate the windos space for other buffers
+
+
+** VALIDATE Speedbar shoud be toggled and be placed left or right side of the screen
+   - A shortkey to toogle speedbar
+   - A shortkey to change speedbar location in the screen
+** VALIDATE Open any .log file should behavior as tail -f
+** TODO Study *Emacs General Variables*  and check its applications
+https://www.gnu.org/software//emacs/manual/html_node/emacs/General-Variables.html
+
+
+
+
+#+begin_groovy :exports code
+#+end_groovy
+#+begin_src emacs-lisp :results output :exports both :wrap EXAMPLE
+#+end_src
+
+
+
+#+begin_groovy :exports code
+#+end_groovy
+
+
 * Emacs features after this customization
 
 ** edebug
 
-
+epr
 ** abbrev
    https://www.emacswiki.org/emacs/AbbrevMode
    
