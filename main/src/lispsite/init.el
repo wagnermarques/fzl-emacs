@@ -35,34 +35,6 @@
 ;;.env controlled but (require dotenv-config) below
 (require 'config-emacs-environment-variables) ;;this file calls pkgconfig-load-vars
 
-;;which-key is a package to show keybindings in a popup
-(use-package which-key
-  :ensure t
-  :config
-  (progn
-    (setq which-key-idle-delay 0.5)
-    (setq which-key-idle-secondary-delay 0.5)
-    (setq which-key-popup-type 'side-window)
-    (setq which-key-side-window-location 'bottom)
-    (setq which-key-side-window-max-width 0.33)
-    (setq which-key-side-window-max-height 0.33)
-    (setq which-key-max-description-length 50)
-    (setq which-key-max-display-columns nil)
-    (setq which-key-show-remaining-keys t)
-    (setq which-key-sort-order 'which-key-key-order-alpha)
-    (setq which-key-allow-imprecise-window-fit t)
-    (setq which-key-allow-evil-operators t)
-    (setq which-key-allow-evil-leader t)
-    (setq which-key-allow-evil-normal-state t)
-    (setq which-key-allow-evil-motion-state t)
-    (setq which-key-allow-evil-visual-state t)
-    (setq which-key-allow-evil-insert-state t)
-    (setq which-key-allow-evil-replace-state t)
-    (setq which-key-allow-evil-operator-state t)
-    (setq which-key-allow-multiple-replacements t)
-    (setq which-key-allow-undefined-keys t)
-    (setq which-key-echo-keystrokes 0.02)
-    (setq which-key-highlighted-command-list '())))
 
 (require 'config-langtool)
 
@@ -77,6 +49,7 @@
 (require 'pkgconfig-treemacs)
 (require 'pkgconfig-ess)
 (require 'pkgconfig-helm)
+(require 'pkgconfig-docker)
 (require 'config-emacs-defaults)
 
 
@@ -152,6 +125,11 @@
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 
+;;which-key is a package to show keybindings in a popup
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
 
 
 ;;(open_dot_env_defined_buffers)
