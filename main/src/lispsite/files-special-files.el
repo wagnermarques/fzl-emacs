@@ -5,6 +5,7 @@
     "/media/wgn/EnvsBk/__devenv__/fzl-emacs/"
     "/media/wgn/EnvsBk/__devenv__/fzl-emacs/main/src/lispsite/"
     "/media/wgn/EnvsBk/__devenv__/fzl-emacs/index.org"
+    "/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects"
     "/media/wgn/EnvsBk/__devenv__/_devenv_cdep3/proj-integrador/integrador/"
     "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/"
     "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/"

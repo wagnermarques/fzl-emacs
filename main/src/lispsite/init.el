@@ -95,7 +95,7 @@
 (require 'pkgconfig-undo-tree)
 
 (require 'pkgconfig-copilot)
-
+(require 'pkgconfig-org-zotxt)
 
 
 
@@ -125,12 +125,13 @@
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 
-;;which-key is a package to show keybindings in a popup
 (use-package which-key
   :ensure t
   :config
-  (which-key-mode))
+  (which-key-mode)
+  (setq which-key-idle-delay 0.5))  ; Set the delay before which-key popup appears
 
+(which-key-mode)
 
 ;;(open_dot_env_defined_buffers)
 ;;(teste)
