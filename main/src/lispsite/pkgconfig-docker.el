@@ -3,7 +3,7 @@
   :defer t  ;; Defer loading until the package is needed
   :config
   ;; Add a keybinding to open the Docker interface
-  (define-key global-map (kbd "C-c C-f C-d l") 'docker) ;; Bind `C-c d` to open Docker interface
+  (define-key global-map (kbd "<S-f>") 'docker) ;; Bind `C-c d` to open Docker interface
   ;; Optionally, customize the Docker executable path if it's not in your PATH
   (setq docker-docker-executable "/usr/bin/docker"))
 
@@ -19,8 +19,6 @@
     (message "Running containers: %s" (docker-api-containers :all nil))) ;; Fetch running containers
   ;; Bind the function to a keybinding
   (define-key global-map (kbd "C-S-c C-f C-d l") 'my/docker-api-list-containers))
-
-
 
 ;; Install and configure `docker-cli` package
 (use-package docker-cli
