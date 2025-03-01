@@ -1,23 +1,30 @@
 
+(setq disk  "/media/wgn/EnvsBk1")
+(setq disk2 "/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd")
+
+
 (defvar fzl-special-files
-  '(
-    "/media/wgn/EnvsBk/__devenv__"
-    "/media/wgn/EnvsBk/__devenv__/fzl-emacs/"
-    "/media/wgn/EnvsBk/__devenv__/fzl-emacs/main/src/lispsite/"
-    "/media/wgn/EnvsBk/__devenv__/fzl-emacs/index.org"
-    "/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects"
-    "/media/wgn/EnvsBk/__devenv__/_devenv_cdep3/proj-integrador/integrador/"
-    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/"
-    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/"
-    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Tasks.org"
-    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Tasks_Projects.org"
-    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Datas.org"
-    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Logbook.org"
-    "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/_0_Notes"
-    "/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS/"
-    "/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS/setup-progsativos-scripts/"
-    "/media/wgn/EnvsBk/Documentos_Pess_Wgn_Pgtos/"
-))
+  (mapcar (lambda (path) (concat disk path))
+          '("/__devenv__"
+            "/__devenv__/fzl-emacs/"
+            "/__devenv__/fzl-emacs/main/src/lispsite/"
+            "/__devenv__/fzl-emacs/index.org"
+            "/__devenv__/AmbDev/projects/textprojects"
+            "/__devenv__/devenv_cdep3/proj-integrador/integrador/"
+            "/_0_Tasks_&_Notes_&_Dates__/"
+            "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/"
+            "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Tasks.org"
+            "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/TasksProjects.org"
+            "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Datas.org"
+            "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Logbook.org"
+            "/_0_Tasks_&_Notes_&_Dates__/_0_Notes")))
+
+(setq fzl-special-files
+      (append fzl-special-files
+              (mapcar (lambda (path) (concat disk2 path))
+                      '("/PROGSATIVOS/"
+                        "/PROGSATIVOS/setup-progsativos-scripts/"
+                        "/DocumentosPessWgn_Pgtos/"))))
 
 (defun fzl-open-special-file ()
   "Prompt to select a file from `fzl-special-files` and open it."

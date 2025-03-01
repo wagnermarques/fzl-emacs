@@ -50,6 +50,8 @@
 (require 'pkgconfig-ess)
 (require 'pkgconfig-helm)
 (require 'pkgconfig-docker)
+(require 'pkgconfig-impatientmode)
+
 (require 'config-emacs-defaults)
 
 
