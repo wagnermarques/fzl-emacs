@@ -82,6 +82,7 @@
 (require 'coding-lang-lisp)
 (require 'coding-lang-php)
 (require 'coding-lang-shellscript)
+(require 'coding-yaml)
 
 ;;its is the basic for angular
 (require 'coding-lang-typescript)
