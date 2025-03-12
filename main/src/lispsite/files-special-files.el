@@ -17,14 +17,14 @@
             "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/TasksProjects.org"
             "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Datas.org"
             "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/Logbook.org"
-            "/_0_Tasks_&_Notes_&_Dates__/_0_Notes")))
+            "/_0_Tasks_&_Notes_&_Dates__/_0_Notes"
+            "/Documentos_Pess_Wgn_Pgtos/")))
 
 (setq fzl-special-files
       (append fzl-special-files
               (mapcar (lambda (path) (concat disk2 path))
                       '("/PROGSATIVOS/"
-                        "/PROGSATIVOS/setup-progsativos-scripts/"
-                        "/DocumentosPessWgn_Pgtos/"))))
+                        "/PROGSATIVOS/setup-progsativos-scripts/"))))
 
 (defun fzl-open-special-file ()
   "Prompt to select a file from `fzl-special-files` and open it."

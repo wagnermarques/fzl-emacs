@@ -7,6 +7,7 @@
 (setq debug-on-error t)
 (require 'edebug)
 
+
 ;; configuring emacs load-path
 ;; add this file dir to load-path
 ;; it is needed to require another el files in this same dir and from its subdir
@@ -38,6 +39,11 @@
 
 (require 'config-langtool)
 
+;;for some reaon edit markdown raise polymode not updated errors
+(use-package polymode
+  :ensure t)
+
+
 ;;some util functions
 (require 'fzl-util-shell)
 (require 'fzl-util-path)
@@ -50,7 +56,6 @@
 (require 'pkgconfig-ess)
 (require 'pkgconfig-helm)
 (require 'pkgconfig-docker)
-(require 'pkgconfig-impatientmode)
 
 (require 'config-emacs-defaults)
 
@@ -131,10 +136,12 @@
 (use-package which-key
   :ensure t
   :config
-  (which-key-mode)
-  (setq which-key-idle-delay 0.5))  ; Set the delay before which-key popup appears
+  (setq which-key-idle-delay 0.5)  ; Set the delay before which-key popup appears
+  (setq which-key-side-window-location 'right)  ; Show which-key popup on the right side
+  (which-key-mode))  ; Enable which-key mode
 
-(which-key-mode)
+
+
 
 ;;(open_dot_env_defined_buffers)
 ;;(teste)
