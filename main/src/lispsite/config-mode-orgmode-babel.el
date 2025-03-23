@@ -1,3 +1,27 @@
+(defun fzl-org-babel-list-languages ()
+  "List Org Babel languages in a new temporary buffer."
+  (interactive)
+  (let ((buffer (get-buffer-create "*Org Babel Languages*")))
+    (with-current-buffer buffer
+      (erase-buffer)
+      (insert (concat
+               "* Org Babel Languages\n\n"
+               "The following languages are supported by Org Babel:\n\n"
+               (mapconcat #'identity org-babel-load-languages "\n")))
+      (goto-char (point-min))
+      (org-mode))
+    (pop-to-buffer buffer)))
+
+
+(defun fzl-org-babel-list-languages-duplicated-keys ()
+  "List duplicated keys in Org Babel languages."
+  (interactive)
+  (let* ((structure-keys (mapcar #'car org-structure-template-alist))
+       (tempo-keys (mapcar #'car org-tempo-keywords-alist))
+       (duplicates (seq-intersection structure-keys tempo-keys #'string=)))
+  (message "Duplicated keys: %S" duplicates)))
+
+
 (defun fzl-org-babel-list-result-options ()
   "List Org Babel result options in a new temporary buffer."
   (interactive)

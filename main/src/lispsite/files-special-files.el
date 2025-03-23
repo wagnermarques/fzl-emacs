@@ -1,6 +1,6 @@
 
-(setq disk  "/media/wgn/EnvsBk1")
-(setq disk2 "/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd")
+(setq disk  "/run/media/wgn/EnvsBk")
+(setq disk2 "/run/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd")
 
 
 (defvar fzl-special-files
@@ -9,7 +9,8 @@
             "/__devenv__/fzl-emacs/"
             "/__devenv__/fzl-emacs/main/src/lispsite/"
             "/__devenv__/fzl-emacs/index.org"
-            "/__devenv__/AmbDev/projects/textprojects"
+            "/__devenv__/Proj-AmbDev/Amb_Dev"
+            "/__devenv__/Proj-AmbDev/Amb_Dev/projects/textprojects"
             "/__devenv__/devenv_cdep3/proj-integrador/integrador/"
             "/_0_Tasks_&_Notes_&_Dates__/"
             "/_0_Tasks_&_Notes_&_Dates__/_0_Tasks/"

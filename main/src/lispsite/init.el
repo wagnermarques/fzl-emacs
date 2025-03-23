@@ -20,6 +20,12 @@
 ;;if you behind a proxy uncomment this line
 ;;(require 'config-proxy)
 
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+(prefer-coding-system 'utf-8)
+
 
 ;;install usepackage package
 (require 'pkgconfig-usepackage);; the use-package is need by other lisp module like 'config-emacs-environment-variables below
@@ -39,7 +45,7 @@
 
 (require 'config-langtool)
 
-;;for some reaon edit markdown raise polymode not updated errors
+;;for some reason edit markdown raise polymode not updated errors
 (use-package polymode
   :ensure t)
 
@@ -109,10 +115,10 @@
 
 
 ;;abre alguns buffers de interesse
-(fzl/view/open-this-buffers)
+;;(fzl/view/open-this-buffers)
 
 ;;escolhe uma estrategia de view
-(fzl/view/open-ibuffer-and-dired)
+(fzl-views--open-ibuffer-and-dired)
 
 
 ;; Set default coding system to UTF-8

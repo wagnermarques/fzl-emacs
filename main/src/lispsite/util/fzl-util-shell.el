@@ -1,3 +1,6 @@
+(use-package shell-maker
+  :ensure t)
+
 (defun fzl-new-shell ()
   "Create a new shell buffer and switch to it."
   (interactive)

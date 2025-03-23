@@ -3,13 +3,13 @@
 
 ;;cada funcao formata a tela do emacs com uma estrategia especifica de visualizacao
 
-(defun fzl/view/open-theese-buffers()  
+(defun fzl-views--open-theese-buffers()  
   (let ((buffer-names '("dot_env" "Readme.org" "init.el")))
       (dolist (buffer-name buffer-names)
         (find-file buffer-name))))
 
 
-(defun fzl/view/open-ibuffer-and-dired()
+(defun fzl-views--open-ibuffer-and-dired()
   "Abre o ibuffer e o dired no diretório atual em janelas divididas."
   (interactive)
   (delete-other-windows)  ;; Fechar outras janelas
@@ -20,7 +20,7 @@
   (ibuffer))  ;; Abrir ibuffer
 
 ;; Vincular a função a uma tecla de atalho, se desejar
-(global-set-key (kbd "C-c i d") 'fzl/view/open-ibuffer-and-dired)
+(global-set-key (kbd "C-c i d") 'fzl-views--open-ibuffer-and-dired)
 
 
 (defun fzl/copilot/display()
