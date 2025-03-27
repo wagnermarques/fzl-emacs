@@ -1,5 +1,7 @@
 #sub modules and external subprojects
 
+.env
+
 **/*.db
 #personal files
 /main/src/lispsite/Pess/*

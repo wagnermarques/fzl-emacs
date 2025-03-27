@@ -62,6 +62,7 @@
 (require 'pkgconfig-ess)
 (require 'pkgconfig-helm)
 (require 'pkgconfig-docker)
+(require 'pkgconfig-restclient)
 
 (require 'config-emacs-defaults)
 
