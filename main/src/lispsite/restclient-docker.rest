@@ -1,1 +1,10 @@
-http://containers/json?all=1&size=0.
+### Get repository information
+GET https://api.github.com/repos/wagnermarques/fzl-emacs
+Authorization: {{GITHUB_TOKEN}}
+Accept: application/vnd.github+json
+X-GitHub-Api-Version: 2022-11-28
+User-Agent: My-Emacs-RestClient-App/1.0
+
+
+
+

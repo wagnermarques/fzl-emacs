@@ -28,14 +28,14 @@
    restclient-inhibit-cookies nil
    
    ;; Highlight response codes
-   restclient-highlight-response-codes t)
+   restclient-highlight-response-codes t))
 
   ;; Optional: Integration with company-mode for auto-completion
   (use-package company-restclient
     :ensure t
     :after (restclient company)
     :config
-    (add-to-list 'company-backends 'company-restclient)))
+    (add-to-list 'company-backends 'company-restclient))
 
 ;;; Support for variables and environments
 (defvar restclient-current-environment 'development
@@ -47,7 +47,7 @@
     (staging . ((base-url . "https://staging-api.example.com")
                 (api-key . "staging-secret-key")))
     (production . ((base-url . "https://api.example.com")
-                   (api-key . "prod-secret-key"))))
+                   (api-key . "prod-secret-key")))))
 
 (defun restclient-set-environment (env)
   "Set the current restclient environment to ENV."

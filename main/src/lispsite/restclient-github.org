@@ -1,0 +1,153 @@
+#+Title: Restclient github api
+
+#+name: config orgmode restclient 
+#+begin_src elisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((restclient . t)))
+#+end_src
+
+#+name: Get repository information
+#+begin_src restclient
+GET https://api.github.com/repos/wagnermarques/fzl-emacs
+Authorization: {{GITHUB_TOKEN}}
+Accept: application/vnd.github+json
+X-GitHub-Api-Version: 2022-11-28
+User-Agent: My-Emacs-RestClient-App/1.0
+
+#+end_src
+
+#+RESULTS: Get repository information
+#+BEGIN_SRC js
+{
+  "id": 11072204,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMTA3MjIwNA==",
+  "name": "fzl-emacs",
+  "full_name": "wagnermarques/fzl-emacs",
+  "private": false,
+  "owner": {
+    "login": "wagnermarques",
+    "id": 77413,
+    "node_id": "MDQ6VXNlcjc3NDEz",
+    "avatar_url": "https://avatars.githubusercontent.com/u/77413?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/wagnermarques",
+    "html_url": "https://github.com/wagnermarques",
+    "followers_url": "https://api.github.com/users/wagnermarques/followers",
+    "following_url": "https://api.github.com/users/wagnermarques/following{/other_user}",
+    "gists_url": "https://api.github.com/users/wagnermarques/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/wagnermarques/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/wagnermarques/subscriptions",
+    "organizations_url": "https://api.github.com/users/wagnermarques/orgs",
+    "repos_url": "https://api.github.com/users/wagnermarques/repos",
+    "events_url": "https://api.github.com/users/wagnermarques/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/wagnermarques/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "html_url": "https://github.com/wagnermarques/fzl-emacs",
+  "description": "My emacs init file",
+  "fork": false,
+  "url": "https://api.github.com/repos/wagnermarques/fzl-emacs",
+  "forks_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/forks",
+  "keys_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/keys{/key_id}",
+  "collaborators_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/collaborators{/collaborator}",
+  "teams_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/teams",
+  "hooks_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/hooks",
+  "issue_events_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/issues/events{/number}",
+  "events_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/events",
+  "assignees_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/assignees{/user}",
+  "branches_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/branches{/branch}",
+  "tags_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/tags",
+  "blobs_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/git/blobs{/sha}",
+  "git_tags_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/git/tags{/sha}",
+  "git_refs_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/git/refs{/sha}",
+  "trees_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/git/trees{/sha}",
+  "statuses_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/statuses/{sha}",
+  "languages_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/languages",
+  "stargazers_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/stargazers",
+  "contributors_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/contributors",
+  "subscribers_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/subscribers",
+  "subscription_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/subscription",
+  "commits_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/commits{/sha}",
+  "git_commits_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/git/commits{/sha}",
+  "comments_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/comments{/number}",
+  "issue_comment_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/issues/comments{/number}",
+  "contents_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/contents/{+path}",
+  "compare_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/compare/{base}...{head}",
+  "merges_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/merges",
+  "archive_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/{archive_format}{/ref}",
+  "downloads_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/downloads",
+  "issues_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/issues{/number}",
+  "pulls_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/pulls{/number}",
+  "milestones_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/milestones{/number}",
+  "notifications_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/notifications{?since,all,participating}",
+  "labels_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/labels{/name}",
+  "releases_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/releases{/id}",
+  "deployments_url": "https://api.github.com/repos/wagnermarques/fzl-emacs/deployments",
+  "created_at": "2013-06-30T15:07:23Z",
+  "updated_at": "2024-05-07T01:29:55Z",
+  "pushed_at": "2025-03-24T00:01:17Z",
+  "git_url": "git://github.com/wagnermarques/fzl-emacs.git",
+  "ssh_url": "git@github.com:wagnermarques/fzl-emacs.git",
+  "clone_url": "https://github.com/wagnermarques/fzl-emacs.git",
+  "svn_url": "https://github.com/wagnermarques/fzl-emacs",
+  "homepage": null,
+  "size": 13011,
+  "stargazers_count": 0,
+  "watchers_count": 0,
+  "language": null,
+  "has_issues": true,
+  "has_projects": true,
+  "has_downloads": true,
+  "has_wiki": true,
+  "has_pages": false,
+  "has_discussions": false,
+  "forks_count": 0,
+  "mirror_url": null,
+  "archived": false,
+  "disabled": false,
+  "open_issues_count": 0,
+  "license": null,
+  "allow_forking": true,
+  "is_template": false,
+  "web_commit_signoff_required": false,
+  "topics": [],
+  "visibility": "public",
+  "forks": 0,
+  "open_issues": 0,
+  "watchers": 0,
+  "default_branch": "main",
+  "temp_clone_token": null,
+  "network_count": 0,
+  "subscribers_count": 2
+}
+// GET https://api.github.com/repos/wagnermarques/fzl-emacs
+// HTTP/1.1 200 OK
+// Date: Fri, 28 Mar 2025 03:47:05 GMT
+// Content-Type: application/json; charset=utf-8
+// Cache-Control: public, max-age=60, s-maxage=60
+// Vary: Accept,Accept-Encoding, Accept, X-Requested-With
+// ETag: W/"adc383c873ab2227c80d27efad8ad9cdc14bcc62e4c5e39c0600b345e7ea7b4b"
+// Last-Modified: Tue, 07 May 2024 01:29:55 GMT
+// X-GitHub-Media-Type: github.v3; format=json
+// x-github-api-version-selected: 2022-11-28
+// X-RateLimit-Limit: 60
+// X-RateLimit-Remaining: 57
+// X-RateLimit-Reset: 1743135497
+// X-RateLimit-Used: 3
+// X-RateLimit-Resource: core
+// Access-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset
+// Access-Control-Allow-Origin: *
+// Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+// X-Frame-Options: deny
+// X-Content-Type-Options: nosniff
+// X-XSS-Protection: 0
+// Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
+// Content-Security-Policy: default-src 'none'
+// Transfer-Encoding: chunked
+// Server: github.com
+// X-GitHub-Request-Id: 1A31:38DCD9:CA9F2D:F65B6F:67E61BB9
+// Request duration: 0.561654s
+#+END_SRC

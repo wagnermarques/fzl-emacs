@@ -17,6 +17,7 @@
 (require 'config-mode-orgmode-babel-plantuml)
 (require 'config-mode-orgmode-babel-shell)
 (require 'config-mode-orgmode-babel-php)
+(require 'config-mode-orgmode-babel-restclient)
 
 ;;https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html
 (require 'config-mode-orgmode-babel-python)
