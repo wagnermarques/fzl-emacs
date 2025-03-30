@@ -47,6 +47,39 @@
   ;; Optionally, add a keybinding for formatting the file
   (define-key docker-compose-mode-map (kbd "C-S-c C-f C-d c") 'indent-region))
 
+
+;; Install and configure `dockerfile-mode` package
+(use-package dockerfile-mode
+  :ensure t ;; Ensure the package is installed
+  :mode "Dockerfile" ;; Associate with Dockerfile files
+  :config
+  ;; Enable syntax highlighting and indentation for Dockerfiles
+  (add-hook 'dockerfile-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil) ;; Use spaces instead of tabs
+              (setq tab-width 2) ;; Set indentation width to 2 spaces
+              (setq dockerfile-check-executable "/usr/bin/docker") ;; Optional: Set docker executable path.
+              (setq dockerfile-check-arguments '("run" "--rm" "-i" "alpine:latest" "sh" "-c" "dockerfile-lint -")) ;; Optional: Set dockerfile-lint args if you use it.
+              (setq dockerfile-check-command '("docker" dockerfile-check-arguments)) ;; Optional: Set the command to run.
+              (setq dockerfile-check-enabled t) ;; Optional: Enables dockerfile checking.
+              (setq dockerfile-check-on-save t) ;; Optional: Enables dockerfile checking on save.
+              ))
+  ;; Optionally, add a keybinding for indenting the region
+  (define-key dockerfile-mode-map (kbd "C-S-c C-f C-d") 'indent-region))
+
+  (use-package dockerfile-ts-mode
+  :ensure t
+  :mode "Dockerfile"
+  :config
+  (add-hook 'dockerfile-ts-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil)
+              (setq tab-width 2))))
+
+;; If you want to make tree-sitter dockerfile mode the default:
+(with-eval-after-load 'dockerfile-mode
+  (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-ts-mode)))
+
 ;; End of Docker-related configurations
 
 (provide 'pkgconfig-docker)
