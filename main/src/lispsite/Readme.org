@@ -3,19 +3,19 @@
 
 * Apresentação
   
-Mais uma customização do emacs 
+  Mais uma customização do emacs 
 
 * configure arquivo dot_env pra definir variáveis de ambiente
 
 ** teclas de atalhos
-   Bom o pessoal mais acostumado com emacs podem ter sugestões
+   O pessoal mais acostumado com emacs podem ter sugestões
    melhores que essas mas fica a vontade pra contribuir... :))
 
-| C-b | Mostra speedbar à esquerda |
+   | C-b | Mostra speedbar à esquerda |
 
-Estilo vscode mas precisa ver o porquê nao tá abrindo os buffer ao clicar no arquivo no speedbar 
+   Estilo vscode mas precisa ver o porquê nao tá abrindo os buffer ao clicar no arquivo no speedbar 
 
-| C-c m | Mostra o buffer *messages* abaixo do buffer que tem o foco |
+   | C-c m | Mostra o buffer *messages* abaixo do buffer que tem o foco |
 
 Isso interessa porque as vezes a gente quer ver o que tÃ¡
     aparecendo no buffer de mensagens do emacs e assim fica bem fÃ¡cil
@@ -62,6 +62,7 @@ F4 PÃ¡ra a gravaÃ§Ã£o da macro, F4 de novo pra executa-la
 
 
 dá pra mudar as teclas de atalho modificando o arquivo dot_env
+
 
 * Emacs modes ajustados nessa configuraÃ§Ã£o bÃ¡sica
 * Packages Installed

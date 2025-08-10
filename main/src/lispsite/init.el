@@ -4,13 +4,15 @@
 ;;; Code:
 ;;;  -*- lexical-binding: t -*-
 
+
+;;; shows errors details in buffer
 (setq debug-on-error t)
 (require 'edebug)
 
 
 ;; configuring emacs load-path
 ;; add this file dir to load-path
-;; it is needed to require another el files in this same dir and from its subdir
+;; it is needed to require another .el files that lives in this same dir and from its subdir
 ;; to make its works, when you start emacs using this init.el as configuration follow this rule:
 ;; "cd $this_dir && emacs -q -l init.el &"
 (normal-top-level-add-to-load-path '("."))
@@ -20,56 +22,82 @@
 ;;if you behind a proxy uncomment this line
 ;;(require 'config-proxy)
 
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-language-environment 'utf-8)
-(prefer-coding-system 'utf-8)
 
 
-;;install usepackage package
-(require 'pkgconfig-usepackage);; the use-package is need by other lisp module like 'config-emacs-environment-variables below
+;;configuring melpa repo and install usepackage
+;; the use-package is need by other lisp module like 'config-emacs-environment-variables below
+(require 'pkgconfig-usepackage)
+
+;;tryin to make emacs understand brazilian portuguese language
+;;it's not works a lot of time
 
 ;; config-emacs-defaults-language nao ta funcionando legal ainda
-;;(require 'config-emacs-defaults-language)
+(require 'config-emacs-defaults-language)
 
-
-;;this environment variables configured are defined in emacs process
-;;in emacs a lot of variables have special meaning as below
-;;https://www.gnu.org/software//emacs/manual/html_node/emacs/General-Variables.html
-;;this setup-environment-variable is to controlling some of them
-;;to manipulate emacs external environment variable use
-;;.env controlled but (require dotenv-config) below
+;;define all global variables
 (require 'config-emacs-environment-variables) ;;this file calls pkgconfig-load-vars
 
+;;changing some emacs defaulst config
+(require 'config-emacs-defaults)
 
-(require 'config-langtool)
+(require 'config-mode-dired)
+(require 'config-mode-ibuffer)
+
+
+
+;;; conding languages
+(require 'coding-lang-java)
+;(require 'coding-R)
+(require 'pkgconfig-ess)
+(require 'pkgconfig-restclient)
+
+
+
+;;; configuring langtool if java is available  ;;;;
+;;; https://languagetool.org/download/
+;; Java verification and conditional langtool loading
+(when (and (fboundp 'fzl-java-executable-find)
+           (fzl-java-executable-find))
+  (require 'config-langtool)
+  (condition-case err
+      (progn
+        (require 'config-langtool)
+        (message "LanguageTool loaded successfully"))
+    (error
+     (message "Failed to load LanguageTool: %s" (error-message-string err))
+     nil))) ; Return nil on failure
+
+
 
 ;;for some reason edit markdown raise polymode not updated errors
 (use-package polymode
   :ensure t)
 
 
+
 ;;some util functions
 (require 'fzl-util-shell)
 (require 'fzl-util-path)
+
+
 
 ;;all-the-icons is dependency pkg for treemacs, company and maybe others
 ;;to make it works was needed to M-x package-delete all-the-icons RET to delete pre installed all-the-icons
 ;;and restart emacs with this configuration to completelly reintall all-the-icons
 (require 'pkgconfig-all-the-icons)
+(use-package nerd-icons
+  :ensure t)
+(require 'config-theme)
 (require 'pkgconfig-treemacs)
-(require 'pkgconfig-ess)
 (require 'pkgconfig-helm)
+
+
+
 (require 'pkgconfig-docker)
-(require 'pkgconfig-restclient)
+
 
 (require 'config-emacs-defaults)
 
-
-(require 'config-mode-dired)
-(require 'config-mode-ibuffer)
-(require 'config-theme)
 
 
 
@@ -158,3 +186,12 @@
 
 ;(require 'emacs-onstart)
 ;;programming languages integrations
+
+
+
+
+
+
+(find-file (concat fzlemacs-dir--fzlemacs-home "/index.org"))
+(find-file (concat fzlemacs-dir--fzlemacs-lispsite "/init.el"))
+(find-file (concat fzlemacs-dir--fzlemacs-lispsite "/initcopia.el"))

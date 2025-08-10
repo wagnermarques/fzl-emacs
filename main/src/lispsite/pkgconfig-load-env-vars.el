@@ -1,9 +1,18 @@
+(print "===> pkgconfig-load-env-vars.el running...")
+
 ;; https://humanlytyped.hashnode.dev/working-effectively-with-env-files-in-emacs
 ;; load-env-vars                  20180511.2210  installed             Load environment variables from files
 ;; To load a .env file into your Emacs environment,
 ;; we read and parse the dot env file
-(use-package load-env-vars
-  :ensure t)
+;(use-package load-env-vars
+;  :ensure t)
+
+(use-package dot-env
+  :ensure t  ; <-- This is the most important part!
+  ;;:hook
+  ;; This automatically loads the .env file when you enter programming modes
+  ;;(prog-mode . dotenv-file-load-file))
+  )
 
 (defvar fzl-dotenv-filename "dot_env"
   "The name of the .env file.")

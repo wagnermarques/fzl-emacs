@@ -2,23 +2,22 @@
 #+Subtitle: yet another (emacs customization)
 
 
-* B·sico do emacs
+* B√°sico do emacs
 
-** Fatures (Facilidades desta configuraÁ„o)
+** Fatures (Facilidades desta configura√ß√£o)
 
 *** Shortcuts
-| teclas                 | DescriÁ„o                                                  | fonte     |
-| C-c f o                | Mostra list Arqs e Dirs especiais pra ficar f·cil de abrir | fzl-emacs |
-| C-h w RET nomedafuncao | Mostra qual shortcut esta associado ‡ funÁ„o               | emacs     |
+| teclas                 | Descri√ß√£o                                                  | fonte     |
+| C-c f o                | Mostra list Arqs e Dirs especiais pra ficar f√°cil de abrir | fzl-emacs |
+| C-h w RET nomedafuncao | Mostra qual shortcut esta associado √† fun√ß√£o               | emacs     |
 |                        |                                                            |           |
 
-
-*** Mostra list Arqs e Dirs especiais pra ficar f·cil de abrir
+*** Mostra list Arqs e Dirs especiais pra ficar f√°cil de abrir
 C-c f o
 Vc configura caminhos de aquivos e diretorios que vc abre muito
-frequentemente e fica f·cil reabri-los novamente
+frequentemente e fica f√°cil reabri-los novamente
 
-**** Consulta qual tecla de atalho est· associada e qual funÁ„o
+**** Consulta qual tecla de atalho est√° associada e qual fun√ß√£o
    C-h w RET nomedafuncao
 
 

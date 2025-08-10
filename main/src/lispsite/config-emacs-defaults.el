@@ -27,14 +27,6 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 
-;;; auto save backup files to ~/.emacs.d/auto-save-list
-;;; (https://www.emacswiki.org/emacs/AutoSave
-(auto-save-mode t)
-(setq backup-directory-alist
-      `((".*" . ,(expand-file-name "~/.emacs.d/auto-save-list/"))))
-
-
-
 ;;http://www.emacswiki.org/emacs/StickyModifiers
 ;;From the documentation:
 ;;This means that you can release the modifier key before pressing down
@@ -64,22 +56,6 @@
 
 ;;highlight incremental search
 (setq search-highlight t)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;F O N T S
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(setq fontHeight (string-to-number (getenv "FZLEMACS_TEXT_ZOOM_INITIAL")))
-;http://www.emacswiki.org/emacs/SetFonts
-(set-face-attribute 'default (selected-frame) :height fontHeight)
-
-;http://www.gnu.org/software/emacs/manual/html_node/emacs/Font-Lock.html
-;means that we want fontification in all modes.
-(global-font-lock-mode t)
-
-;denotes our interest in maximum possible fontification.
-(setq font-lock-maximum-decoration t)
 
 
 ;R e m o v i n g    A n n o y a n c e s 

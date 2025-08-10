@@ -1,3 +1,17 @@
+;;; Package -- Summary:
+;;; Commentary:
+;;; TODO: make it works indeed
+
+;;; Code:
+;;;  -*- lexical-binding: t -*-
+
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+(prefer-coding-system 'utf-8)
+
+
 ;; Set language environment to Brazilian Portuguese
 (set-language-environment "Brazilian Portuguese")
 
@@ -19,12 +33,26 @@
                     (set-buffer-process-coding-system 'utf-8 'utf-8))
                   (setq buffer-file-coding-system 'utf-8)))
 
-;; Set font to one that supports Brazilian Portuguese characters
-(set-frame-font "DejaVu Sans Mono-12" nil t)
+;; Set a robust, Windows-like monospace font (fallback chain)
+(let ((preferred-fonts '("Consolas" "Liberation Mono" "Courier New" "Andale Mono" "Source Code Pro" "Monospace")))
+  (catch 'font-set
+    (dolist (font preferred-fonts)
+      (when (member font (font-family-list))
+        (set-frame-font (format "%s-12" font) nil t)
+        (throw 'font-set t))))
+  (unless (member (face-attribute 'default :font) (mapcar (lambda (f) (format "%s-12" f)) preferred-fonts))))
+
 
 (provide 'config-emacs-defaults-language)
 
-
+(defun fzl-desktop-fonts-list-available-fonts ()
+  "List all available fonts on the system."
+  (interactive)
+  (let ((font-list (font-family-list)))
+    (with-output-to-temp-buffer "*Available Fonts*"
+      (princ "Available Fonts:\n\n")
+      (dolist (font font-list)
+        (princ (format "- %s\n" font))))))
 
 ;;it must be consistent with os local
 ;;wgn@wgnhost:/media/wgn/EnvsBk/__devenv__/fzl-emacs/main/src/lispsite$ locale
