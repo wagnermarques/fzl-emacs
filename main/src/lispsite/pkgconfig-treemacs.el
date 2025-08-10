@@ -1,11 +1,22 @@
+;;; pkgconfig-treemacs.el
 (use-package treemacs
   :ensure t
   :config
-  (setq treemacs-width 0.25) ; Set the initial width of the Treemacs window
-  (setq treemacs-follow-mode t) ; Automatically follow the currently active file in the tree
-  (setq treemacs-pane-relative-size 0.3) ; Set the relative size of the Treemacs pane
-  (treemacs-load-theme "doom-atom") ; Load a Treemacs theme
-  (global-set-key (kbd "C-x t") 'treemacs-toggle) ; Bind a key to toggle Treemacs visibility
-  )
+  ;; All your settings go here
+  (setq treemacs-width 35) ; A fixed width is often more stable
+  (setq treemacs-follow-mode t)
+  (setq treemacs-file-follow-delay 0.2)
+  
+  ;; This is handled by doom-themes, but is good to know
+  (treemacs-load-theme "doom-atom")
+  
+  :bind
+  ;; It's good practice to define keys inside :bind
+  (("C-c t" . treemacs-toggle)))
+
+(provide 'pkgconfig-treemacs)
+
+
+(set-face-attribute 'default nil :font "FiraCode Nerd Font-12")
 
 (provide 'pkgconfig-treemacs)

@@ -84,6 +84,12 @@
 ;;all-the-icons is dependency pkg for treemacs, company and maybe others
 ;;to make it works was needed to M-x package-delete all-the-icons RET to delete pre installed all-the-icons
 ;;and restart emacs with this configuration to completelly reintall all-the-icons
+;;install nerd font
+;;https://www.nerdfonts.com/font-downloads
+;;mkdir -p ~/.local/share/fonts
+;;mv FiraCodeTemp/*.ttf ~/.local/share/fonts/
+;;fc-cache -f -v
+;;fc-list | grep -i "FiraCode"
 (require 'pkgconfig-all-the-icons)
 (use-package nerd-icons
   :ensure t)
