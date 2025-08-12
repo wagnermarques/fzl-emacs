@@ -2,13 +2,23 @@
 #+Subtitle: yet another (emacs customization)
 
 
-This is a README.org of the main branch.
+* Básico do emacs
 
-* About
+** Fatures (Facilidades desta configuração)
 
-This is an another emacs customization .el files that runs at emacs initialization[Fn:1]
+*** Shortcuts
+| teclas                 | Descrição                                                  | fonte     |
+| C-c f o                | Mostra list Arqs e Dirs especiais pra ficar fácil de abrir | fzl-emacs |
+| C-h w RET nomedafuncao | Mostra qual shortcut esta associado à função               | emacs     |
+|                        |                                                            |           |
 
-We knows that customization depends a lot of what you need from emacs.
+*** Mostra list Arqs e Dirs especiais pra ficar fácil de abrir
+C-c f o
+Vc configura caminhos de aquivos e diretorios que vc abre muito
+frequentemente e fica fácil reabri-los novamente
+
+**** Consulta qual tecla de atalho está associada e qual função
+   C-h w RET nomedafuncao
 
 So I divided the work in branchs.
 
@@ -27,4 +37,3 @@ So I divided the work in branchs.
   With several fantastic peace of software together like nexus, maven, eclipse and some framework the main intent is to provide a bpms plataform to develope softwares.
 
 
-[fn:1]  https://www.gnu.org/software/emacs/manual/html_node/eintr/Emacs-Initialization.html

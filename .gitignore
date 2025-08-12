@@ -1,5 +1,12 @@
 #sub modules and external subprojects
 
+.env
+
+**/*.db
+#personal files
+/main/src/lispsite/Pess/*
+**/*.env
+
 node_modules
 **/**/credentials*
 /home/wagner/fzlbpms/ansible/roles/aws_ec2_create/vars/*

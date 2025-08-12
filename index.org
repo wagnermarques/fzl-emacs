@@ -1,7 +1,76 @@
+
 #+Title:  E M A C S I N I T F I L E Project
 
 
-* Emacs features
+* Todo
+** TODO mudar tecla de mudar de window pq conflita com prioridade do todo
+** TODO teclas do word (cua mode)
+   + shortcut to move lines up and down
+   + shortcut to kill line at any point of the line
+   + selecionar igual o word
+   + copy paste igual ao word
+** TODO yasnippets for programming languages and texts
+   write yasnippets-snippets-setup.sh script and provide some automation
+** TODO any editing text file should be possible
+    
+** VALIDATE A short key to toogle message buffer in botton of all other buffers
+** TODO A short key to toogle terminal buffer in botton of all other buffers
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Shell.html
+- the terminal can be: eshell, term, ansi-term, shell
+- SHow result of async shell executions not in any buffer in any
+  place, but at the botton of all buffers
+Close this buffer does liberate the windos space for other buffers
+
+
+** VALIDATE Speedbar shoud be toggled and be placed left or right side of the screen
+   - A shortkey to toogle speedbar
+   - A shortkey to change speedbar location in the screen
+** VALIDATE Open any .log file should behavior as tail -f
+** TODO Study *Emacs General Variables*  and check its applications
+https://www.gnu.org/software//emacs/manual/html_node/emacs/General-Variables.html
+
+
+
+
+#+begin_groovy :exports code
+#+end_groovy
+#+begin_src emacs-lisp :results output :exports both :wrap EXAMPLE
+#+end_src
+
+
+
+#+begin_groovy :exports code
+#+end_groovy
+
+
+* keys
+| package name | key     | function | desc |
+| langtool     | "C-x4w" |          |      |
+
+
+  :bind (("\C-x4w" . langtool-check)
+         ("\C-x4W" . langtool-check-done)
+         ("\C-x4l" . langtool-switch-default-language)
+         ("\C-x44" . langtool-show-message-at-point)
+         ("\C-x4c" . langtool-interactive-correction)))
+
+
+* init.el execution
+
+|   | script name                           | objetivo                          |                  |
+|   | [[/run/media/wgn/libvirt_ext4/Projects-Srcs-Desktop/fzl-emacs/main/src/lispsite/pkgconfig-usepackage.el][pkgconfig-usepackage]]                  | config melpa and usepackage       |                  |
+|   | config-emacs-defaults-language        | config  language charsets e fonts | not working well |
+|   | config-emacs-environment-variables.el | define global vars                |                  |
+|   |                                       |                                   |                  |
+|   | config-langtool                       |                                   |                  |
+
+
+
+
+* Emacs features after this customization
+
+** edebug
+
 ** abbrev
    https://www.emacswiki.org/emacs/AbbrevMode
    
@@ -35,6 +104,10 @@
    ver texto do comando man sem sair do emacs
    M-x woman to use man on emacs
    M-x whitespace-mode to enable or disable spaces/tab non printable viewer
+
+
+* Emacs org-mode fetures
+<s
 
 
 * Emacs Internal Dev Tools
@@ -134,12 +207,17 @@ Behind the scenes, it does
    (setq **maven_container_home** (concat **CONTAINERS_HOME** "/maven"))
    
 
+
+
 * Org Mode
   (global-set-key (kbd "\et") 'org-toggle-iimage-in-org)
 ** Exportando 
    ox-html.el
    https://orgmode.org/manual/Exporting.html
    
+
+* Org Mode Features
+<e
 
 * integrated
 ** talend
@@ -339,10 +417,10 @@ Behind the scenes, it does
 ** TODO <2015-11-15 Dom> config enviroment
 *** TODO <2015-11-15 Dom> when enviroment variable FZL_HOME is difined without "/" at its end, the directory needs helps, whent there is "/" there ara no problmes
 ** eclipse
-*** TODO <2015-11-14 S�b> prepare eclipse modelling
-**** TODO <2015-11-14 S�b> install papyrus acceleo m2eclipse
-**** TODO <2015-11-14 S�b> emacs
-*** TODO <2015-11-14 S�b> prepare eclipse reporting 
+*** TODO <2015-11-14 SÃ¡b> prepare eclipse modelling
+**** TODO <2015-11-14 SÃ¡b> install papyrus acceleo m2eclipse
+**** TODO <2015-11-14 SÃ¡b> emacs
+*** TODO <2015-11-14 SÃ¡b> prepare eclipse reporting 
 
     
     
@@ -365,7 +443,7 @@ Behind the scenes, it does
 ** TODO melhorar configuracao de autocomplete e navegacao de codigo
    https://exceptionshub.com/code-browsing-refactoring-auto-completion-in-emacs.html
    https://stackoverflow.com/questions/12922526/tags-for-emacs-relationship-between-etags-ebrowse-cscope-gnu-global-and-exub
-   por enquanto auto-complete-c-headers t� resolvendo o basico par
+   por enquanto auto-complete-c-headers tÃ¡ resolvendo o basico par
    codigo c
    Testar para outras linguagens e decidir quais pacotes do emacs
    usar, etgs, gtags, company, etc...
@@ -431,8 +509,8 @@ render() call.
     170
 
 *** PICO Container
-   Cada componentes desenvolvido no exo � um plugin e amarrado com IoC
-   atrav�s do PICO Container (um container para inje��o de
+   Cada componentes desenvolvido no exo Ã© um plugin e amarrado com IoC
+   atravÃ©s do PICO Container (um container para injeÃ§Ã£o de
    dependencia)[1]
 *** REF:
    [1] https://www.infoq.com/articles/exo-platform

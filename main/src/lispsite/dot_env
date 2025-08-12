@@ -1,0 +1,12 @@
+FZLEMACS_INIT_SHOW_ENVIRONMENT_VARIABLES=t
+EMACS_BACKUP_DIRECTORY=/media/wgn/EnvsBk/__devenv__/fzl-emacs/var/emacs_autobackup_files
+FZLEMACS_KEY_SHOW_WINDOW_MESSAGE_BUFFER_AT_BOTTON='C-c m'
+FZLEMACS_KEY_SHOW_WINDOW_SPEEDBAR_AT_LEFT='C-b'
+FZLEMACS_TEXT_ZOOM_INITIAL=130
+FZLEMACS_BIBNOTES_HOME=/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects/bibtexfiles
+FZLEMACS_BIBLIOGRAFY_NOTES=/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects/bibtexfiles
+FZLEMACS_PERSONAL_CONFIG__DIRED_AT_FINANCIAL_DIR__KEYBINDING='C-c C-w f'
+FZLEMACS_PERSONAL_CONFIG__DIRED_AT_FINANCIAL_DIR__DIRPATH=/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/WgnFin
+FZLEMACS_COPILOT_CHAT_DISPLAY_KEYBINDING='C-c c c'
+FZLEMACS_INTEGRATION_LANGUAGETOOL_COMMANDLINE_JAR="/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS/LanguageTool-6.5/languagetool-commandline.jar"
+
