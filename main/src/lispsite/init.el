@@ -18,6 +18,12 @@
 (normal-top-level-add-to-load-path '("."))
 (normal-top-level-add-subdirs-to-load-path)
 
+;;This package synchronizes Emacs's internal exec-path with your shell's PATH.
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 
 ;;if you behind a proxy uncomment this line
 ;;(require 'config-proxy)
@@ -27,6 +33,9 @@
 ;;configuring melpa repo and install usepackage
 ;; the use-package is need by other lisp module like 'config-emacs-environment-variables below
 (require 'pkgconfig-usepackage)
+(package-refresh-contents)
+(use-package mcp
+  :ensure t)
 
 ;;tryin to make emacs understand brazilian portuguese language
 ;;it's not works a lot of time
@@ -125,6 +134,8 @@
 
 (require 'pkgconfig-company)
 (require 'coding-lang-server-provider-docker)
+(require 'coding-lang-sql)
+
 (require 'coding-lang-lisp)
 (require 'coding-lang-php)
 (require 'coding-lang-shellscript)
