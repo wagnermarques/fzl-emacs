@@ -7,7 +7,7 @@
 
 ;;; shows errors details in buffer
 (setq debug-on-error t)
-(require 'edebug)
+;(require 'edebug)
 
 
 ;; configuring emacs load-path
@@ -34,8 +34,8 @@
 ;; the use-package is need by other lisp module like 'config-emacs-environment-variables below
 (require 'pkgconfig-usepackage)
 (package-refresh-contents)
-(use-package mcp
-  :ensure t)
+
+
 
 ;;tryin to make emacs understand brazilian portuguese language
 ;;it's not works a lot of time
@@ -204,11 +204,22 @@
 ;(require 'emacs-onstart)
 ;;programming languages integrations
 
+;;;;;;;;;;;;;;;;;
+;; some os facilities
+;;;;;;;;;;;;;;;;;
+(require 'linux-fedora)
+
+;;;;;;;;;;;;;;;;;
+;; fzlbpms utilities to work with stack of containers as bpms
+;;;;;;;;;;;;;;;;;
+(require 'fzlbpms)
 
 
 
+;;(require 'tesaurus_from_json)
 
 
 (find-file (concat fzlemacs-dir--fzlemacs-home "/index.org"))
 (find-file (concat fzlemacs-dir--fzlemacs-lispsite "/init.el"))
-(find-file (concat fzlemacs-dir--fzlemacs-lispsite "/initcopia.el"))
+
+

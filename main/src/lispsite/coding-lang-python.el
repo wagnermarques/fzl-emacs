@@ -31,5 +31,10 @@
   :config
   (setq lsp-pyright-python-executable-cmd "python3")) ; Ensure the correct Python executable is used
 
+;; debuging python
+;; pip install debugpy
+(require 'dap-python)
+
+
 (provide 'coding-lang-python)
 
