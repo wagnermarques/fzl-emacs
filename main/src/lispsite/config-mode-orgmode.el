@@ -29,4 +29,6 @@
 (require 'config-mode-orgmode-tags)
 (require 'config-mode-orgmode-for-latex)
 
+
+
 (provide 'config-mode-orgmode) 

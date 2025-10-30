@@ -1,10 +1,10 @@
 (print "===> config-emacs-environment-variables running...")
 
 (setq externaldisk_partition1 "/run/media/wgn/ntfs") ;;where lives my files in general
-(setq externaldisk_partition2 "/run/media/wgn/libvirt_ext4") ;;where lives my desktop sofwares
-(setq externaldisk_partition3 "/run/media/wgn/ext4") ;;whe lives my programmin projects
+(setq externaldisk_partition2 "/run/media/wgn/ext4") ;;where lives my desktop sofwares
 
-(setq dir_shared_files (concat externaldisk_partition3 "/SHARED_FILES"))
+
+(setq dir_shared_files (concat externaldisk_partition2 "/SHARED_FILES"))
 (setq progsativos (concat externaldisk_partition2 "/progsativos"))
 
 (setq fzlemacs-dir--fzlemacs-home (concat externaldisk_partition2 "/Projects-Srcs-Desktop/fzl-emacs"))
@@ -27,7 +27,6 @@
       fzlemacs-dir-bibnotes-home (concat dir_shared_files "/bibtexfiles")
       ;?fzlemacs-bibliography-notes "/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects/bibtexfiles"
       fzlemacs-personal-config-dired-at-financial-dir-keybinding "C-c C-w f"
-      fzlemacs-personal-config-dired-at-financial-dir-dirpath "/media/wgn/EnvsBk/_0_Tasks_&_Notes_&_Dates__/WgnFin"
 
       ;;https://repo.languagetool.org/ui/native/languagetool-os-release/org/languagetool/languagetool-core
       fzlemacs-integration-languagetool-commandline-jar (concat progsativos "/LanguageTool/LanguageTool-stable/LanguageTool-6.6/languagetool-commandline.jar"))

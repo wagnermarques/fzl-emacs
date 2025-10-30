@@ -7,6 +7,20 @@
   ;; Optionally, customize the Docker executable path if it's not in your PATH
   (setq docker-docker-executable "/usr/bin/docker"))
 
+
+
+;; Example configuration for docker container list columns
+;;(setq docker-container-columns
+;;  '((:name "Container ID" :width 15 :template "{{ .ID }}" :sort nil :format nil)
+;;    (:name "Image" :width 25 :template "{{ .Image }}" :sort nil :format nil)
+;;    (:name "Command" :width 30 :template "{{ .Command }}" :sort nil :format nil)
+;;    (:name "Created" :width 15 :template "{{ .CreatedAt }}" :sort nil :format nil)
+;;    (:name "Status" :width 20 :template "{{ .Status }}" :sort nil :format nil)
+;;    (:name "Ports" :width 35 :template "{{ .Ports }}" :sort nil :format nil)
+;;    (:name "Names" :width 25 :template "{{ .Names }}" :sort nil :format nil)))
+
+
+
 ;; Install and configure `docker-api` package
 (use-package docker-api
   :ensure t ;; Ensure the package is installed
@@ -19,6 +33,9 @@
     (message "Running containers: %s" (docker-api-containers :all nil))) ;; Fetch running containers
   ;; Bind the function to a keybinding
   (define-key global-map (kbd "C-S-c C-f C-d l") 'my/docker-api-list-containers))
+
+
+
 
 ;; Install and configure `docker-cli` package
 (use-package docker-cli
@@ -33,6 +50,9 @@
   ;; Bind the function to a keybinding
   (define-key global-map (kbd "C-S-c C-f C-d r") 'my/docker-run-command))
 
+
+
+
 ;; Install and configure `docker-compose-mode` package
 (use-package docker-compose-mode
   :ensure t ;; Ensure the package is installed
@@ -46,6 +66,8 @@
               (setq tab-width 2))) ;; Set indentation width to 2 spaces
   ;; Optionally, add a keybinding for formatting the file
   (define-key docker-compose-mode-map (kbd "C-S-c C-f C-d c") 'indent-region))
+
+
 
 
 ;; Install and configure `dockerfile-mode` package
@@ -64,6 +86,7 @@
               (setq dockerfile-check-enabled t) ;; Optional: Enables dockerfile checking.
               (setq dockerfile-check-on-save t) ;; Optional: Enables dockerfile checking on save.
               ))
+
   ;; Optionally, add a keybinding for indenting the region
   (define-key dockerfile-mode-map (kbd "C-S-c C-f C-d") 'indent-region))
 
