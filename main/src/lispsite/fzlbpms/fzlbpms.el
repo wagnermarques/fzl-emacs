@@ -9,6 +9,9 @@
 
 (setq fzlbpms-root-dir "/run/media/wgn/ext4/Projects-Srcs/fzlbpms")
 
+(require 'fzlbpms-menus)
 (require 'fzlbpms-db-connections);
+(require 'fzlbpms-routes)
+(require 'fzlbpms-containers)
 
 (provide 'fzlbpms);
