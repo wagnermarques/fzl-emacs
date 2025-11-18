@@ -14,7 +14,9 @@
 
 ;;; Backend Definition
 (org-export-define-derived-backend 'material 'html
-  :translate-alist '((template . org-material-template))
+  :translate-alist '((template . org-material-template)
+                     (src-block . org-material-src-block)
+                     (example-block . org-material-example-block))
   :menu-entry
   '(?m "Export to Material HTML"
        ((?H "To HTML buffer (no assets)" org-material-export-to-html-buffer)
@@ -38,12 +40,145 @@ INFO is a plist holding export options."
   <title>%s</title>
   <link rel=\"stylesheet\" type=\"text/css\" href=\"%s/material-icons.css\"/>
   <link rel=\"stylesheet\" type=\"text/css\" href=\"%s/materialize/css/materialize.min.css\"/>
+  <link rel=\"stylesheet\" type=\"text/css\" href=\"%s/highlight/atom-one-dark.min.css\"/>
+  <style>
+    body { 
+      background-color: #fafafa;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    .container { 
+      margin-top: 2rem;
+      max-width: 1000px;
+    }
+    
+    /* Headers */
+    h1, h2, h3, h4, h5, h6 {
+      color: #1976d2;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Table of Contents */
+    #table-of-contents {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    #table-of-contents h2 {
+      margin-top: 0;
+      color: #1976d2;
+      font-size: 1.5rem;
+    }
+    #table-of-contents ul {
+      margin-left: 1rem;
+    }
+    #table-of-contents a {
+      color: #1976d2;
+      text-decoration: none;
+    }
+    #table-of-contents a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Code blocks */
+    .code-block-wrapper {
+      margin: 1.5rem 0;
+    }
+    .code-block-header {
+      background: linear-gradient(135deg, #667eea 0%%, #764ba2 100%%);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px 8px 0 0;
+      font-weight: 500;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .code-block-header::before {
+      content: '{ }';
+      font-weight: bold;
+    }
+    .code-block-content {
+      background-color: #282c34;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .code-block-content pre {
+      margin: 0;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    .code-block-content code {
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+    
+    /* Example/Output blocks */
+    .example-block-wrapper {
+      margin: 1.5rem 0;
+    }
+    .example-block-header {
+      background: linear-gradient(135deg, #11998e 0%%, #38ef7d 100%%);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px 8px 0 0;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    .example-block-header::before {
+      content: '▶ ';
+      font-weight: bold;
+    }
+    .example-block-content {
+      background-color: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    .example-block-content pre {
+      margin: 0;
+      color: #333;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+    
+    /* Links */
+    a {
+      color: #1976d2;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Paragraphs */
+    p {
+      line-height: 1.6;
+      margin: 1rem 0;
+    }
+  </style>
 </head>
 <body>
   <div class=\"container\">
     %s
   </div>
   <script src=\"%s/materialize/js/materialize.min.js\"></script>
+  <script src=\"%s/highlight/highlight.min.js\"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block);
+      });
+    });
+  </script>
 </body>
 </html>"
      (org-export-data (plist-get info :language) info)
@@ -51,8 +186,49 @@ INFO is a plist holding export options."
      title
      css-path
      css-path
+     css-path
      contents
+     css-path
      css-path)))
+
+;;; Source Block Handling
+(defun org-material-src-block (src-block _contents info)
+  "Transcode a SRC-BLOCK element for Material Design.
+CONTENTS is nil.  INFO is a plist holding contextual information."
+  (let* ((lang (org-element-property :language src-block))
+         (code (org-element-property :value src-block))
+         (label (let ((lbl (org-element-property :name src-block)))
+                  (if lbl (format " id=\"%s\"" (org-html-encode-plain-text lbl)) "")))
+         ;; Map Org language names to Highlight.js language names
+         (hljs-lang (cond
+                     ((string= lang "elisp") "lisp")
+                     ((string= lang "emacs-lisp") "lisp")
+                     ((string= lang "sh") "bash")
+                     ((string= lang "shell") "bash")
+                     (t (or lang "plaintext")))))
+    (format "<div class=\"code-block-wrapper\"%s>
+  <div class=\"code-block-header\">%s</div>
+  <div class=\"code-block-content\">
+    <pre><code class=\"language-%s\">%s</code></pre>
+  </div>
+</div>"
+            label
+            (capitalize (or lang "Code"))
+            hljs-lang
+            (org-html-encode-plain-text code))))
+
+;;; Example Block Handling
+(defun org-material-example-block (example-block _contents info)
+  "Transcode an EXAMPLE-BLOCK element for Material Design.
+CONTENTS is nil.  INFO is a plist holding contextual information."
+  (let ((code (org-element-property :value example-block)))
+    (format "<div class=\"example-block-wrapper\">
+  <div class=\"example-block-header\">Output</div>
+  <div class=\"example-block-content\">
+    <pre>%s</pre>
+  </div>
+</div>"
+            (org-html-encode-plain-text code))))
 
 ;;; Asset Management
 (defun org-material-copy-assets (output-dir)
