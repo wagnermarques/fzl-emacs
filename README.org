@@ -4,6 +4,15 @@
 
 * Básico do emacs
 
+** instalação dos laguages servers provides - lsp
+
+#+name: 
+#+begin_src shell
+  sudo npm install @angular/language-server
+#+end_src
+
+
+
 ** Fatures (Facilidades desta configuração)
 
 *** Shortcuts

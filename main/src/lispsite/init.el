@@ -54,7 +54,14 @@
 
 
 
-;;; conding languages
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; conding languages ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;for html/css/js coding
+;;it will open the html in the browser using emacs simple http-server 
+(require 'config-mode-impatient-mode) 
+
 (require 'coding-lang-java)
 ;(require 'coding-R)
 (require 'pkgconfig-ess)
@@ -143,18 +150,23 @@
 
 ;;its is the basic for angular
 (require 'coding-lang-typescript)
+(require 'coding-lang-angular)
 
 (require 'coding-lang-python)
+(require 'coding-lang-rust)
 
 ;;its specific format for angular
 
 ;;orgmode configuration
 (require 'config-mode-orgmode)
+(require 'ox-material)
 
 (require 'files-special-files)
 (require 'pkgconfig-undo-tree)
 
-(require 'pkgconfig-copilot)
+(unless noninteractive
+  (require 'pkgconfig-copilot))
+
 (require 'pkgconfig-org-zotxt)
 
 
