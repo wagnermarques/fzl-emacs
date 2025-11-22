@@ -1,521 +1,83 @@
+#+Title: Programming Languages Compared
 
-#+Title:  E M A C S I N I T F I L E Project
+* arrays
+** Basico do basico
++ criar um array
++ incluir item
++ retirar item
++ iterar no array
+  
 
-
-* Todo
-** TODO mudar tecla de mudar de window pq conflita com prioridade do todo
-** TODO teclas do word (cua mode)
-   + shortcut to move lines up and down
-   + shortcut to kill line at any point of the line
-   + selecionar igual o word
-   + copy paste igual ao word
-** TODO yasnippets for programming languages and texts
-   write yasnippets-snippets-setup.sh script and provide some automation
-** TODO any editing text file should be possible
-    
-** VALIDATE A short key to toogle message buffer in botton of all other buffers
-** TODO A short key to toogle terminal buffer in botton of all other buffers
-https://www.gnu.org/software/emacs/manual/html_node/emacs/Shell.html
-- the terminal can be: eshell, term, ansi-term, shell
-- SHow result of async shell executions not in any buffer in any
-  place, but at the botton of all buffers
-Close this buffer does liberate the windos space for other buffers
-
-
-** VALIDATE Speedbar shoud be toggled and be placed left or right side of the screen
-   - A shortkey to toogle speedbar
-   - A shortkey to change speedbar location in the screen
-** VALIDATE Open any .log file should behavior as tail -f
-** TODO Study *Emacs General Variables*  and check its applications
-https://www.gnu.org/software//emacs/manual/html_node/emacs/General-Variables.html
-
-
-
-
-#+begin_groovy :exports code
-#+end_groovy
-#+begin_src emacs-lisp :results output :exports both :wrap EXAMPLE
+#+name: array in shellscript
+#+begin_src shell
+  stack1_containers=('fzl-portainerfzl-portainer' 'fzl-mysql'  'fzl-postgresql' 'fzl_nginx' 'fzl_php8.3-fpm')
+  echo ${stack1_containers[0]}
+  
+  for i in "${stack1_containers[@]}"; do
+      echo "$i"
+  done
 #+end_src
 
+#+RESULTS: array in shellscript
+| fzl-portainerfzl-portainer |
+| fzl-portainerfzl-portainer |
+| fzl-mysql                  |
+| fzl-postgresql             |
+| fzl_nginx                  |
+| fzl_php8.3-fpm             |
 
 
-#+begin_groovy :exports code
-#+end_groovy
+* strings concatenation
 
+#+BEGIN_TABS
 
-* keys
-| package name | key     | function | desc |
-| langtool     | "C-x4w" |          |      |
+#+name: python: concatenação com operador "+"
+#+begin_src python :session s1 :shebang "#!/usr/bin/env python3" :exports both :results output
+  primeiro_nome="Ada"
+  sobrenome="Lovelace"
+  idade=28
+  data_ano=1843
+  print("O primeiro algoritmo foi projetado pela princesa " + primeiro_nome + " " + sobrenome + " com " + str(idade) + " anos de idade, em " + str(data_ano))
+#+end_src
 
+#+RESULTS: python: concatenação com operador "+"
+: O primeiro algoritmo foi projetado pela princesa Ada Lovelace com 28 anos de idade, em 1843
 
-  :bind (("\C-x4w" . langtool-check)
-         ("\C-x4W" . langtool-check-done)
-         ("\C-x4l" . langtool-switch-default-language)
-         ("\C-x44" . langtool-show-message-at-point)
-         ("\C-x4c" . langtool-interactive-correction)))
 
+#+name: python: concatenação com f print
+#+begin_src python :session s1 :shebang "#!/usr/bin/env python3" :exports both :results output
+  primeiro_nome="Ada"
+  sobrenome="Lovelace"
+  idade=28
+  data_ano=1843
+  print(f'O primeiro algoritmo foi projetado pela princesa {primeiro_nome} {sobrenome} com {idade} anos de idade, em {data_ano}')
+#+end_src
 
-* init.el execution
+#+RESULTS: python: concatenação com f print
+: O primeiro algoritmo foi projetado pela princesa Ada Lovelace com 28 anos de idade, em 1843
 
-|   | script name                           | objetivo                          |                  |
-|   | [[/run/media/wgn/libvirt_ext4/Projects-Srcs-Desktop/fzl-emacs/main/src/lispsite/pkgconfig-usepackage.el][pkgconfig-usepackage]]                  | config melpa and usepackage       |                  |
-|   | config-emacs-defaults-language        | config  language charsets e fonts | not working well |
-|   | config-emacs-environment-variables.el | define global vars                |                  |
-|   |                                       |                                   |                  |
-|   | config-langtool                       |                                   |                  |
 
 
+#+name: javascript: concatenação com concat
+#+begin_src elisp 
+  (setq primeiro_nome "Ada")
+  (setq sobrenome "Lovelace")
+  (setq idade 28)
+  (setq data_ano 1843)
+  (message (concat "O primeiro algoritmo foi projetado pela princesa " primeiro_nome " " sobrenome " com " (number-to-string idade) " anos de idade, em " (number-to-string data_ano)))
+#+end_src
 
+#+END_TABS
 
-* Emacs features after this customization
 
-** edebug
 
-** abbrev
-   https://www.emacswiki.org/emacs/AbbrevMode
-   
-   https://www.gnu.org/software/emacs/manual/html_node/elisp/Abbrev-Files.html
-   
-   http://ergoemacs.org/emacs/emacs_abbrev_mode_tutorial.html
 
-   config_abbrev.el
-   Essas palavras chaves, quando digitadas entre aspas, com um tab no
-   final ou um enter no final delas vao ser substituidas por um
-   template configurado no arquivo config_abbrev.el
-   
-   lispFileHeader
-   orgFileHeader
-   orgImgConfig
-   orgJekyllPost
-   orgPlanoDeAula
 
-** helm
-   https://github.com/emacs-helm/helm
 
-   (global-set-key (kbd "C-x r b") 'helm-bookmarks)
-   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-   (global-set-key (kbd "C-x b") 'helm-buffers-list)
-   (global-set-key (kbd "C-x r x") 'helm-M-x)
-   (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
-   (global-unset-key (kbd "C-x c"))
 
-** woman M-x woman
-   ver texto do comando man sem sair do emacs
-   M-x woman to use man on emacs
-   M-x whitespace-mode to enable or disable spaces/tab non printable viewer
-
-
-* Emacs org-mode fetures
-<s
 
 
-* Emacs Internal Dev Tools
-** magit
-   A ideia e trabalhar a partir do buffer de status do repositorio.
 
-   
-   (global-set-key (kbd "C-x g") 'magit-status)
-   
-   O buffer vai mostrar as sessoes
-
-   Usar p ou n pra navegar entre as sessoes
-
-   + Untracked files
-     em cada linha do arquivo untracked digite s pra dar um git add nele
-   Unstaged changes
-     aqui tambem, em cada linha digitar o s dar tipo um stage na
-     modificacao
-
-   Unmerged into origin/master
-
-   Pra comitar e so dar um c
-   
-   vai abrir dois buffer, um pra escrever a msg de commit e outro do
-   um diff
-
-   pra terminar o commit da um C-c C-c na msg de commit
-
-   se for dar um push, use P
-
-
-   pra dar um git rm --cached em um arquivo especifico, da um i na
-   linha dele qdo o arquivo esta na sessao de status staged como new file
-
-Behind the scenes, it does 
-
-** Projectile
-
-** Flycheck
-   [f3] mostra menu de erros para a linha corrente
-   [f4] vai para proximo erro se houver
-   arquivo flycheck_config.el
-
-** Autocomplete
-   Auto complete para varias linguagem em um mesmo editor de codigos
-   apensar de ser muito interessante, ja que he icomum alguem
-   trabalhar somente com uma linguagem hoje em dia, e tambem um
-   desafio.
-      
-*** pacote autocomplete   
-   autocomplete_config.el
-   https://www.emacswiki.org/emacs/AutoComplete
-   A ideia deste projeto he colocar todas as configuracoes de auto
-   complete neste arquivo. 
-   O pacote auto-complete-c-header foi instalado e ta resolvendo o
-   basico para codigo c e nao testei mas tambem aponta pros headers do
-   c++ para biblioteca standard
-
-** yasnipets
-   https://www.emacswiki.org/emacs/Yasnippet
-   https://joaotavora.github.io/yasnippet/
-   
-
-* Emacs External Dev Tools
-** java tools
-   see global_variables_setup.el for what devtools paths
-   JAVA_HOME="/home/wagner/PROGSATIVOS/jdk1.8.0_191"
-   ;;GRADLE ENVIRONMENT VARIABLES
-   (setq **GRADLE_HOME** (concat **FZL_HOME** "/integrated/build/gradle-5.1.1"))
-   (setq **M2_HOME** (concat **FZL_HOME** "/integrated/build/apache-maven-3.6.0"))
-   (setq **ANT_HOME** (concat **FZL_HOME** "/integrated/build/apache-ant-1.10.5"))
-   (setq **KARAF_HOME** (concat **FZL_HOME_SERVER** "integrated/apache-karaf-4.2.7"))
-   (setq **ANDROID_STUDIO_PROJECTS_DIR** "/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/AndroidStudioProjects/")
-   (setq **ANDROID_STUDIO_HOME** (concat **DISK** "/PROGSATIVOS/android-studio"))
-   (setq **ANDROID_SDK_ROOT** (concat **DISK** "/wagnerdocri@gmail.com3/fzlbpms/fzlStudio/integrated/android/androidSdk"))
-   (setenv "ANDROID_SDK_ROOT" **ANDROID_SDK_ROOT**)
-   (setenv "ANDROID_SDK_HOME" **ANDROID_SDK_ROOT**)
-   (setq **ANDROID_EMULATOR_HOME** (concat **FZL_HOME** "/integrated/android/android_emulators"))
-   (setq **JEKYLL-WEB-SITE-HOME**
-   (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/Fedora-Dockerfiles/jekyll/jekyll-websites/notasdeaulaswagnermarques"))
-   (setq **FZL_SQLITE_HOME** (concat **FZL_HOME** "/integrated/db/sqlite-tools-linux-x86-3260000"))
-   (setq **FZL_HQSQL_HOME** (concat **FZL_HOME** "/integrated/db/hsqldb"))
-   (setq **FZL_SQUIRRELSQL_HOME** (concat **FZL_HOME** "/integrated/db/squirrelsql-3.9.0-standard"))
-   
-
-
-   ;;;D E S K T O P    F U N C T I O N A L I T I E S
-   (setq **GDriveLocalRootDir** (concat **DISK** "/wagnerdocri@gmail.com3/GDrive"))
-   
-   ;;run rclone config in order this configuration can work
-   ;;if you have been runned it befor, consult /home/$USER/.config/rclone/rclone.config
-   (setq **rclone_remote_config_session**  "gdrive_wgn")
-   
-   
-   ;;;C O N T A I N E R S    F U N C T I O N A L I T I E S
-   (setq **CONTAINERS_HOME** (concat **DISK** "/wagnerdocri@gmail.com3/envs/env-dev/sources/Fedora-Dockerfiles"))
-   (setq **maven_container_home** (concat **CONTAINERS_HOME** "/maven"))
-   
-
-
-
-* Org Mode
-  (global-set-key (kbd "\et") 'org-toggle-iimage-in-org)
-** Exportando 
-   ox-html.el
-   https://orgmode.org/manual/Exporting.html
-   
-
-* Org Mode Features
-<e
-
-* integrated
-** talend
-  http://talendforge.org/forum
-  http://cxf.apache.org/
-  http://camel.apache.org/
-  http://karaf.apache.org/
-
-*** Service Locator
-
-***  Service Activity Monitoring (SAM) 
-     log / monitor service calls done with the Apache CXF Framework
-
-** Karaf
-   
-   http://karaf.apache.org/index.html
-   
-** mutt
-   j: move to next unread email
-   k move to previous unread email
-   SPACE read current email
-   http://www.ucolick.org/%7Elharden/muttchart.html
-
-** etags   
-   https://github.com/Andersbakken/rtags#finding-clang
-   https://github.com/Andersbakken/rtags/wiki
-   https://github.com/Andersbakken/rtags
-
-   #+NAME:install                     
-   #+BEGIN_SRC shell :session s1 :results none
-   ./rtags-build.sh
-   #+END_SRC
-
-
-* BOOKMARK
-** emacs e assuntos relacionados  
-   www.lispworks.com
-   https://www.afralisp.net/
-** llvm
-   https://llvm.org/
-   http://llvm.org/docs/CommandGuide/llvm-config.html
-   http://releases.llvm.org/3.0/docs/UsingLibraries.html
-   https://riptutorial.com/llvm
-   https://github.com/Andersbakken/rtags/wiki/Installing-RTags
-   https://llvmlite.readthedocs.io/en/latest/admin-guide/install.html
-  
-** magit
-   https://magit.vc/manual/
-
-
-* key binds bookmark
-** general 
-      | *key binding* | *function*                 | *Desc*                     |
-      | S             |                            |                            |
-      | Esc r         | eval-region                |                            |
-      | Esc b         | eval-buffer                | idem of M-b                |
-      | Esc s         | fzl/open_shell_in_a_buffer | open shell idem of M-shell |
-      | C-c s         | ansi-term                  | open shell in ansi-term    |
-      | Esc m         | make-directory             | idem of S-m in speedbar    |
-      |               |                            |                            |
-
-
-* org mode
-      | *key binding* | *function*      | *Desc*                |
-      | Esc a         | org-agenda-list | I still understand it |
-      | Esc t         | org-todo-list   |                       |
-
-(define-key global-map (kbd "\et") 'org-todo-list)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-
-
-
-(define-key global-map (kbd "C-c C-a C-b") 'fzl-android-proj-gradlew-build)
-(define-key global-map (kbd "C-c C-a C-r") 'fzl-android-proj-gradlew-install-and-run)
-(define-key global-map (kbd "C-c C-a C-d") 'fzl-android-adb-devices)
-
-
-;;handling files
-(global-set-key (kbd "\ef") 'find-file-in-project)
-
-;handle windows
-;refs 
-;http://www.emacswiki.org/emacs/WindowResize
-(global-set-key (kbd "S-C-<right>") 'shrink-window-horizontally)
-(global-set-key (kbd "S-C-<left>") 'enlarge-window-horizontally)
-(global-set-key (kbd "S-C-<down>") 'shrink-window)
-(global-set-key (kbd "S-C-<up>") 'enlarge-window)
-
-** helm
-   | *key binding* | *function*          | *Desc*                |
-   | C-x b         | helm-buffers-list   | lista buffers         |
-   | C-x r b       | heml-bookmarks      | helm bookmark         |
-   | C-x r x       | M-x                 |                       |
-   | M-y           | helm-show-kill-ring | area de transferencia |
-   | C-x C-f       | helm-find-files     | open or create file   |
-   |               |                     |                       |
-     
-
-* some of utils key bindins (shortcuts)
-  This shortcut keys is defined in [[file:fzl_keys.el]]
-
-  Esc+s -> open shell-mode. A bash terminal inside emacs
-  C-c s -> opens ansi-term 
-  Esc+a -> open org agenda list
-  Esc+t -> open todo list
-
-
-* Programming tools considered
-   https://nodejs.org/en/
-   http://yeoman.io/
-   https://gruntjs.com/
-   https://dojo.io/tutorials/   
-
-
-* forms
-** EMACS CONFIGURATION FORM  
-  #+BEGIN_SRC emacs-lisp
-    (defun show-properties-form()
-        "show properties form in or without fzlbpms presence"
-        (setq debug-on-error t)
-        (forms-find-file './form-control-for-properties.el'))
-    (show-properties-form)
-  #+END_SRC  
-
-  #+RESULTS:
-  : show-properties-form
-
-** forms instructions
-*** general instructions
-    "-*- forms -*-" (in the very begginer of the file active forms-mode)
-*** records navigation 
-    ;; [next]	  forms-next-record
-    ;; [prior]	  forms-prev-record
-    ;; [begin]	  forms-first-record
-    ;; [end]	  forms-last-record
-    ;; [S-TAB]	  forms-prev-field
-    ;; [backtab]	  forms-prev-field
-
-*** Edit mode commands:
-    ;;
-    ;; TAB		 forms-next-field
-    ;; \C-c TAB	 forms-next-field
-    ;; \C-c <	 forms-first-record
-    ;; \C-c >	 forms-last-record
-    ;; \C-c ?	 describe-mode
-    ;; \C-c \C-k	 forms-delete-record
-    ;; \C-c \C-q	 forms-toggle-read-only
-    ;; \C-c \C-o	 forms-insert-record
-    ;; \C-c \C-l	 forms-jump-record
-    ;; \C-c \C-n	 forms-next-record
-    ;; \C-c \C-p	 forms-prev-record
-    ;; \C-c \C-r	 forms-search-backward
-    ;; \C-c \C-s	 forms-search-forward
-    ;; \C-c \C-x	 forms-exit
-
-    
-
-* urls
-  http://localhost:8081/#browse/welcome
-  file:///home/administrador/progsativos/fzlbpms/integrated/servers/Runtime_ESBSE/docs/cxf-api/index.html
-  file:///home/administrador/progsativos/fzlbpms/integrated/servers/Runtime_ESBSE/docs/cxf-api/index-all.html
-
-
-
-* tutorials
-** [#B] execute code within org-mode
-   just C-c C-c to evaluate the code
-     #+BEGIN_SRC emacs-lisp
-       (+ 10 2 3 4)
-     #+END_SRC  
-
-     #+RESULTS:
-=19
-=   
-
-
-
-
-* EMACSINITFILE TODO_LISTS
-** configure web-mode
-   http://web-mode.org/
-   config-web-mode.el
-
-
-
-
-
-
-
-
-** define enviroment variable in one properties file
-   (defun define_enviroment_variables_from_file()
-   
-
-* FZLBPMS TODO_LIST
-** TODO <2015-11-15 Dom> config enviroment
-*** TODO <2015-11-15 Dom> when enviroment variable FZL_HOME is difined without "/" at its end, the directory needs helps, whent there is "/" there ara no problmes
-** eclipse
-*** TODO <2015-11-14 SÃ¡b> prepare eclipse modelling
-**** TODO <2015-11-14 SÃ¡b> install papyrus acceleo m2eclipse
-**** TODO <2015-11-14 SÃ¡b> emacs
-*** TODO <2015-11-14 SÃ¡b> prepare eclipse reporting 
-
-    
-    
-* obtendo ajuda
-** ajuda do emacs
-   C-h i m ert RET
-
-   troque ert pelo modulo que desejar obter ajuda ou interaja com os links
-
-
-* run tests
-  cd "emacsinitel home"
-  ./run-tests-batch-mode-and-exit.sh
-
-
-* some emacs features
-  
-
-* TODOLIST
-** TODO melhorar configuracao de autocomplete e navegacao de codigo
-   https://exceptionshub.com/code-browsing-refactoring-auto-completion-in-emacs.html
-   https://stackoverflow.com/questions/12922526/tags-for-emacs-relationship-between-etags-ebrowse-cscope-gnu-global-and-exub
-   por enquanto auto-complete-c-headers tÃ¡ resolvendo o basico par
-   codigo c
-   Testar para outras linguagens e decidir quais pacotes do emacs
-   usar, etgs, gtags, company, etc...
-   o semantic do cedet ta ativado, mas tem que ativar pra cada major mode
-
-** TODO Fechar automaticamente buffer helm apos selecao
-   https://github.com/emacs-helm/helm/issues/2251
-
-* ANOTS
-** exoplataform
-   Primeiro portal a oferecer suporte total (consumer and provider) -
-   Java Portlet 2.0 API (JSR 286) and Web Service Remote Portlet 2.0
-   (WSRP).[1]
-
-*** DONE The Portlet 2.0 API introduces many new features such as:
-    Inter-Portlet Communication (IPC) which allows the sending of events and parameters to other portlets (not necessary in the same WAR)
-    Portlet Filters to mimic the servlet filters behavior
-    Public Parameters to share render parameters with all portlets during the render phase
-    Advanced Cache Behavior as this part was very limited in JSR 168
-    A new serverResource() method to better handle image insertion (instead of going through a servlet)
-    An URL Listener mechanism to trigger a handler when an URL is called
-
-*** Inter-Portlet Communication explained*
-    let's take a look at what the process is in the context of the JSR 168
-  portlet request.
-  In JSR 168, a request was split in two phases:
-
-  processAction() : which targets a single portlet to change the state of a business object like a JavaBean
-  render() : which is called on every portlet of the page and which is responsible for rendering the HTML fragment
-
-From this, we can see that JSR 168 only defines user interface
- rendering in the context of a single portlet.
- It _does not define any standard way regarding the communication between portlets_ that is a key point to build composite applications.
-
- That said, 
- developers have often taken advantage of the fact that 
- _you can share a JavaBean object between multiple portlets using the
- HTTP session._
-
- However, this is restrictive since this sort of session-based sharing is limited to the portlets that are deployed in the same WAR.
- In a real life scenario, portlets may come from different providers
-and be bundled in different WARs. 
-Still we would like to provide some interaction between portlets,
- allowing the portal user to create powerful composite applications. 
-For example, you may have built an address book portlet that displays
- the details of a user including their address, and want to update a
- third-party portlet that uses Google Maps web services to show the
- address location on a map.
-
-That is why the JSR 286, as shown in the next sequence diagram (taken
-from the specification text itself), has introduced a processEvent()
-phase, which will trigger events at the end of the processAction()
-phase:
-
-It is important to see that a 2 phase request was mandatory as the
-rendered HTML fragments could be dependent on a modified JavaBean
-object and hence the processAction() method should occur before any
-render() call.
-
-
-*** exo CMS
-    eXo Java Content Repository (eXo JCR) is our implementation of JSR
-    170
-
-*** PICO Container
-   Cada componentes desenvolvido no exo Ã© um plugin e amarrado com IoC
-   atravÃ©s do PICO Container (um container para injeÃ§Ã£o de
-   dependencia)[1]
-*** REF:
-   [1] https://www.infoq.com/articles/exo-platform
-
-
-
-
-
+* Refs
+https://levelup.gitconnected.com/30-python-concepts-i-wish-i-knew-way-earlier-3add72af6433
