@@ -16,7 +16,8 @@
 (org-export-define-derived-backend 'material 'html
   :translate-alist '((template . org-material-template)
                      (src-block . org-material-src-block)
-                     (example-block . org-material-example-block))
+                     (example-block . org-material-example-block)
+                     (special-block . org-material-special-block))
   :menu-entry
   '(?m "Export to Material HTML"
        ((?H "To HTML buffer (no assets)" org-material-export-to-html-buffer)
@@ -177,6 +178,10 @@ INFO is a plist holding export options."
       document.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightElement(block);
       });
+      var tabs = document.querySelectorAll('.tabs');
+      if (tabs.length > 0) {
+        M.Tabs.init(tabs, {});
+      }
     });
   </script>
 </body>
@@ -230,6 +235,46 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 </div>"
             (org-html-encode-plain-text code))))
 
+(defun org-material-tabs-block (tabs-block info)
+  "Transcode a TABS block into a Materialize tab layout."
+  (let* ((children (org-element-contents tabs-block))
+         (src-blocks (seq-filter (lambda (el) (eq (org-element-type el) 'src-block)) children))
+         (tab-id-prefix (format "tabs-%d" (random 100000)))
+         (tabs-list "")
+         (tabs-content ""))
+    (dotimes (i (length src-blocks))
+      (let* ((src-block (nth i src-blocks))
+             (name (org-element-property :name src-block))
+             (tab-id (format "%s-%d" tab-id-prefix i))
+             (tab-title (if name (car (split-string name ":")) "Code"))
+             (transcoded-src (org-export-data src-block info)))
+        (setq tabs-list
+              (concat tabs-list
+                      (format "<li class=\"tab\"><a href=\"#%s\">%s</a></li>"
+                              tab-id tab-title)))
+        (setq tabs-content
+              (concat tabs-content
+                      (format "<div id=\"%s\" class=\"col s12\">%s</div>"
+                              tab-id transcoded-src)))))
+    (format "<div class=\"row\">
+               <div class=\"col s12\">
+                 <ul class=\"tabs\">%s</ul>
+               </div>
+               %s
+             </div>"
+            tabs-list
+            tabs-content)))
+
+(defun org-material-special-block (special-block contents info)
+  "Transcode a SPECIAL-BLOCK element for Material Design.
+CONTENTS is the transcoded contents of the block.
+INFO is a plist holding contextual information."
+  (let ((type (org-element-property :type special-block)))
+    (if (string= type "TABS")
+        (org-material-tabs-block special-block info)
+      ;; Default behavior for other special blocks
+      (format "<div class=\"special-block\">%s</div>" contents))))
+
 ;;; Asset Management
 (defun org-material-copy-assets (output-dir)
   "Copy Materialize assets to OUTPUT-DIR."
@@ -240,21 +285,21 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 
 ;;; Export Functions
 ;;;###autoload
-(defun org-material-export-to-html-file (&optional async subtreep visible-only)
+(defun org-material-export-to-html-file (&optional async subtreep visible-only pub-dir)
   "Export current buffer to a Material HTML file.
 This will also copy the asset directory to the target location.
 If ASYNC is non-nil, perform the export asynchronously.
 If SUBTREEP is non-nil, export the current subtree.
 If VISIBLE-ONLY is non-nil, export only the visible part of the buffer."
   (interactive)
-  (let* ((outfile (org-export-output-file-name ".html" subtreep))
+  (let* ((outfile (org-export-output-file-name ".html" subtreep pub-dir))
          (outdir (file-name-directory outfile)))
     (org-material-copy-assets outdir)
     (org-export-to-file 'material outfile
       async subtreep visible-only)))
 
 ;;;###autoload
-(defun org-material-export-to-html-buffer (&optional async subtreep visible-only)
+(defun org-material-export-to-html-buffer (&optional async subtreep visible-only pub-dir)
   "Export current buffer to a Material HTML buffer.
 Note: This does not copy assets and links may be broken.
 If ASYNC is non-nil, perform the export asynchronously.
