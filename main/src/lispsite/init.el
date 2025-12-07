@@ -136,6 +136,7 @@
 (require 'fzl-ide-feat-grep)
 (require 'fzl-ide-feat-keys)
 (require 'fzl-ide-feat-menus)
+(require 'fzl-ide-feat-warp)
 
 (require 'pkgconfig-magit)
 
@@ -206,6 +207,25 @@
 
 
 
+;; Define the Nerd Font to be used for icons/symbols
+(let ((nerd-font-name "FiraCode Nerd Font Mono"))
+  (when (font-installed-p nerd-font-name)
+    (set-fontset-font t 'unicode nerd-font-name nil 'append)
+    (set-fontset-font t 'symbol nerd-font-name nil 'append)
+    (message "Font fallback set to %s for icons." nerd-font-name)))
+
+
+;; --- Emacs Icon Fix ---
+(let ((nerd-font-name "FiraCode Nerd Font Mono"))
+  (when (font-installed-p nerd-font-name)
+    ;; Apply the Nerd Font as a fallback for the 'unicode' character range
+    ;; This is where most icons/symbols reside
+    (set-fontset-font t 'unicode (font-spec :family nerd-font-name) nil 'append)
+    (message "Applied %s as icon fallback." nerd-font-name)))
+
+;; Set the default font using the explicit font-spec form
+;; (It's vital that the name here matches the name used above)
+(set-face-attribute 'default nil :family "FiraCode Nerd Font Mono" :height 120)
 
 ;;(open_dot_env_defined_buffers)
 ;;(teste)

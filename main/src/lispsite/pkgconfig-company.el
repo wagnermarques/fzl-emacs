@@ -1,12 +1,16 @@
 ;; Configuração do Company Mode
-
 (use-package company
   :ensure t
   :hook (after-init . global-company-mode)
   :config
   (setq company-tooltip-align-annotations t
         company-minimum-prefix-length 1
-        company-idle-delay 0.0))  ; Ajuste o tempo de atraso conforme necessário
+        company-idle-delay 0.0) ; Ajuste o tempo de atraso conforme necessário
+
+  ;; Configure company-backends to use LSP and Copilot
+  ;; This setup groups `company-capf` (used by LSP) as the primary
+  ;; and `company-copilot` as a secondary, non-exclusive source.
+  (setq company-backends '((company-capf company-copilot))))
 
 
 ;; in another .el file
