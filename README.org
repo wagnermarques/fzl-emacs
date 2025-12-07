@@ -1,8 +1,12 @@
 #+Title:emacsinitfile
 #+Subtitle: yet another (emacs customization)
 
+dnf install nodejs
+fzl-lsp-install-copilot-language-server.sh
+fzl-fonts-install-nerdfonts-firacode-fedora.sh
 
-* Básico do emacs
+
+* Configuracoes Iniciais pra tudo funcionar
 
 ** instalação dos laguages servers provides - lsp
 
@@ -11,22 +15,25 @@
   sudo npm install @angular/language-server
 #+end_src
 
+** Instalação das fontes nerd fonts
 
 
-** Fatures (Facilidades desta configuração)
+
+
+** Fatures (Facilidades desta configuraÃ§Ã£o)
 
 *** Shortcuts
-| teclas                 | Descrição                                                  | fonte     |
-| C-c f o                | Mostra list Arqs e Dirs especiais pra ficar fácil de abrir | fzl-emacs |
-| C-h w RET nomedafuncao | Mostra qual shortcut esta associado à função               | emacs     |
+| teclas                 | DescriÃ§Ã£o                                                  | fonte     |
+| C-c f o                | Mostra list Arqs e Dirs especiais pra ficar fÃ¡cil de abrir | fzl-emacs |
+| C-h w RET nomedafuncao | Mostra qual shortcut esta associado Ã  funÃ§Ã£o               | emacs     |
 |                        |                                                            |           |
 
-*** Mostra list Arqs e Dirs especiais pra ficar fácil de abrir
+*** Mostra list Arqs e Dirs especiais pra ficar fÃ¡cil de abrir
 C-c f o
 Vc configura caminhos de aquivos e diretorios que vc abre muito
-frequentemente e fica fácil reabri-los novamente
+frequentemente e fica fÃ¡cil reabri-los novamente
 
-**** Consulta qual tecla de atalho está associada e qual função
+**** Consulta qual tecla de atalho estÃ¡ associada e qual funÃ§Ã£o
    C-h w RET nomedafuncao
 
 So I divided the work in branchs.

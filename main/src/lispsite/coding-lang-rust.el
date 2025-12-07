@@ -1,30 +1,22 @@
 
-;;; Package -- Summary:
+;;; Package -- Summary: Rust Language Support
 ;;; Commentary:
+;;; Provides a comprehensive setup for Rust development using lsp-mode, lsp-ui, and cargo.
 ;;; Code:
 
-(use-package lsp-mode
-  :ensure t
-  :commands lsp
-  :hook (lsp-mode . lsp-enable-which-key-integration))
-
-(defun +rust-project-p (workspace)
-  (when-let ((root (lsp--workspace-root workspace)))
-    (message "LSP Rust check: checking for Cargo.toml in %s" root)
-    (let ((cargo-toml-exists (file-exists-p (expand-file-name "Cargo.toml" root))))
-      (message "LSP Rust check: Cargo.toml exists? %s" cargo-toml-exists)
-      cargo-toml-exists)))
-
 (use-package rust-mode
-  :ensure t)
+  :ensure t
+  :hook (rust-mode . (lambda ()
+                       (setq lsp-rust-analyzer-server-display-inlay-hints t)
+                       (lsp))))
 
-(eval-after-load 'rust-mode
-  '(progn
-     (lsp-register-client
-      (make-lsp-client :new-connection (lsp-stdio-connection '("~/.cargo/bin/rust-analyzer"))
-                       :major-modes '(rust-mode)
-                       :server-id 'rust-analyzer
-                       :activation-fn #'+rust-project-p))))
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
+(use-package cargo
+  :ensure t
+  :hook (rust-mode . cargo-minor-mode))
 
 (defun fzl/install-rust-analyzer ()
   "Install rust-analyzer using rustup."
