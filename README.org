@@ -3,8 +3,8 @@
 
 dnf install nodejs
 fzl-lsp-install-copilot-language-server.sh
-fzl-fonts-install-nerdfonts-firacode-fedora.sh
-
+fzl-fonts-install-nerdfonts-firacode-fedora.sh e nao esquecer:fc-cache-fv (fedora) 
+caso o treemacs nao mostrar os icones do nerdfonts corretamente: M-x nerd-icons-install-fonts
 
 * Configuracoes Iniciais pra tudo funcionar
 
