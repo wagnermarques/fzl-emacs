@@ -6,6 +6,31 @@ fzl-lsp-install-copilot-language-server.sh
 fzl-fonts-install-nerdfonts-firacode-fedora.sh e nao esquecer:fc-cache-fv (fedora) 
 caso o treemacs nao mostrar os icones do nerdfonts corretamente: M-x nerd-icons-install-fonts
 
+* To work with eclipse theia appimage
+
+The default THEIA_CONFIG_DIR is $HOME/.theia
+
+to change it just set the another THEIA_CONFIG_DIR value as below
+#+name: 
+#+begin_src shell
+  export THEIA_CONFIG_DIR=/run/media/wgn/hdext2Text4/PROGSATIVOS/ides/eclipse/TheiaIDE
+#+end_src
+
+
+
+* For claude ia integration
+#+name: 
+#+begin_src shell
+  sudo npm i -g  @anthropic-ai/claude-code  
+#+end_src
+
+eclipse theia reads it for API KEY
+#+begin_src shell
+export ANTROPIC_API_KEY=yourapi
+#+end_src
+
+
+
 * Configuracoes Iniciais pra tudo funcionar
 
 ** instalação dos laguages servers provides - lsp

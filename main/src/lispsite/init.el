@@ -136,7 +136,7 @@
 (require 'fzl-ide-feat-grep)
 (require 'fzl-ide-feat-keys)
 (require 'fzl-ide-feat-menus)
-(require 'fzl-ide-feat-warp)
+;(require 'fzl-ide-feat-warp)
 
 (require 'pkgconfig-magit)
 
@@ -247,6 +247,7 @@
 (require 'fzlbpms)
 
 
+(require 'edu-tools)
 
 ;;(require 'tesaurus_from_json)
 

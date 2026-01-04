@@ -1,6 +1,7 @@
 #sub modules and external subprojects
 
 .env
+bin/api-keys-setup.sh
 
 **/*.db
 #personal files
