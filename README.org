@@ -1,57 +1,40 @@
 #+Title:emacsinitfile
 #+Subtitle: yet another (emacs customization)
 
-dnf install nodejs
-fzl-lsp-install-copilot-language-server.sh
-fzl-fonts-install-nerdfonts-firacode-fedora.sh e nao esquecer:fc-cache-fv (fedora) 
-caso o treemacs nao mostrar os icones do nerdfonts corretamente: M-x nerd-icons-install-fonts
+Requirements to emacs be configured with this configurations .el files
 
-* To work with eclipse theia appimage
+* It's for emacs 30
 
-The default THEIA_CONFIG_DIR is $HOME/.theia
-
-to change it just set the another THEIA_CONFIG_DIR value as below
-#+name: 
-#+begin_src shell
-  export THEIA_CONFIG_DIR=/run/media/wgn/hdext2Text4/PROGSATIVOS/ides/eclipse/TheiaIDE
-#+end_src
+I've downloaded and compile from download in this link:
+https://gnu.c3sl.ufpr.br/ftp/emacs/
 
 
+* npm install @github/copilot-language-server
+It is for using copilot from within emacs.
 
-* For claude ia integration
-#+name: 
-#+begin_src shell
-  sudo npm i -g  @anthropic-ai/claude-code  
-#+end_src
+During the configuration process, the configuration will ask you from
+minibuffer to login in the copilot
 
-eclipse theia reads it for API KEY
-#+begin_src shell
-export ANTROPIC_API_KEY=yourapi
-#+end_src
+* install git
+It's needed for magit
 
+to be able to make commit from with magit you need to indentify for git
+
+git config --global user.name your_username
+
+git config --global user.email your_@email.com
 
 
 * Configuracoes Iniciais pra tudo funcionar
 
-** instalação dos laguages servers provides - lsp
-
-#+name: 
-#+begin_src shell
-  sudo npm install @angular/language-server
-#+end_src
-
-** Instalação das fontes nerd fonts
-
-
-
-
 ** Fatures (Facilidades desta configuraÃ§Ã£o)
 
 *** Shortcuts
-| teclas                 | DescriÃ§Ã£o                                                  | fonte     |
-| C-c f o                | Mostra list Arqs e Dirs especiais pra ficar fÃ¡cil de abrir | fzl-emacs |
-| C-h w RET nomedafuncao | Mostra qual shortcut esta associado Ã  funÃ§Ã£o               | emacs     |
-|                        |                                                            |           |
+| teclas                 | Descrição                                                   | fonte     |
+| C-c f o                | Mostra list Arqs e Dirs especiais pra ficar fácil de abrir  | fzl-emacs |
+| C-h w RET nomedafuncao | Mostra qual shortcut esta associado a função                | emacs     |
+|                        |                                                             |           |
+
 
 *** Mostra list Arqs e Dirs especiais pra ficar fÃ¡cil de abrir
 C-c f o

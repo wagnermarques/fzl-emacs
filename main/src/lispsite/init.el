@@ -35,6 +35,13 @@
 (require 'pkgconfig-usepackage)
 (package-refresh-contents)
 
+(use-package which-key
+  :ensure t
+  :config
+  (setq which-key-idle-delay 0.5)  ; Set the delay before which-key popup appears
+  (setq which-key-side-window-location 'right)  ; Show which-key popup on the right side
+  (which-key-mode))  ; Enable which-key mode
+
 
 
 ;;tryin to make emacs understand brazilian portuguese language
@@ -198,18 +205,10 @@
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 
-(use-package which-key
-  :ensure t
-  :config
-  (setq which-key-idle-delay 0.5)  ; Set the delay before which-key popup appears
-  (setq which-key-side-window-location 'right)  ; Show which-key popup on the right side
-  (which-key-mode))  ; Enable which-key mode
-
-
 
 ;; Define the Nerd Font to be used for icons/symbols
 (let ((nerd-font-name "FiraCode Nerd Font Mono"))
-  (when (font-installed-p nerd-font-name)
+  (when (find-font (font-spec :name nerd-font-name))
     (set-fontset-font t 'unicode nerd-font-name nil 'append)
     (set-fontset-font t 'symbol nerd-font-name nil 'append)
     (message "Font fallback set to %s for icons." nerd-font-name)))
@@ -217,7 +216,7 @@
 
 ;; --- Emacs Icon Fix ---
 (let ((nerd-font-name "FiraCode Nerd Font Mono"))
-  (when (font-installed-p nerd-font-name)
+  (when (find-font (font-spec :name nerd-font-name))
     ;; Apply the Nerd Font as a fallback for the 'unicode' character range
     ;; This is where most icons/symbols reside
     (set-fontset-font t 'unicode (font-spec :family nerd-font-name) nil 'append)
@@ -239,7 +238,11 @@
 ;;;;;;;;;;;;;;;;;
 ;; some os facilities
 ;;;;;;;;;;;;;;;;;
-(require 'linux-fedora)
+(if (file-exists-p "/etc/debian_version")
+    (progn
+      (require 'linux-debian)
+      (require 'linux-debian-install-fonts))
+  (require 'linux-fedora))
 
 ;;;;;;;;;;;;;;;;;
 ;; fzlbpms utilities to work with stack of containers as bpms
