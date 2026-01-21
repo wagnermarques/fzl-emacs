@@ -1,6 +1,7 @@
 #+Title: Programming Languages Compared
 
 * arrays
+
 ** Basico do basico
 + criar um array
 + incluir item

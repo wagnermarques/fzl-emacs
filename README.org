@@ -15,6 +15,7 @@ It is for using copilot from within emacs.
 During the configuration process, the configuration will ask you from
 minibuffer to login in the copilot
 
+
 * install git
 It's needed for magit
 
@@ -23,6 +24,11 @@ to be able to make commit from with magit you need to indentify for git
 git config --global user.name your_username
 
 git config --global user.email your_@email.com
+
+
+* org mode babel code requirements
+  + install graphviz for dot language
+  + install java
 
 
 * Configuracoes Iniciais pra tudo funcionar

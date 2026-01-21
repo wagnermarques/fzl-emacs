@@ -70,9 +70,18 @@
 (require 'config-mode-impatient-mode) 
 
 (require 'coding-lang-java)
+(require 'coding-lang-ccpp)
+;(require 'coding-lang-json)
+;(require 'coding-lang-markdown)
+;(require 'coding-lang-xml)
+;(require 'coding-lang-yaml)
+;(require 'coding-lang-kotlin)
 ;(require 'coding-R)
+
+
 (require 'pkgconfig-ess)
 (require 'pkgconfig-restclient)
+
 
 
 

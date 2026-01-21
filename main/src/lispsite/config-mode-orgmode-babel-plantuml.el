@@ -13,11 +13,7 @@
 (add-to-list 'org-babel-load-languages '(plantuml . t))
 
 ;; Set the path to the PlantUML jar file.
-(setq org-plantuml-jar-path (expand-file-name "./plantuml.jar"))
-
-;; Check if the PlantUML jar file exists; if not, download it.
-(unless (file-exists-p org-plantuml-jar-path)
-  (url-copy-file "https://nchc.dl.sourceforge.net/project/plantuml/plantuml.jar" org-plantuml-jar-path t))
+(setq org-plantuml-jar-path "/media/wgn/projsext4/PROGSATIVOS/sdks/plantuml-mit-1.2026.1.jar")
 
 ;;choose one of the below
 ;;use a jar file of the plantuml
