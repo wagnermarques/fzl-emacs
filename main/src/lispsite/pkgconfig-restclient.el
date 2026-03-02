@@ -7,7 +7,9 @@
 
 (use-package restclient
   :ensure t
-  :mode ("\\.http\\'" . restclient-mode)
+  :mode (("\\.http\\'" . restclient-mode)
+         ("\\.restclient\\'" . restclient-mode)
+          ("\\.rest\\'" . restclient-mode))
   :bind (:map restclient-mode-map
          ("C-c C-c" . restclient-http-send-current)
          ("C-c C-r" . restclient-http-send-current-raw)

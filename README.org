@@ -9,6 +9,11 @@ I've downloaded and compile from download in this link:
 https://gnu.c3sl.ufpr.br/ftp/emacs/
 
 
+* compile emacs 30
+/home/wgn/WORKING/Projects-Srcs-Desktop/fzl-emacs/compiling/compile-emacs-30.2.sh --clean
+
+
+
 * npm install @github/copilot-language-server
 It is for using copilot from within emacs.
 
@@ -16,7 +21,10 @@ During the configuration process, the configuration will ask you from
 minibuffer to login in the copilot
 
 
-* install git
+* Requirements
+
+** install git
+
 It's needed for magit
 
 to be able to make commit from with magit you need to indentify for git
