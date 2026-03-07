@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-SOURCE_DIR="/home/wgn/WORKING/Progsativos/ides/emacs-30.2/emacs-30.2"
+SOURCE_DIR="/home/wgn/WORKING/Progsativos/ides/emacs-30.2"
 INSTALL_PREFIX="/usr/local" # Default location for compiled software
 
 # -----------------------------------------------------------------------------
