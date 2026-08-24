@@ -60,6 +60,11 @@
 (require 'config-mode-ibuffer)
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; SqlI ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'sql-connections)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; conding languages ;;;
