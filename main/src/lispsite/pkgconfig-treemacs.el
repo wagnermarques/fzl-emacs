@@ -1,44 +1,117 @@
-;;; pkgconfig-treemacs.el
+;;; pkgconfig-treemacs.el --- Treemacs and Projectile Integration -*- lexical-binding: t -*-
+
+;;; Commentary:
+;; Treemacs is a file and project explorer for Emacs.
+;; Integrated with Projectile for project-aware workspace browsing and Magit for Git status.
+
+;;; Code:
+
 (use-package treemacs
   :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
   :config
-  ;; All your settings go here
-  (setq treemacs-width 35) ; A fixed width is often more stable
-  (setq treemacs-follow-mode t)
-  (setq treemacs-file-follow-delay 0.2)
-  
-  ;; This is handled by doom-themes, but is good to know
-  (treemacs-load-theme "doom-atom")
-  
+  (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
+        treemacs-deferred-git-apply-delay        0.5
+        treemacs-directory-name-transformer      #'identity
+        treemacs-display-in-side-window          t
+        treemacs-eldoc-display                   'simple
+        treemacs-file-event-delay                2000
+        treemacs-file-extension-regex            treemacs-last-period-regex-value
+        treemacs-file-follow-delay               0.2
+        treemacs-follow-after-init               t
+        treemacs-expand-after-init               t
+        treemacs-find-workspace-method           'find-for-file-or-pick-first
+        treemacs-git-integration                 t
+        treemacs-header-scroll-indicators        '(nil . "^^^^^^")
+        treemacs-hide-dot-git-directory          t
+        treemacs-indentation                     2
+        treemacs-indentation-string              " "
+        treemacs-is-never-other-window           nil
+        treemacs-max-git-entries                 5000
+        treemacs-missing-project-action          'ask
+        treemacs-move-files-by-mouse-dragging    t
+        treemacs-move-forward-on-expand          nil
+        treemacs-no-png-images                   nil
+        treemacs-no-delete-other-windows         t
+        treemacs-project-follow-cleanup          nil
+        treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+        treemacs-position                        'left
+        treemacs-read-string-input               'from-child-frame
+        treemacs-recenter-distance               0.1
+        treemacs-recenter-after-file-follow      nil
+        treemacs-recenter-after-tag-follow       nil
+        treemacs-recenter-after-project-jump     'always
+        treemacs-recenter-after-project-expand   'on-distance
+        treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask" "/target" "/dist")
+        treemacs-project-follow-into-home        nil
+        treemacs-show-cursor                     nil
+        treemacs-show-hidden-files               t
+        treemacs-silent-file-watch               nil
+        treemacs-silent-refresh                  nil
+        treemacs-sorting                         'alphabetic-asc
+        treemacs-select-when-already-in-treemacs 'move-back
+        treemacs-space-between-root-nodes        t
+        treemacs-tag-follow-cleanup              t
+        treemacs-tag-follow-delay                1.5
+        treemacs-text-scale                      nil
+        treemacs-user-mode-line-format           nil
+        treemacs-user-header-line-format         nil
+        treemacs-wide-toggle-width               70
+        treemacs-width                           35
+        treemacs-width-is-initially-locked       t
+        treemacs-workspace-switch-cleanup        nil)
+
+  ;; Enable follow mode and filewatch mode by default
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode 'always)
+
+  ;; Git integration
+  (pcase (cons (not (null (executable-find "git")))
+               (not (null treemacs-python-executable)))
+    (`(t . t)
+     (treemacs-git-mode 'deferred))
+    (`(t . _)
+     (treemacs-git-mode 'simple)))
+
+  ;; Theme loading fallback
+  (ignore-errors (treemacs-load-theme "doom-atom"))
+
   :bind
-  ;; It's good practice to define keys inside :bind
-  (("C-c t" . treemacs-toggle)))
+  (:map global-map
+        ("C-c t"       . treemacs)
+        ("C-c T"       . treemacs-select-window)
+        ("M-0"         . treemacs-select-window)
+        ("C-x t 1"     . treemacs-delete-other-windows)
+        ("C-x t t"     . treemacs)
+        ("C-x t d"     . treemacs-select-directory)
+        ("C-x t B"     . treemacs-bookmark)
+        ("C-x t C-t"   . treemacs-find-file)
+        ("C-x t M-t"   . treemacs-find-tag)))
+
+;; Treemacs + Projectile integration
+(use-package treemacs-projectile
+  :ensure t
+  :after (treemacs projectile)
+  :bind
+  (:map projectile-command-map
+        ("h" . treemacs-projectile)                   ; C-c p h : Add/select project in treemacs
+        ("T" . treemacs-add-and-display-current-project))) ; C-c p T : Show current project in treemacs
+
+;; Treemacs + Magit integration
+(use-package treemacs-magit
+  :ensure t
+  :after (treemacs magit))
+
+;; Treemacs + All The Icons support
+(use-package treemacs-all-the-icons
+  :ensure t
+  :after (treemacs all-the-icons)
+  :config
+  (treemacs-load-theme "all-the-icons"))
 
 (provide 'pkgconfig-treemacs)
-
-
-;;Font Name to Use in Emacs Config,Corresponds to File
-;;FiraCode Nerd Font Mono-12          for FiraCodeNerdFontMono-Regular.ttf
-;;FiraCode Nerd Font Mono Retina-12   for FiraCodeNerdFontMono-Retina.ttf
-;;"FiraCode Nerd Font-12 (Original, if it had worked)" for  FiraCodeNerdFont-Regular.ttf
-
-;;wgn@fedora:/run/media/wgn/ext4/Projects-Srcs-Desktop/fzl-domadmin/desktop-scripts$ fc-list | grep fira
-;;/usr/share/fonts/fira-code/FiraCode-Bold.ttf: Fira Code:style=Bold
-;;/usr/share/fonts/fira-code/FiraCode-Retina.ttf: Fira Code,Fira Code Retina:style=Retina,Regular
-;;/usr/share/fonts/fira-code/FiraCode-Regular.ttf: Fira Code:style=Regular
-;;/usr/share/fonts/fira-code/FiraCode-Medium.ttf: Fira Code,Fira Code Medium:style=Medium,Regular
-;;/usr/share/fonts/fira-code/FiraCode-SemiBold.ttf: Fira Code,Fira Code SemiBold:style=SemiBold,Regular
-;;/usr/share/fonts/fira-code/FiraCode-Light.ttf: Fira Code,Fira Code Light:style=Light,Regular
-;;wgn@fedora:/run/media/wgn/ext4/Projects-Srcs-Desktop/fzl-domadmin/desktop-scripts$ 
-
-;;(set-face-attribute 'default nil :font "FiraCode Nerd Font-12")
-;;(set-face-attribute 'default nil :font "FiraCode Nerd Font Mono-12")
-;;(set-face-attribute
-;; 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 12))
-
-;; Try one of these options in your init.el
-;; Option A: Using the explicit font-spec for Fira Code Nerd Font Mono
-(set-face-attribute
- 'default nil :family "FiraCode Nerd Font Mono" :height 120)
-
-(provide 'pkgconfig-treemacs)
+;;; pkgconfig-treemacs.el ends here

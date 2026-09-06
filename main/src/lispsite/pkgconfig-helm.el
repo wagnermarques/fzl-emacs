@@ -39,12 +39,6 @@
   (setq helm-autoresize-min-height 20)
   (helm-autoresize-mode 1))
 
-;; Optional: Install and configure Helm Projectile for project management
-;; must be install projectile first
-;;(use-package helm-projectile
-;;  :ensure t
-;;  :after (helm projectile)
-;;  :config
-;;  (helm-projectile-on))
+;; Note: Helm Projectile is configured in pkgconfig-projectile.el
 
 (provide 'pkgconfig-helm)

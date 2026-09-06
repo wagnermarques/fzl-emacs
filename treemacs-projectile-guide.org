@@ -1,0 +1,182 @@
+#+TITLE: Emacs Productivity Guide: Treemacs & Projectile Integration
+#+SUBTITLE: Mastering Project Navigation and Visual Workspace Management in fzl-emacs
+#+AUTHOR: fzl-emacs
+#+OPTIONS: toc:2 num:t ^:nil
+
+* Introduction: The Power Duo (Projectile + Treemacs)
+
+In modern software development, working across multiple repositories,
+microservices, and large directory hierarchies is standard.
+
+In Emacs, combining **Projectile** with **Treemacs** provides the ultimate balance between:
+
+1. **Lightning-fast keyboard navigation** (Projectile + Helm)
+2. **Rich visual project context** (Treemacs sidebar with Git status & icons)
+
+#+BEGIN_QUOTE
+*Core Philosophy:* Use Projectile to jump directly where you want to go in milliseconds without touching the mouse; use Treemacs to keep visual context of your directory structure and Git status.
+#+END_QUOTE
+
+---
+
+* How It Works Under the Hood
+
+#+BEGIN_SRC text
+ +-------------------------------------------------------------------+
+ |                             EMACS                                 |
+ |                                                                   |
+ |  +---------------------+  +------------------------------------+  |
+ |  | Treemacs Sidebar    |  | Main Editor Buffers                |  |
+ |  | (Visual Workspace)  |  |                                    |  |
+ |  |                     |  |  +------------------------------+  |  |
+ |  | > Project A (git)   |  |  | Active File: src/main.rs     |  |  |
+ |  |   ├── src/          |  |  +------------------------------+  |  |
+ |  |   │   └── main.rs*  |  |                                    |  |
+ |  |   └── Cargo.toml    |  |  +------------------------------+  |  |
+ |  |                     |  |  | Helm / Projectile Minibuffer |  |  |
+ |  | > Project B (web)   |  |  | "Find file in project..."    |  |  |
+ |  |   └── src/app.ts    |  |  +------------------------------+  |  |
+ |  +---------------------+  +------------------------------------+  |
+ +-------------------------------------------------------------------+
+#+END_SRC
+
+** 1. Projectile Root Detection
+Projectile automatically discovers the root of any project by looking for marker files:
+- Version Control: ~.git~, ~.svn~, ~.hg~
+- Build Systems: ~package.json~, ~pom.xml~, ~Cargo.toml~, ~composer.json~, ~Makefile~, ~CMakeLists.txt~
+- Custom overrides: ~.projectile~
+
+Once a root is identified, Projectile indexes the files (using fast alien indexing like ~git ls-files~ or ~fd~) to allow instant searching across thousands of files.
+
+** 2. Treemacs Multi-Project Workspaces
+Unlike traditional single-directory file trees, Treemacs operates on *Workspaces*. A single workspace can hold multiple independent project roots (e.g., your backend API, frontend SPA, and DevOps repo all visible side-by-side).
+
+** 3. The `treemacs-projectile` Bridge
+The ~treemacs-projectile~ package integrates both systems:
+- When you are in a Projectile project, one command adds and focuses that project in Treemacs (~C-c p h~ or ~C-c p T~).
+- *Follow Mode* (~treemacs-follow-mode~): As you switch files or jump via Projectile/Helm, Treemacs automatically expands the folder and highlights the active file in the sidebar.
+
+** 4. Git Status & Magit Integration
+- Treemacs shows real-time Git indicators (modified files in orange/yellow, untracked in green, conflicts in red).
+- Jump directly from any project file into **Magit** (~C-x g~) for staging and committing.
+
+---
+
+* Step-by-Step Productivity Workflows
+
+** Workflow 1: Switching Projects at the Speed of Thought
+When moving from one task to another:
+1. Press =C-c p p= (~projectile-switch-project~).
+2. Type 2-3 letters of the project name with Helm fuzzy search and hit =RET=.
+3. Press =C-c t= or =C-c p T= to ensure Treemacs displays the new project root in the sidebar.
+
+** Workflow 2: Instant File Finding (No Tree Clicking Needed)
+Instead of manually unfolding 6 levels of folders in a tree:
+1. Press =C-c p f= (~projectile-find-file~ with Helm).
+2. Type partial fuzzy words, e.g., ~auth serv ts~ for ~src/services/auth.service.ts~.
+3. Hit =RET=.
+4. Notice that Treemacs automatically scrolls and highlights the opened file in the sidebar, providing instant visual context of sibling files!
+
+** Workflow 3: Multi-Repository Workspaces
+If you are developing a full-stack feature:
+1. Open a file in the frontend repo -> run =M-x treemacs-add-and-display-current-project=.
+2. Open a file in the backend repo -> run =M-x treemacs-add-and-display-current-project=.
+3. Both projects are now pinned in your Treemacs sidebar. You can drag and drop, compare structure, or switch between them effortlessly.
+
+** Workflow 4: Project-Wide Search & Refactoring
+1. Search project-wide: =C-c p s g= (~projectile-grep~) or =helm-projectile-grep~ / =helm-projectile-rg=.
+2. Replace project-wide: =C-c p r= (~projectile-replace~) to rename functions or variables across the entire repository.
+3. Invalidate/Refresh cache: =C-c p i= if newly created external files haven't appeared in Projectile yet.
+
+---
+
+* Complete Shortcuts & Keybindings Cheat Sheet
+
+** Projectile Shortcuts (=C-c p= prefix)
+
+| Keybinding   | Command                          | Description                                         |
+|--------------+----------------------------------+-----------------------------------------------------|
+| =C-c p p=    | ~projectile-switch-project~      | Switch between known projects                       |
+| =C-c p f=    | ~projectile-find-file~           | Fuzzy search and open any file in current project   |
+| =C-c p d=    | ~projectile-find-dir~            | Open Dired in a project subdirectory                |
+| =C-c p b=    | ~projectile-switch-to-buffer~    | Switch only among buffers of current project        |
+| =C-c p k=    | ~projectile-kill-buffers~        | Kill all open buffers belonging to current project  |
+| =C-c p s g=  | ~projectile-grep~                | Grep text across the whole project                  |
+| =C-c p r=    | ~projectile-replace~             | Interactive query-replace across the project        |
+| =C-c p i=    | ~projectile-invalidate-cache~    | Refresh Projectile file index cache                 |
+| =C-c p c=    | ~projectile-compile-project~     | Run project build/compile command                   |
+| =C-c p t=    | ~projectile-test-project~        | Run project test suite                              |
+| =C-c p v=    | ~projectile-vc~                  | Open VC/Magit status for project                    |
+| =C-c p h=    | ~treemacs-projectile~           | Select a Projectile project and add to Treemacs     |
+| =C-c p T=    | ~treemacs-add-and-display...~    | Display current project immediately in Treemacs     |
+
+** Treemacs Sidebar Controls
+
+| Keybinding   | Command                          | Description                                         |
+|--------------+----------------------------------+-----------------------------------------------------|
+| =C-c t=      | ~treemacs~                       | Toggle Treemacs sidebar open/closed                 |
+| =M-0=        | ~treemacs-select-window~         | Move focus directly into the Treemacs window        |
+| =C-x t 1=    | ~treemacs-delete-other-windows~  | Close all windows except editor and Treemacs        |
+| =C-x t B=    | ~treemacs-bookmark~              | Jump to a Treemacs bookmark                         |
+| =C-x t C-t=  | ~treemacs-find-file~             | Find and focus current file in Treemacs             |
+
+** Navigation Inside Treemacs Buffer
+
+| Key in Tree  | Action                                                                              |
+|--------------+-------------------------------------------------------------------------------------|
+| =RET= / =TAB=| Expand / collapse directory node or open file                                       |
+| =o o=        | Open file in adjacent window without leaving Treemacs                               |
+| =o s=        | Open file in horizontal split                                                       |
+| =o v=        | Open file in vertical split                                                         |
+| =d=          | Delete file or directory at point                                                   |
+| =c f=        | Create new file at point                                                            |
+| =c d=        | Create new directory at point                                                       |
+| =R=          | Rename file at point                                                                |
+| =g= / =r=    | Refresh Treemacs view                                                               |
+| =q=          | Quit / hide Treemacs window                                                         |
+| =w=          | Set current node as root of view                                                    |
+| =u=          | Move root up one level                                                              |
+
+---
+
+* Configuration Architecture in `fzl-emacs`
+
+The configuration is modularly split inside ~main/src/lispsite/~:
+
+1. **`pkgconfig-projectile.el`**:
+   - Enables ~projectile-mode~ globally.
+   - Binds prefix keymap to =C-c p=.
+   - Integrates with *Helm* (~helm-projectile~).
+   - Configures caching and ignores noisy directories (~node_modules~, ~target~, ~dist~, ~.venv~).
+
+2. **`pkgconfig-treemacs.el`**:
+   - Configures UI (35 columns width, icons, fringe indicators).
+   - Enables ~treemacs-follow-mode~ (synchronizes tree with editor file).
+   - Loads ~treemacs-projectile~ with bindings on =C-c p h= and =C-c p T=.
+   - Loads ~treemacs-magit~ and ~treemacs-all-the-icons~.
+
+3. **`init.el`**:
+   - Loads ~pkgconfig-projectile~ followed by ~pkgconfig-treemacs~ and ~pkgconfig-helm~.
+
+---
+
+* Pro-Tips for Maximum Productivity
+
+1. **Ignore build output using `.projectile`:**
+   Add a ~.projectile~ file in your project root to ignore heavy folders:
+   #+BEGIN_SRC text
+   -/build
+   -/dist
+   -/target
+   -/node_modules
+   -/.cache
+   #+END_SRC
+
+2. **Keep Treemacs on the left and focus on code:**
+   Use =M-0= to quickly jump into Treemacs to browse, make directory operations, and press =q= or =RET= to return to editing immediately.
+
+3. **Clean workspace hygiene:**
+   When finished with a feature across multiple files, use =C-c p k= (~projectile-kill-buffers~) to close all project-related buffers at once and keep Emacs clean and snappy.
+
+4. **Combine with Magit:**
+   Use =C-x g= while editing any file to open Magit. Any staged/committed changes will update Treemacs status badges in real-time.

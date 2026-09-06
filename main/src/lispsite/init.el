@@ -131,6 +131,7 @@
 (use-package nerd-icons
   :ensure t)
 (require 'config-theme)
+(require 'pkgconfig-projectile)
 (require 'pkgconfig-treemacs)
 (require 'pkgconfig-helm)
 

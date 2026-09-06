@@ -6,6 +6,7 @@ bin/api-keys-setup.sh
 **/*.db
 #personal files
 /main/src/lispsite/Pess/*
+sql-connect/
 **/*.env
 
 node_modules

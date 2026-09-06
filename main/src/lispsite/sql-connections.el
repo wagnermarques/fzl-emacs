@@ -19,11 +19,11 @@
 ;;   INTEGRA_LOCAL_DB_NAME=integra
 ;;
 ;;   # Conexão Dev
-;;   INTEGRA_DEV_DB_HOST=186.217.0.21
-;;   INTEGRA_DEV_DB_PORT=3306
-;;   INTEGRA_DEV_DB_USER=uintegra
-;;   INTEGRA_DEV_DB_PASS=42Ez0E+8
-;;   INTEGRA_DEV_DB_NAME=integra_dev
+;;   INTEGRA_DEV_DB_HOST=ip_do_servidor_dev
+;;   INTEGRA_DEV_DB_PORT=porta_do_servidor_dev
+;;   INTEGRA_DEV_DB_USER=usuario_no_servidor_dev
+;;   INTEGRA_DEV_DB_PASS=suasenhadev
+;;   INTEGRA_DEV_DB_NAME=nome_do_banco_no_servidor_dev
 
 ;;; Code:
 
@@ -42,6 +42,16 @@
 (require 'ob-sql-mode nil t)
 
 (setq org-confirm-babel-evaluate nil)
+
+(defun fzl-update-sql-org-babel-header-args ()
+  "Atualiza as credenciais default do Org-Babel para blocos `sql` a partir do .env."
+  (setq org-babel-default-header-args:sql
+        `((:engine . "mysql")
+          (:dbhost . ,(or (getenv "INTEGRA_DEV_DB_HOST") (getenv "DB_HOST") "127.0.0.1"))
+          (:dbport . ,(or (getenv "INTEGRA_DEV_DB_PORT") (getenv "DB_PORT") "3306"))
+          (:dbuser . ,(or (getenv "INTEGRA_DEV_DB_USER") (getenv "DB_USER") "root"))
+          (:dbpassword . ,(or (getenv "INTEGRA_DEV_DB_PASS") (getenv "DB_PASS") ""))
+          (:database . ,(or (getenv "INTEGRA_DEV_DB_NAME") (getenv "DB_NAME") "integra_dev")))))
 
 ;; --- Leitor de arquivo .env --------------------------------------------------
 
@@ -80,7 +90,9 @@ Procura automaticamente o arquivo .env subindo na árvore de diretórios."
                       (setq val (substring val 1 (1- (length val)))))
                     (unless (string-empty-p key)
                       (setenv key val)))))))
-          (forward-line 1))))))
+          (forward-line 1))))
+    ;; Atualiza os parâmetros default do org-babel sql
+    (fzl-update-sql-org-babel-header-args)))
 
 ;; Carrega as variáveis de ambiente do .env imediatamente ao carregar o arquivo
 (fzl-load-env-file)
