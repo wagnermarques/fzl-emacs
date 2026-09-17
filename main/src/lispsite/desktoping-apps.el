@@ -32,6 +32,15 @@
 ;;; Group 1: Productivity & Office Applications
 ;;; ============================================================================
 
+(defun desktoping-app-brave ()
+  "Launch Brave Browser in the background."
+  (interactive)
+  (let ((brave-bin (or (executable-find "brave-browser")
+                       (executable-find "brave")
+                       "brave-browser")))
+    (start-process "desktoping-brave" nil brave-bin)
+    (message "Launched Brave Browser in background.")))
+
 (defun desktoping-app-libreoffice ()
   "Launch LibreOffice in the background."
   (interactive)
@@ -321,7 +330,8 @@
 (define-prefix-command 'desktoping-apps-map)
 (define-key global-map (kbd "C-c d") 'desktoping-apps-map)
 
-;; Productivity keybindings
+;; Productivity & App keybindings
+(define-key desktoping-apps-map (kbd "B")   #'desktoping-app-brave)
 (define-key desktoping-apps-map (kbd "l")   #'desktoping-app-libreoffice)
 (define-key desktoping-apps-map (kbd "t")   #'desktoping-libreoffice-open-templates-dir)
 (define-key desktoping-apps-map (kbd "T")   #'desktoping-libreoffice-open-mytemplates-dir)
@@ -379,7 +389,9 @@
      ["Import from HTML (Browser Export)" desktoping-buku-import-html :keys "C-c d b i" :help "Import bookmarks from HTML file"]
      "---"
      ["Buku Tutorial & Guia (Org)" desktoping-buku-open-tutorial :keys "C-c d b t" :help "Open Brazilian Portuguese tutorial"])
-    ("LibreOffice & Office"
+    ("Applications & Office"
+     ["Start Brave Browser" desktoping-app-brave :keys "C-c d B" :help "Launch Brave Browser"]
+     "---"
      ["Start LibreOffice" desktoping-app-libreoffice :keys "C-c d l" :help "Launch LibreOffice"]
      ["Templates Directory" desktoping-libreoffice-open-templates-dir :keys "C-c d t" :help "Open LibreOffice templates in Dired"]
      ["Custom MyTemplates Directory" desktoping-libreoffice-open-mytemplates-dir :keys "C-c d T" :help "Open user templates in Dired"]
