@@ -158,6 +158,7 @@
 (require 'fzl-ide-feat-grep)
 (require 'fzl-ide-feat-keys)
 (require 'fzl-ide-feat-menus)
+(require 'desktoping-apps)
 ;(require 'fzl-ide-feat-warp)
 
 (require 'pkgconfig-magit)
