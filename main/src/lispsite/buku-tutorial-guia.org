@@ -220,12 +220,37 @@ O navegador padrão configurado para abrir os links é o *Brave Browser* (=/usr/
    - =g=: Recarregar/atualizar a lista do banco de dados.
    - =q=: Fechar o visualizador e voltar ao buffer anterior.
 
+*** 🏷️ Método 3: Filtrar por Grupo/Tag (=C-c d b g=)
+1. Pressione:
+   #+BEGIN_EXAMPLE
+   C-c d b g
+   #+END_EXAMPLE
+   /(ou menu: *Desktoping -> Bookmarks (Buku) -> Filter by Tag/Group*)/
+2. O Emacs mostrará uma lista apenas com as suas **Tags/Grupos** existentes (ex: =projetos=, =emacs=, =dev=, =leitura=).
+3. Selecione a tag desejada para visualizar apenas os favoritos pertencentes àquele grupo.
+4. Pressione =RET= no favorito desejado para abrir no Brave.
+
+---
+
+*** 🚀 Método 4: Abrir TODOS os Links de um Grupo de Uma Vez no Navegador (=C-c d b o=)
+Ideal para rotinas diárias (ex: abrir todos os dashboards de trabalho ou projetos matinais juntos em abas separadas no Brave):
+1. Pressione:
+   #+BEGIN_EXAMPLE
+   C-c d b o
+   #+END_EXAMPLE
+   /(ou menu: *Desktoping -> Bookmarks (Buku) -> Open All in Tag/Group (Tabs)*)/
+2. Selecione a Tag/Grupo (ex: =projetos=).
+3. O Emacs perguntará: =Open all 3 bookmarks for group 'projetos' in Brave? (yes or no)=.
+4. Digite =yes= e o Emacs abrirá **todas as URLs daquele grupo em abas simultâneas** no Brave Browser!
+
 ---
 
 ** ⌨️ Tabela Resumo de Atalhos no Emacs:
 | Atalho | Ação | Descrição |
 | :--- | :--- | :--- |
-| =C-c d b s= | `desktoping-buku-search-and-open` | 🔍 Busca fuzzy e abre no navegador padrão (Brave) |
+| =C-c d b s= | `desktoping-buku-search-and-open` | 🔍 Busca fuzzy global e abre no navegador padrão (Brave) |
+| =C-c d b g= | `desktoping-buku-browse-by-tag` | 🏷️ Filtra e navega favoritos por Grupo/Tag |
+| =C-c d b o= | `desktoping-buku-open-all-in-tag` | 🚀 Abre **todos** os links de um Grupo em abas no Brave |
 | =C-c d b a= | `desktoping-buku-add-bookmark` | ➕ Adiciona novo favorito com URL, tags e notas |
 | =C-c d b b= | `desktoping-buku-open-manager` | 🗂️ Abre o buffer interativo do `ebuku` |
 | =C-c d b e= | `desktoping-buku-export-html` | 📤 Exporta para HTML (compatível com navegadores) |

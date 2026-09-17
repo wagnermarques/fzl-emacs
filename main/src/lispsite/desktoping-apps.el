@@ -191,24 +191,42 @@
         (desktoping-buku-search-and-open)
       (message "Buku CLI not found. Install with: sudo dnf install buku"))))
 
-(defun desktoping--buku-parse-json (str)
-  "Extract and parse JSON array from Buku output STR, ignoring warning noise."
-  (let ((start (string-match "\\[" str))
-        (end (when (string-match "\\][^]]*$" str)
-               (match-end 0))))
-    (when (and start end)
-      (condition-case nil
-          (json-parse-string (substring str start end) :object-type 'alist :array-type 'list)
-        (error nil)))))
+(defun desktoping--buku-get-entries ()
+  "Fetch and parse all Buku bookmark entries."
+  (unless (executable-find "buku")
+    (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
+  (let* ((cmd "PYTHONWARNINGS=\"ignore\" buku --nostdin -p -j 2>/dev/null")
+         (json-str (shell-command-to-string cmd)))
+    (desktoping--buku-parse-json json-str)))
+
+(defun desktoping--buku-get-all-tags (entries)
+  "Extract a unique, sorted list of all tags from ENTRIES."
+  (let (tag-list)
+    (dolist (item entries)
+      (let ((raw-tags (cdr (assq 'tags item))))
+        (when raw-tags
+          (let ((split-tags (if (listp raw-tags)
+                                raw-tags
+                              (split-string raw-tags "," t "[ \t\n\r]+"))))
+            (dolist (tag split-tags)
+              (let ((clean (string-trim tag)))
+                (unless (or (string-empty-p clean) (member clean tag-list))
+                  (push clean tag-list))))))))
+    (sort tag-list #'string-lessp)))
+
+(defun desktoping--buku-entry-has-tag-p (item tag)
+  "Check if ITEM has TAG."
+  (let ((raw-tags (cdr (assq 'tags item))))
+    (when raw-tags
+      (let ((split-tags (if (listp raw-tags)
+                            raw-tags
+                          (split-string raw-tags "," t "[ \t\n\r]+"))))
+        (seq-some (lambda (tg) (string= (string-trim tg) tag)) split-tags)))))
 
 (defun desktoping-buku-search-and-open ()
   "Search Buku bookmarks interactively and open selected URL in default browser."
   (interactive)
-  (unless (executable-find "buku")
-    (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
-  (let* ((cmd "PYTHONWARNINGS=\"ignore\" buku --nostdin -p -j 2>/dev/null")
-         (json-str (shell-command-to-string cmd))
-         (entries (desktoping--buku-parse-json json-str)))
+  (let ((entries (desktoping--buku-get-entries)))
     (if (not entries)
         (message "No bookmarks found in Buku database (or database is empty).")
       (let* ((candidates
@@ -235,6 +253,52 @@
         (when selected-url
           (desktoping--browse-url selected-url)
           (message "Opened: %s" selected-url))))))
+
+(defun desktoping-buku-browse-by-tag ()
+  "Filter and browse Bookmarks by a selected Tag/Group."
+  (interactive)
+  (let* ((entries (desktoping--buku-get-entries))
+         (tags (desktoping--buku-get-all-tags entries)))
+    (if (not tags)
+        (message "No tagged bookmarks found in database.")
+      (let* ((chosen-tag (completing-read "Filter by Tag/Group: " tags nil t))
+             (filtered (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item chosen-tag)) entries))
+             (candidates
+              (mapcar (lambda (item)
+                        (let* ((index (cdr (assq 'index item)))
+                               (raw-title (cdr (assq 'title item)))
+                               (uri (cdr (assq 'uri item)))
+                               (desc (cdr (assq 'description item)))
+                               (title (cond
+                                       ((and (stringp raw-title) (not (string-empty-p raw-title)) (not (string= raw-title "Untitled"))) raw-title)
+                                       ((and (stringp desc) (not (string-empty-p desc))) desc)
+                                       (t uri)))
+                               (display (format "[#%s] %s  (%s)" index title uri)))
+                          (cons display uri)))
+                      filtered))
+             (choice (completing-read (format "Bookmarks in group [%s]: " chosen-tag)
+                                      (mapcar #'car candidates) nil t))
+             (selected-url (cdr (assoc choice candidates))))
+        (when selected-url
+          (desktoping--browse-url selected-url)
+          (message "Opened: %s" selected-url))))))
+
+(defun desktoping-buku-open-all-in-tag ()
+  "Open ALL bookmarks belonging to a selected Tag/Group in separate browser tabs."
+  (interactive)
+  (let* ((entries (desktoping--buku-get-entries))
+         (tags (desktoping--buku-get-all-tags entries)))
+    (if (not tags)
+        (message "No tagged bookmarks found in database.")
+      (let* ((chosen-tag (completing-read "Open all links for Tag/Group: " tags nil t))
+             (filtered (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item chosen-tag)) entries))
+             (urls (delq nil (mapcar (lambda (item) (cdr (assq 'uri item))) filtered))))
+        (if (not urls)
+            (message "No URLs found for tag '%s'." chosen-tag)
+          (when (yes-or-no-p (format "Open all %d bookmarks for group '%s' in Brave? " (length urls) chosen-tag))
+            (dolist (u urls)
+              (desktoping--browse-url u))
+            (message "Opened %d bookmarks for group '%s'." (length urls) chosen-tag)))))))
 
 (defun desktoping-buku-add-bookmark (url title tags comment)
   "Add a new bookmark to Buku with URL, optional TITLE, TAGS, and optional COMMENT."
@@ -363,6 +427,8 @@
 ;; Bookmarks (Buku) keybindings (Prefix: C-c d b)
 (define-key desktoping-apps-map (kbd "b b") #'desktoping-buku-open-manager)
 (define-key desktoping-apps-map (kbd "b s") #'desktoping-buku-search-and-open)
+(define-key desktoping-apps-map (kbd "b g") #'desktoping-buku-browse-by-tag)
+(define-key desktoping-apps-map (kbd "b o") #'desktoping-buku-open-all-in-tag)
 (define-key desktoping-apps-map (kbd "b a") #'desktoping-buku-add-bookmark)
 (define-key desktoping-apps-map (kbd "b e") #'desktoping-buku-export-html)
 (define-key desktoping-apps-map (kbd "b i") #'desktoping-buku-import-html)
@@ -382,6 +448,9 @@
   '("Desktoping"
     ("Bookmarks (Buku)"
      ["Search & Open Bookmark" desktoping-buku-search-and-open :keys "C-c d b s" :help "Search bookmarks and open in browser"]
+     ["Filter by Tag/Group" desktoping-buku-browse-by-tag :keys "C-c d b g" :help "Browse bookmarks in a specific tag group"]
+     ["Open All in Tag/Group (Tabs)" desktoping-buku-open-all-in-tag :keys "C-c d b o" :help "Open all links of a tag group in Brave tabs"]
+     "---"
      ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]
      ["Open Buku Manager (ebuku)" desktoping-buku-open-manager :keys "C-c d b b" :help "Open interactive ebuku manager"]
      "---"
