@@ -75,6 +75,12 @@ buku -a https://github.com/jarun/buku cli,tools,bookmarks -c "Repositório ofici
 buku -a https://meusite.local --offline dev,local
 #+END_SRC
 
+*** ⚡ Equivalente no Emacs:
+- *Atalho Global:* =C-c d b a= (~desktoping-buku-add-bookmark~)
+- *Pelo Menu:* =Desktoping -> Bookmarks (Buku) -> Add New Bookmark=
+- *No buffer do ebuku:* Pressione =a= para adicionar.
+- *💡 Dica de Produtividade no Emacs:* Se o cursor estiver posicionado sobre uma URL no buffer ou se você acabou de copiar um link (clipboard), o Emacs preenche a URL automaticamente no prompt! Basta teclar =RET=, digitar as tags (separadas por vírgula) e o comentário.
+
 ** 2. Pesquisar Favoritos
 #+BEGIN_SRC bash
 # Busca genérica (busca no título, URL, comentário e tags):
@@ -88,6 +94,11 @@ buku --st emacs,orgmode
 buku --st dev + linux - python
 #+END_SRC
 
+*** ⚡ Equivalente no Emacs:
+- *Atalho Global:* =C-c d b s= (~desktoping-buku-search-and-open~)
+- *Pelo Menu:* =Desktoping -> Bookmarks (Buku) -> Search & Open Bookmark=
+- *Como Funciona:* Abre o minicommando interativo do Emacs com busca fuzzy instantânea por título, URL ou tags (🏷️), permitindo filtrar em tempo real e teclar =RET= para abrir diretamente no navegador padrão.
+
 ** 3. Abrir Favoritos no Navegador
 #+BEGIN_SRC bash
 # Abre o favorito de número #12 no navegador padrão:
@@ -97,6 +108,10 @@ buku -w 12
 buku -s github -w 1
 #+END_SRC
 
+*** ⚡ Equivalente no Emacs:
+- Ao usar =C-c d b s=, basta selecionar qualquer favorito da lista e teclar =RET= para abrir automaticamente no navegador padrão do desktop.
+- No buffer do *ebuku* (=C-c d b b=), posicione o cursor sobre o favorito e tecle =RET=.
+
 ** 4. Listar e Navegar
 #+BEGIN_SRC bash
 # Listar todos os favoritos paginados:
@@ -105,6 +120,9 @@ buku -p
 # Listar os últimos 10 favoritos adicionados:
 buku -p -n 10
 #+END_SRC
+
+*** ⚡ Equivalente no Emacs:
+- *Atalho:* =C-c d b b= (~desktoping-buku-open-manager~) para abrir o gerenciador interativo do `ebuku`, listando todos os favoritos com suporte a navegação por teclado.
 
 ** 5. Editar e Atualizar Favoritos
 #+BEGIN_SRC bash
@@ -118,6 +136,11 @@ buku -u 5 --tag + nova_tag,tutorial
 buku -u 5 --tag - tag_antiga
 #+END_SRC
 
+*** ⚡ Equivalente no Emacs:
+- No buffer do *ebuku* (=C-c d b b=):
+  - =e= para editar título, URL ou comentário.
+  - =t= para gerenciar e editar tags.
+
 ** 6. Deletar Favoritos
 #+BEGIN_SRC bash
 # Deleta o favorito número #5:
@@ -126,6 +149,9 @@ buku -d 5
 # Deleta um intervalo de favoritos (ex: de 10 a 15):
 buku -d 10 15
 #+END_SRC
+
+*** ⚡ Equivalente no Emacs:
+- No buffer do *ebuku* (=C-c d b b=), posicione o cursor sobre o favorito e tecle =d= (delete).
 
 ---
 
