@@ -182,27 +182,41 @@
         (desktoping-buku-search-and-open)
       (message "Buku CLI not found. Install with: sudo dnf install buku"))))
 
+(defun desktoping--buku-parse-json (str)
+  "Extract and parse JSON array from Buku output STR, ignoring warning noise."
+  (let ((start (string-match "\\[" str))
+        (end (when (string-match "\\][^]]*$" str)
+               (match-end 0))))
+    (when (and start end)
+      (condition-case nil
+          (json-parse-string (substring str start end) :object-type 'alist :array-type 'list)
+        (error nil)))))
+
 (defun desktoping-buku-search-and-open ()
   "Search Buku bookmarks interactively and open selected URL in default browser."
   (interactive)
   (unless (executable-find "buku")
     (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
-  (let* ((json-str (shell-command-to-string "buku -p -j"))
-         (entries (condition-case nil
-                      (json-parse-string json-str :object-type 'alist :array-type 'list)
-                    (error nil))))
+  (let* ((cmd "PYTHONWARNINGS=\"ignore\" buku --nostdin -p -j 2>/dev/null")
+         (json-str (shell-command-to-string cmd))
+         (entries (desktoping--buku-parse-json json-str)))
     (if (not entries)
         (message "No bookmarks found in Buku database (or database is empty).")
       (let* ((candidates
               (mapcar (lambda (item)
                         (let* ((index (cdr (assq 'index item)))
-                               (title (cdr (assq 'title item)))
+                               (raw-title (cdr (assq 'title item)))
                                (uri (cdr (assq 'uri item)))
+                               (desc (cdr (assq 'description item)))
                                (tags (cdr (assq 'tags item)))
                                (tag-str (if (listp tags) (string-join tags ", ") (or tags "")))
+                               (title (cond
+                                       ((and (stringp raw-title) (not (string-empty-p raw-title)) (not (string= raw-title "Untitled"))) raw-title)
+                                       ((and (stringp desc) (not (string-empty-p desc))) desc)
+                                       (t uri)))
                                (display (format "[#%s] %s  (%s)%s"
                                                 index
-                                                (if (string-empty-p (or title "")) uri title)
+                                                title
                                                 uri
                                                 (if (string-empty-p tag-str) "" (concat "  🏷️ " tag-str)))))
                           (cons display uri)))
@@ -213,32 +227,34 @@
           (desktoping--browse-url selected-url)
           (message "Opened: %s" selected-url))))))
 
-(defun desktoping-buku-add-bookmark (url tags comment)
-  "Add a new bookmark to Buku with URL, TAGS, and optional COMMENT."
+(defun desktoping-buku-add-bookmark (url title tags comment)
+  "Add a new bookmark to Buku with URL, optional TITLE, TAGS, and optional COMMENT."
   (interactive
    (let* ((default-url (or (thing-at-point 'url) (current-kill 0 t) ""))
           (in-url (read-string (format "URL (%s): " (if (string-empty-p default-url) "required" default-url))
                                nil nil (if (string-empty-p default-url) nil default-url)))
+          (in-title (read-string "Title (optional, blank to auto-fetch): "))
           (in-tags (read-string "Tags (comma-separated, e.g. dev,emacs,linux): "))
-          (in-comment (read-string "Comment (optional): ")))
-     (list in-url in-tags in-comment)))
+          (in-comment (read-string "Comment / Description (optional): ")))
+     (list in-url in-title in-tags in-comment)))
   (unless (executable-find "buku")
     (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
   (if (string-empty-p url)
       (message "No URL provided.")
-    (let* ((cmd (format "buku -a %s %s %s"
+    (let* ((cmd (format "PYTHONWARNINGS=\"ignore\" buku -a %s %s %s %s --nostdin 2>&1"
                         (shell-quote-argument url)
                         (if (string-empty-p tags) "" (shell-quote-argument tags))
-                        (if (string-empty-p comment) "" (format "-c %s" (shell-quote-argument comment)))))
+                        (if (string-empty-p comment) "" (format "-c %s" (shell-quote-argument comment)))
+                        (if (string-empty-p title) "" (format "--title %s" (shell-quote-argument title)))))
            (output (shell-command-to-string cmd)))
-      (message "Buku: %s" (string-trim output)))))
+      (message "Buku: Bookmark added successfully!"))))
 
 (defun desktoping-buku-export-html (file)
   "Export Buku bookmarks to Netscape HTML format (importable into any browser)."
   (interactive "FExport bookmarks to HTML file: ")
   (unless (executable-find "buku")
     (user-error "Buku executable not found in PATH."))
-  (let ((cmd (format "buku -e %s" (shell-quote-argument (expand-file-name file)))))
+  (let ((cmd (format "PYTHONWARNINGS=\"ignore\" buku -e %s --nostdin" (shell-quote-argument (expand-file-name file)))))
     (shell-command cmd)
     (message "Exported Buku bookmarks to %s" file)))
 
@@ -247,7 +263,7 @@
   (interactive "fImport bookmarks from HTML file: ")
   (unless (executable-find "buku")
     (user-error "Buku executable not found in PATH."))
-  (let ((cmd (format "buku -i %s" (shell-quote-argument (expand-file-name file)))))
+  (let ((cmd (format "PYTHONWARNINGS=\"ignore\" buku -i %s --nostdin" (shell-quote-argument (expand-file-name file)))))
     (async-shell-command cmd "*desktoping-buku-import*")
     (message "Importing bookmarks from %s into Buku..." file)))
 
