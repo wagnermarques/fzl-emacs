@@ -176,21 +176,66 @@ Agora, em qualquer navegador, basta ir em /Importar Favoritos de arquivo HTML/ e
 
 * 🧠 Integração no Emacs com `fzl-emacs` e `desktoping-apps.el`
 
-O seu ambiente Emacs já possui total integração com o Buku via menu e atalhos globais prefixados em =C-c d b=.
+O seu ambiente Emacs possui total integração com o Buku via menu e atalhos globais prefixados em =C-c d b=.
+O navegador padrão configurado para abrir os links é o *Brave Browser* (=/usr/bin/brave-browser=).
 
-** Tabela de Atalhos no Emacs:
+** 📋 Como Visualizar os Favoritos e Abrir no Navegador pelo Emacs:
+
+*** ⚡ Método 1: Busca Rápida e Abertura Direta (=C-c d b s=) [Recomendado no Dia a Dia]
+1. No Emacs, pressione o atalho:
+   #+BEGIN_EXAMPLE
+   C-c d b s
+   #+END_EXAMPLE
+   /(ou clique no menu: *Desktoping -> Bookmarks (Buku) -> Search & Open Bookmark*)/
+
+2. Uma lista interativa com busca fuzzy aparecerá no rodapé do Emacs com todos os seus favoritos formatados:
+   #+BEGIN_EXAMPLE
+   Open Bookmark:
+   [#1] wgnbukumarck (wgnbukumark)
+   [#2] leitor de biblia (https://wagnermarques.github.io/biblereaderapp/)  🏷️ projetos-pess
+   [#3] GNU Operating System (https://gnu.org)  🏷️ emacs, gnu
+   #+END_EXAMPLE
+
+3. *Filtre em tempo real:* Digite qualquer termo (ex: =biblia=, =gnu=, =projetos= ou parte do link).
+4. *Abra no navegador:* Pressione =RET= (Enter) sobre o favorito selecionado. O Emacs abrirá a página imediatamente no *Brave Browser*.
+
+---
+
+*** 🗂️ Método 2: Visualizador e Gerenciador em Buffer Completo (=C-c d b b=)
+1. No Emacs, pressione:
+   #+BEGIN_EXAMPLE
+   C-c d b b
+   #+END_EXAMPLE
+   /(ou =M-x ebuku=)/
+
+2. Um buffer chamado =*ebuku*= será aberto exibindo todos os seus favoritos em formato tabular.
+3. *Controles e Teclas de Navegação no buffer:*
+   - =↑= / =↓= (ou =n= / =p=): Mover o cursor entre os favoritos da lista.
+   - =RET= (Enter): Abrir o favorito sob o cursor diretamente no *Brave Browser*.
+   - =/= ou =s=: Filtrar a lista por palavras-chave ou tags.
+   - =e=: Editar URL, título ou comentário do favorito selecionado.
+   - =t=: Gerenciar e editar tags do favorito.
+   - =d=: Excluir o favorito selecionado.
+   - =a=: Adicionar um novo favorito.
+   - =g=: Recarregar/atualizar a lista do banco de dados.
+   - =q=: Fechar o visualizador e voltar ao buffer anterior.
+
+---
+
+** ⌨️ Tabela Resumo de Atalhos no Emacs:
 | Atalho | Ação | Descrição |
 | :--- | :--- | :--- |
-| =C-c d b s= | `desktoping-buku-search-and-open` | 🔍 Busca fuzzy e abre no navegador padrão |
+| =C-c d b s= | `desktoping-buku-search-and-open` | 🔍 Busca fuzzy e abre no navegador padrão (Brave) |
 | =C-c d b a= | `desktoping-buku-add-bookmark` | ➕ Adiciona novo favorito com URL, tags e notas |
 | =C-c d b b= | `desktoping-buku-open-manager` | 🗂️ Abre o buffer interativo do `ebuku` |
 | =C-c d b e= | `desktoping-buku-export-html` | 📤 Exporta para HTML (compatível com navegadores) |
 | =C-c d b i= | `desktoping-buku-import-html` | 📥 Importa arquivo HTML para o banco |
 | =C-c d b t= | `desktoping-buku-open-tutorial` | 📖 Abre este tutorial no Emacs |
+| =C-c d B=   | `desktoping-app-brave` | 🚀 Abre uma nova janela do Brave Browser |
 
-** Acessando pelo Menu Superior:
+** 🖱️ Acessando pelo Menu Superior:
 Acesse no menu do Emacs:
-=Desktoping -> Bookmarks (Buku)=
+=Desktoping -> Bookmarks (Buku)= ou =Desktoping -> Applications & Office=
 
 ---
 
