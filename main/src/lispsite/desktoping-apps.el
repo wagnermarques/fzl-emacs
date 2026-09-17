@@ -191,6 +191,17 @@
         (desktoping-buku-search-and-open)
       (message "Buku CLI not found. Install with: sudo dnf install buku"))))
 
+(defun desktoping--buku-parse-json (str)
+  "Extract and parse JSON array from Buku output STR, ignoring warning noise."
+  (let ((start (string-match "\\[" str))
+        (end (when (string-match "\\][^]]*$" str)
+               (match-end 0))))
+    (if (and start end)
+        (condition-case nil
+            (json-parse-string (substring str start end) :object-type 'alist :array-type 'list)
+          (error nil))
+      nil)))
+
 (defun desktoping--buku-get-entries ()
   "Fetch and parse all Buku bookmark entries."
   (unless (executable-find "buku")
