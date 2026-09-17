@@ -1,14 +1,15 @@
-;;; desktoping-apps.el --- Desktop applications, host configs, sync, and shortcuts manager -*- lexical-binding: t -*-
+;;; desktoping-apps.el --- Desktop applications, host configs, sync, bookmarks, and shortcuts manager -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; This package organizes desktop application launchers, cloud synchronization
-;; commands, host/system configuration files, and developer utilities.
+;; commands, host/system configuration files, Buku bookmark management, and developer utilities.
 ;; It establishes a dedicated prefix keymap (C-c d) and installs the "Desktoping"
 ;; menu bar item with shortcut hints for all actions.
 
 ;;; Code:
 
 (require 'easymenu)
+(require 'subr-x)
 (require 'fzl-util-browser nil t)
 
 ;;; ============================================================================
@@ -166,7 +167,101 @@
          "/usr/lib/systemd/system/mariadb.service"))))
 
 ;;; ============================================================================
-;;; Group 4: Utilities & Documentation
+;;; Group 4: Bookmarks Management (Buku Integration)
+;;; ============================================================================
+
+(defvar desktoping-buku-db-path nil
+  "Custom path to Buku SQLite database. If nil, uses default ~/.local/share/buku/bookmarks.db.")
+
+(defun desktoping-buku-open-manager ()
+  "Open interactive ebuku manager if available, or launch search."
+  (interactive)
+  (if (fboundp 'ebuku)
+      (ebuku)
+    (if (executable-find "buku")
+        (desktoping-buku-search-and-open)
+      (message "Buku CLI not found. Install with: sudo dnf install buku"))))
+
+(defun desktoping-buku-search-and-open ()
+  "Search Buku bookmarks interactively and open selected URL in default browser."
+  (interactive)
+  (unless (executable-find "buku")
+    (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
+  (let* ((json-str (shell-command-to-string "buku -p -j"))
+         (entries (condition-case nil
+                      (json-parse-string json-str :object-type 'alist :array-type 'list)
+                    (error nil))))
+    (if (not entries)
+        (message "No bookmarks found in Buku database (or database is empty).")
+      (let* ((candidates
+              (mapcar (lambda (item)
+                        (let* ((index (cdr (assq 'index item)))
+                               (title (cdr (assq 'title item)))
+                               (uri (cdr (assq 'uri item)))
+                               (tags (cdr (assq 'tags item)))
+                               (tag-str (if (listp tags) (string-join tags ", ") (or tags "")))
+                               (display (format "[#%s] %s  (%s)%s"
+                                                index
+                                                (if (string-empty-p (or title "")) uri title)
+                                                uri
+                                                (if (string-empty-p tag-str) "" (concat "  🏷️ " tag-str)))))
+                          (cons display uri)))
+                      entries))
+             (choice (completing-read "Open Bookmark: " (mapcar #'car candidates) nil t))
+             (selected-url (cdr (assoc choice candidates))))
+        (when selected-url
+          (desktoping--browse-url selected-url)
+          (message "Opened: %s" selected-url))))))
+
+(defun desktoping-buku-add-bookmark (url tags comment)
+  "Add a new bookmark to Buku with URL, TAGS, and optional COMMENT."
+  (interactive
+   (let* ((default-url (or (thing-at-point 'url) (current-kill 0 t) ""))
+          (in-url (read-string (format "URL (%s): " (if (string-empty-p default-url) "required" default-url))
+                               nil nil (if (string-empty-p default-url) nil default-url)))
+          (in-tags (read-string "Tags (comma-separated, e.g. dev,emacs,linux): "))
+          (in-comment (read-string "Comment (optional): ")))
+     (list in-url in-tags in-comment)))
+  (unless (executable-find "buku")
+    (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
+  (if (string-empty-p url)
+      (message "No URL provided.")
+    (let* ((cmd (format "buku -a %s %s %s"
+                        (shell-quote-argument url)
+                        (if (string-empty-p tags) "" (shell-quote-argument tags))
+                        (if (string-empty-p comment) "" (format "-c %s" (shell-quote-argument comment)))))
+           (output (shell-command-to-string cmd)))
+      (message "Buku: %s" (string-trim output)))))
+
+(defun desktoping-buku-export-html (file)
+  "Export Buku bookmarks to Netscape HTML format (importable into any browser)."
+  (interactive "FExport bookmarks to HTML file: ")
+  (unless (executable-find "buku")
+    (user-error "Buku executable not found in PATH."))
+  (let ((cmd (format "buku -e %s" (shell-quote-argument (expand-file-name file)))))
+    (shell-command cmd)
+    (message "Exported Buku bookmarks to %s" file)))
+
+(defun desktoping-buku-import-html (file)
+  "Import bookmarks from an HTML file into Buku."
+  (interactive "fImport bookmarks from HTML file: ")
+  (unless (executable-find "buku")
+    (user-error "Buku executable not found in PATH."))
+  (let ((cmd (format "buku -i %s" (shell-quote-argument (expand-file-name file)))))
+    (async-shell-command cmd "*desktoping-buku-import*")
+    (message "Importing bookmarks from %s into Buku..." file)))
+
+(defun desktoping-buku-open-tutorial ()
+  "Open the Brazilian Portuguese Buku tutorial in Emacs."
+  (interactive)
+  (let* ((dir (file-name-directory (or load-file-name buffer-file-name (locate-library "desktoping-apps") "")))
+         (file (expand-file-name "buku-tutorial-guia.org" dir)))
+    (if (file-exists-p file)
+        (find-file file)
+      (find-file (expand-file-name "buku-tutorial-guia.org" default-directory)))))
+
+;;; ============================================================================
+;;; Group 5: Utilities & Documentation
 ;;; ============================================================================
 
 (defun desktoping-util-org-cheatsheet ()
@@ -239,6 +334,14 @@
 (define-key desktoping-apps-map (kbd "c s") #'desktoping-config-docker-storage)
 (define-key desktoping-apps-map (kbd "c b") #'desktoping-config-mariadb-service)
 
+;; Bookmarks (Buku) keybindings (Prefix: C-c d b)
+(define-key desktoping-apps-map (kbd "b b") #'desktoping-buku-open-manager)
+(define-key desktoping-apps-map (kbd "b s") #'desktoping-buku-search-and-open)
+(define-key desktoping-apps-map (kbd "b a") #'desktoping-buku-add-bookmark)
+(define-key desktoping-apps-map (kbd "b e") #'desktoping-buku-export-html)
+(define-key desktoping-apps-map (kbd "b i") #'desktoping-buku-import-html)
+(define-key desktoping-apps-map (kbd "b t") #'desktoping-buku-open-tutorial)
+
 ;; Utilities & Docs keybindings
 (define-key desktoping-apps-map (kbd "o c") #'desktoping-util-org-cheatsheet)
 (define-key desktoping-apps-map (kbd "o b") #'desktoping-util-org-export-beamer)
@@ -251,6 +354,15 @@
 
 (easy-menu-define desktoping-apps-menu global-map "Desktoping Applications Menu"
   '("Desktoping"
+    ("Bookmarks (Buku)"
+     ["Search & Open Bookmark" desktoping-buku-search-and-open :keys "C-c d b s" :help "Search bookmarks and open in browser"]
+     ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]
+     ["Open Buku Manager (ebuku)" desktoping-buku-open-manager :keys "C-c d b b" :help "Open interactive ebuku manager"]
+     "---"
+     ["Export to HTML (Cross-Browser)" desktoping-buku-export-html :keys "C-c d b e" :help "Export bookmarks to Netscape HTML"]
+     ["Import from HTML (Browser Export)" desktoping-buku-import-html :keys "C-c d b i" :help "Import bookmarks from HTML file"]
+     "---"
+     ["Buku Tutorial & Guia (Org)" desktoping-buku-open-tutorial :keys "C-c d b t" :help "Open Brazilian Portuguese tutorial"])
     ("LibreOffice & Office"
      ["Start LibreOffice" desktoping-app-libreoffice :keys "C-c d l" :help "Launch LibreOffice"]
      ["Templates Directory" desktoping-libreoffice-open-templates-dir :keys "C-c d t" :help "Open LibreOffice templates in Dired"]

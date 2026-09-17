@@ -1,0 +1,204 @@
+#+TITLE: Guia Completo e Tutorial de Uso do Buku (Bookmarks Portáveis)
+#+AUTHOR: fzl-emacs
+#+DATE: 2026-09-17
+#+STARTUP: overview
+#+OPTIONS: toc:2 num:t
+
+* 📌 Introdução: O que é o Buku e Por Que Utilizá-lo?
+
+O *Buku* é um gerenciador de favoritos de linha de comando (CLI) extremamente rápido, seguro e focado em privacidade.
+
+** Principais Vantagens:
+- **100% Local e Offline:** Os seus favoritos ficam salvos exclusivamente no seu computador em um banco SQLite (`bookmarks.db`).
+- **Independente de Navegador:** Permite usar múltiplos navegadores (Firefox, Chrome, Brave, Edge, Nyxt, etc.) sem ficar preso à sincronização proprietária de nenhum deles.
+- **Integração Total com Emacs:** Permite buscar, filtrar e abrir URLs instantaneamente sem sair do seu editor favorito.
+- **Metadados Automáticos:** Busca título de páginas da web automaticamente ao salvar links.
+- **Sistema Poderoso de Tags e Busca:** Suporta filtros booleanos (AND, OR, NOT) e tags ilimitadas.
+- **Importação/Exportação Universal:** Lê e gera o formato padrão Netscape HTML (compatível com todos os navegadores do mercado) e Markdown.
+
+---
+
+* 🚀 Instalação no Linux
+
+** No Fedora / Red Hat / CentOS Stream:
+#+BEGIN_SRC bash
+sudo dnf install buku
+#+END_SRC
+
+** No Debian / Ubuntu / Linux Mint:
+#+BEGIN_SRC bash
+sudo apt install buku
+#+END_SRC
+
+** Via Gerenciador de Pacotes Python (pip/pipx):
+#+BEGIN_SRC bash
+pip install --user buku
+# ou com pipx:
+pipx install buku
+#+END_SRC
+
+---
+
+* 🗄️ Onde Ficam Salvos os Favoritos? (Configuração do Banco)
+
+Por padrão, o Buku salva o banco SQLite em:
+#+BEGIN_EXAMPLE
+~/.local/share/buku/bookmarks.db
+#+END_EXAMPLE
+
+** Como Escolher um Diretório Customizado:
+Você pode definir a variável de ambiente =BUKU_DB_PATH= no seu =~/.bashrc=, =~/.zshrc= ou no próprio Emacs:
+
+#+BEGIN_SRC bash
+# Exemplo no ~/.bashrc:
+export BUKU_DB_PATH="/run/media/wgn/ext4/Projects-Srcs/bookmarks/bookmarks.db"
+#+END_SRC
+
+No Emacs Lisp (em =~/.emacs= ou =init.el=):
+#+BEGIN_SRC elisp
+(setenv "BUKU_DB_PATH" "/run/media/wgn/ext4/Projects-Srcs/bookmarks/bookmarks.db")
+#+END_SRC
+
+---
+
+* 💻 Guia da Linha de Comando (CLI)
+
+** 1. Adicionar Favoritos
+#+BEGIN_SRC bash
+# Adicionar URL básica (busca título automaticamente na web):
+buku -a https://orgmode.org
+
+# Adicionar com tags separadas por vírgula e comentário:
+buku -a https://github.com/jarun/buku cli,tools,bookmarks -c "Repositório oficial do Buku"
+
+# Adicionar sem buscar metadados na web (offline):
+buku -a https://meusite.local --offline dev,local
+#+END_SRC
+
+** 2. Pesquisar Favoritos
+#+BEGIN_SRC bash
+# Busca genérica (busca no título, URL, comentário e tags):
+buku -s emacs
+
+# Busca restrita apenas por tags:
+buku --st emacs,orgmode
+
+# Busca por tags com lógica booleana:
+# Tags 'dev' E 'linux', mas SEM 'python':
+buku --st dev + linux - python
+#+END_SRC
+
+** 3. Abrir Favoritos no Navegador
+#+BEGIN_SRC bash
+# Abre o favorito de número #12 no navegador padrão:
+buku -w 12
+
+# Abre o primeiro resultado de uma busca diretamente:
+buku -s github -w 1
+#+END_SRC
+
+** 4. Listar e Navegar
+#+BEGIN_SRC bash
+# Listar todos os favoritos paginados:
+buku -p
+
+# Listar os últimos 10 favoritos adicionados:
+buku -p -n 10
+#+END_SRC
+
+** 5. Editar e Atualizar Favoritos
+#+BEGIN_SRC bash
+# Menu interativo para editar título, URL, tags e comentários do favorito #5:
+buku -u 5
+
+# Adicionar tags extras ao favorito #5 sem apagar as existentes:
+buku -u 5 --tag + nova_tag,tutorial
+
+# Remover uma tag do favorito #5:
+buku -u 5 --tag - tag_antiga
+#+END_SRC
+
+** 6. Deletar Favoritos
+#+BEGIN_SRC bash
+# Deleta o favorito número #5:
+buku -d 5
+
+# Deleta um intervalo de favoritos (ex: de 10 a 15):
+buku -d 10 15
+#+END_SRC
+
+---
+
+* 🔄 Portabilidade: Migração e Sincronização Entre Navegadores
+
+** Passo 1: Exportar dos seus navegadores atuais
+- No **Firefox**: Pressione =Ctrl+Shift+O= -> /Importar e Backup/ -> /Exportar favoritos como HTML.../
+- No **Chrome / Brave / Edge**: Pressione =Ctrl+Shift+O= -> Menu de 3 pontinhos -> /Exportar favoritos/
+
+** Passo 2: Importar para o Buku
+#+BEGIN_SRC bash
+buku -i ~/Downloads/bookmarks_firefox.html
+#+END_SRC
+
+** Passo 3: Exportar do Buku para atualizar outros navegadores
+#+BEGIN_SRC bash
+buku -e ~/Desktop/todos_os_favoritos.html
+#+END_SRC
+Agora, em qualquer navegador, basta ir em /Importar Favoritos de arquivo HTML/ e carregar o arquivo gerado!
+
+---
+
+* 🧠 Integração no Emacs com `fzl-emacs` e `desktoping-apps.el`
+
+O seu ambiente Emacs já possui total integração com o Buku via menu e atalhos globais prefixados em =C-c d b=.
+
+** Tabela de Atalhos no Emacs:
+| Atalho | Ação | Descrição |
+| :--- | :--- | :--- |
+| =C-c d b s= | `desktoping-buku-search-and-open` | 🔍 Busca fuzzy e abre no navegador padrão |
+| =C-c d b a= | `desktoping-buku-add-bookmark` | ➕ Adiciona novo favorito com URL, tags e notas |
+| =C-c d b b= | `desktoping-buku-open-manager` | 🗂️ Abre o buffer interativo do `ebuku` |
+| =C-c d b e= | `desktoping-buku-export-html` | 📤 Exporta para HTML (compatível com navegadores) |
+| =C-c d b i= | `desktoping-buku-import-html` | 📥 Importa arquivo HTML para o banco |
+| =C-c d b t= | `desktoping-buku-open-tutorial` | 📖 Abre este tutorial no Emacs |
+
+** Acessando pelo Menu Superior:
+Acesse no menu do Emacs:
+=Desktoping -> Bookmarks (Buku)=
+
+---
+
+* 🌐 Integração Dentro dos Navegadores: Extensão Bukubrow
+
+Para ter a busca do Buku diretamente dentro do Firefox ou Chrome/Brave com o atalho =Ctrl+Shift+B=:
+
+1. Instale a extensão **Bukubrow** na Chrome Web Store ou Firefox Add-ons.
+2. Instale o conector nativo no Linux:
+   #+BEGIN_SRC bash
+   # Instalar host nativo do bukubrow via script oficial:
+   curl -sL https://raw.githubusercontent.com/balupton/bukubrow/master/install.sh | bash
+   #+END_SRC
+3. Pronto! Ao pressionar =Ctrl+Shift+B= no navegador, uma janela de busca instantânea conectada ao seu =bookmarks.db= se abrirá.
+
+---
+
+* 🏷️ Boas Práticas para Organização de Tags
+
+- Use tags curtas em minúsculas: =dev=, =emacs=, =linux=, =php=, =python=, =lisp=, =docs=, =finance=.
+- Separe por contexto:
+  - Tipo: =artigo=, =livro=, =repo=, =video=, =ferramenta=
+  - Assunto: =ia=, =infra=, =docker=, =frontend=, =database=
+- Para buscar materiais de estudo de Emacs: =buku --st emacs,tutorial=
+
+---
+
+* 💾 Estratégia de Backup e Sincronização
+
+Como o Buku usa apenas um arquivo (`bookmarks.db`), você pode:
+1. Incluí-lo em um repositório Git privado.
+2. Usar o atalho do menu **Desktoping -> Cloud & Synchronization -> Rclone** para sincronizar com seu Google Drive (`GDrive_wgn:`).
+3. Fazer backup automático com um cron job simples:
+   #+BEGIN_SRC bash
+   # Exemplo: backup diário
+   cp ~/.local/share/buku/bookmarks.db /run/media/wgn/ext4/backups/buku_$(date +%F).db
+   #+END_SRC
