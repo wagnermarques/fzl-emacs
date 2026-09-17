@@ -75,7 +75,7 @@ buku -a https://github.com/jarun/buku cli,tools,bookmarks -c "Repositório ofici
 buku -a https://meusite.local --offline dev,local
 #+END_SRC
 
-*** ⚡ Equivalente no Emacs:
+** ⚡ Equivalente no Emacs:
 - *Atalho Global:* =C-c d b a= (~desktoping-buku-add-bookmark~)
 - *Pelo Menu:* =Desktoping -> Bookmarks (Buku) -> Add New Bookmark=
 - *No buffer do ebuku:* Pressione =a= para adicionar.
