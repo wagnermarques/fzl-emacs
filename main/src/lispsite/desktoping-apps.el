@@ -32,14 +32,14 @@
 ;;; Group 1: Productivity & Office Applications
 ;;; ============================================================================
 
-(defun desktoping-app-brave ()
-  "Launch Brave Browser in the background."
+(defun desktoping-app-chromium ()
+  "Launch Chromium Browser in the background."
   (interactive)
-  (let ((brave-bin (or (executable-find "brave-browser")
-                       (executable-find "brave")
-                       "brave-browser")))
-    (start-process "desktoping-brave" nil brave-bin)
-    (message "Launched Brave Browser in background.")))
+  (let ((chromium-bin (or (executable-find "chromium-browser")
+                          (executable-find "chromium")
+                          "chromium-browser")))
+    (start-process "desktoping-chromium" nil chromium-bin)
+    (message "Launched Chromium Browser in background.")))
 
 (defun desktoping-app-libreoffice ()
   "Launch LibreOffice in the background."
@@ -306,7 +306,7 @@
              (urls (delq nil (mapcar (lambda (item) (cdr (assq 'uri item))) filtered))))
         (if (not urls)
             (message "No URLs found for tag '%s'." chosen-tag)
-          (when (yes-or-no-p (format "Open all %d bookmarks for group '%s' in Brave? " (length urls) chosen-tag))
+          (when (yes-or-no-p (format "Open all %d bookmarks for group '%s' in Chromium? " (length urls) chosen-tag))
             (dolist (u urls)
               (desktoping--browse-url u))
             (message "Opened %d bookmarks for group '%s'." (length urls) chosen-tag)))))))
@@ -406,7 +406,8 @@
 (define-key global-map (kbd "C-c d") 'desktoping-apps-map)
 
 ;; Productivity & App keybindings
-(define-key desktoping-apps-map (kbd "B")   #'desktoping-app-brave)
+(define-key desktoping-apps-map (kbd "C")   #'desktoping-app-chromium)
+(define-key desktoping-apps-map (kbd "B")   #'desktoping-app-chromium)
 (define-key desktoping-apps-map (kbd "l")   #'desktoping-app-libreoffice)
 (define-key desktoping-apps-map (kbd "t")   #'desktoping-libreoffice-open-templates-dir)
 (define-key desktoping-apps-map (kbd "T")   #'desktoping-libreoffice-open-mytemplates-dir)
@@ -460,7 +461,7 @@
     ("Bookmarks (Buku)"
      ["Search & Open Bookmark" desktoping-buku-search-and-open :keys "C-c d b s" :help "Search bookmarks and open in browser"]
      ["Filter by Tag/Group" desktoping-buku-browse-by-tag :keys "C-c d b g" :help "Browse bookmarks in a specific tag group"]
-     ["Open All in Tag/Group (Tabs)" desktoping-buku-open-all-in-tag :keys "C-c d b o" :help "Open all links of a tag group in Brave tabs"]
+     ["Open All in Tag/Group (Tabs)" desktoping-buku-open-all-in-tag :keys "C-c d b o" :help "Open all links of a tag group in Chromium tabs"]
      "---"
      ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]
      ["Open Buku Manager (ebuku)" desktoping-buku-open-manager :keys "C-c d b b" :help "Open interactive ebuku manager"]
@@ -470,7 +471,7 @@
      "---"
      ["Buku Tutorial & Guia (Org)" desktoping-buku-open-tutorial :keys "C-c d b t" :help "Open Brazilian Portuguese tutorial"])
     ("Applications & Office"
-     ["Start Brave Browser" desktoping-app-brave :keys "C-c d B" :help "Launch Brave Browser"]
+     ["Start Chromium Browser" desktoping-app-chromium :keys "C-c d C" :help "Launch Chromium Browser"]
      "---"
      ["Start LibreOffice" desktoping-app-libreoffice :keys "C-c d l" :help "Launch LibreOffice"]
      ["Templates Directory" desktoping-libreoffice-open-templates-dir :keys "C-c d t" :help "Open LibreOffice templates in Dired"]

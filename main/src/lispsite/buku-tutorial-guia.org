@@ -177,7 +177,7 @@ Agora, em qualquer navegador, basta ir em /Importar Favoritos de arquivo HTML/ e
 * 🧠 Integração no Emacs com `fzl-emacs` e `desktoping-apps.el`
 
 O seu ambiente Emacs possui total integração com o Buku via menu e atalhos globais prefixados em =C-c d b=.
-O navegador padrão configurado para abrir os links é o *Brave Browser* (=/usr/bin/brave-browser=).
+O navegador padrão configurado para abrir os links é o *Chromium Browser* (=/usr/bin/chromium-browser=).
 
 ** 📋 Como Visualizar os Favoritos e Abrir no Navegador pelo Emacs:
 
@@ -197,7 +197,7 @@ O navegador padrão configurado para abrir os links é o *Brave Browser* (=/usr/
    #+END_EXAMPLE
 
 3. *Filtre em tempo real:* Digite qualquer termo (ex: =biblia=, =gnu=, =projetos= ou parte do link).
-4. *Abra no navegador:* Pressione =RET= (Enter) sobre o favorito selecionado. O Emacs abrirá a página imediatamente no *Brave Browser*.
+4. *Abra no navegador:* Pressione =RET= (Enter) sobre o favorito selecionado. O Emacs abrirá a página imediatamente no *Chromium Browser*.
 
 ---
 
@@ -211,7 +211,7 @@ O navegador padrão configurado para abrir os links é o *Brave Browser* (=/usr/
 2. Um buffer chamado =*ebuku*= será aberto exibindo todos os seus favoritos em formato tabular.
 3. *Controles e Teclas de Navegação no buffer:*
    - =↑= / =↓= (ou =n= / =p=): Mover o cursor entre os favoritos da lista.
-   - =RET= (Enter): Abrir o favorito sob o cursor diretamente no *Brave Browser*.
+   - =RET= (Enter): Abrir o favorito sob o cursor diretamente no *Chromium Browser*.
    - =/= ou =s=: Filtrar a lista por palavras-chave ou tags.
    - =e=: Editar URL, título ou comentário do favorito selecionado.
    - =t=: Gerenciar e editar tags do favorito.
@@ -228,35 +228,35 @@ O navegador padrão configurado para abrir os links é o *Brave Browser* (=/usr/
    /(ou menu: *Desktoping -> Bookmarks (Buku) -> Filter by Tag/Group*)/
 2. O Emacs mostrará uma lista apenas com as suas **Tags/Grupos** existentes (ex: =projetos=, =emacs=, =dev=, =leitura=).
 3. Selecione a tag desejada para visualizar apenas os favoritos pertencentes àquele grupo.
-4. Pressione =RET= no favorito desejado para abrir no Brave.
+4. Pressione =RET= no favorito desejado para abrir no Chromium.
 
 ---
 
 *** 🚀 Método 4: Abrir TODOS os Links de um Grupo de Uma Vez no Navegador (=C-c d b o=)
-Ideal para rotinas diárias (ex: abrir todos os dashboards de trabalho ou projetos matinais juntos em abas separadas no Brave):
+Ideal para rotinas diárias (ex: abrir todos os dashboards de trabalho ou projetos matinais juntos em abas separadas no Chromium):
 1. Pressione:
    #+BEGIN_EXAMPLE
    C-c d b o
    #+END_EXAMPLE
    /(ou menu: *Desktoping -> Bookmarks (Buku) -> Open All in Tag/Group (Tabs)*)/
 2. Selecione a Tag/Grupo (ex: =projetos=).
-3. O Emacs perguntará: =Open all 3 bookmarks for group 'projetos' in Brave? (yes or no)=.
-4. Digite =yes= e o Emacs abrirá **todas as URLs daquele grupo em abas simultâneas** no Brave Browser!
+3. O Emacs perguntará: =Open all 3 bookmarks for group 'projetos' in Chromium? (yes or no)=.
+4. Digite =yes= e o Emacs abrirá **todas as URLs daquele grupo em abas simultâneas** no Chromium Browser!
 
 ---
 
 ** ⌨️ Tabela Resumo de Atalhos no Emacs:
 | Atalho | Ação | Descrição |
 | :--- | :--- | :--- |
-| =C-c d b s= | `desktoping-buku-search-and-open` | 🔍 Busca fuzzy global e abre no navegador padrão (Brave) |
+| =C-c d b s= | `desktoping-buku-search-and-open` | 🔍 Busca fuzzy global e abre no navegador padrão (Chromium) |
 | =C-c d b g= | `desktoping-buku-browse-by-tag` | 🏷️ Filtra e navega favoritos por Grupo/Tag |
-| =C-c d b o= | `desktoping-buku-open-all-in-tag` | 🚀 Abre **todos** os links de um Grupo em abas no Brave |
+| =C-c d b o= | `desktoping-buku-open-all-in-tag` | 🚀 Abre **todos** os links de um Grupo em abas no Chromium |
 | =C-c d b a= | `desktoping-buku-add-bookmark` | ➕ Adiciona novo favorito com URL, tags e notas |
 | =C-c d b b= | `desktoping-buku-open-manager` | 🗂️ Abre o buffer interativo do `ebuku` |
 | =C-c d b e= | `desktoping-buku-export-html` | 📤 Exporta para HTML (compatível com navegadores) |
 | =C-c d b i= | `desktoping-buku-import-html` | 📥 Importa arquivo HTML para o banco |
 | =C-c d b t= | `desktoping-buku-open-tutorial` | 📖 Abre este tutorial no Emacs |
-| =C-c d B=   | `desktoping-app-brave` | 🚀 Abre uma nova janela do Brave Browser |
+| =C-c d C=   | `desktoping-app-chromium` | 🚀 Abre uma nova janela do Chromium Browser |
 
 ** 🖱️ Acessando pelo Menu Superior:
 Acesse no menu do Emacs:
@@ -266,7 +266,7 @@ Acesse no menu do Emacs:
 
 * 🌐 Integração Dentro dos Navegadores: Extensão Bukubrow
 
-Para ter a busca do Buku diretamente dentro do Firefox ou Chrome/Brave com o atalho =Ctrl+Shift+B=:
+Para ter a busca do Buku diretamente dentro do Chromium/Chrome ou Firefox com o atalho =Ctrl+Shift+B=:
 
 1. Instale a extensão **Bukubrow** na Chrome Web Store ou Firefox Add-ons.
 2. Instale o conector nativo no Linux:
