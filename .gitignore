@@ -4,6 +4,8 @@
 bin/api-keys-setup.sh
 
 **/*.db
+!bookmarks/bookmarks.db
+!bookmarks/*.db
 #personal files
 /main/src/lispsite/Pess/*
 sql-connect/

@@ -46,17 +46,18 @@ Por padrão, o Buku salva o banco SQLite em:
 ~/.local/share/buku/bookmarks.db
 #+END_EXAMPLE
 
-** Como Escolher um Diretório Customizado:
-Você pode definir a variável de ambiente =BUKU_DB_PATH= no seu =~/.bashrc=, =~/.zshrc= ou no próprio Emacs:
+** Banco de Dados Versionado no Projeto `fzl-emacs`:
+No `fzl-emacs`, o banco de dados é mantido e versionado diretamente dentro do projeto em:
+#+BEGIN_EXAMPLE
+<raiz-do-fzl-emacs>/bookmarks/bookmarks.db
+#+END_EXAMPLE
+Dessa forma, todos os seus favoritos ficam salvos no repositório git e são preservados em qualquer máquina ao clonar o projeto!
 
+Caso queira usar o CLI do Buku no seu terminal acessando esse mesmo banco:
 #+BEGIN_SRC bash
-# Exemplo no ~/.bashrc:
-export BUKU_DB_PATH="/run/media/wgn/ext4/Projects-Srcs/bookmarks/bookmarks.db"
-#+END_SRC
-
-No Emacs Lisp (em =~/.emacs= ou =init.el=):
-#+BEGIN_SRC elisp
-(setenv "BUKU_DB_PATH" "/run/media/wgn/ext4/Projects-Srcs/bookmarks/bookmarks.db")
+export BUKU_DB_PATH="$HOME/mnt/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs/bookmarks/bookmarks.db"
+# Ou passar o parâmetro --db diretamente:
+buku --db "$HOME/mnt/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs/bookmarks/bookmarks.db" -p
 #+END_SRC
 
 ---
@@ -296,5 +297,5 @@ Como o Buku usa apenas um arquivo (`bookmarks.db`), você pode:
 3. Fazer backup automático com um cron job simples:
    #+BEGIN_SRC bash
    # Exemplo: backup diário
-   cp ~/.local/share/buku/bookmarks.db /run/media/wgn/ext4/backups/buku_$(date +%F).db
+   cp ~/.local/share/buku/bookmarks.db /home/wgn/mnt/ext4/backups/buku_$(date +%F).db
    #+END_SRC

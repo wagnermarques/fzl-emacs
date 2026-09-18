@@ -179,17 +179,44 @@
 ;;; Group 4: Bookmarks Management (Buku Integration)
 ;;; ============================================================================
 
-(defvar desktoping-buku-db-path nil
-  "Custom path to Buku SQLite database. If nil, uses default ~/.local/share/buku/bookmarks.db.")
+(defvar desktoping-buku-db-path
+  (expand-file-name "bookmarks/bookmarks.db"
+                    (or (bound-and-true-p fzlemacs-dir--fzlemacs-home)
+                        (let ((lib (locate-library "desktoping-apps")))
+                          (and lib (expand-file-name "../../.." (file-name-directory lib))))
+                        (expand-file-name "../../.." (file-name-directory (or load-file-name buffer-file-name default-directory)))))
+  "Path to the fzl-emacs Buku SQLite database stored in the project repository.")
+
+;; Keep environment variable in sync so external tools/subprocesses also use the project database
+(setenv "BUKU_DB_PATH" desktoping-buku-db-path)
+
+(defun desktoping--buku-bin ()
+  "Find buku executable binary path, checking PATH and pipx standard locations."
+  (or (let ((pipx-buku (expand-file-name "~/.local/bin/buku")))
+        (when (file-executable-p pipx-buku) pipx-buku))
+      (executable-find "buku")
+      "buku"))
+
+(defun desktoping--buku-cmd-base ()
+  "Build the base buku command line with project database parameter."
+  (let ((db (expand-file-name desktoping-buku-db-path)))
+    (unless (file-directory-p (file-name-directory db))
+      (make-directory (file-name-directory db) t))
+    (format "PYTHONWARNINGS=\"ignore\" %s --db %s"
+            (shell-quote-argument (desktoping--buku-bin))
+            (shell-quote-argument db))))
 
 (defun desktoping-buku-open-manager ()
   "Open interactive ebuku manager if available, or launch search."
   (interactive)
   (if (fboundp 'ebuku)
-      (ebuku)
-    (if (executable-find "buku")
+      (progn
+        (when (boundp 'ebuku-db-path)
+          (setq ebuku-db-path desktoping-buku-db-path))
+        (ebuku))
+    (if (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
         (desktoping-buku-search-and-open)
-      (message "Buku CLI not found. Install with: sudo dnf install buku"))))
+      (message "Buku CLI not found. Install with: pipx install buku"))))
 
 (defun desktoping--buku-parse-json (str)
   "Extract and parse JSON array from Buku output STR, ignoring warning noise."
@@ -204,9 +231,9 @@
 
 (defun desktoping--buku-get-entries ()
   "Fetch and parse all Buku bookmark entries."
-  (unless (executable-find "buku")
-    (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
-  (let* ((cmd "PYTHONWARNINGS=\"ignore\" buku --nostdin -p -j 2>/dev/null")
+  (unless (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
+    (user-error "Buku executable not found in PATH. Install with: pipx install buku"))
+  (let* ((cmd (format "%s --nostdin -p -j 2>/dev/null" (desktoping--buku-cmd-base)))
          (json-str (shell-command-to-string cmd)))
     (desktoping--buku-parse-json json-str)))
 
@@ -365,8 +392,8 @@ Prompts for TAGS with autocomplete from existing groups, allowing new tags as we
                     nil nil))
           (in-comment (read-string "Comment / Description (optional): ")))
      (list in-url in-title in-tags in-comment)))
-  (unless (executable-find "buku")
-    (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
+  (unless (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
+    (user-error "Buku executable not found. Install with: pipx install buku"))
   (if (string-empty-p url)
       (message "No URL provided.")
     (let* ((clean-tags (if (or (null tags) (string-empty-p (string-trim tags)))
@@ -374,29 +401,32 @@ Prompts for TAGS with autocomplete from existing groups, allowing new tags as we
                          (mapconcat #'string-trim
                                     (split-string tags "," t "[ \t\r\n]+")
                                     ",")))
-           (cmd (format "PYTHONWARNINGS=\"ignore\" buku -a %s %s %s %s --nostdin 2>&1"
+           (cmd (format "%s -a %s %s %s %s --nostdin 2>&1"
+                        (desktoping--buku-cmd-base)
                         (shell-quote-argument url)
                         (if (string-empty-p clean-tags) "" (shell-quote-argument clean-tags))
                         (if (or (null comment) (string-empty-p comment)) "" (format "-c %s" (shell-quote-argument comment)))
                         (if (or (null title) (string-empty-p title)) "" (format "--title %s" (shell-quote-argument title)))))
            (output (shell-command-to-string cmd)))
-      (message "Buku: Bookmark added successfully! (Tags: %s)" (if (string-empty-p clean-tags) "none" clean-tags)))))
+      (if (string-match-p "Error\\|Traceback\\|ModuleNotFoundError" output)
+          (message "Error adding bookmark: %s" output)
+        (message "Buku: Bookmark added successfully! (Tags: %s)" (if (string-empty-p clean-tags) "none" clean-tags))))))
 
 (defun desktoping-buku-export-html (file)
   "Export Buku bookmarks to Netscape HTML format (importable into any browser)."
   (interactive "FExport bookmarks to HTML file: ")
-  (unless (executable-find "buku")
+  (unless (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
     (user-error "Buku executable not found in PATH."))
-  (let ((cmd (format "PYTHONWARNINGS=\"ignore\" buku -e %s --nostdin" (shell-quote-argument (expand-file-name file)))))
+  (let ((cmd (format "%s -e %s --nostdin" (desktoping--buku-cmd-base) (shell-quote-argument (expand-file-name file)))))
     (shell-command cmd)
     (message "Exported Buku bookmarks to %s" file)))
 
 (defun desktoping-buku-import-html (file)
   "Import bookmarks from an HTML file into Buku."
   (interactive "fImport bookmarks from HTML file: ")
-  (unless (executable-find "buku")
+  (unless (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
     (user-error "Buku executable not found in PATH."))
-  (let ((cmd (format "PYTHONWARNINGS=\"ignore\" buku -i %s --nostdin" (shell-quote-argument (expand-file-name file)))))
+  (let ((cmd (format "%s -i %s --nostdin" (desktoping--buku-cmd-base) (shell-quote-argument (expand-file-name file)))))
     (async-shell-command cmd "*desktoping-buku-import*")
     (message "Importing bookmarks from %s into Buku..." file)))
 

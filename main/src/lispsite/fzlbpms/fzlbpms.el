@@ -7,7 +7,7 @@
 ;; install mysql client
 ;;; Code:
 
-(setq fzlbpms-root-dir "/run/media/wgn/ext4/Projects-Srcs/fzlbpms")
+(setq fzlbpms-root-dir "/home/wgn/mnt/ext4/Projects-Srcs/fzlbpms")
 
 (require 'fzlbpms-menus)
 (require 'fzlbpms-db-connections);

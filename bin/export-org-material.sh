@@ -5,7 +5,7 @@
 # --- Configuration ---
 # Path to the init.el file for this Emacs configuration.
 # This needs to be an absolute path.
-EMACS_INIT_FILE="/run/media/wgn/ext4/Projects-Srcs-Desktop/fzl-emacs/main/src/lispsite/init.el"
+EMACS_INIT_FILE="/home/wgn/mnt/ext4/Projects-Srcs-Desktop/fzl-emacs/main/src/lispsite/init.el"
 
 # --- Script Logic ---
 

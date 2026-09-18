@@ -12,7 +12,7 @@
 (easy-menu-define djcb-menu global-map "fzlbpms-menu"
   '("FZLBPMS"))
 
-(setq fzl-menus-root-dir "/run/media/wgn/ext4/Projects-Srcs/fzlbpms")
+(setq fzl-menus-root-dir "/home/wgn/mnt/ext4/Projects-Srcs/fzlbpms")
 (setq fzl-menus-angular-ui-dir
       (concat fzl-menus-root-dir "/src-projects/fzlbpmsadmin/angular-ui"))
 
