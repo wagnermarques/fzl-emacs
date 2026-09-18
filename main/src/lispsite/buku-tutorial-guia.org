@@ -79,7 +79,7 @@ buku -a https://meusite.local --offline dev,local
 - *Atalho Global:* =C-c d b a= (~desktoping-buku-add-bookmark~)
 - *Pelo Menu:* =Desktoping -> Bookmarks (Buku) -> Add New Bookmark=
 - *No buffer do ebuku:* Pressione =a= para adicionar.
-- *💡 Dica de Produtividade no Emacs:* Se o cursor estiver posicionado sobre uma URL no buffer ou se você acabou de copiar um link (clipboard), o Emacs preenche a URL automaticamente no prompt! Basta teclar =RET=, digitar as tags (separadas por vírgula) e o comentário.
+- *💡 Dica de Produtividade no Emacs:* Se o cursor estiver sobre uma URL ou se você acabou de copiar um link (clipboard), o Emacs preenche a URL automaticamente no prompt! No prompt de *Tags / Group*, o Emacs oferece autocompletar com todos os seus grupos existentes (ou você pode digitar novos nomes separados por vírgula, ex: =projetos, dev, backend=).
 
 ** 2. Pesquisar Favoritos
 #+BEGIN_SRC bash
@@ -226,9 +226,9 @@ O navegador padrão configurado para abrir os links é o *Chromium Browser* (=/u
    C-c d b g
    #+END_EXAMPLE
    /(ou menu: *Desktoping -> Bookmarks (Buku) -> Filter by Tag/Group*)/
-2. O Emacs mostrará uma lista apenas com as suas **Tags/Grupos** existentes (ex: =projetos=, =emacs=, =dev=, =leitura=).
-3. Selecione a tag desejada para visualizar apenas os favoritos pertencentes àquele grupo.
-4. Pressione =RET= no favorito desejado para abrir no Chromium.
+2. O Emacs mostrará uma lista com os seus **Grupos/Tags** e a quantidade de favoritos em cada um (ex: =🏷️ projetos (2 bookmarks)=, =🏷️ emacs (1 bookmark)=).
+3. Selecione o grupo desejado para visualizar a lista com **todos os itens** pertencentes àquele grupo.
+4. Pressione =RET= no favorito desejado para abrir imediatamente no Chromium.
 
 ---
 

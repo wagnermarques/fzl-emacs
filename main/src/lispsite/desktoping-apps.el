@@ -234,6 +234,20 @@
                           (split-string raw-tags "," t "[ \t\n\r]+"))))
         (seq-some (lambda (tg) (string= (string-trim tg) tag)) split-tags)))))
 
+(defun desktoping--completing-read (prompt collection &optional predicate require-match initial-input hist def inherit-input-method)
+  "Safe wrapper around `completing-read` supporting Helm, nesting, and recursive minibuffers."
+  (let ((enable-recursive-minibuffers t))
+    (if (and (bound-and-true-p helm-alive-p) (fboundp 'helm-comp-read))
+        (helm-comp-read prompt collection
+                        :test predicate
+                        :must-match require-match
+                        :initial-input initial-input
+                        :history hist
+                        :default def
+                        :allow-nest t
+                        :name prompt)
+      (completing-read prompt collection predicate require-match initial-input hist def inherit-input-method))))
+
 (defun desktoping-buku-search-and-open ()
   "Search Buku bookmarks interactively and open selected URL in default browser."
   (interactive)
@@ -259,7 +273,7 @@
                                                 (if (string-empty-p tag-str) "" (concat "  🏷️ " tag-str)))))
                           (cons display uri)))
                       entries))
-             (choice (completing-read "Open Bookmark: " (mapcar #'car candidates) nil t))
+             (choice (desktoping--completing-read "Open Bookmark: " (mapcar #'car candidates) nil t))
              (selected-url (cdr (assoc choice candidates))))
         (when selected-url
           (desktoping--browse-url selected-url)
@@ -272,27 +286,42 @@
          (tags (desktoping--buku-get-all-tags entries)))
     (if (not tags)
         (message "No tagged bookmarks found in database.")
-      (let* ((chosen-tag (completing-read "Filter by Tag/Group: " tags nil t))
-             (filtered (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item chosen-tag)) entries))
-             (candidates
-              (mapcar (lambda (item)
-                        (let* ((index (cdr (assq 'index item)))
-                               (raw-title (cdr (assq 'title item)))
-                               (uri (cdr (assq 'uri item)))
-                               (desc (cdr (assq 'description item)))
-                               (title (cond
-                                       ((and (stringp raw-title) (not (string-empty-p raw-title)) (not (string= raw-title "Untitled"))) raw-title)
-                                       ((and (stringp desc) (not (string-empty-p desc))) desc)
-                                       (t uri)))
-                               (display (format "[#%s] %s  (%s)" index title uri)))
-                          (cons display uri)))
-                      filtered))
-             (choice (completing-read (format "Bookmarks in group [%s]: " chosen-tag)
-                                      (mapcar #'car candidates) nil t))
-             (selected-url (cdr (assoc choice candidates))))
-        (when selected-url
-          (desktoping--browse-url selected-url)
-          (message "Opened: %s" selected-url))))))
+      (let* ((tag-candidates
+              (mapcar (lambda (tag)
+                        (let* ((matching (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item tag)) entries))
+                               (count (length matching))
+                               (display (format "🏷️ %-15s  (%d bookmark%s)" tag count (if (= count 1) "" "s"))))
+                          (cons display tag)))
+                      tags))
+             (choice-tag (desktoping--completing-read "Filter by Tag/Group: " (mapcar #'car tag-candidates) nil t))
+             (chosen-tag (cdr (assoc choice-tag tag-candidates))))
+        (when chosen-tag
+          (let* ((filtered (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item chosen-tag)) entries))
+                 (candidates
+                  (mapcar (lambda (item)
+                            (let* ((index (cdr (assq 'index item)))
+                                   (raw-title (cdr (assq 'title item)))
+                                   (uri (cdr (assq 'uri item)))
+                                   (desc (cdr (assq 'description item)))
+                                   (tags (cdr (assq 'tags item)))
+                                   (tag-str (if (listp tags) (string-join tags ", ") (or tags "")))
+                                   (title (cond
+                                           ((and (stringp raw-title) (not (string-empty-p raw-title)) (not (string= raw-title "Untitled"))) raw-title)
+                                           ((and (stringp desc) (not (string-empty-p desc))) desc)
+                                           (t uri)))
+                                   (display (format "[#%s] %s  (%s)%s"
+                                                    index
+                                                    title
+                                                    uri
+                                                    (if (string-empty-p tag-str) "" (concat "  🏷️ " tag-str)))))
+                              (cons display uri)))
+                          filtered))
+                 (choice (desktoping--completing-read (format "Bookmarks in group [%s]: " chosen-tag)
+                                                      (mapcar #'car candidates) nil t))
+                 (selected-url (cdr (assoc choice candidates))))
+            (when selected-url
+              (desktoping--browse-url selected-url)
+              (message "Opened: %s" selected-url))))))))
 
 (defun desktoping-buku-open-all-in-tag ()
   "Open ALL bookmarks belonging to a selected Tag/Group in separate browser tabs."
@@ -301,37 +330,57 @@
          (tags (desktoping--buku-get-all-tags entries)))
     (if (not tags)
         (message "No tagged bookmarks found in database.")
-      (let* ((chosen-tag (completing-read "Open all links for Tag/Group: " tags nil t))
-             (filtered (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item chosen-tag)) entries))
+      (let* ((tag-candidates
+              (mapcar (lambda (tag)
+                        (let* ((matching (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item tag)) entries))
+                               (count (length matching))
+                               (display (format "🏷️ %-15s  (%d bookmark%s)" tag count (if (= count 1) "" "s"))))
+                          (cons display tag)))
+                      tags))
+             (choice-tag (desktoping--completing-read "Open all links for Tag/Group: " (mapcar #'car tag-candidates) nil t))
+             (chosen-tag (cdr (assoc choice-tag tag-candidates)))
+             (filtered (when chosen-tag
+                         (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item chosen-tag)) entries)))
              (urls (delq nil (mapcar (lambda (item) (cdr (assq 'uri item))) filtered))))
         (if (not urls)
-            (message "No URLs found for tag '%s'." chosen-tag)
+            (when chosen-tag (message "No URLs found for tag '%s'." chosen-tag))
           (when (yes-or-no-p (format "Open all %d bookmarks for group '%s' in Chromium? " (length urls) chosen-tag))
             (dolist (u urls)
               (desktoping--browse-url u))
             (message "Opened %d bookmarks for group '%s'." (length urls) chosen-tag)))))))
 
 (defun desktoping-buku-add-bookmark (url title tags comment)
-  "Add a new bookmark to Buku with URL, optional TITLE, TAGS, and optional COMMENT."
+  "Add a new bookmark to Buku with URL, optional TITLE, TAGS, and optional COMMENT.
+Prompts for TAGS with autocomplete from existing groups, allowing new tags as well."
   (interactive
    (let* ((default-url (or (thing-at-point 'url) (current-kill 0 t) ""))
+          (entries (ignore-errors (desktoping--buku-get-entries)))
+          (existing-tags (and entries (desktoping--buku-get-all-tags entries)))
           (in-url (read-string (format "URL (%s): " (if (string-empty-p default-url) "required" default-url))
                                nil nil (if (string-empty-p default-url) nil default-url)))
           (in-title (read-string "Title (optional, blank to auto-fetch): "))
-          (in-tags (read-string "Tags (comma-separated, e.g. dev,emacs,linux): "))
+          (in-tags (desktoping--completing-read
+                    "Tags / Group (choose existing or type new, comma-separated): "
+                    (or existing-tags '("projetos" "dev" "emacs" "linux"))
+                    nil nil))
           (in-comment (read-string "Comment / Description (optional): ")))
      (list in-url in-title in-tags in-comment)))
   (unless (executable-find "buku")
     (user-error "Buku executable not found in PATH. Install with: sudo dnf install buku"))
   (if (string-empty-p url)
       (message "No URL provided.")
-    (let* ((cmd (format "PYTHONWARNINGS=\"ignore\" buku -a %s %s %s %s --nostdin 2>&1"
+    (let* ((clean-tags (if (or (null tags) (string-empty-p (string-trim tags)))
+                           ""
+                         (mapconcat #'string-trim
+                                    (split-string tags "," t "[ \t\r\n]+")
+                                    ",")))
+           (cmd (format "PYTHONWARNINGS=\"ignore\" buku -a %s %s %s %s --nostdin 2>&1"
                         (shell-quote-argument url)
-                        (if (string-empty-p tags) "" (shell-quote-argument tags))
-                        (if (string-empty-p comment) "" (format "-c %s" (shell-quote-argument comment)))
-                        (if (string-empty-p title) "" (format "--title %s" (shell-quote-argument title)))))
+                        (if (string-empty-p clean-tags) "" (shell-quote-argument clean-tags))
+                        (if (or (null comment) (string-empty-p comment)) "" (format "-c %s" (shell-quote-argument comment)))
+                        (if (or (null title) (string-empty-p title)) "" (format "--title %s" (shell-quote-argument title)))))
            (output (shell-command-to-string cmd)))
-      (message "Buku: Bookmark added successfully!"))))
+      (message "Buku: Bookmark added successfully! (Tags: %s)" (if (string-empty-p clean-tags) "none" clean-tags)))))
 
 (defun desktoping-buku-export-html (file)
   "Export Buku bookmarks to Netscape HTML format (importable into any browser)."
