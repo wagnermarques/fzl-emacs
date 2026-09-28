@@ -58,5 +58,8 @@ frequentemente e fica fÃ¡cil reabri-los novamente
 **** Consulta qual tecla de atalho estÃ¡ associada e qual funÃ§Ã£o
    C-h w RET nomedafuncao
 
-
-
+*** Gerenciador de Favoritos (Buku)
+- Guia completo e tutorial: [[file:buku-tutorial-guia.org][buku-tutorial-guia.org]]
+- Atalho para abrir o guia no Emacs: =C-c d b t=
+- Atalho para pesquisar e abrir links: =C-c d b s=
+- Menu superior: =Desktoping -> Bookmarks (Buku)=

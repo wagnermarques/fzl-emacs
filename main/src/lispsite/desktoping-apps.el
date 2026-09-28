@@ -202,7 +202,7 @@
   (let ((db (expand-file-name desktoping-buku-db-path)))
     (unless (file-directory-p (file-name-directory db))
       (make-directory (file-name-directory db) t))
-    (format "PYTHONWARNINGS=\"ignore\" %s --db %s"
+    (format "PYTHONWARNINGS=\"ignore\" %s --nostdin --db %s"
             (shell-quote-argument (desktoping--buku-bin))
             (shell-quote-argument db))))
 
@@ -215,7 +215,9 @@
           (setq ebuku-db-path desktoping-buku-db-path))
         (ebuku))
     (if (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
-        (desktoping-buku-search-and-open)
+        (progn
+          (message "Package 'ebuku' not installed (use M-x package-install RET ebuku). Opening search...")
+          (desktoping-buku-search-and-open))
       (message "Buku CLI not found. Install with: pipx install buku"))))
 
 (defun desktoping--buku-parse-json (str)
@@ -233,7 +235,7 @@
   "Fetch and parse all Buku bookmark entries."
   (unless (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
     (user-error "Buku executable not found in PATH. Install with: pipx install buku"))
-  (let* ((cmd (format "%s --nostdin -p -j 2>/dev/null" (desktoping--buku-cmd-base)))
+  (let* ((cmd (format "%s -p -j 2>/dev/null" (desktoping--buku-cmd-base)))
          (json-str (shell-command-to-string cmd)))
     (desktoping--buku-parse-json json-str)))
 
@@ -378,7 +380,8 @@
 
 (defun desktoping-buku-add-bookmark (url title tags comment)
   "Add a new bookmark to Buku with URL, optional TITLE, TAGS, and optional COMMENT.
-Prompts for TAGS with autocomplete from existing groups, allowing new tags as well."
+Prompts for TAGS with autocomplete from existing groups, allowing new tags as well.
+If the URL already exists in Buku, automatically appends the TAGS to the existing bookmark."
   (interactive
    (let* ((default-url (or (thing-at-point 'url) (current-kill 0 t) ""))
           (entries (ignore-errors (desktoping--buku-get-entries)))
@@ -401,23 +404,38 @@ Prompts for TAGS with autocomplete from existing groups, allowing new tags as we
                          (mapconcat #'string-trim
                                     (split-string tags "," t "[ \t\r\n]+")
                                     ",")))
-           (cmd (format "%s -a %s %s %s %s --nostdin 2>&1"
+           (cmd (format "%s -a %s %s %s %s 2>&1"
                         (desktoping--buku-cmd-base)
                         (shell-quote-argument url)
                         (if (string-empty-p clean-tags) "" (shell-quote-argument clean-tags))
                         (if (or (null comment) (string-empty-p comment)) "" (format "-c %s" (shell-quote-argument comment)))
                         (if (or (null title) (string-empty-p title)) "" (format "--title %s" (shell-quote-argument title)))))
            (output (shell-command-to-string cmd)))
-      (if (string-match-p "Error\\|Traceback\\|ModuleNotFoundError" output)
-          (message "Error adding bookmark: %s" output)
-        (message "Buku: Bookmark added successfully! (Tags: %s)" (if (string-empty-p clean-tags) "none" clean-tags))))))
+      (cond
+       ;; If URL already exists, append the new tags to the existing bookmark
+       ((string-match "already exists at index \\([0-9]+\\)" output)
+        (let ((index (match-string 1 output)))
+          (if (string-empty-p clean-tags)
+              (message "Buku: URL already exists at index #%s (no new tags to append)." index)
+            (let* ((update-cmd (format "%s -u %s --tag + %s 2>&1"
+                                       (desktoping--buku-cmd-base)
+                                       index
+                                       (shell-quote-argument clean-tags)))
+                   (update-out (shell-command-to-string update-cmd)))
+              (if (string-match-p "Error\\|Traceback\\|ModuleNotFoundError" update-out)
+                  (message "Error appending tag to index #%s: %s" index update-out)
+                (message "Buku: URL already exists at index #%s. Added to tag/group(s): %s" index clean-tags))))))
+       ((string-match-p "Error\\|Traceback\\|ModuleNotFoundError" output)
+        (message "Error adding bookmark: %s" output))
+       (t
+        (message "Buku: Bookmark added successfully! (Tags: %s)" (if (string-empty-p clean-tags) "none" clean-tags)))))))
 
 (defun desktoping-buku-export-html (file)
   "Export Buku bookmarks to Netscape HTML format (importable into any browser)."
   (interactive "FExport bookmarks to HTML file: ")
   (unless (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
     (user-error "Buku executable not found in PATH."))
-  (let ((cmd (format "%s -e %s --nostdin" (desktoping--buku-cmd-base) (shell-quote-argument (expand-file-name file)))))
+  (let ((cmd (format "%s -e %s" (desktoping--buku-cmd-base) (shell-quote-argument (expand-file-name file)))))
     (shell-command cmd)
     (message "Exported Buku bookmarks to %s" file)))
 
@@ -426,7 +444,7 @@ Prompts for TAGS with autocomplete from existing groups, allowing new tags as we
   (interactive "fImport bookmarks from HTML file: ")
   (unless (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
     (user-error "Buku executable not found in PATH."))
-  (let ((cmd (format "%s -i %s --nostdin" (desktoping--buku-cmd-base) (shell-quote-argument (expand-file-name file)))))
+  (let ((cmd (format "%s -i %s" (desktoping--buku-cmd-base) (shell-quote-argument (expand-file-name file)))))
     (async-shell-command cmd "*desktoping-buku-import*")
     (message "Importing bookmarks from %s into Buku..." file)))
 
@@ -438,6 +456,124 @@ Prompts for TAGS with autocomplete from existing groups, allowing new tags as we
     (if (file-exists-p file)
         (find-file file)
       (find-file (expand-file-name "buku-tutorial-guia.org" default-directory)))))
+
+(defun desktoping-buku-delete-tag ()
+  "Delete or dissolve a Tag/Group in Buku.
+Offers to either:
+1) Remove the tag/group from all bookmarks (keeping the bookmarks), or
+2) Delete all bookmarks that belong to this tag/group."
+  (interactive)
+  (let* ((entries (desktoping--buku-get-entries))
+         (tags (desktoping--buku-get-all-tags entries)))
+    (if (not tags)
+        (message "No tags/groups found in Buku database.")
+      (let ((chosen-tag (desktoping--completing-read "Tag/Group: " tags nil t)))
+        (when (and chosen-tag (not (string-empty-p chosen-tag)))
+          (let ((action (desktoping--completing-read
+                         (format "Action for group '%s': " chosen-tag)
+                         '("1. Remove tag from bookmarks (keep bookmarks)"
+                           "2. Delete ALL bookmarks in this group")
+                         nil t)))
+            (cond
+             ((string-prefix-p "1" action)
+              (when (yes-or-no-p (format "Remove tag '%s' from all bookmarks? " chosen-tag))
+                (let* ((cmd (format "printf \"y\\n\" | %s --replace %s 2>&1"
+                                    (desktoping--buku-cmd-base)
+                                    (shell-quote-argument (downcase chosen-tag))))
+                       (out (shell-command-to-string cmd)))
+                  (if (string-match-p "Error\\|Traceback" out)
+                      (message "Error removing tag: %s" out)
+                    (message "Buku: Tag '%s' removed from all bookmarks!" chosen-tag)))))
+             ((string-prefix-p "2" action)
+              (when (yes-or-no-p (format "PERMANENTLY delete ALL bookmarks tagged '%s'? " chosen-tag))
+                (let* ((cmd (format "%s --tacit -t %s -d 2>&1"
+                                    (desktoping--buku-cmd-base)
+                                    (shell-quote-argument (downcase chosen-tag))))
+                       (out (shell-command-to-string cmd)))
+                  (if (string-match-p "Error\\|Traceback" out)
+                      (message "Error deleting bookmarks: %s" out)
+                    (message "Buku: All bookmarks in group '%s' deleted!" chosen-tag))))))))))))
+
+(defun desktoping-buku-delete-bookmark ()
+  "Interactively select a bookmark and delete it from Buku."
+  (interactive)
+  (let ((entries (desktoping--buku-get-entries)))
+    (if (not entries)
+        (message "No bookmarks found in Buku database.")
+      (let* ((candidates
+              (mapcar (lambda (item)
+                        (let* ((index (cdr (assq 'index item)))
+                               (raw-title (cdr (assq 'title item)))
+                               (uri (cdr (assq 'uri item)))
+                               (desc (cdr (assq 'description item)))
+                               (tags (cdr (assq 'tags item)))
+                               (tag-str (if (listp tags) (string-join tags ", ") (or tags "")))
+                               (title (cond
+                                       ((and (stringp raw-title) (not (string-empty-p raw-title)) (not (string= raw-title "Untitled"))) raw-title)
+                                       ((and (stringp desc) (not (string-empty-p desc))) desc)
+                                       (t uri)))
+                               (display (format "[#%s] %s  (%s)%s"
+                                                index
+                                                title
+                                                uri
+                                                (if (string-empty-p tag-str) "" (concat "  🏷️ " tag-str)))))
+                          (cons display index)))
+                      entries))
+             (choice (desktoping--completing-read "Delete Bookmark: " (mapcar #'car candidates) nil t))
+             (selected-idx (cdr (assoc choice candidates))))
+        (when selected-idx
+          (if (yes-or-no-p (format "Permanently delete bookmark #%s? " selected-idx))
+              (let* ((cmd (format "%s --tacit -d %s 2>&1"
+                                  (desktoping--buku-cmd-base)
+                                  selected-idx))
+                     (out (shell-command-to-string cmd)))
+                (if (string-match-p "Error\\|Traceback" out)
+                    (message "Error deleting bookmark #%s: %s" selected-idx out)
+                  (message "Buku: Bookmark #%s deleted successfully." selected-idx)))
+            (message "Canceled.")))))))
+
+(defun desktoping-buku-edit-tags ()
+  "Interactively select a bookmark and edit or update its tags."
+  (interactive)
+  (let ((entries (desktoping--buku-get-entries)))
+    (if (not entries)
+        (message "No bookmarks found in Buku database.")
+      (let* ((candidates
+              (mapcar (lambda (item)
+                        (let* ((index (cdr (assq 'index item)))
+                               (raw-title (cdr (assq 'title item)))
+                               (uri (cdr (assq 'uri item)))
+                               (desc (cdr (assq 'description item)))
+                               (tags (cdr (assq 'tags item)))
+                               (tag-str (if (listp tags) (string-join tags ", ") (or tags "")))
+                               (title (cond
+                                       ((and (stringp raw-title) (not (string-empty-p raw-title)) (not (string= raw-title "Untitled"))) raw-title)
+                                       ((and (stringp desc) (not (string-empty-p desc))) desc)
+                                       (t uri)))
+                               (display (format "[#%s] %s  (%s)%s"
+                                                index
+                                                title
+                                                uri
+                                                (if (string-empty-p tag-str) "" (concat "  🏷️ " tag-str)))))
+                          (list display index tag-str uri)))
+                      entries))
+             (choice (desktoping--completing-read "Edit Tags for Bookmark: " (mapcar #'car candidates) nil t))
+             (item (assoc choice candidates)))
+        (when item
+          (let* ((idx (nth 1 item))
+                 (cur-tags (nth 2 item))
+                 (new-tags (read-string (format "Edit tags for #%s (comma-separated): " idx) cur-tags))
+                 (clean-tags (mapconcat #'string-trim
+                                        (split-string new-tags "," t "[ \t\r\n]+")
+                                        ","))
+                 (cmd (format "%s -u %s --tag %s 2>&1"
+                              (desktoping--buku-cmd-base)
+                              idx
+                              (shell-quote-argument clean-tags)))
+                 (out (shell-command-to-string cmd)))
+            (if (string-match-p "Error\\|Traceback" out)
+                (message "Error updating tags for bookmark #%s: %s" idx out)
+              (message "Buku: Bookmark #%s tags updated to: [%s]" idx clean-tags))))))))
 
 ;;; ============================================================================
 ;;; Group 5: Utilities & Documentation
@@ -521,6 +657,9 @@ Prompts for TAGS with autocomplete from existing groups, allowing new tags as we
 (define-key desktoping-apps-map (kbd "b g") #'desktoping-buku-browse-by-tag)
 (define-key desktoping-apps-map (kbd "b o") #'desktoping-buku-open-all-in-tag)
 (define-key desktoping-apps-map (kbd "b a") #'desktoping-buku-add-bookmark)
+(define-key desktoping-apps-map (kbd "b d") #'desktoping-buku-delete-bookmark)
+(define-key desktoping-apps-map (kbd "b D") #'desktoping-buku-delete-tag)
+(define-key desktoping-apps-map (kbd "b T") #'desktoping-buku-edit-tags)
 (define-key desktoping-apps-map (kbd "b e") #'desktoping-buku-export-html)
 (define-key desktoping-apps-map (kbd "b i") #'desktoping-buku-import-html)
 (define-key desktoping-apps-map (kbd "b t") #'desktoping-buku-open-tutorial)
@@ -543,6 +682,10 @@ Prompts for TAGS with autocomplete from existing groups, allowing new tags as we
      ["Open All in Tag/Group (Tabs)" desktoping-buku-open-all-in-tag :keys "C-c d b o" :help "Open all links of a tag group in Chromium tabs"]
      "---"
      ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]
+     ["Edit Bookmark Tags" desktoping-buku-edit-tags :keys "C-c d b T" :help "Edit or update tags of a bookmark"]
+     ["Delete Bookmark" desktoping-buku-delete-bookmark :keys "C-c d b d" :help "Delete a bookmark from database"]
+     ["Delete Tag/Group" desktoping-buku-delete-tag :keys "C-c d b D" :help "Remove a tag/group from all bookmarks or delete its bookmarks"]
+     "---"
      ["Open Buku Manager (ebuku)" desktoping-buku-open-manager :keys "C-c d b b" :help "Open interactive ebuku manager"]
      "---"
      ["Export to HTML (Cross-Browser)" desktoping-buku-export-html :keys "C-c d b e" :help "Export bookmarks to Netscape HTML"]

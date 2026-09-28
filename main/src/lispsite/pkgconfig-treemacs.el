@@ -80,6 +80,43 @@
   ;; Theme loading fallback
   (ignore-errors (treemacs-load-theme "doom-atom"))
 
+  ;; Default workspace project configuration
+  (defvar fzl/treemacs-default-project-path
+    (if (boundp 'externaldisk_partition2)
+        (concat externaldisk_partition2 "/Projects-Srcs")
+      "/home/wgn/mnt/ext4/Projects-Srcs")
+    "Default project directory for Treemacs workspace.")
+
+  (defvar fzl/treemacs-default-project-name "Projects-Srcs"
+    "Default project name for Treemacs workspace.")
+
+  (defun fzl/treemacs-set-default-project (&optional path name)
+    "Set PATH (default `fzl/treemacs-default-project-path') as the project in Treemacs workspace."
+    (interactive)
+    (let ((proj-path (or path fzl/treemacs-default-project-path))
+          (proj-name (or name fzl/treemacs-default-project-name)))
+      (when (file-directory-p proj-path)
+        (let ((ws (treemacs-current-workspace)))
+          (when ws
+            (setf (treemacs-workspace->projects ws) nil)
+            (treemacs-do-add-project-to-workspace proj-path proj-name)
+            (treemacs--rerender-after-workspace-change)
+            (treemacs--persist)
+            (message "Treemacs workspace set to default project: %s" proj-path))))))
+
+  ;; Ensure default project exists when workspace is empty
+  (add-hook 'treemacs-post-buffer-init-hook
+            (lambda ()
+              (let* ((ws (treemacs-current-workspace))
+                     (projects (and ws (treemacs-workspace->projects ws))))
+                (when (and (null projects)
+                           (file-directory-p fzl/treemacs-default-project-path))
+                  (treemacs-do-add-project-to-workspace
+                   fzl/treemacs-default-project-path
+                   fzl/treemacs-default-project-name)
+                  (treemacs--rerender-after-workspace-change)
+                  (treemacs--persist)))))
+
   :bind
   (:map global-map
         ("C-c t"       . treemacs)

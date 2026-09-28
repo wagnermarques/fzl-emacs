@@ -62,6 +62,42 @@ buku --db "$HOME/mnt/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs/bookmark
 
 ---
 
+* 🔍 Regra de Unicidade de URLs e Múltiplos Grupos no Buku
+
+No Buku, **as URLs são estritamente únicas por banco de dados** (restrição =UNIQUE= no SQLite).
+Se você tentar adicionar uma URL que já existe, o Buku rejeitará a duplicata:
+#+BEGIN_EXAMPLE
+[ERROR] URL [https://meusite.com] already exists at index 3
+#+END_EXAMPLE
+
+** Como o Buku organiza múltiplos grupos?
+No modelo do Buku, **grupos são modelados através de tags**.
+Um mesmo favorito pode ter quantas tags (grupos) você desejar (ex: =#projetos, dev, mobile, estudos=).
+Portanto, para que um link pertença a outro grupo, você *não duplica o registro*: basta **anexar a nova tag** ao favorito existente!
+
+*** 1. Pelo terminal (CLI):
+#+BEGIN_SRC bash
+# Adiciona a tag 'estudos' ao favorito de índice 3 sem apagar as tags que ele já tem:
+# (Atenção: deve haver um espaço entre o '+' e o nome da tag)
+buku -u 3 --tag + estudos
+
+# Também é possível atualizar buscando pela URL:
+buku -u --tag + estudos -s "https://meusite.com"
+#+END_SRC
+
+*** 2. Pelo Emacs (fzl-emacs):
+- *Detecção Automática:* Ao usar =C-c d b a= (~desktoping-buku-add-bookmark~), se a URL informada já existir no banco, o Emacs detecta o índice existente e **anexa automaticamente o novo grupo/tag ao favorito**, avisando você no rodapé.
+- *Edição Manual de Tags:* Pressione =C-c d b T= (~desktoping-buku-edit-tags~), selecione o favorito pelo autocompletar e altere ou adicione as tags diretamente.
+
+*** 3. E se você quiser bases totalmente separadas?
+Caso queira isolamento completo de coleções (ex: trabalho vs. pessoal), use arquivos de banco de dados diferentes via parâmetro =--db=:
+#+BEGIN_SRC bash
+buku --db pessoal -a https://meusite.com
+buku --db trabalho -a https://meusite.com
+#+END_SRC
+
+---
+
 * 💻 Guia da Linha de Comando (CLI)
 
 ** 1. Adicionar Favoritos
@@ -138,21 +174,30 @@ buku -u 5 --tag - tag_antiga
 #+END_SRC
 
 *** ⚡ Equivalente no Emacs:
-- No buffer do *ebuku* (=C-c d b b=):
-  - =e= para editar título, URL ou comentário.
-  - =t= para gerenciar e editar tags.
+- *Atalho Global:* =C-c d b T= (~desktoping-buku-edit-tags~)
+  - Selecione o favorito pelo autocompletar e edite as tags diretamente.
+- Caso o pacote opcional =ebuku= esteja instalado (=M-x package-install RET ebuku=), você também pode usar =C-c d b b= e teclar =t= sobre a linha.
 
-** 6. Deletar Favoritos
+** 6. Deletar Favoritos ou Grupos
 #+BEGIN_SRC bash
 # Deleta o favorito número #5:
 buku -d 5
 
-# Deleta um intervalo de favoritos (ex: de 10 a 15):
-buku -d 10 15
+# Remover uma tag/grupo de todos os favoritos (mantendo os links):
+buku --replace nome_do_grupo
+
+# Deletar todos os favoritos pertencentes a um grupo:
+buku -t nome_do_grupo -d
 #+END_SRC
 
 *** ⚡ Equivalente no Emacs:
-- No buffer do *ebuku* (=C-c d b b=), posicione o cursor sobre o favorito e tecle =d= (delete).
+- *Deletar Favorito:* =C-c d b d= (~desktoping-buku-delete-bookmark~)
+  - Abre a seleção interativa para escolher o favorito e removê-lo após confirmação.
+- *Deletar Grupo/Tag:* =C-c d b D= (~desktoping-buku-delete-tag~)
+  - Permite escolher entre:
+    1. Remover a tag de todos os links (mantendo os favoritos).
+    2. Excluir permanentemente todos os favoritos pertencentes a esse grupo.
+- No buffer do *ebuku* (se instalado via =C-c d b b=), tecle =d= sobre o favorito.
 
 ---
 
@@ -253,7 +298,10 @@ Ideal para rotinas diárias (ex: abrir todos os dashboards de trabalho ou projet
 | =C-c d b g= | `desktoping-buku-browse-by-tag` | 🏷️ Filtra e navega favoritos por Grupo/Tag |
 | =C-c d b o= | `desktoping-buku-open-all-in-tag` | 🚀 Abre **todos** os links de um Grupo em abas no Chromium |
 | =C-c d b a= | `desktoping-buku-add-bookmark` | ➕ Adiciona novo favorito com URL, tags e notas |
-| =C-c d b b= | `desktoping-buku-open-manager` | 🗂️ Abre o buffer interativo do `ebuku` |
+| =C-c d b T= | `desktoping-buku-edit-tags` | ✏️ Edita / atualiza as tags de um favorito existente |
+| =C-c d b d= | `desktoping-buku-delete-bookmark` | 🗑️ Seleciona interativamente e deleta um favorito |
+| =C-c d b D= | `desktoping-buku-delete-tag` | 🏷️❌ Remove grupo de todos os links ou apaga o grupo |
+| =C-c d b b= | `desktoping-buku-open-manager` | 🗂️ Abre o buffer interativo do `ebuku` (se instalado) |
 | =C-c d b e= | `desktoping-buku-export-html` | 📤 Exporta para HTML (compatível com navegadores) |
 | =C-c d b i= | `desktoping-buku-import-html` | 📥 Importa arquivo HTML para o banco |
 | =C-c d b t= | `desktoping-buku-open-tutorial` | 📖 Abre este tutorial no Emacs |
