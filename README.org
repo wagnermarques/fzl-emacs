@@ -63,3 +63,8 @@ frequentemente e fica fÃ¡cil reabri-los novamente
 - Atalho para abrir o guia no Emacs: =C-c d b t=
 - Atalho para pesquisar e abrir links: =C-c d b s=
 - Menu superior: =Desktoping -> Bookmarks (Buku)=
+
+* License
+This project is licensed under the terms of the GNU General Public License v3.0 (GPLv3).
+See the [[file:LICENSE][LICENSE]] file for the full license text.
+
