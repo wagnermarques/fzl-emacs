@@ -430,6 +430,48 @@ If the URL already exists in Buku, automatically appends the TAGS to the existin
        (t
         (message "Buku: Bookmark added successfully! (Tags: %s)" (if (string-empty-p clean-tags) "none" clean-tags)))))))
 
+(defun desktoping-buku-add-batch (tag urls-input)
+  "Add multiple URLs in batch under a TAG/Group in Buku.
+URLS-INPUT can contain multiple links separated by spaces or newlines.
+If left blank, uses links from clipboard."
+  (interactive
+   (let* ((entries (ignore-errors (desktoping--buku-get-entries)))
+          (existing-tags (and entries (desktoping--buku-get-all-tags entries)))
+          (in-tag (desktoping--completing-read
+                   "Group/Tag for these URLs: "
+                   (or existing-tags '("projetos" "dev" "emacs" "linux"))
+                   nil nil))
+          (clip (or (current-kill 0 t) ""))
+          (default-val (if (string-match-p "https?://" clip) clip nil))
+          (in-urls (read-string (format "Paste URLs (space/newline separated%s): "
+                                        (if default-val ", default: clipboard" ""))
+                                nil nil default-val)))
+     (list in-tag in-urls)))
+  (unless (or (executable-find (desktoping--buku-bin)) (file-executable-p (desktoping--buku-bin)))
+    (user-error "Buku executable not found."))
+  (let* ((clean-tag (downcase (string-trim (or tag "general"))))
+         (raw-list (split-string (or urls-input "") "[ \t\r\n]+" t))
+         (urls (seq-filter (lambda (s) (string-match-p "^https?://" s)) raw-list))
+         (count 0))
+    (if (not urls)
+        (message "No valid HTTP/HTTPS URLs found in input.")
+      (dolist (u urls)
+        (let* ((cmd (format "%s -a %s %s 2>&1"
+                            (desktoping--buku-cmd-base)
+                            (shell-quote-argument u)
+                            (shell-quote-argument clean-tag)))
+               (out (shell-command-to-string cmd)))
+          ;; If exists, append tag
+          (if (string-match "already exists at index \\([0-9]+\\)" out)
+              (let* ((idx (match-string 1 out))
+                     (upd (format "%s -u %s --tag + %s 2>&1"
+                                  (desktoping--buku-cmd-base)
+                                  idx
+                                  (shell-quote-argument clean-tag))))
+                (shell-command-to-string upd)))
+          (setq count (1+ count))))
+      (message "Buku: Successfully added/updated %d bookmark(s) in group '%s'!" count clean-tag))))
+
 (defun desktoping-buku-export-html (file)
   "Export Buku bookmarks to Netscape HTML format (importable into any browser)."
   (interactive "FExport bookmarks to HTML file: ")
@@ -657,6 +699,7 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "b g") #'desktoping-buku-browse-by-tag)
 (define-key desktoping-apps-map (kbd "b o") #'desktoping-buku-open-all-in-tag)
 (define-key desktoping-apps-map (kbd "b a") #'desktoping-buku-add-bookmark)
+(define-key desktoping-apps-map (kbd "b B") #'desktoping-buku-add-batch)
 (define-key desktoping-apps-map (kbd "b d") #'desktoping-buku-delete-bookmark)
 (define-key desktoping-apps-map (kbd "b D") #'desktoping-buku-delete-tag)
 (define-key desktoping-apps-map (kbd "b T") #'desktoping-buku-edit-tags)
@@ -682,6 +725,7 @@ Offers to either:
      ["Open All in Tag/Group (Tabs)" desktoping-buku-open-all-in-tag :keys "C-c d b o" :help "Open all links of a tag group in Chromium tabs"]
      "---"
      ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]
+     ["Add Batch Bookmarks (Paste URLs)" desktoping-buku-add-batch :keys "C-c d b B" :help "Add multiple URLs to a tag group at once"]
      ["Edit Bookmark Tags" desktoping-buku-edit-tags :keys "C-c d b T" :help "Edit or update tags of a bookmark"]
      ["Delete Bookmark" desktoping-buku-delete-bookmark :keys "C-c d b d" :help "Delete a bookmark from database"]
      ["Delete Tag/Group" desktoping-buku-delete-tag :keys "C-c d b D" :help "Remove a tag/group from all bookmarks or delete its bookmarks"]

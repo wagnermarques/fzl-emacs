@@ -298,6 +298,7 @@ Ideal para rotinas diárias (ex: abrir todos os dashboards de trabalho ou projet
 | =C-c d b g= | `desktoping-buku-browse-by-tag` | 🏷️ Filtra e navega favoritos por Grupo/Tag |
 | =C-c d b o= | `desktoping-buku-open-all-in-tag` | 🚀 Abre **todos** os links de um Grupo em abas no Chromium |
 | =C-c d b a= | `desktoping-buku-add-bookmark` | ➕ Adiciona novo favorito com URL, tags e notas |
+| =C-c d b B= | `desktoping-buku-add-batch` | 📋 Salva várias URLs em lote sob um Grupo/Tag |
 | =C-c d b T= | `desktoping-buku-edit-tags` | ✏️ Edita / atualiza as tags de um favorito existente |
 | =C-c d b d= | `desktoping-buku-delete-bookmark` | 🗑️ Seleciona interativamente e deleta um favorito |
 | =C-c d b D= | `desktoping-buku-delete-tag` | 🏷️❌ Remove grupo de todos os links ou apaga o grupo |
@@ -313,17 +314,58 @@ Acesse no menu do Emacs:
 
 ---
 
-* 🌐 Integração Dentro dos Navegadores: Extensão Bukubrow
+* 🌐 Extensões de Navegador e Como Salvar Grupos de Abas Abertas
 
-Para ter a busca do Buku diretamente dentro do Chromium/Chrome ou Firefox com o atalho =Ctrl+Shift+B=:
+Sim! O Buku possui a extensão oficial **Bukubrow**, além de métodos nativos práticos para salvar todas as abas abertas de uma janela sob uma mesma tag/grupo.
 
-1. Instale a extensão **Bukubrow** na Chrome Web Store ou Firefox Add-ons.
-2. Instale o conector nativo no Linux:
+** Método 1: Extensão Oficial Bukubrow (com Staging Area de Abas)
+A **Bukubrow** é a extensão WebExtension oficial para Chrome, Chromium, Brave, Firefox e Edge.
+
+*** Recursos do Bukubrow:
+- **Salvar todas as abas abertas:** Salva automaticamente as abas abertas de uma janela para uma área de preparação (/staging area/) pelo menu de contexto. De lá, você define a tag e envia para o banco do Buku!
+- **Busca rápida:** Atalho =Ctrl+Shift+B= abre popup instantâneo para buscar e abrir favoritos.
+
+*** Como Instalar e Configurar:
+1. Instale a extensão no seu navegador:
+   - Na Chrome Web Store ou Firefox Add-ons: pesquise por *Bukubrow*.
+2. Instale o conector nativo (/native messaging host/) no Linux via terminal:
    #+BEGIN_SRC bash
-   # Instalar host nativo do bukubrow via script oficial:
    curl -sL https://raw.githubusercontent.com/balupton/bukubrow/master/install.sh | bash
    #+END_SRC
-3. Pronto! Ao pressionar =Ctrl+Shift+B= no navegador, uma janela de busca instantânea conectada ao seu =bookmarks.db= se abrirá.
+3. No navegador, clique com o botão direito em qualquer página -> *Bukubrow* -> *Save open tabs to staging area*.
+4. Abra o Bukubrow, revise os links, defina o nome do grupo nas tags e confirme!
+
+---
+
+** Método 2: Método Nativo Sem Extensões (Atalho do Navegador + Importação no Emacs)
+Se você não quiser instalar extensões adicionais agora, o Chromium/Chrome já possui essa função nativa:
+
+1. No navegador, com o grupo de abas que deseja salvar aberto, pressione:
+   #+BEGIN_EXAMPLE
+   Ctrl + Shift + D
+   #+END_EXAMPLE
+   /(ou clique com o botão direito em qualquer aba -> "Adicionar todas as guias aos favoritos...")/
+2. O navegador pedirá um nome para a pasta: **digite o nome do seu grupo/tag** (ex: =meu-projeto=) e tecle Enter.
+3. Abra o gerenciador de favoritos do navegador (=Ctrl + Shift + O=).
+4. No menu superior direito (ícone de 3 pontinhos), clique em **Exportar favoritos** e salve como HTML (ex: =~/Downloads/abas.html=).
+5. No Emacs, pressione:
+   #+BEGIN_EXAMPLE
+   C-c d b i
+   #+END_EXAMPLE
+   e selecione o arquivo =abas.html=. O Buku importará todas as URLs e **criará automaticamente a tag com o nome da pasta**!
+
+---
+
+** Método 3: Lote no Emacs com `desktoping-buku-add-batch` (=C-c d b B=)
+Se você copiou os links das abas (usando extensões leves como /Copy All URLs/ ou colando de um arquivo):
+1. No Emacs, pressione o atalho:
+   #+BEGIN_EXAMPLE
+   C-c d b B
+   #+END_EXAMPLE
+   /(ou menu: Desktoping -> Bookmarks (Buku) -> Add Batch Bookmarks)/
+2. Escolha ou digite a **Tag/Grupo** desejada.
+3. Cole as URLs (separadas por espaço ou quebra de linha) e tecle =RET=.
+4. Todas as URLs serão cadastradas e etiquetadas com a tag instantaneamente!
 
 ---
 
