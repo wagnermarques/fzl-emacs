@@ -316,56 +316,121 @@ Acesse no menu do Emacs:
 
 * 🌐 Extensões de Navegador e Como Salvar Grupos de Abas Abertas
 
-Sim! O Buku possui a extensão oficial **Bukubrow**, além de métodos nativos práticos para salvar todas as abas abertas de uma janela sob uma mesma tag/grupo.
+Sim! O Buku possui a extensão oficial **Bukubrow**, além de métodos nativos práticos para salvar todas as abas abertas de uma janela sob uma mesma tag/grupo e reabri-las quando quiser.
 
-** Método 1: Extensão Oficial Bukubrow (com Staging Area de Abas)
+** 🔄 O Fluxo Completo de Trabalho:
+#+BEGIN_EXAMPLE
+ [ Abas Abertas no Navegador ]
+              │
+              ├── Opção 1: Extensão Bukubrow ("Save open tabs to staging area")
+              ├── Opção 2: Nativo (Ctrl+Shift+D -> Exportar HTML -> C-c d b i)
+              ├── Opção 3: Emacs Batch (Copiar URLs -> C-c d b B)
+              └── Opção 4: Terminal (Script/Loop bash com arquivo de URLs)
+              │
+              ▼
+ [ Banco SQLite do Buku: bookmarks/bookmarks.db ]
+   (Armazenado localmente, seguro e versionado no Git com a Tag/Grupo)
+              │
+              ▼
+ [ Reabrir Todas as Abas Quando Quiser ]
+   No Emacs: C-c d b o (desktoping-buku-open-all-in-tag) -> Abre tudo no Chromium!
+#+END_EXAMPLE
+
+---
+
+** Opção 1: Extensão Oficial Bukubrow (com Staging Area de Abas)
 A **Bukubrow** é a extensão WebExtension oficial para Chrome, Chromium, Brave, Firefox e Edge.
 
-*** Recursos do Bukubrow:
-- **Salvar todas as abas abertas:** Salva automaticamente as abas abertas de uma janela para uma área de preparação (/staging area/) pelo menu de contexto. De lá, você define a tag e envia para o banco do Buku!
-- **Busca rápida:** Atalho =Ctrl+Shift+B= abre popup instantâneo para buscar e abrir favoritos.
+*** O que ela faz:
+- Conecta o navegador diretamente ao seu executável local do =buku= via *Native Messaging*.
+- Possui uma **Área de Preparação (/Staging Area/)** que captura todas as abas abertas da janela atual com um clique.
+- Permite revisar os títulos, excluir abas indesejadas antes de salvar e definir as tags do grupo.
+- Atalho global no navegador (=Ctrl+Shift+B=) para busca instantânea conectada ao seu banco local.
 
-*** Como Instalar e Configurar:
-1. Instale a extensão no seu navegador:
-   - Na Chrome Web Store ou Firefox Add-ons: pesquise por *Bukubrow*.
-2. Instale o conector nativo (/native messaging host/) no Linux via terminal:
+*** Passo a Passo de Instalação no Linux:
+1. *Instale a extensão no seu navegador:*
+   - Para Chrome / Chromium / Brave: instale pela [[https://chromewebstore.google.com/detail/bukubrow/ghniladkapjacfajioheldbegfignflm][Chrome Web Store (Bukubrow)]].
+   - Para Firefox: instale pelo [[https://addons.mozilla.org/en-US/firefox/addon/bukubrow/][Firefox Add-ons (Bukubrow)]].
+2. *Instale o conector nativo (host script) no Linux:*
+   O navegador precisa de permissão para conversar com o binário do Buku. Execute no terminal:
    #+BEGIN_SRC bash
    curl -sL https://raw.githubusercontent.com/balupton/bukubrow/master/install.sh | bash
    #+END_SRC
-3. No navegador, clique com o botão direito em qualquer página -> *Bukubrow* -> *Save open tabs to staging area*.
-4. Abra o Bukubrow, revise os links, defina o nome do grupo nas tags e confirme!
+   /(Esse script cria os manifestos em =~/.config/chromium/NativeMessagingHosts/bukubrow.json= e =~/.config/google-chrome/NativeMessagingHosts/bukubrow.json=)/.
+3. *Como Salvar o Grupo de Abas:*
+   - No navegador, clique com o botão direito em qualquer área da página.
+   - Selecione: *Bukubrow* -> *Save open tabs to staging area*.
+   - Abra a janela da Bukubrow (ou tecle =Ctrl+Shift+B=).
+   - Na aba de Staging, você verá todas as abas capturadas.
+   - Digite o nome da **Tag/Grupo** desejada (ex: =projeto-x, pesquisa=) e confirme para salvar no banco!
 
 ---
 
-** Método 2: Método Nativo Sem Extensões (Atalho do Navegador + Importação no Emacs)
-Se você não quiser instalar extensões adicionais agora, o Chromium/Chrome já possui essa função nativa:
+** Opção 2: Método Nativo Sem Extensões (Atalho do Navegador + Importação no Emacs)
+Ideal se você não quiser instalar extensões e deseja salvar um grupo de abas imediatamente:
 
-1. No navegador, com o grupo de abas que deseja salvar aberto, pressione:
-   #+BEGIN_EXAMPLE
-   Ctrl + Shift + D
-   #+END_EXAMPLE
-   /(ou clique com o botão direito em qualquer aba -> "Adicionar todas as guias aos favoritos...")/
-2. O navegador pedirá um nome para a pasta: **digite o nome do seu grupo/tag** (ex: =meu-projeto=) e tecle Enter.
-3. Abra o gerenciador de favoritos do navegador (=Ctrl + Shift + O=).
-4. No menu superior direito (ícone de 3 pontinhos), clique em **Exportar favoritos** e salve como HTML (ex: =~/Downloads/abas.html=).
-5. No Emacs, pressione:
-   #+BEGIN_EXAMPLE
-   C-c d b i
-   #+END_EXAMPLE
-   e selecione o arquivo =abas.html=. O Buku importará todas as URLs e **criará automaticamente a tag com o nome da pasta**!
+1. *Salvar as abas em uma pasta de favoritos no navegador:*
+   - Na janela com as abas abertas no Chromium/Chrome/Brave, tecle:
+     #+BEGIN_EXAMPLE
+     Ctrl + Shift + D
+     #+END_EXAMPLE
+     /(ou botão direito na barra de guias -> "Adicionar todas as guias aos favoritos...")/.
+   - No campo "Nome da pasta", digite o **nome do seu grupo/tag** (ex: =pesquisa-ia=) e salve na "Barra de favoritos".
+2. *Exportar os favoritos para HTML:*
+   - Abra o gerenciador de favoritos do navegador: =Ctrl + Shift + O=.
+   - Clique no menu de 3 pontinhos (=⋮=) no canto superior direito -> **Exportar favoritos**.
+   - Salve o arquivo (ex: =~/Downloads/abas_salvas.html=).
+3. *Importar diretamente no Emacs:*
+   - No Emacs, tecle:
+     #+BEGIN_EXAMPLE
+     C-c d b i
+     #+END_EXAMPLE
+     /(ou menu: Desktoping -> Bookmarks (Buku) -> Import from HTML)/.
+   - Selecione o arquivo =abas_salvas.html=.
+   - O Buku importará todas as URLs e **criará automaticamente a tag com o nome da pasta** (=pesquisa-ia=)!
+4. *(Opcional)* Você pode agora apagar a pasta criada no navegador para mantê-lo limpo, pois todos os links estão guardados de forma permanente no banco SQLite do Buku.
 
 ---
 
-** Método 3: Lote no Emacs com `desktoping-buku-add-batch` (=C-c d b B=)
-Se você copiou os links das abas (usando extensões leves como /Copy All URLs/ ou colando de um arquivo):
+** Opção 3: Adição em Lote pelo Emacs com `desktoping-buku-add-batch` (=C-c d b B=)
+Se você copiou links de abas (usando extensões leves como /Copy All URLs/, /TabCopy/, ou uma lista em texto):
+
 1. No Emacs, pressione o atalho:
    #+BEGIN_EXAMPLE
    C-c d b B
    #+END_EXAMPLE
-   /(ou menu: Desktoping -> Bookmarks (Buku) -> Add Batch Bookmarks)/
-2. Escolha ou digite a **Tag/Grupo** desejada.
+   /(ou menu: Desktoping -> Bookmarks (Buku) -> Add Batch Bookmarks (Paste URLs))/
+2. Escolha ou digite a **Tag/Grupo** para associar a todos esses links (com autocompletar).
 3. Cole as URLs (separadas por espaço ou quebra de linha) e tecle =RET=.
-4. Todas as URLs serão cadastradas e etiquetadas com a tag instantaneamente!
+   /(Se você já copiou uma URL ou lista de links para a área de transferência, o Emacs já sugere o conteúdo do clipboard automaticamente no prompt!)/
+4. O Emacs cadastra todas as URLs e aplica a tag informada. Se alguma URL já existia previamente no banco, o novo grupo é anexado a ela sem duplicar o registro!
+
+---
+
+** Opção 4: Adição em Lote via Linha de Comando (CLI / Terminal)
+Se você salvou uma lista de URLs em um arquivo de texto simples (ex: =urls.txt=):
+
+#+BEGIN_SRC bash
+# Adiciona cada URL do arquivo associando ao grupo 'meu-projeto':
+while read -r url; do
+  buku --db "$HOME/mnt/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs/bookmarks/bookmarks.db" -a "$url" meu-projeto
+done < urls.txt
+#+END_SRC
+
+---
+
+** 🚀 Como Reabrir Todas as Abas do Grupo Quando Quiser (=C-c d b o=)
+Depois de salvar suas abas em um grupo/tag, você pode fechar o navegador sem preocupação.
+Quando quiser retomar o trabalho com todos aqueles links:
+
+1. No Emacs, pressione:
+   #+BEGIN_EXAMPLE
+   C-c d b o
+   #+END_EXAMPLE
+   /(desktoping-buku-open-all-in-tag)/
+2. Escolha o Grupo/Tag (ex: =pesquisa-ia=).
+3. O Emacs pergunta: =Open all N bookmarks for group 'pesquisa-ia' in Chromium? (yes or no)=.
+4. Digite =yes= e o Chromium abrirá **todas as abas do grupo simultaneamente**!
 
 ---
 
