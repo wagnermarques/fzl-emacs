@@ -65,6 +65,9 @@ frequentemente e fica fÃ¡cil reabri-los novamente
 - Menu superior: =Desktoping -> Bookmarks (Buku)=
 
 * License
-This project is licensed under the terms of the GNU General Public License v3.0 (GPLv3).
-See the [[file:LICENSE][LICENSE]] file for the full license text.
+This project is licensed under the terms of the [[file:LICENSE][GNU General Public License v3.0 (GPLv3)]].
+
+#+BEGIN_QUOTE
+This program is distributed in the hope that it will be useful, but *WITHOUT ANY WARRANTY*; without even the implied warranty of *MERCHANTABILITY* or *FITNESS FOR A PARTICULAR PURPOSE*. The software is provided *"AS IS"*, without warranty of any kind. See the [[file:LICENSE][LICENSE]] file for the full legal terms (specifically Sections 15 and 16: /Disclaimer of Warranty/ and /Limitation of Liability/).
+#+END_QUOTE
 
