@@ -22,6 +22,19 @@
 ;; Vincular a função a uma tecla de atalho, se desejar
 (global-set-key (kbd "C-c i d") 'fzl-views--open-ibuffer-and-dired)
 
+(defvar fzl/startup-view-strategy 'ibuffer-and-dired
+  "Startup view strategy. Options: 'ibuffer-and-dired, 'theese-buffers, a custom function, or nil.")
+
+(defun fzl-views-apply-startup-strategy ()
+  "Apply the configured startup view strategy."
+  (interactive)
+  (let ((strategy (and (boundp 'fzl/startup-view-strategy) fzl/startup-view-strategy)))
+    (pcase strategy
+      ('ibuffer-and-dired (fzl-views--open-ibuffer-and-dired))
+      ('theese-buffers (fzl-views--open-theese-buffers))
+      ((pred functionp) (funcall strategy))
+      (_ nil))))
+
 
 (defun fzl/copilot/display()
   "Display copilot chat in a new window."

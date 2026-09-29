@@ -53,6 +53,9 @@
 ;;define all global variables
 (require 'config-emacs-environment-variables) ;;this file calls pkgconfig-load-vars
 
+;;load centralized user preferences and configurations
+(require 'config)
+
 ;;changing some emacs defaulst config
 (require 'config-emacs-defaults)
 
@@ -199,8 +202,8 @@
 ;;abre alguns buffers de interesse
 ;;(fzl/view/open-this-buffers)
 
-;;escolhe uma estrategia de view
-(fzl-views--open-ibuffer-and-dired)
+;;escolhe uma estrategia de view (aplicada no fim de init.el)
+;;(fzl-views--open-ibuffer-and-dired)
 
 
 ;; Set default coding system to UTF-8
@@ -223,7 +226,7 @@
 
 
 ;; Define the Nerd Font to be used for icons/symbols
-(let ((nerd-font-name "FiraCode Nerd Font Mono"))
+(let ((nerd-font-name (or (and (boundp 'fzl/font-family) fzl/font-family) "FiraCode Nerd Font Mono")))
   (when (find-font (font-spec :name nerd-font-name))
     (set-fontset-font t 'unicode nerd-font-name nil 'append)
     (set-fontset-font t 'symbol nerd-font-name nil 'append)
@@ -231,7 +234,7 @@
 
 
 ;; --- Emacs Icon Fix ---
-(let ((nerd-font-name "FiraCode Nerd Font Mono"))
+(let ((nerd-font-name (or (and (boundp 'fzl/font-family) fzl/font-family) "FiraCode Nerd Font Mono")))
   (when (find-font (font-spec :name nerd-font-name))
     ;; Apply the Nerd Font as a fallback for the 'unicode' character range
     ;; This is where most icons/symbols reside
@@ -240,7 +243,9 @@
 
 ;; Set the default font using the explicit font-spec form
 ;; (It's vital that the name here matches the name used above)
-(set-face-attribute 'default nil :family "FiraCode Nerd Font Mono" :height 120)
+(let ((font-name (or (and (boundp 'fzl/font-family) fzl/font-family) "FiraCode Nerd Font Mono"))
+      (font-size (or (and (boundp 'fzl/font-height) fzl/font-height) 120)))
+  (set-face-attribute 'default nil :family font-name :height font-size))
 
 ;;(open_dot_env_defined_buffers)
 ;;(teste)
@@ -271,7 +276,17 @@
 ;;(require 'tesaurus_from_json)
 
 
-(find-file (concat fzlemacs-dir--fzlemacs-home "/index.org"))
-(find-file (concat fzlemacs-dir--fzlemacs-lispsite "/init.el"))
+;;;;;;;;;;;;;;;;;
+;; Startup files & layout (configured in config.el)
+;;;;;;;;;;;;;;;;;
+(when (boundp 'fzl/startup-files)
+  (dolist (file fzl/startup-files)
+    (when (and file (file-exists-p file))
+      (find-file file))))
+
+;; Apply configured view strategy
+(if (fboundp 'fzl-views-apply-startup-strategy)
+    (fzl-views-apply-startup-strategy)
+  (fzl-views--open-ibuffer-and-dired))
 
 

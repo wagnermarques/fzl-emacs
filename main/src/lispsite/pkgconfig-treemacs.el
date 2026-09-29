@@ -6,6 +6,126 @@
 
 ;;; Code:
 
+;; Workspace projects and startup configuration
+(defvar fzl/treemacs-open-on-startup nil
+  "Whether to open Treemacs automatically at startup.")
+
+(defvar fzl/treemacs-workspace-projects nil
+  "List of projects (either (name . path) pairs or path strings) to ensure in Treemacs workspace.")
+
+(defvar fzl/treemacs-default-project-path
+  (if (boundp 'externaldisk_partition2)
+      (concat externaldisk_partition2 "/Projects-Srcs")
+    "/home/wgn/mnt/ext4/Projects-Srcs")
+  "Default project directory fallback for Treemacs workspace.")
+
+(defvar fzl/treemacs-default-project-name "Projects-Srcs"
+  "Default project name fallback for Treemacs workspace.")
+
+(defvar fzl/treemacs--syncing nil
+  "Re-entrancy guard to prevent recursion during Treemacs workspace sync.")
+
+(defvar fzl/treemacs-workspace-sync-mode 'add-and-resolve
+  "How to synchronize projects defined in `fzl/treemacs-workspace-projects'.
+- 'add-and-resolve: Add configured projects and remove any conflicting nested subprojects.
+- 'exact: Set the workspace to match `fzl/treemacs-workspace-projects' exactly.")
+
+(defun fzl/treemacs-sync-workspace-projects (&optional no-rerender)
+  "Ensure all projects defined in `fzl/treemacs-workspace-projects' exist in Treemacs workspace.
+When NO-RERENDER is non-nil, do not trigger a window/buffer rerender."
+  (interactive)
+  (unless fzl/treemacs--syncing
+    (let ((fzl/treemacs--syncing t))
+      (when (fboundp 'treemacs-current-workspace)
+        (let ((ws (treemacs-current-workspace)))
+          (when ws
+            (let* ((targets (if (and (null fzl/treemacs-workspace-projects)
+                                     (boundp 'fzl/treemacs-default-project-path)
+                                     fzl/treemacs-default-project-path)
+                                (list (cons (or (and (boundp 'fzl/treemacs-default-project-name)
+                                                     fzl/treemacs-default-project-name)
+                                                "Projects-Srcs")
+                                            fzl/treemacs-default-project-path))
+                              fzl/treemacs-workspace-projects))
+                   (changed nil))
+              (when (eq (and (boundp 'fzl/treemacs-workspace-sync-mode)
+                             fzl/treemacs-workspace-sync-mode)
+                        'exact)
+                (setf (treemacs-workspace->projects ws) nil)
+                (setq changed t))
+              (dolist (item targets)
+                (let* ((name (if (consp item) (car item) (file-name-nondirectory (directory-file-name item))))
+                       (raw-path (if (consp item) (cdr item) item))
+                       (path (and raw-path (expand-file-name raw-path))))
+                  (when (and path (file-directory-p path))
+                    (let ((adding t)
+                          (attempts 0)
+                          (max-attempts 50))
+                      (while (and adding (< attempts max-attempts))
+                        (setq attempts (1+ attempts))
+                        (let ((res (treemacs-do-add-project-to-workspace path name)))
+                          (pcase res
+                            (`(success . ,_)
+                             (setq changed t
+                                   adding nil))
+                            (`(includes-project ,nested-child)
+                             ;; The configured project contains an existing child project.
+                             ;; Remove child to allow parent to be added.
+                             (treemacs--remove-project-from-current-workspace nested-child)
+                             (setq changed t))
+                            (`(duplicate-project . ,_)
+                             (setq adding nil))
+                            (`(duplicate-name . ,_)
+                             (setq adding nil))
+                            (_
+                             (setq adding nil)))))))))
+              (when changed
+                (treemacs--persist)
+                (when (and (not no-rerender)
+                           (fboundp 'treemacs-current-visibility)
+                           (eq (treemacs-current-visibility) 'visible))
+                  (treemacs--rerender-after-workspace-change))))))))))
+
+(defun fzl/treemacs-reset-workspace-projects ()
+  "Clear current workspace and re-add all projects defined in `fzl/treemacs-workspace-projects'."
+  (interactive)
+  (require 'treemacs)
+  (let ((ws (treemacs-current-workspace)))
+    (when ws
+      (setf (treemacs-workspace->projects ws) nil)
+      (fzl/treemacs-sync-workspace-projects t)
+      (treemacs--persist)
+      (when (and (fboundp 'treemacs-current-visibility)
+                 (eq (treemacs-current-visibility) 'visible))
+        (treemacs--rerender-after-workspace-change))
+      (message "Treemacs workspace reset to configured projects."))))
+
+(defun fzl/treemacs-open ()
+  "Ensure Treemacs window is open and visible without toggling it off."
+  (interactive)
+  (require 'treemacs)
+  (let ((origin (selected-window)))
+    (fzl/treemacs-sync-workspace-projects t)
+    (unless (eq (treemacs-current-visibility) 'visible)
+      (treemacs))
+    (when (window-live-p origin)
+      (select-window origin))))
+
+(defun fzl/treemacs-set-default-project (&optional path name)
+  "Set PATH (default `fzl/treemacs-default-project-path') as the project in Treemacs workspace."
+  (interactive)
+  (require 'treemacs)
+  (let ((proj-path (or path fzl/treemacs-default-project-path))
+        (proj-name (or name fzl/treemacs-default-project-name)))
+    (when (file-directory-p proj-path)
+      (let ((ws (treemacs-current-workspace)))
+        (when ws
+          (setf (treemacs-workspace->projects ws) nil)
+          (treemacs-do-add-project-to-workspace proj-path proj-name)
+          (treemacs--rerender-after-workspace-change)
+          (treemacs--persist)
+          (message "Treemacs workspace set to default project: %s" proj-path))))))
+
 (use-package treemacs
   :ensure t
   :defer t
@@ -80,42 +200,8 @@
   ;; Theme loading fallback
   (ignore-errors (treemacs-load-theme "doom-atom"))
 
-  ;; Default workspace project configuration
-  (defvar fzl/treemacs-default-project-path
-    (if (boundp 'externaldisk_partition2)
-        (concat externaldisk_partition2 "/Projects-Srcs")
-      "/home/wgn/mnt/ext4/Projects-Srcs")
-    "Default project directory for Treemacs workspace.")
-
-  (defvar fzl/treemacs-default-project-name "Projects-Srcs"
-    "Default project name for Treemacs workspace.")
-
-  (defun fzl/treemacs-set-default-project (&optional path name)
-    "Set PATH (default `fzl/treemacs-default-project-path') as the project in Treemacs workspace."
-    (interactive)
-    (let ((proj-path (or path fzl/treemacs-default-project-path))
-          (proj-name (or name fzl/treemacs-default-project-name)))
-      (when (file-directory-p proj-path)
-        (let ((ws (treemacs-current-workspace)))
-          (when ws
-            (setf (treemacs-workspace->projects ws) nil)
-            (treemacs-do-add-project-to-workspace proj-path proj-name)
-            (treemacs--rerender-after-workspace-change)
-            (treemacs--persist)
-            (message "Treemacs workspace set to default project: %s" proj-path))))))
-
-  ;; Ensure default project exists when workspace is empty
-  (add-hook 'treemacs-post-buffer-init-hook
-            (lambda ()
-              (let* ((ws (treemacs-current-workspace))
-                     (projects (and ws (treemacs-workspace->projects ws))))
-                (when (and (null projects)
-                           (file-directory-p fzl/treemacs-default-project-path))
-                  (treemacs-do-add-project-to-workspace
-                   fzl/treemacs-default-project-path
-                   fzl/treemacs-default-project-name)
-                  (treemacs--rerender-after-workspace-change)
-                  (treemacs--persist)))))
+  ;; Ensure projects are synced when treemacs buffer initializes (without recursive rerender)
+  (add-hook 'treemacs-post-buffer-init-hook (lambda () (fzl/treemacs-sync-workspace-projects t)))
 
   :bind
   (:map global-map
@@ -149,6 +235,14 @@
   :after (treemacs all-the-icons)
   :config
   (treemacs-load-theme "all-the-icons"))
+
+;; Startup hook to open treemacs if configured
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (when (and (boundp 'fzl/treemacs-open-on-startup)
+                       fzl/treemacs-open-on-startup)
+              (fzl/treemacs-open)))
+          95)
 
 (provide 'pkgconfig-treemacs)
 ;;; pkgconfig-treemacs.el ends here
