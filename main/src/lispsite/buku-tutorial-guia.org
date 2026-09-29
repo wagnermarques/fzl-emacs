@@ -352,11 +352,18 @@ A **Bukubrow** é a extensão WebExtension oficial para Chrome, Chromium, Brave,
    - Para Chrome / Chromium / Brave: instale pela [[https://chromewebstore.google.com/detail/bukubrow/ghniladkapjacfajioheldbegfignflm][Chrome Web Store (Bukubrow)]].
    - Para Firefox: instale pelo [[https://addons.mozilla.org/en-US/firefox/addon/bukubrow/][Firefox Add-ons (Bukubrow)]].
 2. *Instale o conector nativo (host script) no Linux:*
-   O navegador precisa de permissão para conversar com o binário do Buku. Execute no terminal:
-   #+BEGIN_SRC bash
-   curl -sL https://raw.githubusercontent.com/balupton/bukubrow/master/install.sh | bash
-   #+END_SRC
-   /(Esse script cria os manifestos em =~/.config/chromium/NativeMessagingHosts/bukubrow.json= e =~/.config/google-chrome/NativeMessagingHosts/bukubrow.json=)/.
+   O navegador precisa de permissão para conversar com o binário do Buku.
+   - *Via Ansible (Recomendado - automatizado em todos os navegadores):*
+     #+BEGIN_SRC bash
+     ansible-playbook -K playbooks/desktopmachine-install-browsers.yml
+     #+END_SRC
+   - *Ou manualmente via binário oficial do Bukubrow Host:*
+     #+BEGIN_SRC bash
+     sudo curl -sL -o /usr/local/bin/bukubrow https://github.com/samhh/bukubrow-host/releases/download/v5.4.0/bukubrow-linux-amd64
+     sudo chmod +x /usr/local/bin/bukubrow
+     bukubrow --install-chrome --install-chromium --install-brave --install-edge --install-firefox
+     #+END_SRC
+   /(O Bukubrow registra os manifestos de native messaging para Chrome, Chromium, Brave, Edge e Firefox)./
 3. *Como Salvar o Grupo de Abas:*
    - No navegador, clique com o botão direito em qualquer área da página.
    - Selecione: *Bukubrow* -> *Save open tabs to staging area*.
