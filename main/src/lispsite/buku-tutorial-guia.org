@@ -349,8 +349,9 @@ A **Bukubrow** é a extensão WebExtension oficial para Chrome, Chromium, Brave,
 
 *** Passo a Passo de Instalação no Linux:
 1. *Instale a extensão no seu navegador:*
-   - Para Chrome / Chromium / Brave: instale pela [[https://chromewebstore.google.com/detail/bukubrow/ghniladkapjacfajioheldbegfignflm][Chrome Web Store (Bukubrow)]].
-   - Para Firefox: instale pelo [[https://addons.mozilla.org/en-US/firefox/addon/bukubrow/][Firefox Add-ons (Bukubrow)]].
+   - Para *Chrome*, *Chromium*, *Brave*, *Edge* e *Opera*: instale diretamente pela [[https://chromewebstore.google.com/detail/bukubrow/ghniladkapjacfajioheldbegfignflm][Chrome Web Store (Bukubrow)]].
+     /(No Edge e no Opera, permita extensões da Chrome Web Store se solicitado)/.
+   - *Nota sobre o Firefox:* A Mozilla removeu/deslistou a extensão da loja oficial (AMO). Para usar no Firefox, é necessário compilar o código fonte de [[https://github.com/samhh/bukubrow-webext][samhh/bukubrow-webext]] via =make webext= e carregar manualmente em =about:debugging=, ou utilizar os métodos nativos (Opção 2 abaixo) de exportação/importação HTML.
 2. *Instale o conector nativo (host script) no Linux:*
    O navegador precisa de permissão para conversar com o binário do Buku.
    - *Via Ansible (Recomendado - automatizado em todos os navegadores):*
