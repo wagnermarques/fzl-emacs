@@ -1,9 +1,8 @@
+;;; init.el --- Configuration file -*- lexical-binding: t -*-
 ;;; Package -- Summary:
 ;;; Commentary:
 
 ;;; Code:
-;;;  -*- lexical-binding: t -*-
-
 
 ;;; shows errors details in buffer
 (setq debug-on-error t)
@@ -18,6 +17,14 @@
 (normal-top-level-add-to-load-path '("."))
 (normal-top-level-add-subdirs-to-load-path)
 
+;; configuring melpa repo and install usepackage
+;; the use-package is need by other lisp module like 'config-emacs-environment-variables below
+(require 'pkgconfig-usepackage)
+
+;; Atualiza catalogo apenas se o cache local estiver vazio (sem travar a inicialização em caso de falha de rede)
+(unless package-archive-contents
+  (ignore-errors (package-refresh-contents)))
+
 ;;This package synchronizes Emacs's internal exec-path with your shell's PATH.
 (use-package exec-path-from-shell
   :ensure t
@@ -27,13 +34,6 @@
 
 ;;if you behind a proxy uncomment this line
 ;;(require 'config-proxy)
-
-
-
-;;configuring melpa repo and install usepackage
-;; the use-package is need by other lisp module like 'config-emacs-environment-variables below
-(require 'pkgconfig-usepackage)
-(package-refresh-contents)
 
 (use-package which-key
   :ensure t
