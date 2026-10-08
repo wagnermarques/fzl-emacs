@@ -24,7 +24,7 @@
       fzlemacs-key-copilot-chat-display-keybinding "C-c c c"
       
       fzlemacs-text-zoom-initial 130
-      fzlemacs-dir-bibnotes-home (concat dir_shared_files "/bibtexfiles")
+      fzlemacs-dir-bibnotes-home "/home/wgn/mnt/ext4/Researching-bibtex-manager-data"
       ;?fzlemacs-bibliography-notes "/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects/bibtexfiles"
       fzlemacs-personal-config-dired-at-financial-dir-keybinding "C-c C-w f"
 

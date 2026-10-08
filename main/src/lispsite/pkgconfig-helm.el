@@ -7,9 +7,15 @@
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "C-x b") 'helm-mini)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+  (global-set-key (kbd "C-c f r") 'helm-recentf)
   :config
   ;; Enable Helm mode
   (helm-mode 1)
+  
+  ;; Track recent files for helm-recentf and helm-mini
+  (recentf-mode 1)
+  (setq recentf-max-saved-items 200)
+  (setq recentf-max-menu-items 25)
   
   ;; Close Helm buffer after selection
   (setq helm-quit-if-no-candidate t)

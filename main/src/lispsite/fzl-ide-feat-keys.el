@@ -20,6 +20,7 @@
 
 ;;(define-key global-map (kbd "\es") 'fzl_open_shell_in_a_buffer) ;ESC s
 (define-key global-map (kbd "C-c s") 'ansi-term)
+(define-key global-map (kbd "C-c u") 'desktoping-open-usage-buffer)
 
 (define-key global-map (kbd "\em") 'make-directory) ;ESC m
 

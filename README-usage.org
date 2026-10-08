@@ -1,0 +1,302 @@
+#+TITLE: Guia de Uso e Inventário de Atalhos (fzl-emacs)
+#+SUBTITLE: Navegação Ágil no Sistema de Arquivos, Rotinas Start-Day Buku e Produtividade sem Treemacs
+#+AUTHOR: fzl-emacs
+#+DATE: 2026-10-07
+#+STARTUP: overview
+#+OPTIONS: toc:2 num:t ^:nil
+
+* 🎯 Introdução e Filosofia: Navegação Ágil sem Treemacs
+
+No dia a dia com múltiplos repositórios, pastas profundas e dezenas de arquivos, a tentação mais comum é abrir a barra lateral do *Treemacs* e navegar pasta por pasta, clicando ou expandindo níveis com o teclado.
+
+No entanto, essa abordagem de "árvore visual" acarreta:
+1. **Perda de tempo:** Expandir 5 a 8 níveis de diretórios para encontrar um arquivo consome segundos preciosos a cada troca de contexto.
+2. **Carga cognitiva:** Ler dezenas de nomes de diretórios distrai o foco do código que você realmente precisa alterar.
+3. **Fadiga de busca:** Quando o projeto cresce, a árvore fica sobrecarregada.
+
+#+BEGIN_QUOTE
+*Filosofia Central:*
+Use atalhos diretos com busca fuzzy (*Helm*, *Projectile*, *Recentf* e
+*Special Files*) para pular exatamente onde você quer em
+milissegundos.
+
+Deixe o *Treemacs* atuar apenas como *contexto visual passivo* (graças ao ~treemacs-follow-mode~), sem depender dele para procurar arquivos!
+#+END_QUOTE
+
+---
+
+* 🚀 Inventário de Atalhos Mais Usados no fzl-emacs
+
+Para abrir este inventário e guia a qualquer momento no próprio Emacs:
+- Atalho rápido global: =C-c u=
+- Pelo prefixo Desktoping: =C-c d u= (~desktoping-open-usage-buffer~)
+- Pelo Menu Superior: =Desktoping -> Utilities & Docs -> fzl-emacs Usage & Shortcuts=
+
+** 1. Arquivos Mais Usados e Histórico Recente (Bypass do Treemacs)
+
+| Atalho      | Comando Lisp              | Descrição e Propósito                                                 |
+|-------------+---------------------------+-----------------------------------------------------------------------|
+| =C-c f r=   | ~helm-recentf~            | Busca fuzzy instantânea em *todos os arquivos recentes* do Emacs      |
+| =C-x b=     | ~helm-mini~               | Alternador unificado: lista buffers ativos *e* arquivos recentes      |
+| =C-c f o=   | ~fzl-open-special-file~   | Seletor da sua lista curada de arquivos/pastas mais usados e vitais   |
+| =C-c p e=   | ~projectile-recentf~      | Lista os arquivos mais recentemente acessados *no projeto atual*      |
+| =C-c p f=   | ~projectile-find-file~    | Busca fuzzy por qualquer arquivo no projeto (sem saber o caminho)     |
+| =C-x C-f=   | ~helm-find-files~         | Abertura tradicional de arquivos com autocompletar fuzzy do Helm      |
+
+** 2. Projetos Mais Usados e Alternância Rápida
+
+| Atalho      | Comando Lisp                             | Descrição e Propósito                                            |
+|-------------+------------------------------------------+------------------------------------------------------------------|
+| =C-c p p=   | ~projectile-switch-project~              | Alterna entre projetos conhecidos (ordenação por uso recente)    |
+| =C-c p d=   | ~projectile-find-dir~                    | Pula direto para um subdiretório do projeto no Dired             |
+| =C-c p b=   | ~projectile-switch-to-buffer~            | Alterna apenas entre os buffers do projeto atual                 |
+| =C-c p k=   | ~projectile-kill-buffers~                | Fecha todos os buffers pertencentes ao projeto atual             |
+| =C-c p s g= | ~projectile-grep~                        | Busca por texto em todos os arquivos do projeto                  |
+| =C-c p h=   | ~treemacs-projectile~                   | Seleciona um projeto Projectile e o exibe no Treemacs            |
+| =C-c p T=   | ~treemacs-add-and-display...~            | Adiciona e foca o projeto atual na barra do Treemacs imediatamente |
+
+** 3. Rotina Matinal (Start-Day Buku) e Gerenciamento de Favoritos
+
+| Atalho        | Comando Lisp                                | Descrição e Propósito                                              |
+|---------------+---------------------------------------------+--------------------------------------------------------------------|
+| =C-c d b S=   | ~desktoping-buku-open-start-day-urls-buffer~ | Abre URLs da rotina =start-day-*= em um *buffer Org interativo*    |
+| =C-u C-c d b S= | (com prefixo =C-u=)                       | Filtra URLs do Buku por um padrão de tag personalizado             |
+| =C-c d b o=   | ~desktoping-buku-open-all-in-tag~           | Abre todos os links de uma tag/grupo direto em abas do Chromium    |
+| =C-c d b s=   | ~desktoping-buku-search-and-open~           | Pesquisa interativa fuzzy em todos os favoritos do Buku            |
+| =C-c d b g=   | ~desktoping-buku-browse-by-tag~             | Filtra favoritos por grupo/tag e abre o selecionado                |
+| =C-c d b a=   | ~desktoping-buku-add-bookmark~              | Adiciona novo favorito com URL, título e tags no Buku              |
+| =C-c d b B=   | ~desktoping-buku-add-batch~                 | Adiciona lote de URLs coladas sob uma tag/grupo                    |
+| =C-c d b T=   | ~desktoping-buku-edit-tags~                 | Edita ou acrescenta tags a um favorito existente                   |
+| =C-c d b d=   | ~desktoping-buku-delete-bookmark~           | Remove um favorito específico do banco                             |
+| =C-c d b D=   | ~desktoping-buku-delete-tag~                | Deleta ou desassocia uma tag/grupo de favoritos                    |
+| =C-c d b t=   | ~desktoping-buku-open-tutorial~             | Abre o guia completo do Buku no Emacs                              |
+
+** 4. Manipulação de Janelas, Frames e Buffers Especiais
+
+| Atalho              | Comando Lisp                             | Descrição e Propósito                                        |
+|---------------------+------------------------------------------+--------------------------------------------------------------|
+| =Shift + Seta=      | ~windmove-...~                           | Move o cursor entre as janelas divididas (Cima/Baixo/Esq/Dir)|
+| =S-C-Left=          | ~enlarge-window-horizontally~            | Alarga a janela horizontalmente                              |
+| =S-C-Right=         | ~shrink-window-horizontally~             | Estreita a janela horizontalmente                            |
+| =S-C-Up=            | ~enlarge-window~                         | Alarga a janela verticalmente                                |
+| =S-C-Down=          | ~shrink-window~                          | Estreita a janela verticalmente                              |
+| =C-c i d=           | ~fzl-views--open-ibuffer-and-dired~      | Tela dividida com IBuffer acima e Dired abaixo               |
+| =C-c m=             | ~fzl/buffers/show-messages-buffer...~    | Exibe o buffer =*Messages*= na parte inferior                |
+| =C-b=               | ~fzl/buffers/show-speedbar-on-left~      | Abre o Speedbar no lado esquerdo                             |
+| =C-c t=             | ~treemacs~                               | Abre ou fecha a barra lateral Treemacs                       |
+| =M-0=               | ~treemacs-select-window~                 | Foca o cursor diretamente na barra Treemacs                  |
+| =C-q=               | ~kill-this-buffer~                       | Fecha imediatamente o buffer atual                           |
+
+** 5. Execução de Código, Terminal, Git e Inteligência Artificial
+
+| Atalho        | Comando Lisp                          | Descrição e Propósito                                                |
+|---------------+---------------------------------------+----------------------------------------------------------------------|
+| =Esc r=       | ~eval-region~                         | Avalia a região Lisp selecionada                                     |
+| =C-c s=       | ~ansi-term~                           | Abre um terminal emulado com shell Bash dentro do Emacs              |
+| =C-x g=       | ~magit-status~                        | Interface completa e visual do Git com Magit                        |
+| =C-c c c=     | ~fzl/copilot/display~                 | Abre o chat do GitHub Copilot em janela lateral                      |
+| =C-c g r=     | ~fzl-ide-feat-grep-region...~         | Executa grep recursivo na string selecionada para novo buffer        |
+| =Esc a=       | ~org-agenda-list~                     | Lista de tarefas e agenda do Org-mode                                |
+| =Esc t=       | ~org-todo-list~                       | Lista de pendências (TODOs) do Org-mode                              |
+| =C-c C-, s=   | (org template shell)                  | Insere bloco de código shell no Org-mode                             |
+| =C-c C-c=     | ~org-ctrl-c-ctrl-c~                   | Executa bloco de código Babel sob o cursor                           |
+
+** 6. Introspecção e Descoberta de Teclas no Emacs
+
+| Atalho              | Comando Lisp        | O que faz                                                               |
+|---------------------+---------------------+-------------------------------------------------------------------------|
+| =C-h w RET funcao=  | ~where-is~          | Mostra qual tecla de atalho está associada a uma determinada função     |
+| =C-h k [atalho]=    | ~describe-key~      | Pressione o atalho e o Emacs explica o que ele faz e qual função chama  |
+| =C-h f [funcao]=    | ~describe-function~ | Documentação detalhada e código-fonte de qualquer função Elisp          |
+| =C-h v [variavel]=  | ~describe-variable~ | Consulta valor atual e documentação de qualquer variável configurada   |
+| (pausa de 0.5s)     | ~which-key~         | Ao teclar um prefixo (ex: =C-c= ou =C-x=), exibe janela com opções      |
+
+---
+
+* 🌅 Rotina Matinal Buku: Buffer de URLs `start-day-*`
+
+** Por que usar um Buffer de Rotina Matinal?
+Em vez de abrir manualmente 10 abas todos os dias no navegador ou ficar procurando links em pastas de favoritos, o comando:
+#+BEGIN_SRC text
+C-c d b S
+#+END_SRC
+(~desktoping-buku-open-start-day-urls-buffer~) pesquisa no banco do Buku todos os favoritos marcados com tags que iniciem ou contenham =start-day= (por exemplo: =start-day-dev=, =start-day-work=, =start-day-news=, =start-day-infra=) e monta instantaneamente um buffer Org interativo chamado =*buku-start-day-urls*=.
+
+** Controles Rápidos dentro do Buffer `*buku-start-day-urls*`:
+
+- =RET= ou =C-c C-o=: Abre o link sob o cursor no seu navegador padrão.
+- =o=: Abre *todos os links da categoria/seção atual* em novas abas do Chromium (com confirmação rápida).
+- =g=: Recarrega e atualiza o buffer imediatamente a partir do banco de dados do Buku.
+- =C-c d b a=: Cadastra um novo link de rotina diretamente.
+- =C-c d b T=: Edita as tags de um link existente.
+- =q=: Fecha / enterra o buffer.
+
+** Como Etiquetar Links como `start-day-*`:
+
+1. **Pelo Emacs:**
+   - Pressione =C-c d b a= (~desktoping-buku-add-bookmark~).
+   - Insira a URL (se estiver copiada, o Emacs preenche automaticamente).
+   - No prompt de *Tags / Group*, digite uma tag como =start-day-dev= ou =start-day-work=.
+   - Se a URL já existir no banco, o Emacs automaticamente anexa a tag sem duplicar o link!
+
+2. **Acrescentar tag a um link que já está no banco:**
+   - Pressione =C-c d b T= (~desktoping-buku-edit-tags~).
+   - Selecione o favorito e adicione =start-day-dev=.
+
+3. **Pela Linha de Comando:**
+   #+BEGIN_SRC shell
+   # Cadastrar novo:
+   buku -a https://meu-dashboard.com/ "start-day-work, painel" --title "Dashboard Principal"
+
+   # Adicionar tag a link existente (índice 2):
+   buku -u 2 --tag + start-day-dev
+   #+END_SRC
+
+** Dica de Fluxo Alternativo:
+Se você preferir abrir direto todas as abas no Chromium de uma só vez sem passar pelo buffer, use:
+=C-c d b o= (~desktoping-buku-open-all-in-tag~) -> selecione a tag =start-day-work= e confirme.
+
+---
+
+* ⚡ Navegação Instantânea: Arquivos Mais Usados (Evite o Treemacs)
+
+** O Problema do Treemacs para Busca Diária:
+Para chegar em um arquivo como =yii3/yii3taskapp/src/Console/TaskCommand.php= via Treemacs:
+1. Precisa abrir a barra (=C-c t=).
+2. Expandir a pasta =yii3=.
+3. Expandir =yii3taskapp=.
+4. Expandir =src=.
+5. Expandir =Console=.
+6. Rolar até achar =TaskCommand.php= e teclar =RET=.
+Isso leva 10 a 15 segundos repetidamente ao longo do dia.
+
+** A Solução Ágil com Teclado:
+
+*** 1. `C-c f r` — Arquivos Recentemente Abertos (Helm Recentf)
+O Emacs mantém o histórico completo de arquivos que você visitou.
+- Pressione =C-c f r=.
+- Digite 2 ou 3 letras de qualquer parte do nome do arquivo (ex: =task com=).
+- Pressione =RET=.
+- O arquivo abre instantaneamente em *menos de 1 segundo*!
+
+*** 2. `C-x b` — Helm Mini (Buffers + Recentes em um só lugar)
+- Pressione =C-x b=.
+- O Helm exibe primeiro os buffers que já estão na memória e, em seguida, a lista dos arquivos mais recentes do disco.
+- Permite alternar de volta para qualquer arquivo trabalhado na sessão sem pensar se o buffer já estava aberto ou não.
+
+*** 3. `C-c f o` — Arquivos e Diretórios Especiais (Curadoria Pessoal)
+Definido em =main/src/lispsite/files-special-files.el=:
+- Pressione =C-c f o=.
+- Exibe o menu fuzzy com seus caminhos prioritários (ex: pastas de projetos, notas do Org, arquivos de configuração).
+- Você pode personalizar essa lista incluindo caminhos de discos externos ou repositórios centrais.
+
+*** 4. `C-c p e` — Arquivos Recentes do Projeto Atual (Projectile)
+- Quando estiver focado em um projeto específico e quiser apenas os arquivos que mexeu recentemente dentro deste repositório, pressione =C-c p e=.
+
+*** 5. `C-c p f` — Encontrar Qualquer Arquivo no Projeto (Projectile Find File)
+- Não lembra em qual pasta do projeto o arquivo está?
+- Pressione =C-c p f=, digite fragmentos do nome (ex: =conf dock= para =docker-compose.yml=) e tecle =RET=.
+- O Projectile indexa todo o projeto usando ferramentas rápidas (~git ls-files~ / ~fd~), pulando pastas pesadas (~node_modules~, ~target~, ~vendor~).
+
+---
+
+* 🎯 Navegação Instantânea: Projetos Mais Usados (Evite o Treemacs)
+
+** O Problema de Procurar Projetos na Árvore:
+Se você possui dezenas de repositórios em =/home/.../Projects-Srcs/=, navegar por uma única árvore longa no Treemacs torna a barra lateral poluída e confusa.
+
+** A Solução Ágil com Teclado:
+
+*** 1. `C-c p p` — Troca Instantânea de Projeto (~projectile-switch-project~)
+- Pressione =C-c p p=.
+- O Projectile exibe a lista de todos os projetos que você já abriu no Emacs, ordenados pelos mais recentemente acessados (*LRU*).
+- Digite 2 letras do projeto desejado e tecle =RET=.
+- O Emacs já abre o Dired ou a busca de arquivos diretamente na raiz do projeto selecionado!
+
+*** 2. Quando usar o Treemacs? Apenas para Visão Estrutural:
+- Se você quiser visualizar a estrutura de diretórios do projeto no Treemacs, não precisa navegar até ele manualmente:
+  - Abra um arquivo do projeto e tecle =C-c p T= (~treemacs-add-and-display-current-project~).
+  - Ou tecle =C-c p h= (~treemacs-projectile~) e escolha o projeto.
+- O Treemacs já adiciona e foca o projeto na barra lateral sem nenhum clique manual.
+
+*** 3. Projetos Automáticos no Início (~config.el~):
+No arquivo =main/src/lispsite/config.el=, você pode fixar previamente os projetos que devem estar sempre disponíveis no Treemacs ao iniciar o Emacs através da variável =fzl/treemacs-workspace-projects=:
+#+BEGIN_SRC emacs-lisp
+(defvar fzl/treemacs-workspace-projects
+  (list
+   (cons "Projects-Srcs" "/caminho/para/Projects-Srcs")
+   (cons "fzl-emacs" "/caminho/para/fzl-emacs")))
+#+END_SRC
+
+---
+
+* 💡 Sugestões e Boas Práticas de Produtividade
+
+** A Estratégia de Navegação em 3 Níveis:
+Para a máxima velocidade no Emacs, adote o seguinte modelo mental:
+
+#+BEGIN_SRC text
+ +-------------------------------------------------------------------------+
+ | NÍVEL 1: PULO DIRETO COM TECLADO (90% do tempo)                         |
+ |  - C-c f r  (Arquivo recente geral)      - C-c p f  (Arquivo no projeto)|
+ |  - C-x b    (Helm-mini buffer/recente)   - C-c p p  (Mudar de projeto)  |
+ |  - C-c f o  (Arquivo/diretório especial) - C-c d b S (Rotina Start-Day) |
+ +-------------------------------------------------------------------------+
+                                    ↓
+ +-------------------------------------------------------------------------+
+ | NÍVEL 2: OPERAÇÕES ESTRUTURADAS COM DIRED (8% do tempo)                 |
+ |  - C-x d    (Dired no diretório)         - C-c i d  (IBuffer + Dired)   |
+ |  - Renomeações em lote (wdired), cópias, exclusões e permissões         |
+ +-------------------------------------------------------------------------+
+                                    ↓
+ +-------------------------------------------------------------------------+
+ | NÍVEL 3: CONTEXTO VISUAL PASSIVO NO TREEMACS (2% do tempo)              |
+ |  - C-c t    (Abrir/fechar barra)         - M-0      (Focar no Treemacs) |
+ |  - Usado para inspecionar novos projetos ou ter visão geral do Git.     |
+ +-------------------------------------------------------------------------+
+#+END_SRC
+
+** Bookmarks Nativos do Emacs para Pontos Frequentes:
+Além do Buku (focado em links web), você pode usar o sistema de favoritos nativo do Emacs para marcar posições exatas em arquivos de código ou diretórios:
+- =C-x r m [nome]=: Grava a posição atual do cursor como um favorito.
+- =C-x r b [nome]=: Pula instantaneamente para a posição marcada em qualquer arquivo.
+- =C-x r l=: Lista todos os favoritos salvos no Emacs.
+
+** Como Personalizar sua Lista de Arquivos Especiais (=C-c f o=):
+Abra o arquivo =main/src/lispsite/files-special-files.el= ou configure no seu =config.local.el=:
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'fzl-special-files "/meu/caminho/favorito/projeto/")
+(add-to-list 'fzl-special-files "/meu/caminho/arquivo_importante.org")
+#+END_SRC
+Assim que salvar, ao pressionar =C-c f o= esses caminhos estarão prontos para autocompletar!
+
+** Como Chamar a Rotina Matinal Automaticamente no Startup:
+Se você deseja que o buffer com suas URLs =start-day-*= seja aberto toda vez que o Emacs iniciar, basta adicionar ao final de seu =main/src/lispsite/config.el= (ou em =config.local.el=):
+#+BEGIN_SRC emacs-lisp
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (when (fboundp 'desktoping-buku-open-start-day-urls-buffer)
+              (desktoping-buku-open-start-day-urls-buffer))))
+#+END_SRC
+
+---
+
+* 📖 Resumo das Teclas em Uma Tabela
+
+| Objetivo                             | Atalho Principal | Atalho Alternativo |
+|--------------------------------------+------------------+---------------------|
+| *Abrir este Guia/Inventário*         | =C-c u=          | =C-c d u=           |
+| *Buffer de Rotina Matinal (Buku)*    | =C-c d b S=      | =M-x fzl-buku-start-day= |
+| *Abrir todas as abas da rotina*      | =C-c d b o=      | No buffer: tecle =o=|
+| *Arquivos Mais Usados (Recentes)*    | =C-c f r=        | =C-x b= (Helm Mini) |
+| *Arquivos/Diretórios Especiais*      | =C-c f o=        | —                   |
+| *Projetos Mais Usados*               | =C-c p p=        | =C-c p h=           |
+| *Arquivo no Projeto Atual*           | =C-c p f=        | =C-c p e= (Recentes)|
+| *Pesquisa de Favoritos (Buku)*       | =C-c d b s=      | =C-c d b g= (Tags)  |
+| *Alternar Janelas com Teclado*       | =Shift + Setas=  | —                   |
+| *Terminal Embutido*                  | =C-c s=          | —                   |
+| *Git Magit*                          | =C-x g=          | —                   |
+| *Descobrir atalho de uma função*     | =C-h w=          | =C-h k=             |
+
+---
+*License:* This documentation is part of =fzl-emacs= under the [[file:LICENSE][GNU General Public License v3.0 (GPLv3)]].

@@ -7,10 +7,9 @@
         company-minimum-prefix-length 1
         company-idle-delay 0.0) ; Ajuste o tempo de atraso conforme necessário
 
-  ;; Configure company-backends to use LSP and Copilot
-  ;; This setup groups `company-capf` (used by LSP) as the primary
-  ;; and `company-copilot` as a secondary, non-exclusive source.
-  (setq company-backends '((company-capf company-copilot))))
+  ;; Configure company-backends to use LSP (company-capf).
+  ;; Note: copilot.el provides its own overlay mechanism, not a company backend.
+  (setq company-backends '(company-capf)))
 
 
 ;; in another .el file

@@ -1,0 +1,75 @@
+#+TITLE: Guia de Uso: Gerenciador de Bibliografia no Emacs (Zotero-like)
+#+AUTHOR: fzl-emacs
+#+STARTUP: showall
+#+OPTIONS: toc:2 num:t ^:nil
+
+* 📚 O que é este sistema?
+
+Este sistema substitui ferramentas externas como o *Zotero* ou *Mendeley*, trazendo toda a gestão de referências acadêmicas, artigos em PDF e anotações para dentro do Emacs.
+
+Ele é movido a três componentes principais:
+1. **Helm-BibTeX**: O motor de busca instantâneo para suas referências.
+2. **Ebib**: Um gerenciador visual do banco de dados (estilo Zotero).
+3. **Org-ref**: Para citar referências em documentos Org-mode (=org-cite= também é suportado).
+
+* ⚙️ Onde ficam meus arquivos?
+
+Seu Emacs está configurado para ler o diretório definido pela variável de ambiente =FZLEMACS_BIBNOTES_HOME=.
+Por padrão (baseado na sua configuração), este diretório é:
+=/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects/bibtexfiles=
+
+Lá dentro, o sistema espera encontrar:
+- =references.bib=: O arquivo principal que contém todas as suas referências (o banco de dados).
+- =pdfs/=: A pasta onde você guarda os PDFs dos artigos. Eles devem ser renomeados com a exata "Citation Key" (Chave BibTeX) do artigo. Ex: =smith2023.pdf=.
+- =notes/=: Pasta onde o Emacs salvará automaticamente suas notas sobre cada referência.
+
+* 🚀 Atalhos Principais (Desktoping Menu)
+
+Todos os atalhos estão mapeados no prefixo *Desktoping* (=C-c d=) e também disponíveis no menu superior do Emacs em =Desktoping -> Bibliography (BibTeX)=.
+
+| Ação                          | Atalho Emacs | Descrição                                                                 |
+|-------------------------------+--------------+---------------------------------------------------------------------------|
+| **Pesquisar Referências**     | =C-c d R=    | Abre o =helm-bibtex=. Busca interativa por autor, título ou ano.          |
+| **Abrir Gerenciador Visual**  | =C-c d E=    | Abre o =ebib= para adicionar, editar ou remover itens do banco =.bib=.    |
+
+* 🔍 Como usar o Helm-BibTeX (=C-c d R=)
+
+Este é o equivalente à barra de pesquisa do Zotero.
+
+1. Pressione =C-c d R=.
+2. Comece a digitar o nome de um autor ou uma palavra do título do artigo. A lista será filtrada instantaneamente.
+3. Use as =Setas= ou =C-n / C-p= para selecionar um artigo.
+4. **Pressione =TAB=** para ver as opções disponíveis para aquele artigo!
+   - =Open PDF, URL or DOI=: Abre o PDF associado, ou tenta buscar o link online.
+   - =Insert citation=: Insere a citação no documento que você estiver editando.
+   - =Edit notes=: Abre (ou cria) um arquivo de notas atrelado a este artigo.
+   - =Insert BibTeX=: Cola o código puro do BibTeX no seu texto (útil para compartilhar).
+
+* 🗃️ Como gerenciar o banco de dados visualmente com Ebib (=C-c d E=)
+
+Se você não quer escrever código BibTeX puro, use o =Ebib=.
+
+1. Pressione =C-c d E=. Uma interface com duas colunas será aberta. A lista de artigos em cima, e os detalhes em baixo.
+2. **Atalhos dentro do Ebib:**
+   - =a= : Adicionar uma nova referência. O Emacs perguntará o tipo (Article, Book, InProceedings, etc).
+   - =e= : Editar o campo atualmente selecionado (título, autor, ano).
+   - =d= : Deletar a referência selecionada.
+   - =s= : Salvar as mudanças no arquivo =references.bib=.
+   - =q= : Sair do Ebib.
+
+* ✍️ Escrevendo e Citando em Org-mode
+
+Quando estiver escrevendo um arquivo =.org=:
+1. Vá até o ponto onde deseja citar.
+2. Pressione =C-c d R= (=helm-bibtex=).
+3. Pesquise e selecione o artigo.
+4. Pressione =TAB=, escolha =Insert citation= (ou =org-ref insert citation=).
+5. O Emacs vai gerar algo como =cite:smith2023= ou =[@smith2023]=.
+
+Ao exportar seu documento para PDF ou LaTeX, a bibliografia será renderizada perfeitamente no final do arquivo.
+
+* 🔗 Resumo de Funcionalidades
+
+- ✅ **Sem sincronização em nuvem obscura:** Seus dados são apenas arquivos de texto puro (=.bib=) e PDFs em pastas comuns. Sincronize com Git, Dropbox ou Nextcloud livremente.
+- ✅ **Rapidez Extrema:** O =helm-bibtex= carrega bancos de milhares de referências instantaneamente.
+- ✅ **Organização:** Todas as suas anotações sobre os artigos ficam integradas e a um clique de distância.

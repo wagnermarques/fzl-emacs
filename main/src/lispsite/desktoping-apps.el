@@ -499,6 +499,158 @@ If left blank, uses links from clipboard."
         (find-file file)
       (find-file (expand-file-name "buku-tutorial-guia.org" default-directory)))))
 
+(defun desktoping-bibtex-open-tutorial ()
+  "Open the BibTeX/Zotero-like tutorial in Emacs."
+  (interactive)
+  (let* ((dir (file-name-directory (or load-file-name buffer-file-name (locate-library "desktoping-apps") "")))
+         (file (expand-file-name "bibtex-tutorial-guia.org" dir)))
+    (if (file-exists-p file)
+        (find-file file)
+      (find-file (expand-file-name "bibtex-tutorial-guia.org" default-directory)))))
+
+(defun desktoping-change-bibnotes-dir ()
+  "Interactively change FZLEMACS_BIBNOTES_HOME and reconfigure BibTeX variables."
+  (interactive)
+  (let ((new-dir (read-directory-name "New Bibnotes Dir (FZLEMACS_BIBNOTES_HOME): "
+                                      (if (boundp 'fzlemacs-dir-bibnotes-home)
+                                          fzlemacs-dir-bibnotes-home
+                                        "/home/wgn/mnt/ext4/Researching-bibtex-manager-data"))))
+    ;; Update the global variable
+    (setq fzlemacs-dir-bibnotes-home (expand-file-name new-dir))
+    
+    ;; Re-evaluate variables for helm-bibtex if loaded
+    (when (boundp 'bibtex-completion-bibliography)
+      (setq bibtex-completion-bibliography (list (expand-file-name "references.bib" fzlemacs-dir-bibnotes-home)))
+      (setq bibtex-completion-library-path (list (expand-file-name "pdfs" fzlemacs-dir-bibnotes-home)))
+      (setq bibtex-completion-notes-path (expand-file-name "notes" fzlemacs-dir-bibnotes-home)))
+      
+    ;; Re-evaluate variables for ebib if loaded
+    (when (boundp 'ebib-preload-bib-files)
+      (setq ebib-preload-bib-files (list (expand-file-name "references.bib" fzlemacs-dir-bibnotes-home)))
+      (setq ebib-notes-directory (expand-file-name "notes" fzlemacs-dir-bibnotes-home))
+      (setq ebib-file-search-dirs (list (expand-file-name "pdfs" fzlemacs-dir-bibnotes-home))))
+      
+    ;; Re-evaluate variables for org-ref if loaded
+    (when (boundp 'org-ref-default-bibliography)
+      (setq org-ref-default-bibliography (list (expand-file-name "references.bib" fzlemacs-dir-bibnotes-home)))
+      (setq org-ref-pdf-directory (expand-file-name "pdfs" fzlemacs-dir-bibnotes-home))
+      (setq org-ref-notes-directory (expand-file-name "notes" fzlemacs-dir-bibnotes-home)))
+
+    (message "FZLEMACS_BIBNOTES_HOME changed to: %s" fzlemacs-dir-bibnotes-home)))
+
+(defun desktoping-buku-open-start-day-urls-buffer (&optional custom-tag)
+  "Open start-day-* routine URLs from Buku in an interactive Org buffer.
+If CUSTOM-TAG is provided or prefix argument is used, filter by that tag pattern."
+  (interactive
+   (list (when current-prefix-arg
+           (read-string "Filter Buku by tag pattern (default 'start-day'): " "start-day"))))
+  (let* ((pattern (or custom-tag "start-day"))
+         (entries (desktoping--buku-get-entries)))
+    (if (not entries)
+        (message "No bookmarks found in Buku database.")
+      (let* ((matching-entries
+              (seq-filter
+               (lambda (item)
+                 (let ((raw-tags (cdr (assq 'tags item))))
+                   (when raw-tags
+                     (let ((split (if (listp raw-tags) raw-tags (split-string raw-tags "," t "[ \t\n\r]+"))))
+                       (seq-some (lambda (tg) (string-match-p pattern (string-trim tg))) split)))))
+               entries))
+             (buf (get-buffer-create "*buku-start-day-urls*")))
+        (with-current-buffer buf
+          (let ((inhibit-read-only t))
+            (erase-buffer)
+            (insert "#+TITLE: 🌅 Buku Start-Day Routine URLs\n")
+            (insert "#+AUTHOR: fzl-emacs\n")
+            (insert "#+STARTUP: showall\n\n")
+            (insert "* ⚡ Ações Rápidas do Buffer\n")
+            (insert "| Atalho            | Ação                                                           |\n")
+            (insert "|-------------------+----------------------------------------------------------------|\n")
+            (insert "| =RET= / =C-c C-o= | Abrir link sob o cursor no navegador                            |\n")
+            (insert "| =o=               | Abrir todos os links desta categoria em abas do Chromium       |\n")
+            (insert "| =g=               | Atualizar buffer recarregando do banco Buku                    |\n")
+            (insert "| =C-c d b a=       | Adicionar novo favorito com tag start-day-*                    |\n")
+            (insert "| =C-c d b T=       | Editar tags de um favorito existente                            |\n")
+            (insert "| =q=               | Fechar / ocultar este buffer                                   |\n\n")
+            (if matching-entries
+                (progn
+                  (insert (format "* 📋 Rotinas Diárias Encontradas (Filtro: '%s')\n\n" pattern))
+                  (let ((tags-found nil))
+                    (dolist (item matching-entries)
+                      (let* ((raw-tags (cdr (assq 'tags item)))
+                             (split (if (listp raw-tags) raw-tags (split-string raw-tags "," t "[ \t\n\r]+"))))
+                        (dolist (tg split)
+                          (let ((ctg (string-trim tg)))
+                            (when (and (string-match-p pattern ctg) (not (member ctg tags-found)))
+                              (push ctg tags-found))))))
+                    (setq tags-found (sort tags-found #'string-lessp))
+                    (dolist (tag tags-found)
+                      (let ((items-in-tag
+                             (seq-filter
+                              (lambda (item)
+                                (let* ((raw-tags (cdr (assq 'tags item)))
+                                       (split (if (listp raw-tags) raw-tags (split-string raw-tags "," t "[ \t\n\r]+"))))
+                                  (member tag (mapcar #'string-trim split))))
+                              matching-entries)))
+                        (insert (format "** 🏷️ %s (%d link%s)\n" tag (length items-in-tag) (if (= (length items-in-tag) 1) "" "s")))
+                        (dolist (item items-in-tag)
+                          (let* ((idx (cdr (assq 'index item)))
+                                 (raw-title (cdr (assq 'title item)))
+                                 (uri (cdr (assq 'uri item)))
+                                 (desc (cdr (assq 'description item)))
+                                 (title (if (and (stringp raw-title) (not (string-empty-p raw-title)) (not (string= raw-title "Untitled")))
+                                            raw-title
+                                          (if (and (stringp desc) (not (string-empty-p desc))) desc uri))))
+                            (insert (format "- [[%s][%s]]" uri title))
+                            (when (and desc (not (string-empty-p desc)) (not (string= desc title)))
+                              (insert (format " :: %s" desc)))
+                            (insert (format "  =[#%s]=\n" idx))))
+                        (insert "\n")))))
+              (progn
+                (insert (format "* ⚠️ Nenhum favorito com tag '%s' encontrado no banco!\n\n" pattern))
+                (insert "Para cadastrar links na sua rotina diária matinal:\n")
+                (insert "1. Pressione =C-c d b a= (~desktoping-buku-add-bookmark~)\n")
+                (insert "2. Digite ou cole a URL (ex: painel, repositório, notícias)\n")
+                (insert "3. No campo *Tags / Group*, defina: =start-day-dev=, =start-day-work=, etc.\n")
+                (insert "4. Pressione =g= neste buffer para recarregar os links automaticamente!\n\n")
+                (insert "* 📌 Amostra de favoritos existentes no banco Buku:\n\n")
+                (dolist (item (seq-take entries 10))
+                  (let* ((idx (cdr (assq 'index item)))
+                         (raw-title (cdr (assq 'title item)))
+                         (uri (cdr (assq 'uri item)))
+                         (desc (cdr (assq 'description item)))
+                         (tags (cdr (assq 'tags item)))
+                         (title (if (and (stringp raw-title) (not (string-empty-p raw-title))) raw-title (or desc uri))))
+                    (insert (format "- [[%s][%s]]" uri title))
+                    (when (and desc (not (string-empty-p desc)))
+                      (insert (format " :: %s" desc)))
+                    (when tags
+                      (insert (format "  (Tags: %s)" tags)))
+                    (insert (format "  =[#%s]=\n" idx))))
+                (insert "\n")))
+            (org-mode)
+            (local-set-key (kbd "g") (lambda () (interactive) (desktoping-buku-open-start-day-urls-buffer pattern)))
+            (local-set-key (kbd "q") #'quit-window)
+            (local-set-key (kbd "o")
+                           (lambda ()
+                             (interactive)
+                             (let ((urls nil))
+                               (save-excursion
+                                 (org-back-to-heading t)
+                                 (let ((end (save-excursion (outline-next-heading) (point))))
+                                   (while (re-search-forward org-link-bracket-re end t)
+                                     (push (match-string-no-properties 1) urls))))
+                               (if (not urls)
+                                   (message "Nenhum link encontrado nesta seção.")
+                                 (when (yes-or-no-p (format "Abrir %d links desta seção no Chromium? " (length urls)))
+                                   (dolist (u (reverse urls))
+                                     (desktoping--browse-url u))
+                                   (message "Abertos %d links no navegador." (length urls)))))))
+            (setq-local buffer-read-only t)))
+        (pop-to-buffer buf)))))
+
+(defalias 'fzl-buku-start-day #'desktoping-buku-open-start-day-urls-buffer)
+
 (defun desktoping-buku-delete-tag ()
   "Delete or dissolve a Tag/Group in Buku.
 Offers to either:
@@ -651,6 +803,34 @@ Offers to either:
   (interactive)
   (async-shell-command "npm config list" "*desktoping-npm-config*"))
 
+(defun desktoping-open-usage-buffer ()
+  "Open the fzl-emacs usage and shortcut inventory buffer (README-usage.org)."
+  (interactive)
+  (let* ((dir (file-name-directory (or load-file-name buffer-file-name (locate-library "desktoping-apps") "")))
+         (home (or (and (boundp 'fzlemacs-dir--fzlemacs-home) fzlemacs-dir--fzlemacs-home)
+                   (and dir (file-name-directory (directory-file-name dir)))
+                   default-directory))
+         (file (expand-file-name "README-usage.org" home)))
+    (if (file-exists-p file)
+        (find-file file)
+      (find-file (expand-file-name "README-usage.org" default-directory)))))
+
+(defalias 'fzl-open-usage-buffer #'desktoping-open-usage-buffer)
+
+;;; ============================================================================
+;;; Group 6: TaskToday
+;;; ============================================================================
+
+(defun desktoping-tasktoday-dir ()
+  "Open TaskToday directory in Dired."
+  (interactive)
+  (dired "/run/media/wgn/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-tasktoday/_0_tasktoday-files"))
+
+(defun desktoping-tasktoday-file ()
+  "Open tasktoday.org file."
+  (interactive)
+  (find-file "/run/media/wgn/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-tasktoday/_0_tasktoday-files/tasktoday.org"))
+
 ;;; ============================================================================
 ;;; Keymap Setup (Prefix: C-c d)
 ;;; ============================================================================
@@ -666,10 +846,22 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "C")   #'desktoping-app-chromium)
 (define-key desktoping-apps-map (kbd "B")   #'desktoping-app-chromium)
 (define-key desktoping-apps-map (kbd "l")   #'desktoping-app-libreoffice)
-(define-key desktoping-apps-map (kbd "t")   #'desktoping-libreoffice-open-templates-dir)
 (define-key desktoping-apps-map (kbd "T")   #'desktoping-libreoffice-open-mytemplates-dir)
 (define-key desktoping-apps-map (kbd "e")   #'desktoping-libreoffice-open-extensions-dir)
 (define-key desktoping-apps-map (kbd "w")   #'desktoping-libreoffice-open-templates-web)
+
+;; TaskToday keybindings
+(define-key desktoping-apps-map (kbd "t d") #'desktoping-tasktoday-dir)
+(define-key desktoping-apps-map (kbd "t f") #'desktoping-tasktoday-file)
+
+;; Bibliography (BibTeX) keybindings
+(autoload 'helm-bibtex "helm-bibtex" "Search BibTeX" t)
+(autoload 'ebib "ebib" "Manage BibTeX" t)
+(autoload 'org-ref-helm-insert-cite-link "org-ref" "Insert citation" t)
+
+(define-key desktoping-apps-map (kbd "R") #'helm-bibtex)
+(define-key desktoping-apps-map (kbd "E") #'ebib)
+(define-key desktoping-apps-map (kbd "r") #'desktoping-change-bibnotes-dir)
 
 ;; Cloud & Sync keybindings
 (define-key desktoping-apps-map (kbd "s g") #'desktoping-cloud-rclone-gdrive-to-desktop)
@@ -698,6 +890,7 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "b s") #'desktoping-buku-search-and-open)
 (define-key desktoping-apps-map (kbd "b g") #'desktoping-buku-browse-by-tag)
 (define-key desktoping-apps-map (kbd "b o") #'desktoping-buku-open-all-in-tag)
+(define-key desktoping-apps-map (kbd "b S") #'desktoping-buku-open-start-day-urls-buffer)
 (define-key desktoping-apps-map (kbd "b a") #'desktoping-buku-add-bookmark)
 (define-key desktoping-apps-map (kbd "b B") #'desktoping-buku-add-batch)
 (define-key desktoping-apps-map (kbd "b d") #'desktoping-buku-delete-bookmark)
@@ -708,6 +901,7 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "b t") #'desktoping-buku-open-tutorial)
 
 ;; Utilities & Docs keybindings
+(define-key desktoping-apps-map (kbd "u")   #'desktoping-open-usage-buffer)
 (define-key desktoping-apps-map (kbd "o c") #'desktoping-util-org-cheatsheet)
 (define-key desktoping-apps-map (kbd "o b") #'desktoping-util-org-export-beamer)
 (define-key desktoping-apps-map (kbd "p")   #'desktoping-util-wkhtmltopdf)
@@ -723,6 +917,7 @@ Offers to either:
      ["Search & Open Bookmark" desktoping-buku-search-and-open :keys "C-c d b s" :help "Search bookmarks and open in browser"]
      ["Filter by Tag/Group" desktoping-buku-browse-by-tag :keys "C-c d b g" :help "Browse bookmarks in a specific tag group"]
      ["Open All in Tag/Group (Tabs)" desktoping-buku-open-all-in-tag :keys "C-c d b o" :help "Open all links of a tag group in Chromium tabs"]
+     ["Open Start-Day URLs Buffer" desktoping-buku-open-start-day-urls-buffer :keys "C-c d b S" :help "Open start-day-* routine URLs in an Org buffer"]
      "---"
      ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]
      ["Add Batch Bookmarks (Paste URLs)" desktoping-buku-add-batch :keys "C-c d b B" :help "Add multiple URLs to a tag group at once"]
@@ -736,15 +931,26 @@ Offers to either:
      ["Import from HTML (Browser Export)" desktoping-buku-import-html :keys "C-c d b i" :help "Import bookmarks from HTML file"]
      "---"
      ["Buku Tutorial & Guia (Org)" desktoping-buku-open-tutorial :keys "C-c d b t" :help "Open Brazilian Portuguese tutorial"])
+    ("Bibliography (BibTeX)"
+     ["Search Bibliography (Helm)" helm-bibtex :keys "C-c d R" :help "Search BibTeX and open PDFs"]
+     ["Open Ebib Manager" ebib :keys "C-c d E" :help "Manage BibTeX databases visually"]
+     ["Change Bibnotes Directory" desktoping-change-bibnotes-dir :keys "C-c d r" :help "Change FZLEMACS_BIBNOTES_HOME"]
+     "---"
+     ["Insert Citation (Org-ref)" org-ref-helm-insert-cite-link :help "Insert a citation in Org mode"]
+     "---"
+     ["BibTeX Tutorial & Guia (Org)" desktoping-bibtex-open-tutorial :help "Open BibTeX tutorial"])
     ("Applications & Office"
      ["Start Chromium Browser" desktoping-app-chromium :keys "C-c d C" :help "Launch Chromium Browser"]
      "---"
      ["Start LibreOffice" desktoping-app-libreoffice :keys "C-c d l" :help "Launch LibreOffice"]
-     ["Templates Directory" desktoping-libreoffice-open-templates-dir :keys "C-c d t" :help "Open LibreOffice templates in Dired"]
+     ["Templates Directory" desktoping-libreoffice-open-templates-dir :help "Open LibreOffice templates in Dired"]
      ["Custom MyTemplates Directory" desktoping-libreoffice-open-mytemplates-dir :keys "C-c d T" :help "Open user templates in Dired"]
      ["Extensions Directory" desktoping-libreoffice-open-extensions-dir :keys "C-c d e" :help "Open UNO packages extensions directory"]
      "---"
      ["Templates Online Site" desktoping-libreoffice-open-templates-web :keys "C-c d w" :help "Open templates site in browser"])
+    ("TaskToday"
+     ["Open TaskToday Directory" desktoping-tasktoday-dir :keys "C-c d t d" :help "Open TaskToday directory in Dired"]
+     ["Open TaskToday File" desktoping-tasktoday-file :keys "C-c d t f" :help "Open TaskToday org file"])
     ("Cloud & Synchronization"
      ["Rclone: GDrive -> Desktop" desktoping-cloud-rclone-gdrive-to-desktop :keys "C-c d s g" :help "Sync GDrive to Desktop"]
      ["Rclone: Desktop -> GDrive" desktoping-cloud-rclone-desktop-to-gdrive :keys "C-c d s d" :help "Sync Desktop to GDrive"]
@@ -766,6 +972,8 @@ Offers to either:
       ["Maven Settings (~/.m2/settings.xml)" desktoping-config-maven :keys "C-c d c m" :help "Open Maven settings"]
       ["Gradle Properties (~/.gradle/gradle.properties)" desktoping-config-gradle :keys "C-c d c p" :help "Open Gradle properties"]))
     ("Utilities & Docs"
+     ["fzl-emacs Usage & Shortcuts" desktoping-open-usage-buffer :keys "C-c d u" :help "Open fzl-emacs usage inventory buffer"]
+     "---"
      ["Org-Mode Cheatsheet (Web)" desktoping-util-org-cheatsheet :keys "C-c d o c" :help "Open Org-mode reference sheet"]
      ["Org-Mode Export Beamer" desktoping-util-org-export-beamer :keys "C-c d o b" :help "Export Org to Beamer PDF"]
      "---"
