@@ -1,0 +1,3 @@
+[submodule "gitsubmodules/fzl-emacs-extension"]
+	path = gitsubmodules/fzl-emacs-extension
+	url = git@github.com:wagnermarques/fzl-emacs-extension.git
