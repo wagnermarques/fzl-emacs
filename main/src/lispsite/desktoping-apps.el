@@ -187,6 +187,11 @@
                         (expand-file-name "../../.." (file-name-directory (or load-file-name buffer-file-name default-directory)))))
   "Path to the fzl-emacs Buku SQLite database stored in the project repository.")
 
+;; Ensure path points to active repository if fzlemacs-dir--fzlemacs-home is set
+(when (and (bound-and-true-p fzlemacs-dir--fzlemacs-home)
+           (file-exists-p (expand-file-name "bookmarks/bookmarks.db" fzlemacs-dir--fzlemacs-home)))
+  (setq desktoping-buku-db-path (expand-file-name "bookmarks/bookmarks.db" fzlemacs-dir--fzlemacs-home)))
+
 ;; Keep environment variable in sync so external tools/subprocesses also use the project database
 (setenv "BUKU_DB_PATH" desktoping-buku-db-path)
 
@@ -581,12 +586,27 @@ If left blank, uses links from clipboard."
                      (and lib (expand-file-name "../../.." (file-name-directory lib))))
                    (expand-file-name "../../.." (file-name-directory (or load-file-name buffer-file-name default-directory)))))
          (candidates
-          (list
-           (expand-file-name "gitsubmodules/fzl-emacs-extension" home)
-           (expand-file-name "gitsubmodules/fzl-emacs-extension" default-directory)
-           (expand-file-name "../fzl-emacs-bookmarks" home)))
-         (found (seq-find #'file-directory-p candidates)))
-    (or found (car candidates))))
+          (delq nil
+                (list
+                 ;; 1. From desktoping-apps library location:
+                 (let ((lib (locate-library "desktoping-apps")))
+                   (and lib (expand-file-name "../../../gitsubmodules/fzl-emacs-extension" (file-name-directory lib))))
+                 ;; 2. Submodule relative to home:
+                 (expand-file-name "gitsubmodules/fzl-emacs-extension" home)
+                 ;; 3. Canonical direct path:
+                 "/home/wgn/mnt/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs/gitsubmodules/fzl-emacs-extension"
+                 ;; 4. Submodule relative to default-directory:
+                 (expand-file-name "gitsubmodules/fzl-emacs-extension" default-directory)
+                 ;; 5. Peer repository:
+                 (expand-file-name "../fzl-emacs-bookmarks" home))))
+         (found (seq-find (lambda (dir)
+                            (and dir
+                                 (file-directory-p dir)
+                                 (file-exists-p (expand-file-name "native-host/install-native-host.sh" dir))))
+                          candidates)))
+    (or found
+        (expand-file-name "gitsubmodules/fzl-emacs-extension" home)
+        (car candidates))))
 
 (defun desktoping-buku-install-browser-extensions ()
   "Install Native Messaging Host and guide installation in local browsers.

@@ -7,7 +7,12 @@
 (setq dir_shared_files (concat externaldisk_partition2 "/SHARED_FILES"))
 (setq progsativos (concat externaldisk_partition2 "/progsativos"))
 
-(setq fzlemacs-dir--fzlemacs-home (concat externaldisk_partition2 "/Projects-Srcs-Desktop/fzl-emacs"))
+(setq fzlemacs-dir--fzlemacs-home
+      (or (let* ((this-file (or load-file-name buffer-file-name (locate-library "config-emacs-environment-variables")))
+                 (dir (and this-file (file-name-directory this-file))))
+            (and dir (file-exists-p (expand-file-name "../../.." dir))
+                 (expand-file-name "../../.." dir)))
+          (concat externaldisk_partition2 "/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs")))
 (setq fzlemacs-dir--fzlemacs-lispsite (concat fzlemacs-dir--fzlemacs-home "/main/src/lispsite"))
 
 
