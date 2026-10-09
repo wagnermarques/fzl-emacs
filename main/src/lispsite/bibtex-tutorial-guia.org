@@ -5,71 +5,68 @@
 
 * 📚 O que é este sistema?
 
-Este sistema substitui ferramentas externas como o *Zotero* ou *Mendeley*, trazendo toda a gestão de referências acadêmicas, artigos em PDF e anotações para dentro do Emacs.
+Este sistema substitui ferramentas externas como o *Zotero* ou *Mendeley*, trazendo toda a gestão de referências acadêmicas, artigos em PDF e anotações para dentro do Emacs. Inspirado pela filosofia Zettelkasten e pela palestra "Emacs as a fully-fledged reference manager" de Vidianos Giannitsis, este formato abandona pastas complexas em favor de bancos locais de texto plano fáceis de buscar.
 
-Ele é movido a três componentes principais:
+Ele é movido a componentes principais integrados:
 1. **Helm-BibTeX**: O motor de busca instantâneo para suas referências.
-2. **Ebib**: Um gerenciador visual do banco de dados (estilo Zotero).
-3. **Org-ref**: Para citar referências em documentos Org-mode (=org-cite= também é suportado).
+2. **Ebib**: Um gerenciador visual do banco de dados BibTeX.
+3. **Biblio.el**: Para buscar metadados de artigos online (DOI, ArXiv, Crossref) e importar magicamente.
+4. **Ebib-Reading-List**: Para rastrear o que você precisa ler através de um arquivo org.
+5. **Org-ref**: Para citar referências nativamente em documentos Org-mode.
 
 * ⚙️ Onde ficam meus arquivos?
 
-Seu Emacs está configurado para ler o diretório definido pela variável de ambiente =FZLEMACS_BIBNOTES_HOME=.
-Por padrão (baseado na sua configuração), este diretório é:
-=/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects/bibtexfiles=
+Seu Emacs está configurado para ler o diretório definido pela variável =FZLEMACS_BIBNOTES_HOME=.
+Por padrão, este diretório é:
+=/home/wgn/mnt/ext4/Researching-bibtex-manager-data=
 
-Lá dentro, o sistema espera encontrar:
+Lá dentro, o sistema trabalha com a seguinte estrutura:
 - =references.bib=: O arquivo principal que contém todas as suas referências (o banco de dados).
-- =pdfs/=: A pasta onde você guarda os PDFs dos artigos. Eles devem ser renomeados com a exata "Citation Key" (Chave BibTeX) do artigo. Ex: =smith2023.pdf=.
-- =notes/=: Pasta onde o Emacs salvará automaticamente suas notas sobre cada referência.
+- =pdfs/=: A pasta onde você guarda os PDFs. Ao baixar ou mover PDFs para cá, certifique-se de que o nome seja exatamente a "Citation Key" (Chave BibTeX) do artigo. Ex: =smith2023.pdf=.
+- =notes/=: Pasta onde o Emacs salvará automaticamente suas notas acadêmicas atreladas a cada referência.
+- =reading-list.org=: Arquivo gerado pelo ebib para você acompanhar sua fila de leitura.
+
+*(Lembre-se: Você pode mudar esse diretório ativo a qualquer momento usando o atalho =C-c d r=)*
 
 * 🚀 Atalhos Principais (Desktoping Menu)
 
-Todos os atalhos estão mapeados no prefixo *Desktoping* (=C-c d=) e também disponíveis no menu superior do Emacs em =Desktoping -> Bibliography (BibTeX)=.
+Todos os atalhos estão mapeados no prefixo *Desktoping* (=C-c d=) e também no menu superior =Desktoping -> Bibliography (BibTeX)=.
 
-| Ação                          | Atalho Emacs | Descrição                                                                 |
-|-------------------------------+--------------+---------------------------------------------------------------------------|
-| **Pesquisar Referências**     | =C-c d R=    | Abre o =helm-bibtex=. Busca interativa por autor, título ou ano.          |
-| **Abrir Gerenciador Visual**  | =C-c d E=    | Abre o =ebib= para adicionar, editar ou remover itens do banco =.bib=.    |
+| Ação                                | Atalho Emacs | Descrição                                                                 |
+|-------------------------------------+--------------+---------------------------------------------------------------------------|
+| **Pesquisar Referências**           | =C-c d R=    | Abre o =helm-bibtex=. Busca interativa por autor, título ou ano.          |
+| **Abrir Gerenciador Visual**        | =C-c d E=    | Abre o =ebib= para gerenciar a base e sua lista de leitura.               |
+| **Busca Online (DOI/ArXiv)**        | =C-c d f=    | Abre o =biblio-lookup= para importar metadados da internet para o Ebib.   |
+| **Mudar Diretório (FZLEMACS...)**   | =C-c d r=    | Alterna dinamicamente a pasta de bibliografia ativa sem reiniciar o Emacs.|
 
-* 🔍 Como usar o Helm-BibTeX (=C-c d R=)
+* 📥 Importando Referências da Internet (=C-c d f=)
 
-Este é o equivalente à barra de pesquisa do Zotero.
+Em vez de digitar os campos BibTeX na mão, deixe a internet fazer o trabalho (conforme demonstrado no vídeo do EmacsConf):
+1. Pressione =C-c d f= (~biblio-lookup~).
+2. O Emacs perguntará o que buscar. Você pode colar um *DOI*, ou digitar palavras-chave de um artigo (ex: "machine learning 2024").
+3. Uma lista de resultados aparecerá. Navegue com as setas.
+4. Pressione =Enter= em cima do resultado correto para exibir os detalhes.
+5. Em seguida, pressione =c= para copiar o BibTeX, ou =i= para importar *diretamente* para o seu banco do =ebib=!
 
-1. Pressione =C-c d R=.
-2. Comece a digitar o nome de um autor ou uma palavra do título do artigo. A lista será filtrada instantaneamente.
-3. Use as =Setas= ou =C-n / C-p= para selecionar um artigo.
-4. **Pressione =TAB=** para ver as opções disponíveis para aquele artigo!
-   - =Open PDF, URL or DOI=: Abre o PDF associado, ou tenta buscar o link online.
-   - =Insert citation=: Insere a citação no documento que você estiver editando.
-   - =Edit notes=: Abre (ou cria) um arquivo de notas atrelado a este artigo.
-   - =Insert BibTeX=: Cola o código puro do BibTeX no seu texto (útil para compartilhar).
+* 🗃️ Gerenciando o Banco e Lista de Leitura (=C-c d E=)
 
-* 🗃️ Como gerenciar o banco de dados visualmente com Ebib (=C-c d E=)
+A interface do =Ebib= é seu "painel de controle" Zotero-like.
+- **a**: Adiciona nova referência manualmente.
+- **e**: Edita o campo do artigo selecionado.
+- **d**: Deleta a referência.
+- **s**: Salva o arquivo de banco de dados (=references.bib=).
 
-Se você não quer escrever código BibTeX puro, use o =Ebib=.
+**📚 Lista de Leitura (Ebib Reading List)**:
+Para implementar o fluxo do EmacsConf de acompanhar o que precisa ser lido:
+- Dentro do =Ebib=, ao selecionar um artigo, o pacote *ebib-reading-list* permite adicioná-lo à fila. (Procure pelos comandos =M-x ebib-reading-list...= para gerenciar itens de leitura em formato Org-mode).
 
-1. Pressione =C-c d E=. Uma interface com duas colunas será aberta. A lista de artigos em cima, e os detalhes em baixo.
-2. **Atalhos dentro do Ebib:**
-   - =a= : Adicionar uma nova referência. O Emacs perguntará o tipo (Article, Book, InProceedings, etc).
-   - =e= : Editar o campo atualmente selecionado (título, autor, ano).
-   - =d= : Deletar a referência selecionada.
-   - =s= : Salvar as mudanças no arquivo =references.bib=.
-   - =q= : Sair do Ebib.
+* 🔍 Lendo, Anotando e Citando (=C-c d R=)
 
-* ✍️ Escrevendo e Citando em Org-mode
+O =helm-bibtex= (=C-c d R=) é para o fluxo rápido do dia a dia enquanto você escreve.
+1. Pressione =C-c d R=, digite parte do nome do autor.
+2. Pressione =TAB= sobre a referência.
+3. Ações disponíveis no painel:
+   - =Open PDF, URL or DOI=: Se o arquivo =smith2023.pdf= estiver na pasta =pdfs/=, ele abre o arquivo!
+   - =Edit notes=: Abre sua pasta =notes/= criando um arquivo focado nas suas anotações atrelado ao autor. (Uma abordagem *Zettelkasten* excelente para sua pesquisa).
+   - =Insert citation=: Se estiver num buffer Org-mode, gera um link =cite:smith2023= para a bibliografia automática!
 
-Quando estiver escrevendo um arquivo =.org=:
-1. Vá até o ponto onde deseja citar.
-2. Pressione =C-c d R= (=helm-bibtex=).
-3. Pesquise e selecione o artigo.
-4. Pressione =TAB=, escolha =Insert citation= (ou =org-ref insert citation=).
-5. O Emacs vai gerar algo como =cite:smith2023= ou =[@smith2023]=.
-
-Ao exportar seu documento para PDF ou LaTeX, a bibliografia será renderizada perfeitamente no final do arquivo.
-
-* 🔗 Resumo de Funcionalidades
-
-- ✅ **Sem sincronização em nuvem obscura:** Seus dados são apenas arquivos de texto puro (=.bib=) e PDFs em pastas comuns. Sincronize com Git, Dropbox ou Nextcloud livremente.
-- ✅ **Rapidez Extrema:** O =helm-bibtex= carrega bancos de milhares de referências instantaneamente.
-- ✅ **Organização:** Todas as suas anotações sobre os artigos ficam integradas e a um clique de distância.

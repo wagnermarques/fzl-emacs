@@ -858,10 +858,12 @@ Offers to either:
 (autoload 'helm-bibtex "helm-bibtex" "Search BibTeX" t)
 (autoload 'ebib "ebib" "Manage BibTeX" t)
 (autoload 'org-ref-helm-insert-cite-link "org-ref" "Insert citation" t)
+(autoload 'biblio-lookup "biblio" "Search Crossref/ArXiv" t)
 
 (define-key desktoping-apps-map (kbd "R") #'helm-bibtex)
 (define-key desktoping-apps-map (kbd "E") #'ebib)
 (define-key desktoping-apps-map (kbd "r") #'desktoping-change-bibnotes-dir)
+(define-key desktoping-apps-map (kbd "f") #'biblio-lookup)
 
 ;; Cloud & Sync keybindings
 (define-key desktoping-apps-map (kbd "s g") #'desktoping-cloud-rclone-gdrive-to-desktop)
@@ -934,6 +936,7 @@ Offers to either:
     ("Bibliography (BibTeX)"
      ["Search Bibliography (Helm)" helm-bibtex :keys "C-c d R" :help "Search BibTeX and open PDFs"]
      ["Open Ebib Manager" ebib :keys "C-c d E" :help "Manage BibTeX databases visually"]
+     ["Fetch via DOI/Crossref" biblio-lookup :keys "C-c d f" :help "Search ArXiv/Crossref by DOI/Name and import"]
      ["Change Bibnotes Directory" desktoping-change-bibnotes-dir :keys "C-c d r" :help "Change FZLEMACS_BIBNOTES_HOME"]
      "---"
      ["Insert Citation (Org-ref)" org-ref-helm-insert-cite-link :help "Insert a citation in Org mode"]
