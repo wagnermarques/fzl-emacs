@@ -298,6 +298,7 @@ Ideal para rotinas diárias (ex: abrir todos os dashboards de trabalho ou projet
 | =C-c d b g= | `desktoping-buku-browse-by-tag` | 🏷️ Filtra e navega favoritos por Grupo/Tag |
 | =C-c d b o= | `desktoping-buku-open-all-in-tag` | 🚀 Abre **todos** os links de um Grupo em abas no Chromium |
 | =C-c d b O= | `desktoping-buku-open-tag-group` | ⚡ Abre direto **todos** os links de um Grupo no Chromium (sem confirmação) |
+| =C-c d b I= | `desktoping-buku-install-browser-extensions` | 🔌 Instala o Native Messaging Host e guia configuração nos navegadores |
 | =C-c d b a= | `desktoping-buku-add-bookmark` | ➕ Adiciona novo favorito com URL, tags e notas |
 | =C-c d b B= | `desktoping-buku-add-batch` | 📋 Salva várias URLs em lote sob um Grupo/Tag |
 | =C-c d b T= | `desktoping-buku-edit-tags` | ✏️ Edita / atualiza as tags de um favorito existente |
@@ -312,6 +313,7 @@ Ideal para rotinas diárias (ex: abrir todos os dashboards de trabalho ou projet
 ** 🖱️ Acessando pelo Menu Superior:
 Acesse no menu do Emacs:
 - =Desktoping -> Bookmarks (Buku)=
+  - =Install Browsers Extensions=: Instala o host nativo de comunicação e orienta o carregamento no Chromium / Firefox.
   - =Open tag/groups=: submenu dinâmico listando todas as tags/grupos existentes e respectivas contagens; ao clicar em um grupo, abre instantaneamente todos os seus links no navegador.
 - =Desktoping -> Applications & Office=
 

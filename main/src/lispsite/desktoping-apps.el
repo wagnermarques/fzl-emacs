@@ -574,6 +574,107 @@ If left blank, uses links from clipboard."
         (find-file file)
       (find-file (expand-file-name "buku-tutorial-guia.org" default-directory)))))
 
+(defun desktoping--buku-extension-dir ()
+  "Return absolute path to the fzl-emacs-extension directory."
+  (let* ((home (or (and (boundp 'fzlemacs-dir--fzlemacs-home) fzlemacs-dir--fzlemacs-home)
+                   (let ((lib (locate-library "desktoping-apps")))
+                     (and lib (expand-file-name "../../.." (file-name-directory lib))))
+                   (expand-file-name "../../.." (file-name-directory (or load-file-name buffer-file-name default-directory)))))
+         (candidates
+          (list
+           (expand-file-name "gitsubmodules/fzl-emacs-extension" home)
+           (expand-file-name "gitsubmodules/fzl-emacs-extension" default-directory)
+           (expand-file-name "../fzl-emacs-bookmarks" home)))
+         (found (seq-find #'file-directory-p candidates)))
+    (or found (car candidates))))
+
+(defun desktoping-buku-install-browser-extensions ()
+  "Install Native Messaging Host and guide installation in local browsers.
+Executes the native host installer script to register manifests for Chromium,
+Chrome, Brave, Edge, and Firefox, ensures Emacs server is active, copies the
+extension path to the kill-ring/clipboard, and provides guided one-click
+browser launcher actions."
+  (interactive)
+  (let* ((ext-dir (desktoping--buku-extension-dir))
+         (installer-script (expand-file-name "native-host/install-native-host.sh" ext-dir))
+         (manifest-file (expand-file-name "manifest.json" ext-dir)))
+    (unless (file-exists-p installer-script)
+      (user-error "Extension installer not found at %s. Run: git submodule update --init" installer-script))
+    (message "Installing Native Messaging Host for Chromium & Firefox...")
+    (let* ((cmd (format "bash %s" (shell-quote-argument installer-script)))
+           (output (shell-command-to-string cmd)))
+      (desktoping-server-start)
+      (kill-new ext-dir)
+      (let ((buf (get-buffer-create "*fzl-buku-extension-install*")))
+        (with-current-buffer buf
+          (let ((inhibit-read-only t))
+            (erase-buffer)
+            (insert "#+TITLE: 🌐 Instalação da Extensão FZL Emacs Buku nos Navegadores\n")
+            (insert "#+AUTHOR: fzl-emacs\n")
+            (insert "#+STARTUP: showall\n\n")
+            (insert "* ✅ Host de Mensagens Nativas Instalado com Sucesso!\n\n")
+            (insert "Os manifestos nativos foram registrados no seu sistema:\n")
+            (insert "- Chromium / Chrome / Brave / Edge: =~/.config/*/NativeMessagingHosts/fzl_emacs_buku.json=\n")
+            (insert "- Mozilla Firefox: =~/.mozilla/native-messaging-hosts/fzl_emacs_buku.json=\n\n")
+            (insert "* 📌 Pasta da Extensão (COPIADA para Área de Transferência / Clipboard):\n\n")
+            (insert (format "  =%s=\n\n" ext-dir))
+            (insert "* 🚀 Como Carregar no Navegador (Passo a Passo):\n\n")
+            (insert "** A. No Chromium / Google Chrome / Brave Browser:\n")
+            (insert "1. Abra a página de extensões: =chrome://extensions= (pressione =c= neste buffer)\n")
+            (insert "2. No canto superior direito, ative o botão *Modo do desenvolvedor* (Developer mode).\n")
+            (insert "3. Clique em *Carregar sem compactação* (Load unpacked).\n")
+            (insert "4. Pressione =Ctrl+V= para colar o caminho da pasta copiado acima e confirme.\n")
+            (insert "5. Pronto! O ícone do FZL Buku aparecerá na barra de ferramentas.\n\n")
+            (insert "** B. No Mozilla Firefox:\n")
+            (insert "1. Abra a página de depuração: =about:debugging#/runtime/this-firefox= (pressione =f= neste buffer)\n")
+            (insert "2. Clique no botão *Carregar extensão temporária...* (Load Temporary Add-on...).\n")
+            (insert (format "3. Selecione o arquivo: =%s=\n" manifest-file))
+            (insert "4. Pronto! A extensão será carregada com o ID =fzl-emacs-buku@fzl.desktop=.\n\n")
+            (insert "* ⌨️ Teclas de Ação Rápida deste Buffer:\n")
+            (insert "| Tecla | Ação                                                        |\n")
+            (insert "|-------+-------------------------------------------------------------|\n")
+            (insert "| =c=   | Abrir página de extensões no Chromium (=chrome://extensions=) |\n")
+            (insert "| =f=   | Abrir depuração no Firefox (=about:debugging=)              |\n")
+            (insert "| =w=   | Copiar caminho da pasta da extensão para o clipboard        |\n")
+            (insert "| =r=   | Reexecutar instalador do Native Messaging Host              |\n")
+            (insert "| =q=   | Fechar este buffer                                          |\n\n")
+            (insert "* 📋 Saída do Instalador Nativo:\n\n")
+            (insert "#+BEGIN_EXAMPLE\n")
+            (insert output)
+            (insert "\n#+END_EXAMPLE\n"))
+          (org-mode)
+          (local-set-key (kbd "c")
+                         (lambda ()
+                           (interactive)
+                           (let ((bin (or (executable-find "chromium-browser")
+                                          (executable-find "chromium")
+                                          (executable-find "google-chrome")
+                                          (executable-find "brave-browser"))))
+                             (if bin
+                                 (progn
+                                   (start-process "fzl-ext-chromium" nil bin "chrome://extensions")
+                                   (message "Launched Chromium at chrome://extensions."))
+                               (desktoping--browse-url "chrome://extensions")))))
+          (local-set-key (kbd "f")
+                         (lambda ()
+                           (interactive)
+                           (let ((bin (executable-find "firefox")))
+                             (if bin
+                                 (progn
+                                   (start-process "fzl-ext-firefox" nil bin "about:debugging#/runtime/this-firefox")
+                                   (message "Launched Firefox at about:debugging#/runtime/this-firefox."))
+                               (desktoping--browse-url "about:debugging#/runtime/this-firefox")))))
+          (local-set-key (kbd "w")
+                         (lambda ()
+                           (interactive)
+                           (kill-new ext-dir)
+                           (message "Copiado para o clipboard: %s" ext-dir)))
+          (local-set-key (kbd "r") #'desktoping-buku-install-browser-extensions)
+          (local-set-key (kbd "q") #'quit-window)
+          (setq-local buffer-read-only t))
+        (pop-to-buffer buf)
+        (message "Native host installed! Path copied to clipboard. Press 'c' for Chromium or 'f' for Firefox.")))))
+
 (defun desktoping-bibtex-open-tutorial ()
   "Open the BibTeX/Zotero-like tutorial in Emacs."
   (interactive)
@@ -991,6 +1092,7 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "b e") #'desktoping-buku-export-html)
 (define-key desktoping-apps-map (kbd "b i") #'desktoping-buku-import-html)
 (define-key desktoping-apps-map (kbd "b t") #'desktoping-buku-open-tutorial)
+(define-key desktoping-apps-map (kbd "b I") #'desktoping-buku-install-browser-extensions)
 
 ;; Utilities & Docs keybindings
 (define-key desktoping-apps-map (kbd "u")   #'desktoping-open-usage-buffer)
@@ -1011,6 +1113,8 @@ Offers to either:
      ["Open All in Tag/Group (Tabs)" desktoping-buku-open-all-in-tag :keys "C-c d b o" :help "Open all links of a tag group in Chromium tabs"]
      ("Open tag/groups" :filter desktoping--buku-tag-groups-menu-filter :help "Open all links for a specific tag/group")
      ["Open Start-Day URLs Buffer" desktoping-buku-open-start-day-urls-buffer :keys "C-c d b S" :help "Open start-day-* routine URLs in an Org buffer"]
+     "---"
+     ["Install Browsers Extensions" desktoping-buku-install-browser-extensions :keys "C-c d b I" :help "Install Native Messaging Host and setup extension in Chromium / Firefox"]
      "---"
      ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]
      ["Add Batch Bookmarks (Paste URLs)" desktoping-buku-add-batch :keys "C-c d b B" :help "Add multiple URLs to a tag group at once"]
