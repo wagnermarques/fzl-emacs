@@ -263,6 +263,60 @@
                           (split-string raw-tags "," t "[ \t\n\r]+"))))
         (seq-some (lambda (tg) (string= (string-trim tg) tag)) split-tags)))))
 
+(defvar desktoping--buku-tags-cache nil
+  "Cache for Buku tags and bookmark counts: (MTIME . ((TAG . COUNT) ...)).")
+
+(defun desktoping--buku-get-tag-counts (entries)
+  "Calculate bookmark counts per tag from ENTRIES, sorted alphabetically by tag name."
+  (let ((counts (make-hash-table :test 'equal)))
+    (dolist (item entries)
+      (let ((raw-tags (cdr (assq 'tags item))))
+        (when raw-tags
+          (let ((split-tags (if (listp raw-tags)
+                                raw-tags
+                              (split-string raw-tags "," t "[ \t\n\r]+"))))
+            (dolist (tag split-tags)
+              (let ((clean (string-trim tag)))
+                (unless (string-empty-p clean)
+                  (puthash clean (1+ (gethash clean counts 0)) counts))))))))
+    (let (result)
+      (maphash (lambda (tag count)
+                 (push (cons tag count) result))
+               counts)
+      (sort result (lambda (a b) (string-lessp (car a) (car b)))))))
+
+(defun desktoping--buku-tag-groups-menu-filter (&optional _menu-items)
+  "Dynamic menu filter generating subitems for each Buku tag/group.
+Clicking a tag/group subitem opens all bookmarks belonging to that group."
+  (condition-case err
+      (let* ((db (expand-file-name desktoping-buku-db-path))
+             (mtime (and (file-exists-p db)
+                         (file-attribute-modification-time (file-attributes db))))
+             (cached-data (and mtime desktoping--buku-tags-cache))
+             (tag-counts
+              (if (and cached-data (equal (car cached-data) mtime))
+                  (cdr cached-data)
+                (let* ((entries (ignore-errors (desktoping--buku-get-entries)))
+                       (counts (and entries (desktoping--buku-get-tag-counts entries))))
+                  (when mtime
+                    (setq desktoping--buku-tags-cache (cons mtime counts)))
+                  counts))))
+        (if (not tag-counts)
+            (list ["(No tag/groups found)" nil :active nil])
+          (mapcar
+           (lambda (tc)
+             (let* ((tag (car tc))
+                    (count (cdr tc))
+                    (label (format "%s (%d)" tag count))
+                    (help (format "Open all %d bookmarks for group '%s' in browser" count tag)))
+               (vector label
+                       (list 'desktoping-buku-open-all-in-tag tag t)
+                       t
+                       :help help)))
+           tag-counts)))
+    (error
+     (list (vector (format "(Error: %s)" (error-message-string err)) nil :active nil)))))
+
 (defun desktoping--completing-read (prompt collection &optional predicate require-match initial-input hist def inherit-input-method)
   "Safe wrapper around `completing-read` supporting Helm, nesting, and recursive minibuffers."
   (let ((enable-recursive-minibuffers t))
@@ -352,31 +406,49 @@
               (desktoping--browse-url selected-url)
               (message "Opened: %s" selected-url))))))))
 
-(defun desktoping-buku-open-all-in-tag ()
-  "Open ALL bookmarks belonging to a selected Tag/Group in separate browser tabs."
+(defun desktoping-buku-open-all-in-tag (&optional tag no-confirm)
+  "Open ALL bookmarks belonging to a selected Tag/Group in separate browser tabs.
+When TAG is nil, interactively prompts for a Tag/Group to open.
+If NO-CONFIRM is non-nil, opens all links without asking for confirmation."
   (interactive)
   (let* ((entries (desktoping--buku-get-entries))
          (tags (desktoping--buku-get-all-tags entries)))
     (if (not tags)
         (message "No tagged bookmarks found in database.")
-      (let* ((tag-candidates
-              (mapcar (lambda (tag)
-                        (let* ((matching (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item tag)) entries))
-                               (count (length matching))
-                               (display (format "🏷️ %-15s  (%d bookmark%s)" tag count (if (= count 1) "" "s"))))
-                          (cons display tag)))
-                      tags))
-             (choice-tag (desktoping--completing-read "Open all links for Tag/Group: " (mapcar #'car tag-candidates) nil t))
-             (chosen-tag (cdr (assoc choice-tag tag-candidates)))
+      (let* ((chosen-tag
+              (or tag
+                  (let ((tag-candidates
+                         (mapcar (lambda (tg)
+                                   (let* ((matching (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item tg)) entries))
+                                          (count (length matching))
+                                          (display (format "🏷️ %-15s  (%d bookmark%s)" tg count (if (= count 1) "" "s"))))
+                                     (cons display tg)))
+                                 tags)))
+                    (cdr (assoc (desktoping--completing-read "Open all links for Tag/Group: " (mapcar #'car tag-candidates) nil t)
+                                tag-candidates)))))
              (filtered (when chosen-tag
                          (seq-filter (lambda (item) (desktoping--buku-entry-has-tag-p item chosen-tag)) entries)))
              (urls (delq nil (mapcar (lambda (item) (cdr (assq 'uri item))) filtered))))
-        (if (not urls)
-            (when chosen-tag (message "No URLs found for tag '%s'." chosen-tag))
-          (when (yes-or-no-p (format "Open all %d bookmarks for group '%s' in Chromium? " (length urls) chosen-tag))
-            (dolist (u urls)
-              (desktoping--browse-url u))
-            (message "Opened %d bookmarks for group '%s'." (length urls) chosen-tag)))))))
+        (cond
+         ((not chosen-tag)
+          nil)
+         ((not urls)
+          (message "No URLs found for tag '%s'." chosen-tag))
+         ((and (not no-confirm)
+               (not (yes-or-no-p (format "Open all %d bookmarks for group '%s' in Chromium? " (length urls) chosen-tag))))
+          (message "Cancelled opening bookmarks for group '%s'." chosen-tag))
+         (t
+          (dolist (u urls)
+            (desktoping--browse-url u))
+          (message "Opened %d bookmarks for group '%s'." (length urls) chosen-tag)))))))
+
+(defun desktoping-buku-open-tag-group (tag)
+  "Open all bookmarks belonging to TAG directly in browser tabs."
+  (interactive
+   (let* ((entries (desktoping--buku-get-entries))
+          (tags (desktoping--buku-get-all-tags entries)))
+     (list (desktoping--completing-read "Open all links for Tag/Group: " tags nil t))))
+  (desktoping-buku-open-all-in-tag tag t))
 
 (defun desktoping-buku-add-bookmark (url title tags comment)
   "Add a new bookmark to Buku with URL, optional TITLE, TAGS, and optional COMMENT.
@@ -424,10 +496,12 @@ If the URL already exists in Buku, automatically appends the TAGS to the existin
                    (update-out (shell-command-to-string update-cmd)))
               (if (string-match-p "Error\\|Traceback\\|ModuleNotFoundError" update-out)
                   (message "Error appending tag to index #%s: %s" index update-out)
+                (setq desktoping--buku-tags-cache nil)
                 (message "Buku: URL already exists at index #%s. Added to tag/group(s): %s" index clean-tags))))))
        ((string-match-p "Error\\|Traceback\\|ModuleNotFoundError" output)
         (message "Error adding bookmark: %s" output))
        (t
+        (setq desktoping--buku-tags-cache nil)
         (message "Buku: Bookmark added successfully! (Tags: %s)" (if (string-empty-p clean-tags) "none" clean-tags)))))))
 
 (defun desktoping-buku-add-batch (tag urls-input)
@@ -453,24 +527,25 @@ If left blank, uses links from clipboard."
          (raw-list (split-string (or urls-input "") "[ \t\r\n]+" t))
          (urls (seq-filter (lambda (s) (string-match-p "^https?://" s)) raw-list))
          (count 0))
-    (if (not urls)
-        (message "No valid HTTP/HTTPS URLs found in input.")
-      (dolist (u urls)
-        (let* ((cmd (format "%s -a %s %s 2>&1"
-                            (desktoping--buku-cmd-base)
-                            (shell-quote-argument u)
-                            (shell-quote-argument clean-tag)))
-               (out (shell-command-to-string cmd)))
-          ;; If exists, append tag
-          (if (string-match "already exists at index \\([0-9]+\\)" out)
-              (let* ((idx (match-string 1 out))
-                     (upd (format "%s -u %s --tag + %s 2>&1"
-                                  (desktoping--buku-cmd-base)
-                                  idx
-                                  (shell-quote-argument clean-tag))))
-                (shell-command-to-string upd)))
-          (setq count (1+ count))))
-      (message "Buku: Successfully added/updated %d bookmark(s) in group '%s'!" count clean-tag))))
+  (if (not urls)
+      (message "No valid HTTP/HTTPS URLs found in input.")
+    (dolist (u urls)
+      (let* ((cmd (format "%s -a %s %s 2>&1"
+                          (desktoping--buku-cmd-base)
+                          (shell-quote-argument u)
+                          (shell-quote-argument clean-tag)))
+             (out (shell-command-to-string cmd)))
+        ;; If exists, append tag
+        (if (string-match "already exists at index \\([0-9]+\\)" out)
+            (let* ((idx (match-string 1 out))
+                   (upd (format "%s -u %s --tag + %s 2>&1"
+                                (desktoping--buku-cmd-base)
+                                idx
+                                (shell-quote-argument clean-tag))))
+              (shell-command-to-string upd)))
+        (setq count (1+ count))))
+    (setq desktoping--buku-tags-cache nil)
+    (message "Buku: Successfully added/updated %d bookmark(s) in group '%s'!" count clean-tag))))
 
 (defun desktoping-buku-export-html (file)
   "Export Buku bookmarks to Netscape HTML format (importable into any browser)."
@@ -677,6 +752,7 @@ Offers to either:
                        (out (shell-command-to-string cmd)))
                   (if (string-match-p "Error\\|Traceback" out)
                       (message "Error removing tag: %s" out)
+                    (setq desktoping--buku-tags-cache nil)
                     (message "Buku: Tag '%s' removed from all bookmarks!" chosen-tag)))))
              ((string-prefix-p "2" action)
               (when (yes-or-no-p (format "PERMANENTLY delete ALL bookmarks tagged '%s'? " chosen-tag))
@@ -686,6 +762,7 @@ Offers to either:
                        (out (shell-command-to-string cmd)))
                   (if (string-match-p "Error\\|Traceback" out)
                       (message "Error deleting bookmarks: %s" out)
+                    (setq desktoping--buku-tags-cache nil)
                     (message "Buku: All bookmarks in group '%s' deleted!" chosen-tag))))))))))))
 
 (defun desktoping-buku-delete-bookmark ()
@@ -723,6 +800,7 @@ Offers to either:
                      (out (shell-command-to-string cmd)))
                 (if (string-match-p "Error\\|Traceback" out)
                     (message "Error deleting bookmark #%s: %s" selected-idx out)
+                  (setq desktoping--buku-tags-cache nil)
                   (message "Buku: Bookmark #%s deleted successfully." selected-idx)))
             (message "Canceled.")))))))
 
@@ -767,6 +845,7 @@ Offers to either:
                  (out (shell-command-to-string cmd)))
             (if (string-match-p "Error\\|Traceback" out)
                 (message "Error updating tags for bookmark #%s: %s" idx out)
+              (setq desktoping--buku-tags-cache nil)
               (message "Buku: Bookmark #%s tags updated to: [%s]" idx clean-tags))))))))
 
 ;;; ============================================================================
@@ -892,6 +971,7 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "b s") #'desktoping-buku-search-and-open)
 (define-key desktoping-apps-map (kbd "b g") #'desktoping-buku-browse-by-tag)
 (define-key desktoping-apps-map (kbd "b o") #'desktoping-buku-open-all-in-tag)
+(define-key desktoping-apps-map (kbd "b O") #'desktoping-buku-open-tag-group)
 (define-key desktoping-apps-map (kbd "b S") #'desktoping-buku-open-start-day-urls-buffer)
 (define-key desktoping-apps-map (kbd "b a") #'desktoping-buku-add-bookmark)
 (define-key desktoping-apps-map (kbd "b B") #'desktoping-buku-add-batch)
@@ -919,6 +999,7 @@ Offers to either:
      ["Search & Open Bookmark" desktoping-buku-search-and-open :keys "C-c d b s" :help "Search bookmarks and open in browser"]
      ["Filter by Tag/Group" desktoping-buku-browse-by-tag :keys "C-c d b g" :help "Browse bookmarks in a specific tag group"]
      ["Open All in Tag/Group (Tabs)" desktoping-buku-open-all-in-tag :keys "C-c d b o" :help "Open all links of a tag group in Chromium tabs"]
+     ("Open tag/groups" :filter desktoping--buku-tag-groups-menu-filter :help "Open all links for a specific tag/group")
      ["Open Start-Day URLs Buffer" desktoping-buku-open-start-day-urls-buffer :keys "C-c d b S" :help "Open start-day-* routine URLs in an Org buffer"]
      "---"
      ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]

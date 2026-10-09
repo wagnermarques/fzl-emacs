@@ -62,6 +62,7 @@ Para abrir este inventário e guia a qualquer momento no próprio Emacs:
 | =C-c d b S=   | ~desktoping-buku-open-start-day-urls-buffer~ | Abre URLs da rotina =start-day-*= em um *buffer Org interativo*    |
 | =C-u C-c d b S= | (com prefixo =C-u=)                       | Filtra URLs do Buku por um padrão de tag personalizado             |
 | =C-c d b o=   | ~desktoping-buku-open-all-in-tag~           | Abre todos os links de uma tag/grupo direto em abas do Chromium    |
+| =C-c d b O=   | ~desktoping-buku-open-tag-group~            | Abre direto todos os links de uma tag/grupo (menu *Open tag/groups*) |
 | =C-c d b s=   | ~desktoping-buku-search-and-open~           | Pesquisa interativa fuzzy em todos os favoritos do Buku            |
 | =C-c d b g=   | ~desktoping-buku-browse-by-tag~             | Filtra favoritos por grupo/tag e abre o selecionado                |
 | =C-c d b a=   | ~desktoping-buku-add-bookmark~              | Adiciona novo favorito com URL, título e tags no Buku              |
