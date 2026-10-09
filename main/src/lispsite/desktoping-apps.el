@@ -620,10 +620,14 @@ browser launcher actions."
          (manifest-file (expand-file-name "manifest.json" ext-dir)))
     (unless (file-exists-p installer-script)
       (user-error "Extension installer not found at %s. Run: git submodule update --init" installer-script))
+    (desktoping-server-start)
     (message "Installing Native Messaging Host for Chromium & Firefox...")
-    (let* ((cmd (format "bash %s" (shell-quote-argument installer-script)))
+    (let* ((process-environment (append (list "FZL_EMACS_SERVER_ACTIVE=1"
+                                              "FZL_SKIP_EMACSCLIENT_CHECK=1"
+                                              "INSIDE_EMACS=1")
+                                        process-environment))
+           (cmd (format "bash %s" (shell-quote-argument installer-script)))
            (output (shell-command-to-string cmd)))
-      (desktoping-server-start)
       (kill-new ext-dir)
       (let ((buf (get-buffer-create "*fzl-buku-extension-install*")))
         (with-current-buffer buf
