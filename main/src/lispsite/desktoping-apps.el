@@ -896,6 +896,16 @@ Offers to either:
 
 (defalias 'fzl-open-usage-buffer #'desktoping-open-usage-buffer)
 
+(defun desktoping-server-start ()
+  "Start or check Emacs server status for browser extension and emacsclient communication."
+  (interactive)
+  (require 'server)
+  (if (server-running-p)
+      (message "Emacs server is running and ready for browser extension (socket: %s)."
+               (expand-file-name server-name (or (and (boundp 'server-socket-dir) server-socket-dir) "/tmp")))
+    (server-start)
+    (message "Emacs server started successfully for browser extension and emacsclient.")))
+
 ;;; ============================================================================
 ;;; Group 6: TaskToday
 ;;; ============================================================================
@@ -1057,6 +1067,8 @@ Offers to either:
       ["Gradle Properties (~/.gradle/gradle.properties)" desktoping-config-gradle :keys "C-c d c p" :help "Open Gradle properties"]))
     ("Utilities & Docs"
      ["fzl-emacs Usage & Shortcuts" desktoping-open-usage-buffer :keys "C-c d u" :help "Open fzl-emacs usage inventory buffer"]
+     "---"
+     ["Start / Status Emacs Server" desktoping-server-start :help "Start or check Emacs server for browser extension and emacsclient"]
      "---"
      ["Org-Mode Cheatsheet (Web)" desktoping-util-org-cheatsheet :keys "C-c d o c" :help "Open Org-mode reference sheet"]
      ["Org-Mode Export Beamer" desktoping-util-org-export-beamer :keys "C-c d o b" :help "Export Org to Beamer PDF"]

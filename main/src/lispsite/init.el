@@ -164,6 +164,13 @@
 (require 'desktoping-apps)
 ;(require 'fzl-ide-feat-warp)
 
+;; Iniciar servidor do Emacs na inicialização para comunicação com a extensão de navegador e emacsclient
+(unless noninteractive
+  (require 'server)
+  (unless (server-running-p)
+    (server-start)
+    (message "Emacs server started for browser extension and emacsclient.")))
+
 (require 'pkgconfig-magit)
 
 (require 'pkgconfig-company)
