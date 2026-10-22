@@ -407,6 +407,189 @@ Se o `.env` ainda não existir e houver `.env.example`, copia o template automat
     (pop-to-buffer buf)))
 
 ;;; ---------------------------------------------------------------------------
+;;; VPN (OpenVPN / UNESP) — Integração com .env
+;;; ---------------------------------------------------------------------------
+
+(defvar fzl-vpn-buffer-name "*fzl-vpn-unesp*"
+  "Nome do buffer onde o processo OpenVPN é executado.")
+
+(defvar fzl-vpn--sudo-password nil
+  "Armazenamento temporário em memória da senha sudo durante o handshake inicial.")
+
+(defvar fzl-vpn--connected nil
+  "Indica se a sessão OpenVPN completou a inicialização (`Initialization Sequence Completed`).")
+
+(defun fzl-vpn--get-config ()
+  "Obtém a configuração de VPN a partir do `.env`."
+  (fzl-load-env-file)
+  (let* ((vpn-dir (expand-file-name (or (getenv "UNESP_VPN_DIR") "~/WORKING/HOME/vpn")))
+         (ovpn-file (expand-file-name (or (getenv "UNESP_VPN_OVPN_FILE")
+                                          (expand-file-name "unesp.ovpn" vpn-dir))))
+         (vpn-user (or (getenv "UNESP_VPN_USER") ""))
+         (vpn-pass (or (getenv "UNESP_VPN_PASS") "")))
+    (list :dir vpn-dir :ovpn ovpn-file :user vpn-user :pass vpn-pass)))
+
+(defun fzl-vpn-running-p ()
+  "Retorna non-nil se o processo OpenVPN do Emacs ou do sistema estiver em execução."
+  (let ((proc (get-buffer-process fzl-vpn-buffer-name)))
+    (or (and proc (process-live-p proc))
+        (= 0 (call-process "pgrep" nil nil nil "-x" "openvpn")))))
+
+(defun fzl-vpn--tun-ip ()
+  "Retorna o endereço IP da interface `tun0` (ou `tun*`) caso ativa, ou nil."
+  (let ((out (shell-command-to-string "ip -4 -o addr show dev tun0 2>/dev/null")))
+    (when (string-match "inet \\([0-9.]+\\)" out)
+      (match-string 1 out))))
+
+(defun fzl-vpn--sudo-needs-password-p ()
+  "Retorna non-nil se `sudo` exigir senha no momento."
+  (/= 0 (call-process "sudo" nil nil nil "-n" "true")))
+
+(defun fzl-vpn--process-filter (proc output)
+  "Filtro de processo do OpenVPN para responder automaticamente sudo, usuário e senha do `.env`."
+  (let ((clean-output (replace-regexp-in-string "\r" "" output)))
+    ;; Insere no buffer de log (ocultando ecos de senha caso existam)
+    (when (buffer-live-p (process-buffer proc))
+      (with-current-buffer (process-buffer proc)
+        (let ((inhibit-read-only t)
+              (moving (= (point) (process-mark proc))))
+          (save-excursion
+            (goto-char (process-mark proc))
+            (insert clean-output)
+            (set-marker (process-mark proc) (point)))
+          (when moving
+            (goto-char (process-mark proc))))))
+    ;; 1. Prompt de senha do sudo
+    (when (string-match-p "\\(\\[sudo\\]\\|Password for\\|senha para\\).*:" clean-output)
+      (let ((pw (or fzl-vpn--sudo-password
+                    (read-passwd (format "[sudo] senha para %s: " (user-login-name))))))
+        (setq fzl-vpn--sudo-password nil)
+        (process-send-string proc (concat pw "\n"))))
+    ;; 2. Prompt de Usuário do OpenVPN (Enter Auth Username:)
+    (when (string-match-p "Enter Auth Username:" clean-output)
+      (let* ((cfg (fzl-vpn--get-config))
+             (user (plist-get cfg :user)))
+        (when (string-empty-p user)
+          (setq user (read-string "OpenVPN Username: ")))
+        (process-send-string proc (concat user "\n"))
+        (message "VPN (.env): enviando usuário '%s'..." user)))
+    ;; 3. Prompt de Senha do OpenVPN (Enter Auth Password:)
+    (when (string-match-p "Enter Auth Password:" clean-output)
+      (let* ((cfg (fzl-vpn--get-config))
+             (pass (plist-get cfg :pass)))
+        (when (string-empty-p pass)
+          (setq pass (read-passwd "OpenVPN Password: ")))
+        (process-send-string proc (concat pass "\n"))
+        (message "VPN (.env): enviando senha do .env...")))
+    ;; 4. Confirmação de conexão estabelecida
+    (when (string-match-p "Initialization Sequence Completed" clean-output)
+      (setq fzl-vpn--connected t)
+      (let ((ip (fzl-vpn--tun-ip)))
+        (message "✅ VPN UNESP conectada com sucesso!%s"
+                 (if ip (format " (tun0: %s)" ip) ""))))
+    ;; 5. Falha de autenticação
+    (when (string-match-p "AUTH_FAILED" clean-output)
+      (setq fzl-vpn--connected nil)
+      (message "❌ VPN UNESP: Falha de autenticação (AUTH_FAILED). Verifique UNESP_VPN_USER e UNESP_VPN_PASS no .env."))))
+
+(defun fzl-vpn--process-sentinel (proc event)
+  "Sentinel para monitorar o encerramento do processo OpenVPN."
+  (setq fzl-vpn--sudo-password nil)
+  (when (memq (process-status proc) '(exit signal))
+    (setq fzl-vpn--connected nil)
+    (when (buffer-live-p (process-buffer proc))
+      (with-current-buffer (process-buffer proc)
+        (let ((inhibit-read-only t))
+          (goto-char (point-max))
+          (insert (format "\n--- Processo OpenVPN finalizado: %s ---\n" (string-trim event))))))
+    (message "🔌 VPN UNESP desconectada (%s)." (string-trim event))))
+
+(defun fzl-vpn-connect ()
+  "Inicia a conexão OpenVPN da UNESP usando usuário e senha definidos no `.env`.
+Pede a senha do `sudo` no minibuffer caso necessário."
+  (interactive)
+  (let* ((cfg (fzl-vpn--get-config))
+         (vpn-dir (plist-get cfg :dir))
+         (ovpn-file (plist-get cfg :ovpn))
+         (existing-proc (get-buffer-process fzl-vpn-buffer-name)))
+    (unless (file-exists-p ovpn-file)
+      (user-error "Arquivo OpenVPN não encontrado: %s" ovpn-file))
+    (if (and existing-proc (process-live-p existing-proc))
+        (progn
+          (pop-to-buffer fzl-vpn-buffer-name)
+          (message "VPN já está em execução no buffer %s." fzl-vpn-buffer-name))
+      (when (fzl-vpn--sudo-needs-password-p)
+        (setq fzl-vpn--sudo-password
+              (read-passwd (format "[sudo] senha para %s (OpenVPN): " (user-login-name)))))
+      (let ((buf (get-buffer-create fzl-vpn-buffer-name))
+            (process-connection-type t))
+        (with-current-buffer buf
+          (let ((inhibit-read-only t))
+            (erase-buffer)
+            (insert (format "=== Iniciando OpenVPN (%s) em %s ===\n"
+                            (file-name-nondirectory ovpn-file) vpn-dir))
+            (insert "Teclas: [q] fechar janela  |  [d] desconectar VPN  |  [r] reconectar  |  [s] status\n\n"))
+          (setq default-directory (file-name-as-directory vpn-dir))
+          (local-set-key (kbd "q") #'quit-window)
+          (local-set-key (kbd "d") #'fzl-vpn-disconnect)
+          (local-set-key (kbd "r") (lambda () (interactive) (fzl-vpn-disconnect) (sit-for 1) (fzl-vpn-connect)))
+          (local-set-key (kbd "s") #'fzl-vpn-status)
+          (setq-local buffer-read-only t))
+        (let ((proc (start-process "fzl-openvpn" buf
+                                   "sudo" "openvpn" (file-name-nondirectory ovpn-file))))
+          (set-process-filter proc #'fzl-vpn--process-filter)
+          (set-process-sentinel proc #'fzl-vpn--process-sentinel)
+          (pop-to-buffer buf)
+          (message "Iniciando OpenVPN UNESP..."))))))
+
+(defun fzl-vpn-disconnect ()
+  "Encerra a conexão OpenVPN ativa."
+  (interactive)
+  (let ((proc (get-buffer-process fzl-vpn-buffer-name)))
+    (if (not (fzl-vpn-running-p))
+        (message "Nenhuma conexão OpenVPN ativa no momento.")
+      (let ((sudo-pw (when (fzl-vpn--sudo-needs-password-p)
+                       (read-passwd (format "[sudo] senha para %s (encerrar OpenVPN): " (user-login-name))))))
+        (if sudo-pw
+            (call-process-region (concat sudo-pw "\n") nil "sudo" nil nil nil "-S" "killall" "-SIGINT" "openvpn")
+          (call-process "sudo" nil nil nil "killall" "-SIGINT" "openvpn"))
+        (when (and proc (process-live-p proc))
+          (ignore-errors (interrupt-process proc)))
+        (setq fzl-vpn--connected nil)
+        (message "Sinal de desconexão enviado ao OpenVPN.")))))
+
+(defun fzl-vpn-status ()
+  "Verifica e informa o status atual da VPN (processo `openvpn` e interface `tun0`)."
+  (interactive)
+  (let ((running (fzl-vpn-running-p))
+        (ip (fzl-vpn--tun-ip)))
+    (cond
+     ((and running ip)
+      (message "✅ VPN UNESP ATIVA — Interface tun0: %s" ip))
+     (running
+      (message "⏳ Processo OpenVPN em execução (aguardando tun0 / autenticação)..."))
+     (t
+      (message "🔌 VPN UNESP DESCONECTADA.")))))
+
+(defun fzl-vpn-show-logs ()
+  "Abre o buffer de logs da sessão OpenVPN (`*fzl-vpn-unesp*`)."
+  (interactive)
+  (let ((buf (get-buffer fzl-vpn-buffer-name)))
+    (if buf
+        (pop-to-buffer buf)
+      (message "Buffer %s ainda não foi criado. Use `M-x fzl-vpn-connect` para iniciar a VPN."
+               fzl-vpn-buffer-name))))
+
+(defun fzl-vpn-open-dir ()
+  "Abre o diretório de configuração da VPN (`UNESP_VPN_DIR`) no Dired."
+  (interactive)
+  (let* ((cfg (fzl-vpn--get-config))
+         (dir (plist-get cfg :dir)))
+    (if (file-directory-p dir)
+        (dired dir)
+      (user-error "Diretório VPN não encontrado: %s" dir))))
+
+;;; ---------------------------------------------------------------------------
 ;;; Menu Dinâmico: "SQL (.env)"
 ;;; ---------------------------------------------------------------------------
 
@@ -469,15 +652,24 @@ Se o `.env` ainda não existir e houver `.env.example`, copia o template automat
     (error
      (list (vector (format "(Erro: %s)" (error-message-string err)) nil :active nil)))))
 
-(easy-menu-define fzl-sql-menu global-map "Menu de Conexões SQL (.env)"
+(easy-menu-define fzl-sql-menu global-map "Menu de Conexões SQL & VPN (.env)"
   '("SQL (.env)"
     ("Conectar SQLi (REPL)" :filter fzl-sql--menu-connect-filter)
     ("Perfil Ativo no Org-Babel" :filter fzl-sql--menu-org-babel-filter)
+    ("VPN Trabalho (UNESP OpenVPN)"
+     ["Conectar VPN (unesp.ovpn)" fzl-vpn-connect :keys "C-c d v c" :help "Iniciar OpenVPN com credenciais do .env"]
+     ["Desconectar VPN" fzl-vpn-disconnect :keys "C-c d v d" :help "Encerrar conexão OpenVPN ativa"]
+     ["Status da VPN (tun0)" fzl-vpn-status :keys "C-c d v s" :help "Verificar status da VPN e IP tun0"]
+     ["Ver Buffer de Logs da VPN" fzl-vpn-show-logs :keys "C-c d v l" :help "Abrir buffer *fzl-vpn-unesp*"]
+     ["Abrir Pasta da VPN (Dired)" fzl-vpn-open-dir :keys "C-c d v o" :help "Abrir ~/WORKING/HOME/vpn no Dired"])
     "---"
     ["Conectar Interativamente (Prompt)..." fzl-sql-connect :keys "C-c d q c" :help "Escolher conexão SQL (.env) via minibuffer/Helm"]
     ["Conectar: integra-dev (Rápido)" integra-sql :keys "C-c d q d" :help "Abrir REPL SQLi conectado ao integra-dev"]
     ["Conectar: integra-local (Rápido)" integra-local-sql :keys "C-c d q l" :help "Abrir REPL SQLi conectado ao integra-local"]
     ["Alternar para Buffer SQLi Ativo..." fzl-sql-list-sqli-buffers :keys "C-c d q i" :help "Listar e focar em um buffer SQLi aberto"]
+    "---"
+    ["Conectar VPN UNESP" fzl-vpn-connect :keys "C-c d v c" :help "Conectar à VPN UNESP usando UNESP_VPN_USER / UNESP_VPN_PASS do .env"]
+    ["Desconectar VPN UNESP" fzl-vpn-disconnect :keys "C-c d v d" :help "Desconectar da VPN UNESP"]
     "---"
     ["Painel de Status SQL (.env)" fzl-sql-show-status :keys "C-c d q s" :help "Exibir tabela com todos os bancos carregados do .env"]
     ["Abrir Consultas (consultas.org)" fzl-sql-open-consultas-org :keys "C-c d q o" :help "Abrir arquivo sql-connect/consultas.org"]

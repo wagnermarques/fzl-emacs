@@ -1136,12 +1136,27 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "q e") #'fzl-sql-open-env-file)
 (define-key desktoping-apps-map (kbd "q r") #'fzl-load-env-file)
 
+;; VPN (Work / UNESP OpenVPN) keybindings (Prefix: C-c d v)
+(define-key desktoping-apps-map (kbd "v c") #'fzl-vpn-connect)
+(define-key desktoping-apps-map (kbd "v d") #'fzl-vpn-disconnect)
+(define-key desktoping-apps-map (kbd "v s") #'fzl-vpn-status)
+(define-key desktoping-apps-map (kbd "v l") #'fzl-vpn-show-logs)
+(define-key desktoping-apps-map (kbd "v o") #'fzl-vpn-open-dir)
+
 ;;; ============================================================================
 ;;; Menu Definition: "Desktoping"
 ;;; ============================================================================
 
 (easy-menu-define desktoping-apps-menu global-map "Desktoping Applications Menu"
   '("Desktoping"
+    ("VPN Trabalho (UNESP)"
+     ["Conectar VPN (unesp.ovpn)" fzl-vpn-connect :keys "C-c d v c" :help "Iniciar OpenVPN com credenciais do .env"]
+     ["Desconectar VPN" fzl-vpn-disconnect :keys "C-c d v d" :help "Encerrar conexão OpenVPN ativa"]
+     ["Status da VPN (tun0)" fzl-vpn-status :keys "C-c d v s" :help "Verificar status da VPN e IP tun0"]
+     ["Ver Buffer de Logs da VPN" fzl-vpn-show-logs :keys "C-c d v l" :help "Abrir buffer *fzl-vpn-unesp*"]
+     ["Abrir Pasta da VPN (Dired)" fzl-vpn-open-dir :keys "C-c d v o" :help "Abrir ~/WORKING/HOME/vpn no Dired"]
+     "---"
+     ["Editar Arquivo .env" fzl-sql-open-env-file :keys "C-c d q e" :help "Abrir o arquivo .env do projeto para edição"])
     ("Databases (.env)"
      ("Conectar SQLi (REPL)" :filter fzl-sql--menu-connect-filter)
      ("Perfil Ativo no Org-Babel" :filter fzl-sql--menu-org-babel-filter)
