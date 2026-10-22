@@ -1125,12 +1125,37 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "p")   #'desktoping-util-wkhtmltopdf)
 (define-key desktoping-apps-map (kbd "n")   #'desktoping-util-npm-config-list)
 
+;; SQL (.env) Databases keybindings (Prefix: C-c d q)
+(define-key desktoping-apps-map (kbd "q c") #'fzl-sql-connect)
+(define-key desktoping-apps-map (kbd "q d") #'integra-sql)
+(define-key desktoping-apps-map (kbd "q l") #'integra-local-sql)
+(define-key desktoping-apps-map (kbd "q b") #'fzl-sql-switch-org-babel-profile)
+(define-key desktoping-apps-map (kbd "q i") #'fzl-sql-list-sqli-buffers)
+(define-key desktoping-apps-map (kbd "q s") #'fzl-sql-show-status)
+(define-key desktoping-apps-map (kbd "q o") #'fzl-sql-open-consultas-org)
+(define-key desktoping-apps-map (kbd "q e") #'fzl-sql-open-env-file)
+(define-key desktoping-apps-map (kbd "q r") #'fzl-load-env-file)
+
 ;;; ============================================================================
 ;;; Menu Definition: "Desktoping"
 ;;; ============================================================================
 
 (easy-menu-define desktoping-apps-menu global-map "Desktoping Applications Menu"
   '("Desktoping"
+    ("Databases (.env)"
+     ("Conectar SQLi (REPL)" :filter fzl-sql--menu-connect-filter)
+     ("Perfil Ativo no Org-Babel" :filter fzl-sql--menu-org-babel-filter)
+     "---"
+     ["Conectar Interativamente (Prompt)..." fzl-sql-connect :keys "C-c d q c" :help "Escolher conexão SQL (.env) via minibuffer/Helm"]
+     ["Conectar: integra-dev (Rápido)" integra-sql :keys "C-c d q d" :help "Abrir REPL SQLi conectado ao integra-dev"]
+     ["Conectar: integra-local (Rápido)" integra-local-sql :keys "C-c d q l" :help "Abrir REPL SQLi conectado ao integra-local"]
+     ["Alternar para Buffer SQLi Ativo..." fzl-sql-list-sqli-buffers :keys "C-c d q i" :help "Listar e focar em um buffer SQLi aberto"]
+     "---"
+     ["Painel de Status SQL (.env)" fzl-sql-show-status :keys "C-c d q s" :help "Exibir tabela com todos os bancos carregados do .env"]
+     ["Abrir Consultas (consultas.org)" fzl-sql-open-consultas-org :keys "C-c d q o" :help "Abrir arquivo sql-connect/consultas.org"]
+     "---"
+     ["Editar Arquivo .env" fzl-sql-open-env-file :keys "C-c d q e" :help "Abrir o arquivo .env do projeto para edição"]
+     ["Recarregar Credenciais (.env)" fzl-load-env-file :keys "C-c d q r" :help "Reler variáveis do arquivo .env e atualizar conexões"])
     ("Bookmarks (Buku)"
      ["Search & Open Bookmark" desktoping-buku-search-and-open :keys "C-c d b s" :help "Search bookmarks and open in browser"]
      ["Filter by Tag/Group" desktoping-buku-browse-by-tag :keys "C-c d b g" :help "Browse bookmarks in a specific tag group"]
