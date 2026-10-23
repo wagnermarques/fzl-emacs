@@ -652,30 +652,36 @@ Pede a senha do `sudo` no minibuffer caso necessário."
     (error
      (list (vector (format "(Erro: %s)" (error-message-string err)) nil :active nil)))))
 
-(easy-menu-define fzl-sql-menu global-map "Menu de Conexões SQL & VPN (.env)"
+(easy-menu-define fzl-sql-menu global-map "Menu de Conexões SQL (.env)"
   '("SQL (.env)"
     ("Conectar SQLi (REPL)" :filter fzl-sql--menu-connect-filter)
     ("Perfil Ativo no Org-Babel" :filter fzl-sql--menu-org-babel-filter)
-    ("VPN Trabalho (UNESP OpenVPN)"
-     ["Conectar VPN (unesp.ovpn)" fzl-vpn-connect :keys "C-c d v c" :help "Iniciar OpenVPN com credenciais do .env"]
-     ["Desconectar VPN" fzl-vpn-disconnect :keys "C-c d v d" :help "Encerrar conexão OpenVPN ativa"]
-     ["Status da VPN (tun0)" fzl-vpn-status :keys "C-c d v s" :help "Verificar status da VPN e IP tun0"]
-     ["Ver Buffer de Logs da VPN" fzl-vpn-show-logs :keys "C-c d v l" :help "Abrir buffer *fzl-vpn-unesp*"]
-     ["Abrir Pasta da VPN (Dired)" fzl-vpn-open-dir :keys "C-c d v o" :help "Abrir ~/WORKING/HOME/vpn no Dired"])
     "---"
     ["Conectar Interativamente (Prompt)..." fzl-sql-connect :keys "C-c d q c" :help "Escolher conexão SQL (.env) via minibuffer/Helm"]
     ["Conectar: integra-dev (Rápido)" integra-sql :keys "C-c d q d" :help "Abrir REPL SQLi conectado ao integra-dev"]
     ["Conectar: integra-local (Rápido)" integra-local-sql :keys "C-c d q l" :help "Abrir REPL SQLi conectado ao integra-local"]
     ["Alternar para Buffer SQLi Ativo..." fzl-sql-list-sqli-buffers :keys "C-c d q i" :help "Listar e focar em um buffer SQLi aberto"]
     "---"
-    ["Conectar VPN UNESP" fzl-vpn-connect :keys "C-c d v c" :help "Conectar à VPN UNESP usando UNESP_VPN_USER / UNESP_VPN_PASS do .env"]
-    ["Desconectar VPN UNESP" fzl-vpn-disconnect :keys "C-c d v d" :help "Desconectar da VPN UNESP"]
-    "---"
     ["Painel de Status SQL (.env)" fzl-sql-show-status :keys "C-c d q s" :help "Exibir tabela com todos os bancos carregados do .env"]
     ["Abrir Consultas (consultas.org)" fzl-sql-open-consultas-org :keys "C-c d q o" :help "Abrir arquivo sql-connect/consultas.org"]
     "---"
     ["Editar Arquivo .env" fzl-sql-open-env-file :keys "C-c d q e" :help "Abrir o arquivo .env do projeto para edição"]
     ["Recarregar Credenciais (.env)" fzl-load-env-file :keys "C-c d q r" :help "Reler variáveis do arquivo .env e atualizar conexões"]))
+
+;;; ---------------------------------------------------------------------------
+;;; Menu: "VPN (UNESP)"
+;;; ---------------------------------------------------------------------------
+
+(easy-menu-define fzl-vpn-menu global-map "Menu VPN Trabalho (UNESP OpenVPN)"
+  '("VPN (UNESP)"
+    ["Conectar VPN (unesp.ovpn)" fzl-vpn-connect :keys "C-c d v c" :help "Iniciar OpenVPN com credenciais do .env"]
+    ["Desconectar VPN" fzl-vpn-disconnect :keys "C-c d v d" :help "Encerrar conexão OpenVPN ativa"]
+    "---"
+    ["Status da VPN (tun0)" fzl-vpn-status :keys "C-c d v s" :help "Verificar status da VPN e IP tun0"]
+    ["Ver Buffer de Logs da VPN" fzl-vpn-show-logs :keys "C-c d v l" :help "Abrir buffer *fzl-vpn-unesp*"]
+    ["Abrir Pasta da VPN (Dired)" fzl-vpn-open-dir :keys "C-c d v o" :help "Abrir ~/WORKING/HOME/vpn no Dired"]
+    "---"
+    ["Editar Arquivo .env" fzl-sql-open-env-file :keys "C-c d q e" :help "Abrir o arquivo .env do projeto para edição"]))
 
 (provide 'sql-connections)
 (provide 'init)
