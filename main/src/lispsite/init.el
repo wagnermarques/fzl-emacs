@@ -136,6 +136,7 @@
 (require 'config-theme)
 (require 'pkgconfig-projectile)
 (require 'pkgconfig-treemacs)
+(require 'pkgconfig-antigravity)
 (require 'pkgconfig-helm)
 
 

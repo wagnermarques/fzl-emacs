@@ -244,5 +244,9 @@ When NO-RERENDER is non-nil, do not trigger a window/buffer rerender."
               (fzl/treemacs-open)))
           95)
 
+;; Antigravity Remote Control integration for Treemacs (Linux & Windows)
+(require 'pkgconfig-antigravity nil t)
+
+(provide 'pkgconfig-antigravity-treemacs)
 (provide 'pkgconfig-treemacs)
 ;;; pkgconfig-treemacs.el ends here
