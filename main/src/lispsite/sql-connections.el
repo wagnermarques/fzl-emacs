@@ -287,6 +287,20 @@ registra dinamicamente todas as conexões `<PREFIX>_DB_*` encontradas."
   (interactive)
   (fzl-sql-connect-profile 'integra-local))
 
+(defun edutec2-homolog-sql ()
+  "Abre um buffer SQLi conectado ao MySQL de homologação (`edutec2-homolog`)."
+  (interactive)
+  (fzl-sql-connect-profile 'edutec2-homolog))
+
+(defalias 'edutec-sql #'edutec2-homolog-sql)
+
+(defun moodle-homolog-sql ()
+  "Abre um buffer SQLi conectado ao MySQL de homologação (`moodle-homolog`)."
+  (interactive)
+  (fzl-sql-connect-profile 'moodle-homolog))
+
+(defalias 'moodle-sql #'moodle-homolog-sql)
+
 (defun fzl-sql-switch-org-babel-profile (&optional profile-sym)
   "Alterna o perfil de banco do `.env` usado como padrão nos blocos `sql` do Org-Babel."
   (interactive)
@@ -660,6 +674,8 @@ Pede a senha do `sudo` no minibuffer caso necessário."
     ["Conectar Interativamente (Prompt)..." fzl-sql-connect :keys "C-c d q c" :help "Escolher conexão SQL (.env) via minibuffer/Helm"]
     ["Conectar: integra-dev (Rápido)" integra-sql :keys "C-c d q d" :help "Abrir REPL SQLi conectado ao integra-dev"]
     ["Conectar: integra-local (Rápido)" integra-local-sql :keys "C-c d q l" :help "Abrir REPL SQLi conectado ao integra-local"]
+    ["Conectar: edutec2-homolog (Rápido)" edutec2-homolog-sql :keys "C-c d q E" :help "Abrir REPL SQLi conectado ao edutec2-homolog"]
+    ["Conectar: moodle-homolog (Rápido)" moodle-homolog-sql :keys "C-c d q m" :help "Abrir REPL SQLi conectado ao moodle-homolog"]
     ["Alternar para Buffer SQLi Ativo..." fzl-sql-list-sqli-buffers :keys "C-c d q i" :help "Listar e focar em um buffer SQLi aberto"]
     "---"
     ["Painel de Status SQL (.env)" fzl-sql-show-status :keys "C-c d q s" :help "Exibir tabela com todos os bancos carregados do .env"]

@@ -1129,6 +1129,8 @@ Offers to either:
 (define-key desktoping-apps-map (kbd "q c") #'fzl-sql-connect)
 (define-key desktoping-apps-map (kbd "q d") #'integra-sql)
 (define-key desktoping-apps-map (kbd "q l") #'integra-local-sql)
+(define-key desktoping-apps-map (kbd "q E") #'edutec2-homolog-sql)
+(define-key desktoping-apps-map (kbd "q m") #'moodle-homolog-sql)
 (define-key desktoping-apps-map (kbd "q b") #'fzl-sql-switch-org-babel-profile)
 (define-key desktoping-apps-map (kbd "q i") #'fzl-sql-list-sqli-buffers)
 (define-key desktoping-apps-map (kbd "q s") #'fzl-sql-show-status)
@@ -1164,6 +1166,8 @@ Offers to either:
      ["Conectar Interativamente (Prompt)..." fzl-sql-connect :keys "C-c d q c" :help "Escolher conexão SQL (.env) via minibuffer/Helm"]
      ["Conectar: integra-dev (Rápido)" integra-sql :keys "C-c d q d" :help "Abrir REPL SQLi conectado ao integra-dev"]
      ["Conectar: integra-local (Rápido)" integra-local-sql :keys "C-c d q l" :help "Abrir REPL SQLi conectado ao integra-local"]
+     ["Conectar: edutec2-homolog (Rápido)" edutec2-homolog-sql :keys "C-c d q E" :help "Abrir REPL SQLi conectado ao edutec2-homolog"]
+     ["Conectar: moodle-homolog (Rápido)" moodle-homolog-sql :keys "C-c d q m" :help "Abrir REPL SQLi conectado ao moodle-homolog"]
      ["Alternar para Buffer SQLi Ativo..." fzl-sql-list-sqli-buffers :keys "C-c d q i" :help "Listar e focar em um buffer SQLi aberto"]
      "---"
      ["Painel de Status SQL (.env)" fzl-sql-show-status :keys "C-c d q s" :help "Exibir tabela com todos os bancos carregados do .env"]
