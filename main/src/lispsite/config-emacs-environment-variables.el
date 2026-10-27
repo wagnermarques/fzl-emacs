@@ -11,9 +11,31 @@
       (or (let* ((this-file (or load-file-name buffer-file-name (locate-library "config-emacs-environment-variables")))
                  (dir (and this-file (file-name-directory this-file))))
             (and dir (file-exists-p (expand-file-name "../../.." dir))
-                 (expand-file-name "../../.." dir)))
-          (concat externaldisk_partition2 "/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs")))
+                 (file-truename (expand-file-name "../../.." dir))))
+          (let ((dom (locate-dominating-file default-directory "main/src/lispsite")))
+            (and dom (file-truename dom)))
+          (and (boundp 'externaldisk_partition2)
+               (file-directory-p (concat externaldisk_partition2 "/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs"))
+               (concat externaldisk_partition2 "/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs"))
+          (file-truename default-directory)))
 (setq fzlemacs-dir--fzlemacs-lispsite (concat fzlemacs-dir--fzlemacs-home "/main/src/lispsite"))
+
+(defun fzl/find-projects-root ()
+  "Dynamically discover the root Projects-Srcs directory if available."
+  (or (and (getenv "PROJECTS_SRCS_DIR")
+           (file-directory-p (getenv "PROJECTS_SRCS_DIR"))
+           (file-truename (getenv "PROJECTS_SRCS_DIR")))
+      ;; Relative parent ../.. from fzlemacs-dir--fzlemacs-home
+      (and (bound-and-true-p fzlemacs-dir--fzlemacs-home)
+           (let ((candidate (expand-file-name "../.." fzlemacs-dir--fzlemacs-home)))
+             (and (file-directory-p candidate)
+                  (string-equal (file-name-nondirectory (directory-file-name candidate)) "Projects-Srcs")
+                  (file-truename candidate))))
+      ;; Check externaldisk_partition2 if configured and directory exists
+      (and (bound-and-true-p externaldisk_partition2)
+           (let ((candidate (concat externaldisk_partition2 "/Projects-Srcs")))
+             (and (file-directory-p candidate) (file-truename candidate))))
+      nil))
 
 
 ;;; coding lang dirs

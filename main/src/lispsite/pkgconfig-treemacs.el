@@ -14,12 +14,15 @@
   "List of projects (either (name . path) pairs or path strings) to ensure in Treemacs workspace.")
 
 (defvar fzl/treemacs-default-project-path
-  (if (boundp 'externaldisk_partition2)
-      (concat externaldisk_partition2 "/Projects-Srcs")
-    "/home/wgn/mnt/ext4/Projects-Srcs")
+  (or (and (fboundp 'fzl/find-projects-root) (fzl/find-projects-root))
+      (bound-and-true-p fzlemacs-dir--fzlemacs-home)
+      (expand-file-name default-directory))
   "Default project directory fallback for Treemacs workspace.")
 
-(defvar fzl/treemacs-default-project-name "Projects-Srcs"
+(defvar fzl/treemacs-default-project-name
+  (if (and (fboundp 'fzl/find-projects-root) (fzl/find-projects-root))
+      "Projects-Srcs"
+    (file-name-nondirectory (directory-file-name fzl/treemacs-default-project-path)))
   "Default project name fallback for Treemacs workspace.")
 
 (defvar fzl/treemacs--syncing nil

@@ -95,6 +95,12 @@ Para abrir este inventário e guia a qualquer momento no próprio Emacs:
 |---------------+---------------------------------------+----------------------------------------------------------------------|
 | =Esc r=       | ~eval-region~                         | Avalia a região Lisp selecionada                                     |
 | =C-c s=       | ~ansi-term~                           | Abre um terminal emulado com shell Bash dentro do Emacs              |
+| =C-c d t t=   | ~desktoping-terminal-open-external~   | Abre terminal desktop (Ptyxis/Gnome) na pasta do Treemacs ou Dired   |
+| =C-c d t a=   | ~desktoping-terminal-open-ansi-term~  | Abre terminal Emacs (ansi-term) na pasta do Treemacs ou Dired        |
+| =C-c d t e=   | ~desktoping-terminal-open-eshell~     | Abre Eshell configurado na pasta do Treemacs ou Dired                |
+| =C-c d t s=   | ~desktoping-terminal-open-shell~      | Abre Shell interativo (M-x shell) na pasta do Treemacs ou Dired      |
+| =C-c d t v=   | ~desktoping-terminal-open-vterm~      | Abre vterm na pasta do Treemacs ou Dired (se instalado)              |
+| =O t= (Treem.)| ~desktoping-terminal-open-external~   | No Treemacs: abre terminal desktop no nó/pasta sob o cursor          |
 | =C-x g=       | ~magit-status~                        | Interface completa e visual do Git com Magit                        |
 | =C-c c c=     | ~fzl/copilot/display~                 | Abre o chat do GitHub Copilot em janela lateral                      |
 | =C-c g r=     | ~fzl-ide-feat-grep-region...~         | Executa grep recursivo na string selecionada para novo buffer        |

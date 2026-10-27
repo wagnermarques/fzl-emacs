@@ -1046,6 +1046,169 @@ Offers to either:
   (find-file "/run/media/wgn/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-tasktoday/_0_tasktoday-files/tasktoday.org"))
 
 ;;; ============================================================================
+;;; Group 7: Terminal & Shell Integration (Treemacs & Dired Aware)
+;;; ============================================================================
+
+(defcustom desktoping-terminal-external-program nil
+  "Preferred external terminal emulator command.
+If nil, automatically detect from available emulators (ptyxis, gnome-terminal,
+xfce4-terminal, konsole, kitty, alacritty, terminator, tilix, foot, xterm)."
+  :type '(choice (const :tag "Auto-detect" nil)
+                 (string :tag "Custom executable"))
+  :group 'desktoping)
+
+(defun desktoping--treemacs-path-at-point ()
+  "Return the filesystem directory path at point in Treemacs, or nil."
+  (when (derived-mode-p 'treemacs-mode)
+    (let ((path (or (and (fboundp 'treemacs--prop-at-point)
+                         (ignore-errors (treemacs--prop-at-point :path)))
+                    (and (fboundp 'treemacs-current-button)
+                         (let ((btn (ignore-errors (treemacs-current-button))))
+                           (and btn
+                                (or (and (fboundp 'treemacs--nearest-path)
+                                         (ignore-errors (treemacs--nearest-path btn)))
+                                    (and (fboundp 'treemacs-button-get)
+                                         (ignore-errors (treemacs-button-get btn :path))))))))))
+      (when (and path (stringp path) (file-exists-p path))
+        (if (file-directory-p path)
+            (file-name-as-directory (file-truename path))
+          (file-name-as-directory (file-truename (file-name-directory path))))))))
+
+(defun desktoping--dired-path-at-point ()
+  "Return target directory in Dired buffer."
+  (when (derived-mode-p 'dired-mode)
+    (let ((item (and (fboundp 'dired-get-filename)
+                     (ignore-errors (dired-get-filename nil t)))))
+      (cond
+       ((and item (file-directory-p item)
+             (not (member (file-name-nondirectory (directory-file-name item)) '("." ".."))))
+        (file-name-as-directory (file-truename item)))
+       ((and item (file-exists-p item))
+        (file-name-as-directory (file-truename (file-name-directory item))))
+       (t
+        (file-name-as-directory (file-truename (or (ignore-errors (dired-current-directory)) default-directory))))))))
+
+(defun desktoping-target-directory (&optional prompt-prefix)
+  "Resolve directory from Treemacs at point, Dired at point, current file, or `default-directory'.
+If PROMPT-PREFIX is non-nil (e.g. called with `C-u`), prompt the user to choose."
+  (let* ((resolved
+          (cond
+           ((derived-mode-p 'treemacs-mode)
+            (or (desktoping--treemacs-path-at-point) default-directory))
+           ((derived-mode-p 'dired-mode)
+            (or (desktoping--dired-path-at-point) default-directory))
+           ((and (buffer-file-name) (file-name-directory (buffer-file-name)))
+            (file-name-as-directory (file-truename (file-name-directory (buffer-file-name)))))
+           (t
+            (file-name-as-directory (file-truename default-directory))))))
+    (if prompt-prefix
+        (file-name-as-directory
+         (expand-file-name
+          (read-directory-name "Abrir terminal no diretório: " resolved nil t)))
+      resolved)))
+
+(defun desktoping--detect-external-terminal ()
+  "Detect the first available external terminal emulator."
+  (or (and desktoping-terminal-external-program
+           (executable-find desktoping-terminal-external-program)
+           desktoping-terminal-external-program)
+      (seq-find #'executable-find
+                '("ptyxis" "gnome-terminal" "xfce4-terminal" "konsole"
+                  "kitty" "alacritty" "terminator" "tilix" "foot"
+                  "x-terminal-emulator" "xterm"))))
+
+(defun desktoping-terminal-open-external (&optional dir)
+  "Open external desktop terminal in directory DIR (resolved from Treemacs/Dired).
+With prefix argument `C-u', prompt for directory."
+  (interactive (list (when current-prefix-arg (desktoping-target-directory t))))
+  (let* ((target-dir (file-truename (or dir (desktoping-target-directory))))
+         (term (desktoping--detect-external-terminal)))
+    (unless (and target-dir (file-directory-p target-dir))
+      (user-error "Diretório não encontrado: %s" target-dir))
+    (unless term
+      (user-error "Nenhum emulador de terminal externo foi encontrado no sistema"))
+    (let ((default-directory (file-name-as-directory target-dir)))
+      (cond
+       ((string-equal term "ptyxis")
+        (start-process "desktoping-terminal" nil "ptyxis" "--new-window" "-d" target-dir))
+       ((string-equal term "gnome-terminal")
+        (start-process "desktoping-terminal" nil "gnome-terminal" "--window" (format "--working-directory=%s" target-dir)))
+       ((string-equal term "xfce4-terminal")
+        (start-process "desktoping-terminal" nil "xfce4-terminal" "--window" (format "--working-directory=%s" target-dir)))
+       ((string-equal term "terminator")
+        (start-process "desktoping-terminal" nil "terminator" "-u" (format "--working-directory=%s" target-dir)))
+       ((string-equal term "konsole")
+        (start-process "desktoping-terminal" nil "konsole" "--separate" "--workdir" target-dir))
+       ((string-equal term "kitty")
+        (start-process "desktoping-terminal" nil "kitty" "-d" target-dir))
+       ((string-equal term "alacritty")
+        (start-process "desktoping-terminal" nil "alacritty" "--working-directory" target-dir))
+       ((string-equal term "tilix")
+        (start-process "desktoping-terminal" nil "tilix" "--action=session-add-window" "-w" target-dir))
+       ((string-equal term "foot")
+        (start-process "desktoping-terminal" nil "foot" "-D" target-dir))
+       (t
+        ;; Fallback (xterm, x-terminal-emulator, etc.) runs inside target-dir default-directory
+        (start-process "desktoping-terminal" nil term))))
+    (message "Terminal externo (%s) aberto em: %s" term target-dir)))
+
+(defun desktoping-terminal-open-ansi-term (&optional dir)
+  "Open an Emacs `ansi-term' buffer in directory DIR (resolved from Treemacs/Dired).
+With prefix argument `C-u', prompt for directory."
+  (interactive (list (when current-prefix-arg (desktoping-target-directory t))))
+  (let* ((target-dir (file-truename (or dir (desktoping-target-directory))))
+         (folder-name (file-name-nondirectory (directory-file-name target-dir)))
+         (buf-name (format "ansi-term:%s" (if (string-empty-p folder-name) "root" folder-name)))
+         (default-directory (file-name-as-directory target-dir))
+         (shell-prog (or (getenv "SHELL") "/bin/bash")))
+    (unless (and target-dir (file-directory-p target-dir))
+      (user-error "Diretório não encontrado: %s" target-dir))
+    (ansi-term shell-prog buf-name)
+    (message "ansi-term aberto em: %s" target-dir)))
+
+(defun desktoping-terminal-open-eshell (&optional dir)
+  "Open Eshell buffer in directory DIR (resolved from Treemacs/Dired).
+With prefix argument `C-u', prompt for directory."
+  (interactive (list (when current-prefix-arg (desktoping-target-directory t))))
+  (let* ((target-dir (file-truename (or dir (desktoping-target-directory))))
+         (default-directory (file-name-as-directory target-dir)))
+    (unless (and target-dir (file-directory-p target-dir))
+      (user-error "Diretório não encontrado: %s" target-dir))
+    (eshell t)
+    (when (derived-mode-p 'eshell-mode)
+      (eshell/cd target-dir))
+    (message "Eshell aberto em: %s" target-dir)))
+
+(defun desktoping-terminal-open-shell (&optional dir)
+  "Open interactive Shell buffer in directory DIR (resolved from Treemacs/Dired).
+With prefix argument `C-u', prompt for directory."
+  (interactive (list (when current-prefix-arg (desktoping-target-directory t))))
+  (let* ((target-dir (file-truename (or dir (desktoping-target-directory))))
+         (folder-name (file-name-nondirectory (directory-file-name target-dir)))
+         (buf-name (format "*shell: %s*" (if (string-empty-p folder-name) "root" folder-name)))
+         (default-directory (file-name-as-directory target-dir)))
+    (unless (and target-dir (file-directory-p target-dir))
+      (user-error "Diretório não encontrado: %s" target-dir))
+    (shell buf-name)
+    (message "Shell aberto em: %s" target-dir)))
+
+(defun desktoping-terminal-open-vterm (&optional dir)
+  "Open vterm buffer in directory DIR (resolved from Treemacs/Dired).
+With prefix argument `C-u', prompt for directory."
+  (interactive (list (when current-prefix-arg (desktoping-target-directory t))))
+  (let* ((target-dir (file-truename (or dir (desktoping-target-directory))))
+         (folder-name (file-name-nondirectory (directory-file-name target-dir)))
+         (buf-name (format "*vterm: %s*" (if (string-empty-p folder-name) "root" folder-name)))
+         (default-directory (file-name-as-directory target-dir)))
+    (unless (and target-dir (file-directory-p target-dir))
+      (user-error "Diretório não encontrado: %s" target-dir))
+    (if (fboundp 'vterm)
+        (progn
+          (vterm buf-name)
+          (message "vterm aberto em: %s" target-dir))
+      (user-error "O pacote vterm não está instalado neste Emacs"))))
+
+;;; ============================================================================
 ;;; Keymap Setup (Prefix: C-c d)
 ;;; ============================================================================
 
@@ -1067,6 +1230,20 @@ Offers to either:
 ;; TaskToday keybindings
 (define-key desktoping-apps-map (kbd "t d") #'desktoping-tasktoday-dir)
 (define-key desktoping-apps-map (kbd "t f") #'desktoping-tasktoday-file)
+
+;; Terminal keybindings (Treemacs & Dired aware)
+(define-key desktoping-apps-map (kbd "t t") #'desktoping-terminal-open-external)
+(define-key desktoping-apps-map (kbd "t a") #'desktoping-terminal-open-ansi-term)
+(define-key desktoping-apps-map (kbd "t e") #'desktoping-terminal-open-eshell)
+(define-key desktoping-apps-map (kbd "t s") #'desktoping-terminal-open-shell)
+(define-key desktoping-apps-map (kbd "t v") #'desktoping-terminal-open-vterm)
+
+(with-eval-after-load 'treemacs
+  (define-key treemacs-mode-map (kbd "C-c d t t") #'desktoping-terminal-open-external)
+  (define-key treemacs-mode-map (kbd "O t")       #'desktoping-terminal-open-external))
+
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "C-c d t t") #'desktoping-terminal-open-external))
 
 ;; Bibliography (BibTeX) keybindings
 (autoload 'helm-bibtex "helm-bibtex" "Search BibTeX" t)
@@ -1151,6 +1328,12 @@ Offers to either:
 
 (easy-menu-define desktoping-apps-menu global-map "Desktoping Applications Menu"
   '("Desktoping"
+    ("Terminal (Treemacs / Dired)"
+     ["Abrir Terminal Externo (Desktop)" desktoping-terminal-open-external :keys "C-c d t t" :help "Abre o terminal do sistema operacional (Ptyxis, Gnome-Terminal, etc.) no diretório selecionado no Treemacs ou Dired"]
+     ["Abrir Terminal Emacs (ansi-term)" desktoping-terminal-open-ansi-term :keys "C-c d t a" :help "Abre o ansi-term no diretório selecionado"]
+     ["Abrir Eshell" desktoping-terminal-open-eshell :keys "C-c d t e" :help "Abre o Eshell no diretório selecionado"]
+     ["Abrir Shell (M-x shell)" desktoping-terminal-open-shell :keys "C-c d t s" :help "Abre o Shell interativo no diretório selecionado"]
+     ["Abrir vterm" desktoping-terminal-open-vterm :keys "C-c d t v" :help "Abre o vterm no diretório selecionado (se instalado)"])
     ("VPN Trabalho (UNESP)"
      ["Conectar VPN (unesp.ovpn)" fzl-vpn-connect :keys "C-c d v c" :help "Iniciar OpenVPN com credenciais do .env"]
      ["Desconectar VPN" fzl-vpn-disconnect :keys "C-c d v d" :help "Encerrar conexão OpenVPN ativa"]

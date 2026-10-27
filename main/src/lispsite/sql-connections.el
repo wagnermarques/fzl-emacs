@@ -224,6 +224,9 @@ registra dinamicamente todas as conexões `<PREFIX>_DB_*` encontradas."
 ;;; ---------------------------------------------------------------------------
 
 (with-eval-after-load 'sql
+  ;; Prefere 'mariadb' sobre 'mysql' para evitar aviso de deprecacao do MariaDB 10.5+
+  (setq sql-mysql-program (or (executable-find "mariadb") "mysql"))
+
   ;; -A desliga o auto-rehash (conexao mais rapida);
   ;; --protocol=tcp garante TCP mesmo se o host mudar para localhost.
   (setq sql-mysql-options '("-A" "--protocol=tcp"))
