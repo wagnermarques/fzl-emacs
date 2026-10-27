@@ -28,24 +28,16 @@
 (defvar fzl/treemacs-workspace-projects
   (delq nil
         (list
-         ;; 1. Primary Projects directory (resolved dynamically/relatively)
+         ;; 1. Primary Projects directory (resolved dynamically relative to init.el)
          (when-let* ((ps-path (and (fboundp 'fzl/find-projects-root)
                                    (fzl/find-projects-root))))
            (cons "Projects-Srcs" ps-path))
 
-         ;; 2. Current fzl-emacs configuration project (relative to where it is cloned/located)
-         (when (and (bound-and-true-p fzlemacs-dir--fzlemacs-home)
+         ;; 2. Current fzl-emacs project fallback (only if Projects-Srcs is not found)
+         (when (and (not (and (fboundp 'fzl/find-projects-root) (fzl/find-projects-root)))
+                    (bound-and-true-p fzlemacs-dir--fzlemacs-home)
                     (file-directory-p fzlemacs-dir--fzlemacs-home))
            (cons "fzl-emacs" fzlemacs-dir--fzlemacs-home))
-
-         ;; 3. Current working directory where Emacs was started (if outside fzl-emacs)
-         (when (and default-directory
-                    (file-directory-p default-directory)
-                    (not (and (bound-and-true-p fzlemacs-dir--fzlemacs-home)
-                              (string-prefix-p (expand-file-name fzlemacs-dir--fzlemacs-home)
-                                               (expand-file-name default-directory)))))
-           (cons (file-name-nondirectory (directory-file-name (expand-file-name default-directory)))
-                 (expand-file-name default-directory)))
 
          ;; Add more projects here as needed, for example:
          ;; (cons "MyProject" "/path/to/my/project")

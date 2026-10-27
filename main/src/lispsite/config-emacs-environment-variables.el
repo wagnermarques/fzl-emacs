@@ -21,17 +21,28 @@
 (setq fzlemacs-dir--fzlemacs-lispsite (concat fzlemacs-dir--fzlemacs-home "/main/src/lispsite"))
 
 (defun fzl/find-projects-root ()
-  "Dynamically discover the root Projects-Srcs directory if available."
-  (or (and (getenv "PROJECTS_SRCS_DIR")
-           (file-directory-p (getenv "PROJECTS_SRCS_DIR"))
-           (file-truename (getenv "PROJECTS_SRCS_DIR")))
-      ;; Relative parent ../.. from fzlemacs-dir--fzlemacs-home
+  "Dynamically discover the root Projects-Srcs directory relative to init.el."
+  (or ;; 1. Directly relative to init.el (5 levels up from main/src/lispsite)
+      (let* ((init-file (or (locate-library "init.el")
+                            (and (boundp 'fzlemacs-dir--fzlemacs-lispsite)
+                                 (expand-file-name "init.el" fzlemacs-dir--fzlemacs-lispsite))))
+             (init-dir (and init-file (file-name-directory (file-truename init-file))))
+             (candidate (and init-dir (expand-file-name "../../../../.." init-dir))))
+        (and candidate
+             (file-directory-p candidate)
+             (string-equal (file-name-nondirectory (directory-file-name candidate)) "Projects-Srcs")
+             (file-truename candidate)))
+      ;; 2. Relative to fzlemacs-dir--fzlemacs-home (2 levels up)
       (and (bound-and-true-p fzlemacs-dir--fzlemacs-home)
            (let ((candidate (expand-file-name "../.." fzlemacs-dir--fzlemacs-home)))
              (and (file-directory-p candidate)
                   (string-equal (file-name-nondirectory (directory-file-name candidate)) "Projects-Srcs")
                   (file-truename candidate))))
-      ;; Check externaldisk_partition2 if configured and directory exists
+      ;; 3. Environment variable override
+      (and (getenv "PROJECTS_SRCS_DIR")
+           (file-directory-p (getenv "PROJECTS_SRCS_DIR"))
+           (file-truename (getenv "PROJECTS_SRCS_DIR")))
+      ;; 4. Check externaldisk_partition2 if configured and directory exists
       (and (bound-and-true-p externaldisk_partition2)
            (let ((candidate (concat externaldisk_partition2 "/Projects-Srcs")))
              (and (file-directory-p candidate) (file-truename candidate))))
