@@ -1152,6 +1152,9 @@ With prefix argument `C-u', prompt for directory."
         (start-process "desktoping-terminal" nil term))))
     (message "Terminal externo (%s) aberto em: %s" term target-dir)))
 
+(defalias 'desktoping-terminal-open-bash #'desktoping-terminal-open-external)
+(defalias 'desktoping-open-bash #'desktoping-terminal-open-external)
+
 (defun desktoping-terminal-open-ansi-term (&optional dir)
   "Open an Emacs `ansi-term' buffer in directory DIR (resolved from Treemacs/Dired).
 With prefix argument `C-u', prompt for directory."
@@ -1329,7 +1332,7 @@ With prefix argument `C-u', prompt for directory."
 (easy-menu-define desktoping-apps-menu global-map "Desktoping Applications Menu"
   '("Desktoping"
     ("Terminal (Treemacs / Dired)"
-     ["Abrir Terminal Externo (Desktop)" desktoping-terminal-open-external :keys "C-c d t t" :help "Abre o terminal do sistema operacional (Ptyxis, Gnome-Terminal, etc.) no diretório selecionado no Treemacs ou Dired"]
+     ["Abrir Terminal Bash (Desktop / Nova Janela)" desktoping-terminal-open-external :keys "C-c d t t" :help "Abre o terminal externo com Bash em nova janela no diretório selecionado no Treemacs ou Dired"]
      ["Abrir Terminal Emacs (ansi-term)" desktoping-terminal-open-ansi-term :keys "C-c d t a" :help "Abre o ansi-term no diretório selecionado"]
      ["Abrir Eshell" desktoping-terminal-open-eshell :keys "C-c d t e" :help "Abre o Eshell no diretório selecionado"]
      ["Abrir Shell (M-x shell)" desktoping-terminal-open-shell :keys "C-c d t s" :help "Abre o Shell interativo no diretório selecionado"]
