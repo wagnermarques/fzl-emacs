@@ -1,7 +1,10 @@
 (print "===> config-emacs-environment-variables running...")
 
 (setq externaldisk_partition1 "/run/media/wgn/ntfs") ;;where lives my files in general
-(setq externaldisk_partition2 "/home/wgn/mnt/ext4") ;;where lives my desktop sofwares
+(setq externaldisk_partition2
+      (cond ((file-directory-p "/home/wgn/WORKING") "/home/wgn/WORKING")
+            ((file-directory-p "/home/wgn/mnt/ext4") "/home/wgn/mnt/ext4")
+            (t (expand-file-name "~/WORKING")))) ;;where lives my desktop softwares
 
 
 (setq dir_shared_files (concat externaldisk_partition2 "/SHARED_FILES"))

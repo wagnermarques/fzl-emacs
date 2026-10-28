@@ -76,10 +76,23 @@ When NO-RERENDER is non-nil, do not trigger a window/buffer rerender."
                              ;; Remove child to allow parent to be added.
                              (treemacs--remove-project-from-current-workspace nested-child)
                              (setq changed t))
-                            (`(duplicate-project . ,_)
-                             (setq adding nil))
-                            (`(duplicate-name . ,_)
-                             (setq adding nil))
+                            (`(duplicate-project ,existing)
+                             ;; The directory is already in the workspace under some project.
+                             (if (and existing
+                                      (not (string-equal (treemacs-project->name existing) name)))
+                                 (progn
+                                   (treemacs--remove-project-from-current-workspace existing)
+                                   (setq changed t))
+                               (setq adding nil)))
+                            (`(duplicate-name ,existing)
+                             ;; An existing project already has this name.
+                             ;; If it points to a different/stale path, remove it so the new path is added.
+                             (if (and existing
+                                      (not (file-equal-p (treemacs-project->path existing) path)))
+                                 (progn
+                                   (treemacs--remove-project-from-current-workspace existing)
+                                   (setq changed t))
+                               (setq adding nil)))
                             (_
                              (setq adding nil)))))))))
               (when changed
