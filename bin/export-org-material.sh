@@ -4,8 +4,9 @@
 
 # --- Configuration ---
 # Path to the init.el file for this Emacs configuration.
-# This needs to be an absolute path.
-EMACS_INIT_FILE="/home/wgn/mnt/ext4/Projects-Srcs-Desktop/fzl-emacs/main/src/lispsite/init.el"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+EMACS_INIT_FILE="${EMACS_INIT_FILE:-${REPO_ROOT}/main/src/lispsite/init.el}"
 
 # --- Script Logic ---
 
