@@ -1,4 +1,4 @@
-;;; coding-lang-angular.el --- Configuration for Angular development using lsp-mode
+;;; coding-lang-angular.el --- Configuration for Angular development using lsp-mode -*- lexical-binding: t -*-
 
 (use-package lsp-mode
   :ensure t

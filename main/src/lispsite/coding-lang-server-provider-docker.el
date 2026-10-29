@@ -1,3 +1,4 @@
+;;; coding-lang-server-provider-docker.el -*- lexical-binding: t -*-
 ;; lsp-docker-setup.el
 ;; This file sets up lsp-docker and provides interactive functions to manage Docker containers.
 

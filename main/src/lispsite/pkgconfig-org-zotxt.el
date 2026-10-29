@@ -1,3 +1,4 @@
+;;; pkgconfig-org-zotxt.el -*- lexical-binding: t -*-
 (use-package zotxt
   :ensure t
   :config

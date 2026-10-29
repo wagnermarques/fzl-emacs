@@ -1,6 +1,5 @@
-;;; coding-lang-sql.el --- SQL language support for Org Babel
-;;; commentary:
-;;; lexical-binding: t
+;;; coding-lang-sql.el --- SQL language support for Org Babel -*- lexical-binding: t -*-
+;;; Commentary:
 
 ;;
 ;; habilita usar :connection
@@ -17,20 +16,15 @@
 ;; change accordingly to your setup
 (setenv "PGPASSWORD" "1234")
 
-
-;;; enable sql mode for org babel
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((sql . t)))
-
-
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((sql . t)))
-
+;;; enable sql mode for org babel when org loads
+(with-eval-after-load 'org
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sql . t))))
 
 (use-package ob-sql-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (provide 'coding-lang-sql)
+;;; coding-lang-sql.el ends here

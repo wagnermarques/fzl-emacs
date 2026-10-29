@@ -1,3 +1,4 @@
+;;; fzl-ide-feat-grep.el -*- lexical-binding: t -*-
 ;;; Package --- Summary
 ;;; commentary:
 ;;; code:

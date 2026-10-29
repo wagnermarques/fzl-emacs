@@ -1,3 +1,4 @@
+;;; config-buffer-for--logs.el -*- lexical-binding: t -*-
 (defun my-auto-revert-tail-for-log-files ()
   "Enable `auto-revert-tail-mode` for `.log` files."
   (when (string-match "\\.log\\'" buffer-file-name)

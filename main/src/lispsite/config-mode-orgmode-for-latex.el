@@ -1,3 +1,4 @@
+;;; config-mode-orgmode-for-latex.el -*- lexical-binding: t -*-
 
 ;; Enable LaTeX preview in Org-mode
 (setq org-latex-create-formula-image-program 'dvisvgm)

@@ -1,12 +1,12 @@
+;;; coding-yaml.el --- YAML configuration -*- lexical-binding: t -*-
+
 ;; Ensure yaml-mode is installed and used for .yml and .yaml files
 (use-package yaml-mode
   :ensure t
-  :mode ("\.yml\'" "\.yaml\'"))
-
-;; Add flycheck for YAML linting
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
+  :mode ("\\.ya?ml\\'")
+  :hook (yaml-mode . (lambda ()
+                       (when (fboundp 'flycheck-mode)
+                         (flycheck-mode 1)))))
 
 ;; Enable flycheck for YAML files
 (use-package flycheck-yamllint
@@ -14,7 +14,6 @@
   :after (flycheck yaml-mode)
   :config
   (flycheck-add-mode 'yaml-yamllint 'yaml-mode))
-
 
 ;; Optionally, you can add yaml-imenu for better navigation
 (use-package yaml-imenu
@@ -25,3 +24,4 @@
 (require 'coding-yaml-ansible)
 
 (provide 'coding-yaml)
+;;; coding-yaml.el ends here

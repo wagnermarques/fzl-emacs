@@ -1,3 +1,4 @@
+;;; config-mode-ibuffer.el -*- lexical-binding: t -*-
 ;; Carregar o pacote `ibuffer` usando use-package
 (use-package ibuffer
   :ensure t  ;; Instalar o pacote se ainda não estiver instalado

@@ -1,3 +1,4 @@
+;;; pkgconfig-copilot.el -*- lexical-binding: t -*-
 ;; Ensure dependencies are installed
 (use-package editorconfig
   :ensure t)

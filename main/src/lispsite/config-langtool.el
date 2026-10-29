@@ -1,3 +1,4 @@
+;;; config-langtool.el -*- lexical-binding: t -*-
 ;;; config-langtool.el --- Configuration for LanguageTool grammar checker.
 
 (print "===> config-langtool.el running...")

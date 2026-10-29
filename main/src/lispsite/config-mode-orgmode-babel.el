@@ -1,3 +1,4 @@
+;;; config-mode-orgmode-babel.el -*- lexical-binding: t -*-
 (defun fzl-org-babel-list-languages ()
   "List Org Babel languages in a new temporary buffer."
   (interactive)

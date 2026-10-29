@@ -1,3 +1,4 @@
+;;; pkgconfig-auctex.el -*- lexical-binding: t -*-
 (use-package auctex
   :ensure t 
   :mode ("\\.tex\\'" . latex-mode) ; Associate .tex files with LaTeX mode.

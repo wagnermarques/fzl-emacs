@@ -83,18 +83,24 @@
 (defun desktoping-cloud-rclone-gdrive-to-desktop ()
   "Run rclone sync from GDrive_wgn: to ~/Desktop asynchronously."
   (interactive)
+  (unless (executable-find "rclone")
+    (user-error "O binário 'rclone' não foi encontrado no PATH"))
   (async-shell-command "rclone sync GDrive_wgn:/ ~/Desktop" "*desktoping-rclone-sync*")
   (message "Started rclone sync: GDrive -> Desktop"))
 
 (defun desktoping-cloud-rclone-desktop-to-gdrive ()
   "Run rclone sync from ~/Desktop to GDrive_wgn: asynchronously."
   (interactive)
+  (unless (executable-find "rclone")
+    (user-error "O binário 'rclone' não foi encontrado no PATH"))
   (async-shell-command "rclone sync ~/Desktop GDrive_wgn:/" "*desktoping-rclone-sync*")
   (message "Started rclone sync: Desktop -> GDrive"))
 
 (defun desktoping-cloud-azure-login ()
   "Run Azure CLI interactive login in a shell buffer."
   (interactive)
+  (unless (executable-find "az")
+    (user-error "O binário 'az' (Azure CLI) não foi encontrado no PATH"))
   (let ((buf (get-buffer-create "*desktoping-azure-login*")))
     (display-buffer buf)
     (async-shell-command "az login" buf)
@@ -145,9 +151,20 @@
   (desktoping--open-file-or-sudo "/etc/resolv.conf"))
 
 (defun desktoping-config-network-ifcfg ()
-  "Open /etc/sysconfig/network-scripts/ifcfg-enp2s0 with sudo if necessary."
+  "Open network configuration file or directory with sudo if necessary."
   (interactive)
-  (desktoping--open-file-or-sudo "/etc/sysconfig/network-scripts/ifcfg-enp2s0"))
+  (let ((ifcfg-file "/etc/sysconfig/network-scripts/ifcfg-enp2s0")
+        (nm-dir "/etc/NetworkManager/system-connections")
+        (scripts-dir "/etc/sysconfig/network-scripts"))
+    (cond
+     ((file-exists-p ifcfg-file)
+      (desktoping--open-file-or-sudo ifcfg-file))
+     ((file-directory-p nm-dir)
+      (desktoping--open-file-or-sudo nm-dir))
+     ((file-directory-p scripts-dir)
+      (desktoping--open-file-or-sudo scripts-dir))
+     (t
+      (desktoping--open-file-or-sudo ifcfg-file)))))
 
 ;; Systemd services configs
 (defun desktoping-config-docker-service ()
@@ -593,11 +610,9 @@ If left blank, uses links from clipboard."
                    (and lib (expand-file-name "../../../gitsubmodules/fzl-emacs-extension" (file-name-directory lib))))
                  ;; 2. Submodule relative to home:
                  (expand-file-name "gitsubmodules/fzl-emacs-extension" home)
-                 ;; 3. Canonical direct path:
-                 "/home/wgn/mnt/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs/gitsubmodules/fzl-emacs-extension"
-                 ;; 4. Submodule relative to default-directory:
+                 ;; 3. Submodule relative to default-directory:
                  (expand-file-name "gitsubmodules/fzl-emacs-extension" default-directory)
-                 ;; 5. Peer repository:
+                 ;; 4. Peer repository:
                  (expand-file-name "../fzl-emacs-bookmarks" home))))
          (found (seq-find (lambda (dir)
                             (and dir
@@ -714,7 +729,7 @@ browser launcher actions."
   (let ((new-dir (read-directory-name "New Bibnotes Dir (FZLEMACS_BIBNOTES_HOME): "
                                       (if (boundp 'fzlemacs-dir-bibnotes-home)
                                           fzlemacs-dir-bibnotes-home
-                                        "/home/wgn/mnt/ext4/Researching-bibtex-manager-data"))))
+                                        (expand-file-name "~/WORKING/Researching-bibtex-manager-data")))))
     ;; Update the global variable
     (setq fzlemacs-dir-bibnotes-home (expand-file-name new-dir))
     
@@ -992,6 +1007,8 @@ Offers to either:
 (defun desktoping-util-wkhtmltopdf ()
   "Convert the current HTML file visiting the buffer to a PDF."
   (interactive)
+  (unless (executable-find "wkhtmltopdf")
+    (user-error "O binário 'wkhtmltopdf' não foi encontrado no PATH"))
   (if (and (buffer-file-name) (string-match-p "\\.html?$" (buffer-file-name)))
       (let* ((html-file (buffer-file-name))
              (pdf-file (concat (file-name-sans-extension html-file) ".pdf"))
@@ -1005,6 +1022,8 @@ Offers to either:
 (defun desktoping-util-npm-config-list ()
   "List npm configuration in a dedicated buffer."
   (interactive)
+  (unless (executable-find "npm")
+    (user-error "O binário 'npm' não foi encontrado no PATH"))
   (async-shell-command "npm config list" "*desktoping-npm-config*"))
 
 (defun desktoping-open-usage-buffer ()
@@ -1035,15 +1054,32 @@ Offers to either:
 ;;; Group 6: TaskToday
 ;;; ============================================================================
 
+(defun desktoping--tasktoday-files-dir ()
+  "Resolve the path to fzl-tasktoday/_0_tasktoday-files dynamically."
+  (or (and (bound-and-true-p fzlemacs-dir--fzlemacs-home)
+           (let ((cand (expand-file-name "../fzl-tasktoday/_0_tasktoday-files" fzlemacs-dir--fzlemacs-home)))
+             (and (file-directory-p cand) (file-truename cand))))
+      (and (fboundp 'fzl/find-projects-root)
+           (fzl/find-projects-root)
+           (let ((cand (expand-file-name "Projects-Srcs-Desktop/fzl-tasktoday/_0_tasktoday-files" (fzl/find-projects-root))))
+             (and (file-directory-p cand) (file-truename cand))))
+      (expand-file-name "~/WORKING/Projects-Srcs/Projects-Srcs-Desktop/fzl-tasktoday/_0_tasktoday-files")))
+
 (defun desktoping-tasktoday-dir ()
   "Open TaskToday directory in Dired."
   (interactive)
-  (dired "/run/media/wgn/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-tasktoday/_0_tasktoday-files"))
+  (let ((dir (desktoping--tasktoday-files-dir)))
+    (if (file-directory-p dir)
+        (dired dir)
+      (user-error "Diretório TaskToday não encontrado: %s" dir))))
 
 (defun desktoping-tasktoday-file ()
   "Open tasktoday.org file."
   (interactive)
-  (find-file "/run/media/wgn/ext4/Projects-Srcs/Projects-Srcs-Desktop/fzl-tasktoday/_0_tasktoday-files/tasktoday.org"))
+  (let ((file (expand-file-name "tasktoday.org" (desktoping--tasktoday-files-dir))))
+    (if (file-exists-p file)
+        (find-file file)
+      (user-error "Arquivo TaskToday não encontrado: %s" file))))
 
 ;;; ============================================================================
 ;;; Group 7: Terminal & Shell Integration (Treemacs & Dired Aware)

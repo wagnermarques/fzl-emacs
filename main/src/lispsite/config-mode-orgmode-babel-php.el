@@ -1,3 +1,4 @@
+;;; config-mode-orgmode-babel-php.el -*- lexical-binding: t -*-
 (use-package ob-php
   :ensure t
   :config

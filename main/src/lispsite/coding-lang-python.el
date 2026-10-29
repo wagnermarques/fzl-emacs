@@ -1,6 +1,8 @@
+;;; coding-lang-python.el --- Python configuration -*- lexical-binding: t -*-
+
 (use-package python-mode
   :ensure t
-  :mode "\.py\'"
+  :mode ("\\.py\\'" . python-mode)
   :hook (python-mode . (lambda ()
                          (electric-indent-mode 1)
                          (lsp)))) ; Enable auto-indentation and LSP
@@ -31,10 +33,10 @@
   :config
   (setq lsp-pyright-python-executable-cmd "python3")) ; Ensure the correct Python executable is used
 
-;; debuging python
-;; pip install debugpy
-(require 'dap-python)
-
+;; debugging python (pip install debugpy)
+(with-eval-after-load 'dap-mode
+  (require 'dap-python nil t))
 
 (provide 'coding-lang-python)
+;;; coding-lang-python.el ends here
 

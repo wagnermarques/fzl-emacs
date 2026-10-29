@@ -1,3 +1,4 @@
+;;; pkgconfig-docker.el -*- lexical-binding: t -*-
 (use-package docker
   :ensure t ;; Ensure the package is installed
   :defer t  ;; Defer loading until the package is needed

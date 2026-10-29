@@ -1,3 +1,4 @@
+;;; files-special-files.el -*- lexical-binding: t -*-
 
 (setq disk  "/run/media/wgn/EnvsBk")
 (setq disk2 "/run/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd")

@@ -1,3 +1,4 @@
+;;; config-emacs-defaults-language.el -*- lexical-binding: t -*-
 ;;; Package -- Summary:
 ;;; Commentary:
 ;;; TODO: make it works indeed

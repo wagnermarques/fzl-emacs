@@ -1,3 +1,4 @@
+;;; pkgconfig-undo-tree.el -*- lexical-binding: t -*-
 ;; Ensure use-package is initialized
 (require 'use-package)
 

@@ -1,3 +1,4 @@
+;;; config-emacs-defaults-window.el -*- lexical-binding: t -*-
 ;;; package --- Summary
 
 ;;; Commentary:

@@ -1,3 +1,4 @@
+;;; fzl-views-strategies.el -*- lexical-binding: t -*-
 (print "===> windows-and-frames loaded sucessfully")
 (print (getenv "FZLEMACS_KEY_SHOW_WINDOW_SPEEDBAR_AT_LEFT"))
 

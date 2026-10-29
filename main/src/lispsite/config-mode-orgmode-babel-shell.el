@@ -1,3 +1,4 @@
+;;; config-mode-orgmode-babel-shell.el -*- lexical-binding: t -*-
 ;;https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-shell.html
 
 ;; active shell in Babel languages

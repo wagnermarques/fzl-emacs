@@ -1,3 +1,4 @@
+;;; fzl-util-shell.el -*- lexical-binding: t -*-
 (use-package shell-maker
   :ensure t)
 

@@ -1,3 +1,4 @@
+;;; config-mode-orgmode.el -*- lexical-binding: t -*-
 ;; org-insert-template-structure does not insert #+NAME at the top of the code block
 ;; this function do it 
 (defun fzl-org-insert-structure-template-after-advice--set-block-name (&rest _args)
@@ -12,6 +13,10 @@
 
 ;; Prevent Org from running Babel code during export
 (setq org-export-use-babel nil)
+
+;; Avoid loading ol-gnus if gnus is not configured
+(with-eval-after-load 'org
+  (setq org-modules (delq 'ol-gnus org-modules)))
 
 (require 'config-mode-orgmode-babel)
 (require 'config-mode-orgmode-babel-plantuml)

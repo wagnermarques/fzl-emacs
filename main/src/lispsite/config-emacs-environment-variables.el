@@ -1,3 +1,5 @@
+;;; config-emacs-environment-variables.el --- Environment variables and paths -*- lexical-binding: t -*-
+
 (print "===> config-emacs-environment-variables running...")
 
 (setq externaldisk_partition1 "/run/media/wgn/ntfs") ;;where lives my files in general
@@ -8,7 +10,14 @@
 
 
 (setq dir_shared_files (concat externaldisk_partition2 "/SHARED_FILES"))
-(setq progsativos (concat externaldisk_partition2 "/progsativos"))
+(setq progsativos
+      (cond ((file-directory-p (concat externaldisk_partition2 "/Progsativos"))
+             (concat externaldisk_partition2 "/Progsativos"))
+            ((file-directory-p (concat externaldisk_partition2 "/progsativos"))
+             (concat externaldisk_partition2 "/progsativos"))
+            ((file-directory-p (expand-file-name "~/Progsativos"))
+             (expand-file-name "~/Progsativos"))
+            (t (concat externaldisk_partition2 "/Progsativos"))))
 
 (setq fzlemacs-dir--fzlemacs-home
       (or (let* ((this-file (or load-file-name buffer-file-name (locate-library "config-emacs-environment-variables")))
@@ -54,7 +63,15 @@
 
 ;;; coding lang dirs
 ;;; coding lang dirs for java
-(setq fzlemacs-dir--java-jdk-home (concat progsativos "/javasdks/temurim/jdk-21.0.8+9"))
+(setq fzlemacs-dir--java-jdk-home
+      (or (and (getenv "JAVA_HOME") (file-directory-p (getenv "JAVA_HOME")) (getenv "JAVA_HOME"))
+          (let ((cand1 (concat progsativos "/sdks/java-sdks/temurim/jdk-21.0.8+9"))
+                (cand2 (concat progsativos "/javasdks/temurim/jdk-21.0.8+9")))
+            (cond ((file-directory-p cand1) cand1)
+                  ((file-directory-p cand2) cand2)
+                  ((executable-find "java")
+                   (file-truename (expand-file-name "../.." (file-name-directory (file-truename (executable-find "java"))))))
+                  (t cand1)))))
 
 
 ;; Environment Variables Configuration
@@ -65,7 +82,7 @@
       fzlemacs-key-copilot-chat-display-keybinding "C-c c c"
       
       fzlemacs-text-zoom-initial 130
-      fzlemacs-dir-bibnotes-home "/home/wgn/mnt/ext4/Researching-bibtex-manager-data"
+      fzlemacs-dir-bibnotes-home (concat externaldisk_partition2 "/Researching-bibtex-manager-data")
       ;?fzlemacs-bibliography-notes "/media/wgn/EnvsBk/__devenv__/Amb_Dev/projects/text_projects/bibtexfiles"
       fzlemacs-personal-config-dired-at-financial-dir-keybinding "C-c C-w f"
 

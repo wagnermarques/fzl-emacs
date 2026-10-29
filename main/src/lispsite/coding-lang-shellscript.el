@@ -1,3 +1,5 @@
+;;; coding-lang-shellscript.el --- Shell script configuration -*- lexical-binding: t -*-
+
 ;; Certifique-se de ter o use-package configurado
 (require 'use-package)
 (setq use-package-always-ensure t)

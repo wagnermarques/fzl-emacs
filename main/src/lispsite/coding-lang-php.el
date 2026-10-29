@@ -1,3 +1,5 @@
+;;; coding-lang-php.el --- PHP configuration -*- lexical-binding: t -*-
+
 (setq phpDebugJs "/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS/vscode-plugins/vscode-php-debug/out/phpDebug.js")
 
 ;; Configuração do lsp-mode com PHP

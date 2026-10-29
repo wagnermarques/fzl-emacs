@@ -1,3 +1,4 @@
+;;; config-theme.el -*- lexical-binding: t -*-
 ;;
 (use-package doom-themes
   :ensure t

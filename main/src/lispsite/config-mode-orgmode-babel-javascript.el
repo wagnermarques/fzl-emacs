@@ -1,3 +1,4 @@
+;;; config-mode-orgmode-babel-javascript.el -*- lexical-binding: t -*-
 
 ;; configure template insertions for babel block codes
       

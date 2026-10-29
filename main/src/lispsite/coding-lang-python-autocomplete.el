@@ -1,3 +1,4 @@
+;;; coding-lang-python-autocomplete.el -*- lexical-binding: t -*-
 (require 'pkgconfig-company)
 (use-package elpy
   :init

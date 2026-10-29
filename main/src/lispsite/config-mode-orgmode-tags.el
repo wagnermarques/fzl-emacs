@@ -1,3 +1,4 @@
+;;; config-mode-orgmode-tags.el -*- lexical-binding: t -*-
 (require 'org)
 
 ;; Definir tags personalizadas (opcional)

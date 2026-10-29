@@ -1,3 +1,4 @@
+;;; fzl-ide-feat-menus.el -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:

@@ -1,3 +1,4 @@
+;;; pkgconfig-load-env-vars.el -*- lexical-binding: t -*-
 (print "===> pkgconfig-load-env-vars.el running...")
 
 ;; https://humanlytyped.hashnode.dev/working-effectively-with-env-files-in-emacs

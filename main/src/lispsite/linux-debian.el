@@ -1,3 +1,4 @@
+;;; linux-debian.el -*- lexical-binding: t -*-
 (defun fzl-apt-install-package (package-name)  
   "Install a Debian/Ubuntu package using 'sudo apt install PACKAGE-NAME' via TRAMP.
 Prompts for PACKAGE-NAME if called interactively.

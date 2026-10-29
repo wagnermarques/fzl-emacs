@@ -1,3 +1,4 @@
+;;; config-mode-dired.el -*- lexical-binding: t -*-
 ;; Carregar o pacote `dired` usando use-package
 (require 'ls-lisp)
 

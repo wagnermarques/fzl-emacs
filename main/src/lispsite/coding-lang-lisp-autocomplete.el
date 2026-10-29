@@ -1,24 +1,26 @@
+;;; coding-lang-lisp-autocomplete.el --- Autocomplete hooks -*- lexical-binding: t -*-
+
 ;; Configuração para Emacs Lisp (Elisp)
 (use-package company
-  :config
-  (add-hook 'emacs-lisp-mode-hook 'company-mode))
+  :defer t
+  :hook (emacs-lisp-mode . company-mode))
 
 ;; Configuração para PHP
 (use-package php-mode
+  :defer t
   :mode ("\\.php\\'" . php-mode)
-  :config
-  (add-hook 'php-mode-hook 'company-mode))
+  :hook (php-mode . company-mode))
 
 ;; Configuração para Java
 (use-package lsp-java
-  :config
-  (add-hook 'java-mode-hook #'lsp))
+  :defer t
+  :hook (java-mode . lsp))
 
 ;; Configuração para R
 (use-package ess
+  :defer t
   :mode ("\\.R\\'" . R-mode)
-  :config
-  (add-hook 'R-mode-hook 'company-mode))
-
+  :hook (R-mode . company-mode))
 
 (provide 'coding-lang-lisp-autocomplete)
+;;; coding-lang-lisp-autocomplete.el ends here

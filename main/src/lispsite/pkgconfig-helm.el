@@ -1,3 +1,4 @@
+;;; pkgconfig-helm.el -*- lexical-binding: t -*-
 ;; Install and configure Helm
 (use-package helm
   :ensure t

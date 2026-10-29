@@ -1,3 +1,4 @@
+;;; config-mode-orgmode-babel-plantuml.el -*- lexical-binding: t -*-
 ;; Load the PlantUML and Org packages.
 (require 'ob-plantuml)
 (require 'org)

@@ -1,3 +1,4 @@
+;;; pkgconfig-company.el -*- lexical-binding: t -*-
 ;; Configuração do Company Mode
 (use-package company
   :ensure t

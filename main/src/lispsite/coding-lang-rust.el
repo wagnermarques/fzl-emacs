@@ -1,5 +1,6 @@
+;;; coding-lang-rust.el -*- lexical-binding: t -*-
 
-;;; Package -- Summary: Rust Language Support
+;;; coding-lang-rust.el --- Rust Language Support -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Provides a comprehensive setup for Rust development using lsp-mode, lsp-ui, and cargo.
 ;;; Code:

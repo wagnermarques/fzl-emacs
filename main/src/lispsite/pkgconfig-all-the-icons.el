@@ -1,3 +1,4 @@
+;;; pkgconfig-all-the-icons.el -*- lexical-binding: t -*-
 ;;https://github.com/domtronn/all-the-icons.el
 
 ;; Instalar e configurar all-the-icons

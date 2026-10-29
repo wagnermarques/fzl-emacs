@@ -1,3 +1,4 @@
+;;; config-emacs-defaults-highlight.el -*- lexical-binding: t -*-
 ;;https://www.emacswiki.org/emacs/ShowWhiteSpace
 
 (defface extra-whitespace-face

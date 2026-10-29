@@ -1,3 +1,4 @@
+;;; fzlbpms-routes.el -*- lexical-binding: t -*-
 ;;3b7ffed2a02e   portainer/portainer-ce:latest         "/portainer"             4 hours ago    Up 4 hours               0.0.0.0:9000->9000/tcp, [::]:9000->9000/tcp, 8000/tcp, 9443/tcp, 0.0.0.0:9043->9043/tcp, [::]:9043->9043/tcp   fzl-portainer
 ;;e934cb8eb2a1   fzlbpms-fzl-nexus                     "/opt/sonatype/nexus…"   4 hours ago    Up 4 hours (unhealthy)   0.0.0.0:8082->8082/tcp, [::]:8082->8082/tcp, 0.0.0.0:8088->8081/tcp, [::]:8088->8081/tcp                       fzl-nexus
 ;;aaec5dfe3826   fzlbpms-fzl-karaf-camel-integration   "entrypoint.sh /opt/…"   4 hours ago    Up 4 hours               1099/tcp, 8101/tcp, 8181/tcp, 44444/tcp                                                                        fzl-karaf-camel-integration

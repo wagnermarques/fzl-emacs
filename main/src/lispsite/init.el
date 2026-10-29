@@ -4,8 +4,9 @@
 
 ;;; Code:
 
-;;; shows errors details in buffer
-(setq debug-on-error t)
+;;; shows errors details in buffer (only in interactive mode)
+(unless noninteractive
+  (setq debug-on-error t))
 ;(require 'edebug)
 
 
@@ -98,7 +99,6 @@
 ;; Java verification and conditional langtool loading
 (when (and (fboundp 'fzl-java-executable-find)
            (fzl-java-executable-find))
-  (require 'config-langtool)
   (condition-case err
       (progn
         (require 'config-langtool)
@@ -111,7 +111,8 @@
 
 ;;for some reason edit markdown raise polymode not updated errors
 (use-package polymode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 
 
@@ -132,7 +133,8 @@
 ;;fc-list | grep -i "FiraCode"
 (require 'pkgconfig-all-the-icons)
 (use-package nerd-icons
-  :ensure t)
+  :ensure t
+  :defer t)
 (require 'config-theme)
 (require 'pkgconfig-projectile)
 (require 'pkgconfig-treemacs)
@@ -142,9 +144,6 @@
 
 
 (require 'pkgconfig-docker)
-
-
-(require 'config-emacs-defaults)
 
 
 
@@ -234,21 +233,12 @@
 
 
 
-;; Define the Nerd Font to be used for icons/symbols
+;; Define the Nerd Font to be used for icons/symbols fallback
 (let ((nerd-font-name (or (and (boundp 'fzl/font-family) fzl/font-family) "FiraCode Nerd Font Mono")))
   (when (find-font (font-spec :name nerd-font-name))
-    (set-fontset-font t 'unicode nerd-font-name nil 'append)
-    (set-fontset-font t 'symbol nerd-font-name nil 'append)
-    (message "Font fallback set to %s for icons." nerd-font-name)))
-
-
-;; --- Emacs Icon Fix ---
-(let ((nerd-font-name (or (and (boundp 'fzl/font-family) fzl/font-family) "FiraCode Nerd Font Mono")))
-  (when (find-font (font-spec :name nerd-font-name))
-    ;; Apply the Nerd Font as a fallback for the 'unicode' character range
-    ;; This is where most icons/symbols reside
     (set-fontset-font t 'unicode (font-spec :family nerd-font-name) nil 'append)
-    (message "Applied %s as icon fallback." nerd-font-name)))
+    (set-fontset-font t 'symbol nerd-font-name nil 'append)
+    (message "Font fallback set to %s for icons/symbols." nerd-font-name)))
 
 ;; Set the default font using the explicit font-spec form
 ;; (It's vital that the name here matches the name used above)

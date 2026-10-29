@@ -1,3 +1,4 @@
+;;; linux-fedora.el -*- lexical-binding: t -*-
 (defun fzl-dnf-install-package (package-name)  
   "Install a Fedora package using 'sudo dnf install PACKAGE-NAME' via TRAMP.
 Prompts for PACKAGE-NAME if called interactively.

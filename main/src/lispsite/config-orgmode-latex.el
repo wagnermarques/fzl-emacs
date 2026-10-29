@@ -1,3 +1,4 @@
+;;; config-orgmode-latex.el -*- lexical-binding: t -*-
 
 (setq FZLEMACS_BIBNOTES_HOME (env"FZLEMACS_BIB_HOME"))
 

@@ -1,3 +1,4 @@
+;;; config-mode-orgmode-babel-R.el -*- lexical-binding: t -*-
 (require 'org)
 (require 'ess)
 
@@ -24,7 +25,8 @@
 ;; Optional: Automatically start an R session when opening an R code block
 (add-hook 'org-mode-hook
           (lambda ()
-            (when (and buffer-file-name
+            (when (and (fboundp 'ess-set-style)
+                       buffer-file-name
                        (string= (file-name-extension buffer-file-name) "org"))
               (ess-set-style 'RStudio))))
 

@@ -1,3 +1,4 @@
+;;; linux-debian-install-fonts.el -*- lexical-binding: t -*-
 (defun fzl-linux-debian-install-fonts ()
   "Install FiraCode Nerd Font on Debian/Ubuntu/Zorin."
   (interactive)

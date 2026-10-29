@@ -1,3 +1,4 @@
+;;; edu-tool-scorm-generator.el -*- lexical-binding: t -*-
 (defvar fzl-scorm-version "1.2"
   "SCORM version for the package.")
 

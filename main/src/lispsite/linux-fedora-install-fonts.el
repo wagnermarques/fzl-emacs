@@ -1,3 +1,4 @@
+;;; linux-fedora-install-fonts.el -*- lexical-binding: t -*-
 
 (defun fzl-linux-fedora-install-fonts ()
   "Install FiraCode Nerd Font on Fedora."

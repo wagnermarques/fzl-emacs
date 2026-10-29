@@ -7,7 +7,15 @@
 ;; install mysql client
 ;;; Code:
 
-(setq fzlbpms-root-dir "/home/wgn/mnt/ext4/Projects-Srcs/fzlbpms")
+(setq fzlbpms-root-dir
+      (or (and (bound-and-true-p externaldisk_partition2)
+               (let ((cand (concat externaldisk_partition2 "/fzlbpms")))
+                 (and (file-directory-p cand) cand)))
+          (and (fboundp 'fzl/find-projects-root)
+               (fzl/find-projects-root)
+               (let ((cand (concat (fzl/find-projects-root) "/fzlbpms")))
+                 (and (file-directory-p cand) cand)))
+          (expand-file-name "~/WORKING/fzlbpms")))
 
 (require 'fzlbpms-menus)
 (require 'fzlbpms-db-connections);

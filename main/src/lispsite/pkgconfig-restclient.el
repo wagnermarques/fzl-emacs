@@ -1,3 +1,4 @@
+;;; pkgconfig-restclient.el -*- lexical-binding: t -*-
 ;;; restclient-config.el --- Configuration for restclient mode
 
 ;;; Commentary:

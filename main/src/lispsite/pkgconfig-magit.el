@@ -1,3 +1,4 @@
+;;; pkgconfig-magit.el -*- lexical-binding: t -*-
 ;;; package --- Summary
 
 ;;; Commentary:

@@ -51,19 +51,10 @@
     (setq ebib-preload-bib-files (list (expand-file-name "references.bib" bib-dir)))
     (setq ebib-notes-directory (expand-file-name "notes" bib-dir))
     (setq ebib-file-search-dirs (list (expand-file-name "pdfs" bib-dir)))
+    (setq ebib-reading-list-file (expand-file-name "reading-list.org" bib-dir))
     ;; Automatically save database when Emacs is killed or ebib is quit
     (setq ebib-autogenerate-keys t)
     (setq ebib-index-window-size 15)))
-
-;; 2.5. Ebib Reading List (Track what to read next, inspired by Vidianos Giannitsis' talk)
-(use-package ebib-reading-list
-  :ensure t
-  :after ebib
-  :config
-  (let ((bib-dir (if (boundp 'fzlemacs-dir-bibnotes-home)
-                     fzlemacs-dir-bibnotes-home
-                   "~/bibtexfiles")))
-    (setq ebib-reading-list-file (expand-file-name "reading-list.org" bib-dir))))
 
 ;; 2.6. Biblio.el (Easily fetch BibTeX entries from Crossref, ArXiv, etc.)
 (use-package biblio
