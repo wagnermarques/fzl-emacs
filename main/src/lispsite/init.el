@@ -162,6 +162,7 @@
 (require 'fzl-ide-feat-keys)
 (require 'fzl-ide-feat-menus)
 (require 'desktoping-apps)
+(require 'fzl-remote-unesp)
 ;(require 'fzl-ide-feat-warp)
 
 ;; Iniciar servidor do Emacs na inicialização para comunicação com a extensão de navegador e emacsclient

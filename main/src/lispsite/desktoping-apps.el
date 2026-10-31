@@ -11,6 +11,7 @@
 (require 'easymenu)
 (require 'subr-x)
 (require 'fzl-util-browser nil t)
+(require 'fzl-remote-unesp nil t)
 
 ;;; ============================================================================
 ;;; Helper Functions
@@ -1361,6 +1362,13 @@ With prefix argument `C-u', prompt for directory."
 (define-key desktoping-apps-map (kbd "v l") #'fzl-vpn-show-logs)
 (define-key desktoping-apps-map (kbd "v o") #'fzl-vpn-open-dir)
 
+;; Servidor Remoto UNESP (SSH / TRAMP) keybindings (Prefix: C-c d s)
+(define-key desktoping-apps-map (kbd "s d") #'fzl/remote-unesp-dired)
+(define-key desktoping-apps-map (kbd "s f") #'fzl/remote-unesp-find-file)
+(define-key desktoping-apps-map (kbd "s m") #'fzl/remote-unesp-magit)
+(define-key desktoping-apps-map (kbd "s t") #'fzl/remote-unesp-terminal)
+(define-key desktoping-apps-map (kbd "s c") #'fzl/remote-unesp-check-connection)
+
 ;;; ============================================================================
 ;;; Menu Definition: "Desktoping"
 ;;; ============================================================================
@@ -1381,6 +1389,13 @@ With prefix argument `C-u', prompt for directory."
      ["Abrir Pasta da VPN (Dired)" fzl-vpn-open-dir :keys "C-c d v o" :help "Abrir ~/WORKING/HOME/vpn no Dired"]
      "---"
      ["Editar Arquivo .env" fzl-sql-open-env-file :keys "C-c d q e" :help "Abrir o arquivo .env do projeto para edição"])
+    ("Servidor Remoto UNESP (SSH / TRAMP)"
+     ["Abrir Dired Remoto (~/)" fzl/remote-unesp-dired :keys "C-c d s d" :help "Abre o Dired na home do servidor UNESP via TRAMP"]
+     ["Abrir Arquivo Remoto (find-file)" fzl/remote-unesp-find-file :keys "C-c d s f" :help "Navega e abre arquivos diretamente no servidor UNESP"]
+     ["Magit no Repositório Remoto" fzl/remote-unesp-magit :keys "C-c d s m" :help "Abre o status do Magit em repositório Git no servidor"]
+     ["Terminal SSH Remoto" fzl/remote-unesp-terminal :keys "C-c d s t" :help "Abre terminal interativo SSH no servidor UNESP"]
+     "---"
+     ["Verificar Status da VPN / Servidor" fzl/remote-unesp-check-connection :keys "C-c d s c" :help "Testa se a VPN tun0 está ativa e o servidor acessível"])
     ("Databases (.env)"
      ("Conectar SQLi (REPL)" :filter fzl-sql--menu-connect-filter)
      ("Perfil Ativo no Org-Babel" :filter fzl-sql--menu-org-babel-filter)
