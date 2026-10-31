@@ -29,17 +29,16 @@
   :config
   (setq copilot-chat-indentation-alist '((prog-mode . 2) (org-mode . 2) (text-mode . 2) (emacs-lisp-mode . 2))))
 
-;; Initial setup
+;; Helper commands
 (defun fzl/pkgconfig/copilot-install-server ()
+  "Interactively install or update Copilot language server."
   (interactive)
   (copilot-install-server))
 
 (defun fzl/pkgconfig/copilot-login ()
+  "Interactively login to GitHub Copilot."
   (interactive)
   (copilot-login))
-
-(fzl/pkgconfig/copilot-install-server)
-(fzl/pkgconfig/copilot-login)
 
 (provide 'pkgconfig-copilot)
 
