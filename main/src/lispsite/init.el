@@ -201,6 +201,8 @@
 (unless noninteractive
   (require 'pkgconfig-copilot))
 
+(require 'fzl-menu-ias)
+
 (require 'pkgconfig-org-zotxt)
 (require 'pkgconfig-helm-bibtex)
 

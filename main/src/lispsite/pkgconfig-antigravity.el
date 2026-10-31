@@ -446,20 +446,8 @@ With PREFIX (`C-u`), always prompt to choose from active sessions."
   (when (boundp 'dired-mode-map)
     (define-key dired-mode-map (kbd "C-c a") fzl/agy-command-map)))
 
-(easy-menu-define fzl/agy-menu global-map "Menu de controle remoto do Antigravity (agy)."
-  '("Antigravity"
-    ["Iniciar Sessão Remota na Pasta (Treemacs/Dired) (C-c a s)" fzl/agy-remote-start t]
-    ["Iniciar Sessão no Diretório de Trabalho do Dired (C-c a S)" fzl/agy-remote-start-dired-workdir
-     :visible (derived-mode-p 'dired-mode)]
-    ["Iniciar Sessão Interativa no Emacs (C-c a i)"              fzl/agy-remote-start-interactive t]
-    ["Alternar (Start/Stop) na Pasta Atual (C-c a t)"            fzl/agy-remote-toggle t]
-    "--"
-    ["Parar Sessão Remota (C-c a k)"                             fzl/agy-remote-stop t]
-    ["Parar TODAS as Sessões Remotas (C-c a K)"                  fzl/agy-remote-stop-all t]
-    "--"
-    ["Status das Sessões Ativas (C-c a l)"                       fzl/agy-remote-status t]
-    ["Ver Buffer de Log/Terminal (C-c a b)"                      fzl/agy-remote-open-buffer t]
-    ["Abrir Painel Web Remote Control (C-c a w)"                 fzl/agy-remote-open-web t]))
+;; Menu consolidado: As entradas do Antigravity foram migradas como submenu de "IAs"
+;; gerenciadas centralizadamente em `fzl-menu-ias.el`.
 
 (provide 'pkgconfig-antigravity)
 ;;; pkgconfig-antigravity.el ends here
