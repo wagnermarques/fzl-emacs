@@ -1342,6 +1342,12 @@ With prefix argument `C-u', prompt for directory."
 (define-key desktoping-apps-map (kbd "p")   #'desktoping-util-wkhtmltopdf)
 (define-key desktoping-apps-map (kbd "n")   #'desktoping-util-npm-config-list)
 
+;; Org Agenda & Compromissos keybindings (Prefix: C-c d A)
+(define-key desktoping-apps-map (kbd "A a") #'fzl-org-agenda-open-today)
+(define-key desktoping-apps-map (kbd "A f") #'fzl-org-agenda-open-file)
+(define-key desktoping-apps-map (kbd "A s") #'fzl-org-agenda-git-sync)
+(define-key desktoping-apps-map (kbd "A d") #'fzl-org-agenda-prompt-for-dir)
+
 ;; SQL (.env) Databases keybindings (Prefix: C-c d q)
 (define-key desktoping-apps-map (kbd "q c") #'fzl-sql-connect)
 (define-key desktoping-apps-map (kbd "q d") #'integra-sql)
@@ -1454,6 +1460,12 @@ With prefix argument `C-u', prompt for directory."
     ("TaskToday"
      ["Open TaskToday Directory" desktoping-tasktoday-dir :keys "C-c d t d" :help "Open TaskToday directory in Dired"]
      ["Open TaskToday File" desktoping-tasktoday-file :keys "C-c d t f" :help "Open TaskToday org file"])
+    ("Org Agenda & Compromissos"
+     ["Abrir Agenda do Dia" fzl-org-agenda-open-today :keys "C-c d A a" :help "Abrir visão diária da agenda no buffer *Org Agenda*"]
+     ["Editar Arquivo de Compromissos" fzl-org-agenda-open-file :keys "C-c d A f" :help "Abrir agenda.org da pasta persistida para edição"]
+     ["Git Sync & Push da Agenda" fzl-org-agenda-git-sync :keys "C-c d A s" :help "Salvar, commitar e enviar alterações do repositório Git da agenda"]
+     "---"
+     ["Configurar Diretório da Agenda..." fzl-org-agenda-prompt-for-dir :keys "C-c d A d" :help "Selecionar ou alterar interativamente a pasta de persistência"])
     ("Cloud & Synchronization"
      ["Rclone: GDrive -> Desktop" desktoping-cloud-rclone-gdrive-to-desktop :keys "C-c d s g" :help "Sync GDrive to Desktop"]
      ["Rclone: Desktop -> GDrive" desktoping-cloud-rclone-desktop-to-gdrive :keys "C-c d s d" :help "Sync Desktop to GDrive"]

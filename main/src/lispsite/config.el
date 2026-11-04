@@ -50,10 +50,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Choose startup view layout strategy:
+;;   'agenda             - Open Org Agenda daily view maximized
+;;   'agenda-and-ibuffer - Split window with Org Agenda on top and ibuffer below
 ;;   'ibuffer-and-dired  - Split window with ibuffer on top and dired below
 ;;   'theese-buffers     - Open predefined buffers (dot_env, Readme.org, init.el)
 ;;   nil                 - Keep default initial Emacs buffer
-(defvar fzl/startup-view-strategy 'ibuffer-and-dired
+(defvar fzl/startup-view-strategy 'agenda
   "Startup window layout strategy.")
 
 ;; Files to open automatically at startup (prior to view layout)

@@ -23,14 +23,34 @@
 ;; Vincular a função a uma tecla de atalho, se desejar
 (global-set-key (kbd "C-c i d") 'fzl-views--open-ibuffer-and-dired)
 
+(defun fzl-views--open-agenda ()
+  "Abre o painel do Org Agenda maximizado na inicialização."
+  (interactive)
+  (delete-other-windows)
+  (when (fboundp 'fzl-org-agenda-open-today)
+    (fzl-org-agenda-open-today)))
+
+(defun fzl-views--open-agenda-and-ibuffer ()
+  "Abre o Org Agenda na parte superior e o ibuffer na parte inferior."
+  (interactive)
+  (delete-other-windows)
+  (split-window-below)
+  (other-window 1)
+  (ibuffer)
+  (other-window -1)
+  (when (fboundp 'fzl-org-agenda-open-today)
+    (fzl-org-agenda-open-today)))
+
 (defvar fzl/startup-view-strategy 'ibuffer-and-dired
-  "Startup view strategy. Options: 'ibuffer-and-dired, 'theese-buffers, a custom function, or nil.")
+  "Startup view strategy. Options: 'agenda, 'agenda-and-ibuffer, 'ibuffer-and-dired, 'theese-buffers, a custom function, or nil.")
 
 (defun fzl-views-apply-startup-strategy ()
   "Apply the configured startup view strategy."
   (interactive)
   (let ((strategy (and (boundp 'fzl/startup-view-strategy) fzl/startup-view-strategy)))
     (pcase strategy
+      ('agenda (fzl-views--open-agenda))
+      ('agenda-and-ibuffer (fzl-views--open-agenda-and-ibuffer))
       ('ibuffer-and-dired (fzl-views--open-ibuffer-and-dired))
       ('theese-buffers (fzl-views--open-theese-buffers))
       ((pred functionp) (funcall strategy))

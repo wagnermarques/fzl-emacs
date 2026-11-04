@@ -33,6 +33,7 @@
 (require 'config-mode-orgmode-babel-sql)
 (require 'config-mode-orgmode-tags)
 (require 'config-mode-orgmode-for-latex)
+(require 'config-mode-orgmode-agenda)
 
 
 
