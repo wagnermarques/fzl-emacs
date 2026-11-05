@@ -205,13 +205,20 @@
                         (expand-file-name "../../.." (file-name-directory (or load-file-name buffer-file-name default-directory)))))
   "Path to the fzl-emacs Buku SQLite database stored in the project repository.")
 
-;; Ensure path points to active repository if fzlemacs-dir--fzlemacs-home is set
+;; Ensure path points to active repository if fzlemacs-dir--fzlemacs-home is set.
+;; Only bookmarks.sql is versioned; bookmarks.db is a local cache that may not exist yet.
 (when (and (bound-and-true-p fzlemacs-dir--fzlemacs-home)
-           (file-exists-p (expand-file-name "bookmarks/bookmarks.db" fzlemacs-dir--fzlemacs-home)))
+           (file-directory-p (expand-file-name "bookmarks" fzlemacs-dir--fzlemacs-home)))
   (setq desktoping-buku-db-path (expand-file-name "bookmarks/bookmarks.db" fzlemacs-dir--fzlemacs-home)))
 
 ;; Keep environment variable in sync so external tools/subprocesses also use the project database
 (setenv "BUKU_DB_PATH" desktoping-buku-db-path)
+
+;; Keep bookmarks.db <-> bookmarks.sql (versioned text) in sync: rebuilds the DB
+;; from the SQL at startup and rewrites the SQL on every DB change.
+;; See docs/features/buku-text-persistence.md
+(when (require 'fzl-buku-sync nil t)
+  (fzl-buku-sync-mode 1))
 
 (defun desktoping--buku-bin ()
   "Find buku executable binary path, checking PATH and pipx standard locations."
@@ -1334,6 +1341,7 @@ With prefix argument `C-u', prompt for directory."
 (define-key desktoping-apps-map (kbd "b i") #'desktoping-buku-import-html)
 (define-key desktoping-apps-map (kbd "b t") #'desktoping-buku-open-tutorial)
 (define-key desktoping-apps-map (kbd "b I") #'desktoping-buku-install-browser-extensions)
+(define-key desktoping-apps-map (kbd "b y") #'fzl-buku-sync-now)
 
 ;; Utilities & Docs keybindings
 (define-key desktoping-apps-map (kbd "u")   #'desktoping-open-usage-buffer)
@@ -1437,6 +1445,7 @@ With prefix argument `C-u', prompt for directory."
      "---"
      ["Export to HTML (Cross-Browser)" desktoping-buku-export-html :keys "C-c d b e" :help "Export bookmarks to Netscape HTML"]
      ["Import from HTML (Browser Export)" desktoping-buku-import-html :keys "C-c d b i" :help "Import bookmarks from HTML file"]
+     ["Sync bookmarks.db <-> bookmarks.sql" fzl-buku-sync-now :keys "C-c d b y" :help "Synchronize the Buku DB with the versioned bookmarks.sql text file"]
      "---"
      ["Buku Tutorial & Guia (Org)" desktoping-buku-open-tutorial :keys "C-c d b t" :help "Open Brazilian Portuguese tutorial"])
     ("Bibliography (BibTeX)"

@@ -4,8 +4,9 @@
 bin/api-keys-setup.sh
 
 **/*.db
-!bookmarks/bookmarks.db
-!bookmarks/*.db
+# bookmarks/bookmarks.db is a local cache; bookmarks/bookmarks.sql is versioned (docs/features/buku-text-persistence.md)
+bookmarks/*.db.new
+bookmarks/.bookmarks.sync-base.sql
 #personal files
 /main/src/lispsite/Pess/*
 sql-connect/
