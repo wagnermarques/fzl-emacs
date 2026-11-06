@@ -211,6 +211,35 @@ Return a symbol describing what happened."
   (interactive)
   (message "Buku sync: %s" (fzl-buku-sync-run)))
 
+;;;###autoload
+(defun fzl-buku-sync-git-commit-and-push (&optional user-message)
+  "Synchronize bookmarks.db to bookmarks.sql, then git commit and push bookmarks.sql.
+Allows saving and sharing bookmarks without closing Emacs."
+  (interactive)
+  (message "Buku: sincronizando bookmarks.db <-> bookmarks.sql...")
+  (let ((sync-result (fzl-buku-sync-run))
+        (sql-file (fzl-buku-sync--sql)))
+    (unless (file-exists-p sql-file)
+      (user-error "fzl-buku-sync: arquivo %s não encontrado" sql-file))
+    (let* ((repo-dir (locate-dominating-file sql-file ".git")))
+      (unless repo-dir
+        (user-error "fzl-buku-sync: %s não pertence a um repositório Git" sql-file))
+      (let* ((default-directory (expand-file-name repo-dir))
+             (rel-sql (file-relative-name sql-file default-directory))
+             (msg (or user-message
+                      (format "chore(bookmarks): update bookmarks.sql (%s)"
+                              (format-time-string "%Y-%m-%d %H:%M:%S"))))
+             (cmd (format "git add %s && (git diff --cached --quiet -- %s || git commit -m %s -- %s) && git push origin HEAD"
+                          (shell-quote-argument rel-sql)
+                          (shell-quote-argument rel-sql)
+                          (shell-quote-argument msg)
+                          (shell-quote-argument rel-sql))))
+        (message "Buku: executando Git commit & push para %s..." rel-sql)
+        (let ((output (shell-command-to-string cmd)))
+          (message "Buku: bookmarks.sql sincronizado, commitado e enviado com sucesso! (%s)" sync-result)
+          (when (called-interactively-p 'interactive)
+            (message "Git output: %s" (string-trim output))))))))
+
 ;;; File watching
 
 (defvar fzl-buku-sync--watch nil "Active `file-notify' descriptor.")

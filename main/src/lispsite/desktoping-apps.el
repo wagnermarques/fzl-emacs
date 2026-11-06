@@ -1342,6 +1342,7 @@ With prefix argument `C-u', prompt for directory."
 (define-key desktoping-apps-map (kbd "b t") #'desktoping-buku-open-tutorial)
 (define-key desktoping-apps-map (kbd "b I") #'desktoping-buku-install-browser-extensions)
 (define-key desktoping-apps-map (kbd "b y") #'fzl-buku-sync-now)
+(define-key desktoping-apps-map (kbd "b p") #'fzl-buku-sync-git-commit-and-push)
 
 ;; Utilities & Docs keybindings
 (define-key desktoping-apps-map (kbd "u")   #'desktoping-open-usage-buffer)
@@ -1446,6 +1447,7 @@ With prefix argument `C-u', prompt for directory."
      ["Export to HTML (Cross-Browser)" desktoping-buku-export-html :keys "C-c d b e" :help "Export bookmarks to Netscape HTML"]
      ["Import from HTML (Browser Export)" desktoping-buku-import-html :keys "C-c d b i" :help "Import bookmarks from HTML file"]
      ["Sync bookmarks.db <-> bookmarks.sql" fzl-buku-sync-now :keys "C-c d b y" :help "Synchronize the Buku DB with the versioned bookmarks.sql text file"]
+     ["Git Commit & Push (bookmarks.sql)" fzl-buku-sync-git-commit-and-push :keys "C-c d b p" :help "Sync bookmarks to bookmarks.sql, commit and push to Git without exiting Emacs"]
      "---"
      ["Buku Tutorial & Guia (Org)" desktoping-buku-open-tutorial :keys "C-c d b t" :help "Open Brazilian Portuguese tutorial"])
     ("Bibliography (BibTeX)"
