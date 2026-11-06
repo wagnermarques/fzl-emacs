@@ -1,7 +1,7 @@
 -- fzl-emacs Buku bookmarks. Generated automatically from bookmarks.db by
 -- fzl-buku-sync.el: one bookmark per line. Prefer editing through buku/Emacs.
 CREATE TABLE IF NOT EXISTS bookmarks (id integer PRIMARY KEY, URL text NOT NULL UNIQUE, metadata text default '', tags text default ',', desc text default '', flags integer default 0);
-INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://chatgpt.com','ChatGPT',',ia,ias-basicas,','ChatGPT OpenAI',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://chatgpt.com','ChatGPT',',ia,ias-basicas,online-tools-ias-basicas,','ChatGPT OpenAI',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://claude.ai','Claude',',ia,ias-basicas,','Claude Anthropic',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://gemini.google.com','Google Gemini',',ia,ias-basicas,','Google Gemini',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://fzlbpms.com.br/fzlbpmsadmin/','FzlbpmsadminWeb',',fzl-projects-fzlbpms,','',0);
@@ -60,3 +60,11 @@ INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('chrome://
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://www.sitepen.com/blog/using-the-local-file-system-to-enrich-your-apps','Using the Local File System to Enrich Your Apps - SitePen',',leituras-programing-js,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://www.sitepen.com/blog/building-a-serverless-chat-application-with-supabase','Building a Serverless Chat Application with Supabase - SitePen',',leituras-programing-js,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://dados.pbh.gov.br/en/','Welcome - Portal de Dados Abertos',',dadosabertos-sites,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://repositorio.unesp.br/server/api/core/bitstreams/10a8deb5-c33e-42dd-914b-020b6e1ba67c/content','tannus_gp_tcc_guara.pdf',',researching-papers-edu,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://chat.deepseek.com/','DeepSeek - Rumo ao Desconhecido',',ias-basicas,online-tools-ias-basicas,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://bv.fapesp.br/pt/','BV FAPESP - Biblioteca Virtual da FAPESP',',researching-sites,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://git.unesp.br/outros-locais/ead/siscdep3','Outros Locais / EAD / Formação Pedagógica · GitLab',',cdep3-projects-siscep3,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://homolog.unesp.br/sisesp/','SISESP - Sistema de Especialização (Lato Sensu)',',unesp-projects,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://dev.unesp.br/formacao-pedagogica/','Sistema de Gerenciamento de Atividades de Formação Pedagógica',',cdep3-projects-siscep3,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://homolog.unesp.br/formacao-pedagogica/','Sistema de Gerenciamento de Atividades de Formação Pedagógica',',cdep3-projects-siscep3,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://wagnermarques.github.io/3DPrinter4You/','3DPrinter4You',',fzl-projects,fzl-projects-3dprinter4you,','',0);
