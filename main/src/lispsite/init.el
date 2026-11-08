@@ -163,6 +163,7 @@
 (require 'fzl-ide-feat-menus)
 (require 'desktoping-apps)
 (require 'fzl-remote-unesp)
+(require 'fzl-dashboard)
 ;(require 'fzl-ide-feat-warp)
 
 ;; Iniciar servidor do Emacs na inicialização para comunicação com a extensão de navegador e emacsclient
@@ -290,5 +291,11 @@
 (if (fboundp 'fzl-views-apply-startup-strategy)
     (fzl-views-apply-startup-strategy)
   (fzl-views--open-ibuffer-and-dired))
+
+;; Display features health dashboard on startup if enabled
+(when (and (not noninteractive)
+           (bound-and-true-p fzl/dashboard-show-on-startup)
+           (fboundp 'fzl/dashboard-show))
+  (fzl/dashboard-show))
 
 

@@ -12,6 +12,7 @@
 (require 'subr-x)
 (require 'fzl-util-browser nil t)
 (require 'fzl-remote-unesp nil t)
+(require 'fzl-dashboard nil t)
 
 ;;; ============================================================================
 ;;; Helper Functions
@@ -1384,12 +1385,17 @@ With prefix argument `C-u', prompt for directory."
 (define-key desktoping-apps-map (kbd "s t") #'fzl/remote-unesp-terminal)
 (define-key desktoping-apps-map (kbd "s c") #'fzl/remote-unesp-check-connection)
 
+;; Dashboard / Status das Features (Prefix: C-c d F)
+(define-key desktoping-apps-map (kbd "F") #'fzl/dashboard-show)
+
 ;;; ============================================================================
 ;;; Menu Definition: "Desktoping"
 ;;; ============================================================================
 
 (easy-menu-define desktoping-apps-menu global-map "Desktoping Applications Menu"
   '("Desktoping"
+    ["Painel de Status das Features" fzl/dashboard-show :keys "C-c d F" :help "Exibe o dashboard consolidado de status do Buku, IAs, VPN e Servidores"]
+    "---"
     ("Terminal (Treemacs / Dired)"
      ["Abrir Terminal Bash (Desktop / Nova Janela)" desktoping-terminal-open-external :keys "C-c d t t" :help "Abre o terminal externo com Bash em nova janela no diretório selecionado no Treemacs ou Dired"]
      ["Abrir Terminal Emacs (ansi-term)" desktoping-terminal-open-ansi-term :keys "C-c d t a" :help "Abre o ansi-term no diretório selecionado"]
