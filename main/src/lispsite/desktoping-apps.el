@@ -18,11 +18,25 @@
 ;;; Helper Functions
 ;;; ============================================================================
 
+(defun desktoping--open-file-sudo (file-path)
+  "Open FILE-PATH with root/sudo privileges via TRAMP."
+  (let ((path (expand-file-name file-path)))
+    (if (or (zerop (user-uid))
+            (string-prefix-p "/sudo::" path))
+        (find-file path)
+      (find-file (concat "/sudo::" path)))))
+
 (defun desktoping--open-file-or-sudo (file-path)
   "Open FILE-PATH. If not writable, attempt to open via TRAMP sudo."
-  (if (file-writable-p file-path)
-      (find-file file-path)
-    (find-file (concat "/sudo::" file-path))))
+  (let ((path (expand-file-name file-path)))
+    (if (file-writable-p path)
+        (find-file path)
+      (desktoping--open-file-sudo path))))
+
+(defun desktoping-open-file-sudo (file)
+  "Prompt for a FILE and open it with root/sudo privileges via TRAMP."
+  (interactive "fOpen file with sudo: ")
+  (desktoping--open-file-sudo file))
 
 (defun desktoping--browse-url (url)
   "Open URL in the default browser."
@@ -109,14 +123,261 @@
     (message "Executed `az login` in buffer *desktoping-azure-login*.")))
 
 ;;; ============================================================================
-;;; Group 3: Configuration Files (Host, System & User)
+;;; Group 3: Configuration Files (Host, System, AI Harnesses & User)
 ;;; ============================================================================
 
-;; User & Developer configs
+;; ----------------------------------------------------------------------------
+;; 3.1 Host & System (/etc) configs (Open with sudo via TRAMP)
+;; ----------------------------------------------------------------------------
+
+(defun desktoping-config-hosts ()
+  "Open /etc/hosts with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/hosts"))
+
+(defun desktoping-config-fstab ()
+  "Open /etc/fstab with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/fstab"))
+
+(defun desktoping-config-resolv ()
+  "Open /etc/resolv.conf with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/resolv.conf"))
+
+(defun desktoping-config-sshd ()
+  "Open /etc/ssh/sshd_config with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/ssh/sshd_config"))
+
+(defun desktoping-config-sudoers ()
+  "Open /etc/sudoers with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/sudoers"))
+
+(defun desktoping-config-selinux ()
+  "Open /etc/selinux/config with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/selinux/config"))
+
+(defun desktoping-config-dnf ()
+  "Open /etc/dnf/dnf.conf with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/dnf/dnf.conf"))
+
+(defun desktoping-config-environment ()
+  "Open /etc/environment with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/environment"))
+
+(defun desktoping-config-docker-daemon ()
+  "Open /etc/docker/daemon.json with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/docker/daemon.json"))
+
+(defun desktoping-config-crontab ()
+  "Open /etc/crontab with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/crontab"))
+
+(defun desktoping-config-limits ()
+  "Open /etc/security/limits.conf with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/security/limits.conf"))
+
+(defun desktoping-config-ansible-hosts ()
+  "Open /etc/ansible/hosts with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/ansible/hosts"))
+
+(defun desktoping-config-ansible ()
+  "Open /etc/ansible/ansible.cfg or ~/.ansible.cfg with sudo if necessary."
+  (interactive)
+  (let ((file (if (file-exists-p "~/.ansible.cfg")
+                  (expand-file-name "~/.ansible.cfg")
+                "/etc/ansible/ansible.cfg")))
+    (desktoping--open-file-or-sudo file)))
+
+(defun desktoping-config-network-ifcfg ()
+  "Open network configuration file or directory with sudo privileges via TRAMP."
+  (interactive)
+  (let ((ifcfg-file "/etc/sysconfig/network-scripts/ifcfg-enp2s0")
+        (nm-dir "/etc/NetworkManager/system-connections")
+        (scripts-dir "/etc/sysconfig/network-scripts"))
+    (cond
+     ((file-exists-p ifcfg-file)
+      (desktoping--open-file-sudo ifcfg-file))
+     ((file-directory-p nm-dir)
+      (desktoping--open-file-sudo nm-dir))
+     ((file-directory-p scripts-dir)
+      (desktoping--open-file-sudo scripts-dir))
+     (t
+      (desktoping--open-file-sudo ifcfg-file)))))
+
+;; ----------------------------------------------------------------------------
+;; 3.2 Systemd services configs (Open with sudo via TRAMP)
+;; ----------------------------------------------------------------------------
+
+(defun desktoping-config-docker-service ()
+  "Open systemd docker.service file with sudo privileges via TRAMP."
+  (interactive)
+  (let ((paths '("/etc/systemd/system/docker.service"
+                 "/usr/lib/systemd/system/docker.service"
+                 "/lib/systemd/system/docker.service")))
+    (desktoping--open-file-sudo
+     (or (seq-find #'file-exists-p paths)
+         "/usr/lib/systemd/system/docker.service"))))
+
+(defun desktoping-config-docker-storage ()
+  "Open docker-storage-setup configuration file with sudo privileges via TRAMP."
+  (interactive)
+  (desktoping--open-file-sudo "/etc/sysconfig/docker-storage-setup"))
+
+(defun desktoping-config-mariadb-service ()
+  "Open systemd mariadb.service file with sudo privileges via TRAMP."
+  (interactive)
+  (let ((paths '("/etc/systemd/system/mariadb.service"
+                 "/usr/lib/systemd/system/mariadb.service"
+                 "/lib/systemd/system/mariadb.service")))
+    (desktoping--open-file-sudo
+     (or (seq-find #'file-exists-p paths)
+         "/usr/lib/systemd/system/mariadb.service"))))
+
+;; ----------------------------------------------------------------------------
+;; 3.3 AI Harnesses & Agents configurations
+;; ----------------------------------------------------------------------------
+
+(defun desktoping-config-gemini-settings (&optional sudo)
+  "Open ~/.gemini/settings.json (or ~/.gemini/settings).
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (cond
+               ((file-exists-p (expand-file-name "~/.gemini/settings.json"))
+                (expand-file-name "~/.gemini/settings.json"))
+               ((file-exists-p (expand-file-name "~/.gemini/settings"))
+                (expand-file-name "~/.gemini/settings"))
+               (t (expand-file-name "~/.gemini/settings.json")))))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-gemini-cli-settings (&optional sudo)
+  "Open ~/.gemini/antigravity-cli/settings.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.gemini/antigravity-cli/settings.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-gemini-config (&optional sudo)
+  "Open ~/.gemini/config/config.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.gemini/config/config.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-claude-settings (&optional sudo)
+  "Open ~/.claude/settings.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.claude/settings.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-claude-desktop (&optional sudo)
+  "Open ~/.config/Claude/claude_desktop_config.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.config/Claude/claude_desktop_config.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-copilot-config (&optional sudo)
+  "Open ~/.copilot/config.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.copilot/config.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-copilot-settings (&optional sudo)
+  "Open ~/.copilot/settings.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.copilot/settings.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-opencode (&optional sudo)
+  "Open ~/.config/opencode/opencode.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.config/opencode/opencode.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-openclaude (&optional sudo)
+  "Open ~/.openclaude/settings.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.openclaude/settings.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-kimi (&optional sudo)
+  "Open ~/.kimi-code/config.toml.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.kimi-code/config.toml")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-antigravity-argv (&optional sudo)
+  "Open ~/.antigravity/argv.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (expand-file-name "~/.antigravity/argv.json")))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+(defun desktoping-config-aider (&optional sudo)
+  "Open ~/.aider.conf.yml or ~/.aider/analytics.json.
+With prefix arg SUDO, open with sudo privileges."
+  (interactive "P")
+  (let ((file (cond
+               ((file-exists-p (expand-file-name "~/.aider.conf.yml"))
+                (expand-file-name "~/.aider.conf.yml"))
+               ((file-exists-p (expand-file-name "~/.aider/analytics.json"))
+                (expand-file-name "~/.aider/analytics.json"))
+               (t (expand-file-name "~/.aider.conf.yml")))))
+    (if sudo
+        (desktoping--open-file-sudo file)
+      (desktoping--open-file-or-sudo file))))
+
+;; ----------------------------------------------------------------------------
+;; 3.4 User & Developer configs (~/)
+;; ----------------------------------------------------------------------------
+
 (defun desktoping-config-git ()
   "Open global git configuration ~/.gitconfig."
   (interactive)
   (find-file (expand-file-name "~/.gitconfig")))
+
+(defun desktoping-config-bashrc ()
+  "Open ~/.bashrc."
+  (interactive)
+  (find-file (expand-file-name "~/.bashrc")))
 
 (defun desktoping-config-maven ()
   "Open Maven settings.xml."
@@ -128,71 +389,17 @@
   (interactive)
   (find-file (expand-file-name "~/.gradle/gradle.properties")))
 
-;; Host & System (/etc) configs
-(defun desktoping-config-selinux ()
-  "Open /etc/selinux/config with sudo if necessary."
+(defun desktoping-config-emacs-init ()
+  "Open fzl-emacs init.el configuration."
   (interactive)
-  (desktoping--open-file-or-sudo "/etc/selinux/config"))
-
-(defun desktoping-config-ansible-hosts ()
-  "Open /etc/ansible/hosts with sudo if necessary."
-  (interactive)
-  (desktoping--open-file-or-sudo "/etc/ansible/hosts"))
-
-(defun desktoping-config-ansible ()
-  "Open /etc/ansible/ansible.cfg or ~/.ansible.cfg."
-  (interactive)
-  (let ((file (if (file-exists-p "~/.ansible.cfg")
-                  (expand-file-name "~/.ansible.cfg")
-                "/etc/ansible/ansible.cfg")))
-    (desktoping--open-file-or-sudo file)))
-
-(defun desktoping-config-resolv ()
-  "Open /etc/resolv.conf with sudo if necessary."
-  (interactive)
-  (desktoping--open-file-or-sudo "/etc/resolv.conf"))
-
-(defun desktoping-config-network-ifcfg ()
-  "Open network configuration file or directory with sudo if necessary."
-  (interactive)
-  (let ((ifcfg-file "/etc/sysconfig/network-scripts/ifcfg-enp2s0")
-        (nm-dir "/etc/NetworkManager/system-connections")
-        (scripts-dir "/etc/sysconfig/network-scripts"))
-    (cond
-     ((file-exists-p ifcfg-file)
-      (desktoping--open-file-or-sudo ifcfg-file))
-     ((file-directory-p nm-dir)
-      (desktoping--open-file-or-sudo nm-dir))
-     ((file-directory-p scripts-dir)
-      (desktoping--open-file-or-sudo scripts-dir))
-     (t
-      (desktoping--open-file-or-sudo ifcfg-file)))))
-
-;; Systemd services configs
-(defun desktoping-config-docker-service ()
-  "Open systemd docker.service file with sudo if necessary."
-  (interactive)
-  (let ((paths '("/etc/systemd/system/docker.service"
-                 "/usr/lib/systemd/system/docker.service"
-                 "/lib/systemd/system/docker.service")))
-    (desktoping--open-file-or-sudo
-     (or (seq-find #'file-exists-p paths)
-         "/usr/lib/systemd/system/docker.service"))))
-
-(defun desktoping-config-docker-storage ()
-  "Open docker-storage-setup configuration file with sudo if necessary."
-  (interactive)
-  (desktoping--open-file-or-sudo "/etc/sysconfig/docker-storage-setup"))
-
-(defun desktoping-config-mariadb-service ()
-  "Open systemd mariadb.service file with sudo if necessary."
-  (interactive)
-  (let ((paths '("/etc/systemd/system/mariadb.service"
-                 "/usr/lib/systemd/system/mariadb.service"
-                 "/lib/systemd/system/mariadb.service")))
-    (desktoping--open-file-or-sudo
-     (or (seq-find #'file-exists-p paths)
-         "/usr/lib/systemd/system/mariadb.service"))))
+  (let ((fzl-init (expand-file-name "main/src/lispsite/init.el"
+                                    (or (bound-and-true-p fzlemacs-dir--fzlemacs-home)
+                                        (let ((lib (locate-library "desktoping-apps")))
+                                          (and lib (expand-file-name "../../.." (file-name-directory lib))))
+                                        default-directory))))
+    (if (file-exists-p fzl-init)
+        (find-file fzl-init)
+      (find-file user-init-file))))
 
 ;;; ============================================================================
 ;;; Group 4: Bookmarks Management (Buku Integration)
@@ -1314,12 +1521,24 @@ With prefix argument `C-u', prompt for directory."
 (define-key desktoping-apps-map (kbd "c m") #'desktoping-config-maven)
 (define-key desktoping-apps-map (kbd "c p") #'desktoping-config-gradle)
 
-;; Config files keybindings (Host & System)
+;; Config files keybindings (Host & System - sudo)
+(define-key desktoping-apps-map (kbd "c H") #'desktoping-config-hosts)
+(define-key desktoping-apps-map (kbd "c F") #'desktoping-config-fstab)
+(define-key desktoping-apps-map (kbd "c S") #'desktoping-config-sshd)
+(define-key desktoping-apps-map (kbd "c u") #'desktoping-config-sudoers)
 (define-key desktoping-apps-map (kbd "c x") #'desktoping-config-selinux)
+(define-key desktoping-apps-map (kbd "c D") #'desktoping-config-dnf)
 (define-key desktoping-apps-map (kbd "c h") #'desktoping-config-ansible-hosts)
 (define-key desktoping-apps-map (kbd "c a") #'desktoping-config-ansible)
 (define-key desktoping-apps-map (kbd "c r") #'desktoping-config-resolv)
 (define-key desktoping-apps-map (kbd "c n") #'desktoping-config-network-ifcfg)
+(define-key desktoping-apps-map (kbd "c !") #'desktoping-open-file-sudo)
+
+;; Config files keybindings (AI Harnesses)
+(define-key desktoping-apps-map (kbd "c G") #'desktoping-config-gemini-settings)
+(define-key desktoping-apps-map (kbd "c C") #'desktoping-config-claude-settings)
+(define-key desktoping-apps-map (kbd "c P") #'desktoping-config-copilot-config)
+(define-key desktoping-apps-map (kbd "c K") #'desktoping-config-kimi)
 
 ;; Config files keybindings (Systemd services)
 (define-key desktoping-apps-map (kbd "c d") #'desktoping-config-docker-service)
@@ -1488,21 +1707,47 @@ With prefix argument `C-u', prompt for directory."
      ["Rclone: Desktop -> GDrive" desktoping-cloud-rclone-desktop-to-gdrive :keys "C-c d s d" :help "Sync Desktop to GDrive"]
      "---"
      ["Azure Login (az login)" desktoping-cloud-azure-login :keys "C-c d a" :help "Login to Azure CLI"])
-    ("Configuration Files"
-     ("Host & System (/etc)"
-      ["SELinux (/etc/selinux/config)" desktoping-config-selinux :keys "C-c d c x" :help "Open /etc/selinux/config"]
-      ["Ansible Hosts (/etc/ansible/hosts)" desktoping-config-ansible-hosts :keys "C-c d c h" :help "Open /etc/ansible/hosts"]
-      ["Ansible Config (ansible.cfg)" desktoping-config-ansible :keys "C-c d c a" :help "Open ansible.cfg"]
-      ["DNS Resolv (/etc/resolv.conf)" desktoping-config-resolv :keys "C-c d c r" :help "Open /etc/resolv.conf"]
-      ["Network ifcfg (ifcfg-enp2s0)" desktoping-config-network-ifcfg :keys "C-c d c n" :help "Open network ifcfg"])
-     ("Services (Systemd)"
-      ["Docker Service (/etc/...)" desktoping-config-docker-service :keys "C-c d c d" :help "Open docker.service"]
-      ["Docker Storage Setup" desktoping-config-docker-storage :keys "C-c d c s" :help "Open docker-storage-setup"]
-      ["MariaDB Service" desktoping-config-mariadb-service :keys "C-c d c b" :help "Open mariadb.service"])
+    ("Config files"
+     ("System Configs (Sudo /etc)"
+      ["Hosts (/etc/hosts)" desktoping-config-hosts :keys "C-c d c H" :help "Open /etc/hosts with sudo"]
+      ["Fstab (/etc/fstab)" desktoping-config-fstab :keys "C-c d c F" :help "Open /etc/fstab with sudo"]
+      ["DNS Resolv (/etc/resolv.conf)" desktoping-config-resolv :keys "C-c d c r" :help "Open /etc/resolv.conf with sudo"]
+      ["SSH Server (/etc/ssh/sshd_config)" desktoping-config-sshd :keys "C-c d c S" :help "Open /etc/ssh/sshd_config with sudo"]
+      ["Sudoers (/etc/sudoers)" desktoping-config-sudoers :keys "C-c d c u" :help "Open /etc/sudoers with sudo"]
+      ["SELinux (/etc/selinux/config)" desktoping-config-selinux :keys "C-c d c x" :help "Open /etc/selinux/config with sudo"]
+      ["DNF Package Manager (/etc/dnf/dnf.conf)" desktoping-config-dnf :keys "C-c d c D" :help "Open /etc/dnf/dnf.conf with sudo"]
+      ["Environment (/etc/environment)" desktoping-config-environment :help "Open /etc/environment with sudo"]
+      ["Docker Daemon (/etc/docker/daemon.json)" desktoping-config-docker-daemon :help "Open /etc/docker/daemon.json with sudo"]
+      ["Crontab (/etc/crontab)" desktoping-config-crontab :help "Open /etc/crontab with sudo"]
+      ["Security Limits (/etc/security/limits.conf)" desktoping-config-limits :help "Open /etc/security/limits.conf with sudo"]
+      ["Ansible Hosts (/etc/ansible/hosts)" desktoping-config-ansible-hosts :keys "C-c d c h" :help "Open /etc/ansible/hosts with sudo"]
+      ["Ansible Config (ansible.cfg)" desktoping-config-ansible :keys "C-c d c a" :help "Open ansible.cfg with sudo"]
+      ["Network ifcfg (ifcfg-enp2s0)" desktoping-config-network-ifcfg :keys "C-c d c n" :help "Open network ifcfg with sudo"])
+     ("AI Harnesses & Agents"
+      ["Gemini Settings (~/.gemini/settings.json)" desktoping-config-gemini-settings :keys "C-c d c G" :help "Open Gemini MCP settings"]
+      ["Gemini CLI Settings (~/.gemini/antigravity-cli/settings.json)" desktoping-config-gemini-cli-settings :help "Open Antigravity CLI settings"]
+      ["Gemini Config (~/.gemini/config/config.json)" desktoping-config-gemini-config :help "Open Gemini config.json"]
+      ["Claude Settings (~/.claude/settings.json)" desktoping-config-claude-settings :keys "C-c d c C" :help "Open Claude Code settings"]
+      ["Claude Desktop Config (claude_desktop_config.json)" desktoping-config-claude-desktop :help "Open Claude Desktop MCP config"]
+      ["Copilot Config (~/.copilot/config.json)" desktoping-config-copilot-config :keys "C-c d c P" :help "Open GitHub Copilot config"]
+      ["Copilot Settings (~/.copilot/settings.json)" desktoping-config-copilot-settings :help "Open GitHub Copilot settings"]
+      ["OpenCode Config (~/.config/opencode/opencode.json)" desktoping-config-opencode :help "Open OpenCode configuration"]
+      ["OpenClaude Settings (~/.openclaude/settings.json)" desktoping-config-openclaude :help "Open OpenClaude settings"]
+      ["Kimi Code Config (~/.kimi-code/config.toml)" desktoping-config-kimi :keys "C-c d c K" :help "Open Kimi Code config"]
+      ["Antigravity Argv (~/.antigravity/argv.json)" desktoping-config-antigravity-argv :help "Open Antigravity IDE argv.json"]
+      ["Aider Config (~/.aider.conf.yml)" desktoping-config-aider :help "Open Aider configuration"])
+     ("Services (Systemd - Sudo)"
+      ["Docker Service (/etc/...)" desktoping-config-docker-service :keys "C-c d c d" :help "Open docker.service with sudo"]
+      ["Docker Storage Setup" desktoping-config-docker-storage :keys "C-c d c s" :help "Open docker-storage-setup with sudo"]
+      ["MariaDB Service" desktoping-config-mariadb-service :keys "C-c d c b" :help "Open mariadb.service with sudo"])
      ("User & Developer (~/)"
       ["Git Config (~/.gitconfig)" desktoping-config-git :keys "C-c d c g" :help "Open ~/.gitconfig"]
+      ["Bashrc (~/.bashrc)" desktoping-config-bashrc :help "Open ~/.bashrc"]
       ["Maven Settings (~/.m2/settings.xml)" desktoping-config-maven :keys "C-c d c m" :help "Open Maven settings"]
-      ["Gradle Properties (~/.gradle/gradle.properties)" desktoping-config-gradle :keys "C-c d c p" :help "Open Gradle properties"]))
+      ["Gradle Properties (~/.gradle/gradle.properties)" desktoping-config-gradle :keys "C-c d c p" :help "Open Gradle properties"]
+      ["Emacs Config (fzl-emacs init.el)" desktoping-config-emacs-init :help "Open fzl-emacs init.el"])
+     "---"
+     ["Open Any File with Sudo (Prompt)..." desktoping-open-file-sudo :keys "C-c d c !" :help "Open any file path as root with TRAMP /sudo::"])
     ("Utilities & Docs"
      ["fzl-emacs Usage & Shortcuts" desktoping-open-usage-buffer :keys "C-c d u" :help "Open fzl-emacs usage inventory buffer"]
      "---"

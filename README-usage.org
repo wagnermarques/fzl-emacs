@@ -109,7 +109,29 @@ Para abrir este inventário e guia a qualquer momento no próprio Emacs:
 | =C-c C-, s=   | (org template shell)                  | Insere bloco de código shell no Org-mode                             |
 | =C-c C-c=     | ~org-ctrl-c-ctrl-c~                   | Executa bloco de código Babel sob o cursor                           |
 
-** 6. Introspecção e Descoberta de Teclas no Emacs
+** 6. Arquivos de Configuração do Sistema (Sudo) e IA Harnesses (Prefixo =C-c d c=)
+
+Acesso rápido pelo menu: =Desktoping -> Config files=
+
+| Atalho      | Comando Lisp                         | Descrição e Propósito                                                 |
+|-------------+--------------------------------------+-----------------------------------------------------------------------|
+| =C-c d c H= | ~desktoping-config-hosts~             | Abre =/etc/hosts= com privilégios de root/sudo via TRAMP              |
+| =C-c d c F= | ~desktoping-config-fstab~             | Abre =/etc/fstab= com sudo via TRAMP                                  |
+| =C-c d c r= | ~desktoping-config-resolv~            | Abre =/etc/resolv.conf= com sudo via TRAMP                            |
+| =C-c d c S= | ~desktoping-config-sshd~              | Abre =/etc/ssh/sshd_config= com sudo via TRAMP                        |
+| =C-c d c u= | ~desktoping-config-sudoers~           | Abre =/etc/sudoers= com sudo via TRAMP                                |
+| =C-c d c x= | ~desktoping-config-selinux~           | Abre =/etc/selinux/config= com sudo via TRAMP                        |
+| =C-c d c D= | ~desktoping-config-dnf~               | Abre =/etc/dnf/dnf.conf= com sudo via TRAMP                           |
+| =C-c d c != | ~desktoping-open-file-sudo~          | Prompt interativo para abrir *qualquer arquivo com sudo*              |
+| =C-c d c G= | ~desktoping-config-gemini-settings~  | Abre =~/.gemini/settings.json= (MCP & configurações do Gemini)        |
+| =C-c d c C= | ~desktoping-config-claude-settings~  | Abre =~/.claude/settings.json= (Claude Code)                          |
+| =C-c d c P= | ~desktoping-config-copilot-config~   | Abre =~/.copilot/config.json= (GitHub Copilot)                        |
+| =C-c d c K= | ~desktoping-config-kimi~             | Abre =~/.kimi-code/config.toml= (Kimi Code)                           |
+| =C-c d c g= | ~desktoping-config-git~              | Abre =~/.gitconfig= global                                            |
+| =C-c d c d= | ~desktoping-config-docker-service~   | Abre =docker.service= com sudo via TRAMP                              |
+| =C-c d c b= | ~desktoping-config-mariadb-service~  | Abre =mariadb.service= com sudo via TRAMP                             |
+
+** 7. Introspecção e Descoberta de Teclas no Emacs
 
 | Atalho              | Comando Lisp        | O que faz                                                               |
 |---------------------+---------------------+-------------------------------------------------------------------------|
@@ -304,6 +326,9 @@ Se você deseja que o buffer com suas URLs =start-day-*= seja aberto toda vez qu
 | *Alternar Janelas com Teclado*       | =Shift + Setas=  | —                   |
 | *Terminal Embutido*                  | =C-c s=          | —                   |
 | *Git Magit*                          | =C-x g=          | —                   |
+| *Configs Sistema (Sudo /etc/hosts)*  | =C-c d c H=      | Menu: Config files  |
+| *Configs Gemini MCP (~/.gemini)*     | =C-c d c G=      | Menu: Config files  |
+| *Abrir Qualquer Arquivo com Sudo*    | =C-c d c !=      | =M-x desktoping-open-file-sudo= |
 | *Descobrir atalho de uma função*     | =C-h w=          | =C-h k=             |
 
 ---
