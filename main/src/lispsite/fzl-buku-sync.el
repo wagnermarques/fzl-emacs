@@ -40,6 +40,10 @@
   "Seconds to wait after a file change before synchronizing."
   :type 'number)
 
+(defcustom fzl-buku-sync-ask-on-exit t
+  "When non-nil, ask to commit & push bookmarks.sql on Emacs exit if there are updates."
+  :type 'boolean)
+
 (defconst fzl-buku-sync--columns "URL,metadata,tags,desc,flags"
   "Buku columns serialized to the SQL file (everything except `id').")
 
@@ -211,6 +215,14 @@ Return a symbol describing what happened."
   (interactive)
   (message "Buku sync: %s" (fzl-buku-sync-run)))
 
+(defun fzl-buku-sync--ssh-auth-sock ()
+  "Ensure SSH_AUTH_SOCK is resolved from environment or standard user locations."
+  (or (getenv "SSH_AUTH_SOCK")
+      (let ((cands (list (expand-file-name (format "/run/user/%d/gcr/.ssh" (user-uid)))
+                         (expand-file-name (format "/run/user/%d/keyring/ssh" (user-uid)))
+                         (expand-file-name (format "/run/user/%d/openssh_agent" (user-uid))))))
+        (seq-find #'file-exists-p cands))))
+
 ;;;###autoload
 (defun fzl-buku-sync-git-commit-and-push (&optional user-message)
   "Synchronize bookmarks.db to bookmarks.sql, then git commit and push bookmarks.sql.
@@ -226,6 +238,10 @@ Allows saving and sharing bookmarks without closing Emacs."
         (user-error "fzl-buku-sync: %s não pertence a um repositório Git" sql-file))
       (let* ((default-directory (expand-file-name repo-dir))
              (rel-sql (file-relative-name sql-file default-directory))
+             (sock (fzl-buku-sync--ssh-auth-sock))
+             (process-environment (if sock
+                                      (cons (format "SSH_AUTH_SOCK=%s" sock) process-environment)
+                                    process-environment))
              (msg (or user-message
                       (format "chore(bookmarks): update bookmarks.sql (%s)"
                               (format-time-string "%Y-%m-%d %H:%M:%S"))))
@@ -239,6 +255,50 @@ Allows saving and sharing bookmarks without closing Emacs."
           (message "Buku: bookmarks.sql sincronizado, commitado e enviado com sucesso! (%s)" sync-result)
           (when (called-interactively-p 'interactive)
             (message "Git output: %s" (string-trim output))))))))
+
+;;;###autoload
+(defun fzl-buku-sync-has-unpushed-changes-p ()
+  "Return non-nil if bookmarks.sql has local uncommitted or unpushed changes."
+  (condition-case nil
+      (let* ((sql-file (fzl-buku-sync--sql))
+             (repo-dir (and (file-exists-p sql-file) (locate-dominating-file sql-file ".git"))))
+        (when repo-dir
+          (let* ((default-directory (expand-file-name repo-dir))
+                 (rel-sql (file-relative-name sql-file default-directory))
+                 ;; Check modified working tree or staged changes
+                 (status-out (string-trim (shell-command-to-string
+                                          (format "git status --porcelain -- %s" (shell-quote-argument rel-sql)))))
+                 ;; Check if committed but ahead of upstream
+                 (ahead-out (string-trim (shell-command-to-string
+                                          (format "git log @{u}..HEAD --oneline -- %s 2>/dev/null || git log origin/HEAD..HEAD --oneline -- %s 2>/dev/null"
+                                                  (shell-quote-argument rel-sql)
+                                                  (shell-quote-argument rel-sql))))))
+            (or (not (string-empty-p status-out))
+                (not (string-empty-p ahead-out))))))
+    (error nil)))
+
+(defun fzl-buku-sync--on-kill-emacs-query ()
+  "Query user on Emacs exit to share bookmarks updates if changes exist.
+Used in `kill-emacs-query-functions'."
+  (when (and fzl-buku-sync-ask-on-exit
+             (not noninteractive))
+    (condition-case err
+        ;; Ensure latest changes in DB are dumped to bookmarks.sql first
+        (progn
+          (fzl-buku-sync-run)
+          (when (fzl-buku-sync-has-unpushed-changes-p)
+            (if (y-or-n-p "Deseja compartilhar as atualizações dos bookmarks Buku (commit & push bookmarks.sql)? ")
+                (progn
+                  (message "Buku: enviando bookmarks.sql para o repositório remoto...")
+                  (fzl-buku-sync-git-commit-and-push)
+                  t)
+              (message "Buku: bookmarks.sql mantido localmente sem envio.")
+              t)))
+      (error
+       (message "fzl-buku-sync: erro ao verificar/compartilhar bookmarks: %s" (error-message-string err))
+       t)))
+  ;; Always return t so exiting Emacs is not blocked
+  t)
 
 ;;; File watching
 
@@ -274,7 +334,9 @@ Synchronizes once when enabled and then on every change to either file."
   (when fzl-buku-sync--watch
     (file-notify-rm-watch fzl-buku-sync--watch)
     (setq fzl-buku-sync--watch nil))
+  (remove-hook 'kill-emacs-query-functions #'fzl-buku-sync--on-kill-emacs-query)
   (when fzl-buku-sync-mode
+    (add-hook 'kill-emacs-query-functions #'fzl-buku-sync--on-kill-emacs-query)
     (let ((dir (file-name-directory (fzl-buku-sync--db))))
       (fzl-buku-sync--run-safely)
       (if (file-directory-p dir)
