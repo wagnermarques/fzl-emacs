@@ -123,6 +123,80 @@
     (message "Executed `az login` in buffer *desktoping-azure-login*.")))
 
 ;;; ============================================================================
+;;; Group 2.1: Ollama
+;;; ============================================================================
+
+(defconst desktoping-ollama-models-page-url
+  "https://centropaulasouza.sharepoint.com/:fl:/r/contentstorage/x8FNO-xtskuCRX2_fMTHLQ7pLMpBu1FKitYh_0wBEXk/Biblioteca%20de%20Documentos/Copilot/onde%20encontrar%20os%20modelos%20que%20eu%20posso%20rodar%20no%20ol.page?d=w7a6980ead1504a058503ce667b097efc&csf=1&web=1&e=jZYYir&nav=cz0lMkZjb250ZW50c3RvcmFnZSUyRng4Rk5PLXh0c2t1Q1JYMl9mTVRITFE3cExNcEJ1TUZLaXRZaF8wd0JFWGsmZD1iJTIxNkdLMWNNWXYyVWlmeVhMT04zMjRCZU0xSU5Nand0WkptNzRpU0E3SzJ1S2duWFEyZWQzX1Q1SmJZWFFUMzVRQyZmPTAxSEtEWEJNN0tRQlVYVVVHUkFWRklLQTZPTVo1UVM3WDQmYz0lMkYmcD0lNDBmbHVpZHglMkZsb29wLXBhZ2UtY29udGFpbmVy"
+  "URL of the organization page listing available Ollama models.")
+
+(defun desktoping--require-ollama ()
+  "Signal a user error unless the Ollama executable is available."
+  (unless (executable-find "ollama")
+    (user-error "Ollama was not found in PATH. Use Desktoping > Ollama > Install Ollama")))
+
+(defun desktoping-ollama-install ()
+  "Run Ollama's official Linux installer in an interactive shell."
+  (interactive)
+  (unless (y-or-n-p "Run Ollama's official installer from ollama.com? ")
+    (user-error "Ollama installation cancelled"))
+  (let ((buffer (get-buffer-create "*desktoping-ollama-install*")))
+    (shell buffer)
+    (with-current-buffer buffer
+      (goto-char (point-max))
+      (insert "curl -fsSL https://ollama.com/install.sh | sh")
+      (comint-send-input))
+    (pop-to-buffer buffer)
+    (message "Started the official Ollama installer in %s." (buffer-name buffer))))
+
+(defun desktoping-ollama-open-models-page ()
+  "Open the organization page listing available Ollama models."
+  (interactive)
+  (desktoping--browse-url desktoping-ollama-models-page-url))
+
+(defun desktoping-ollama-open-library ()
+  "Open the official Ollama model library."
+  (interactive)
+  (desktoping--browse-url "https://ollama.com/library"))
+
+(defun desktoping-ollama-list-models ()
+  "Show locally installed Ollama models in an output buffer."
+  (interactive)
+  (desktoping--require-ollama)
+  (async-shell-command "ollama list" "*desktoping-ollama-models*"))
+
+(defun desktoping-ollama-list-running-models ()
+  "Show models currently loaded by the Ollama server."
+  (interactive)
+  (desktoping--require-ollama)
+  (async-shell-command "ollama ps" "*desktoping-ollama-running*"))
+
+(defun desktoping-ollama-pull-model (model)
+  "Download MODEL from the Ollama library asynchronously."
+  (interactive "sOllama model to download (for example llama3.2): ")
+  (desktoping--require-ollama)
+  (if (string-empty-p (string-trim model))
+      (user-error "A model name is required")
+    (async-shell-command
+     (format "ollama pull %s" (shell-quote-argument (string-trim model)))
+     "*desktoping-ollama-pull*")))
+
+(defun desktoping-ollama-open-api-guide ()
+  "Open the local guide for calling the Ollama REST API."
+  (interactive)
+  (let* ((dir (file-name-directory (or load-file-name buffer-file-name
+                                       (locate-library "desktoping-apps"))))
+         (file (expand-file-name "ollama-rest-api-guide.org" dir)))
+    (if (file-exists-p file)
+        (find-file file)
+      (user-error "Ollama REST API guide not found: %s" file))))
+
+(defun desktoping-ollama-open-api-docs ()
+  "Open the official Ollama API documentation."
+  (interactive)
+  (desktoping--browse-url "https://docs.ollama.com/api"))
+
+;;; ============================================================================
 ;;; Group 3: Configuration Files (Host, System, AI Harnesses & User)
 ;;; ============================================================================
 
@@ -1516,6 +1590,17 @@ With prefix argument `C-u', prompt for directory."
 (define-key desktoping-apps-map (kbd "s d") #'desktoping-cloud-rclone-desktop-to-gdrive)
 (define-key desktoping-apps-map (kbd "a")   #'desktoping-cloud-azure-login)
 
+;; Ollama keybindings (Prefix: C-c d O)
+(defvar desktoping-ollama-map (make-sparse-keymap)
+  "Keymap for Ollama commands.")
+(define-key desktoping-apps-map (kbd "O") desktoping-ollama-map)
+(define-key desktoping-ollama-map (kbd "i") #'desktoping-ollama-install)
+(define-key desktoping-ollama-map (kbd "m") #'desktoping-ollama-open-models-page)
+(define-key desktoping-ollama-map (kbd "l") #'desktoping-ollama-list-models)
+(define-key desktoping-ollama-map (kbd "p") #'desktoping-ollama-list-running-models)
+(define-key desktoping-ollama-map (kbd "d") #'desktoping-ollama-pull-model)
+(define-key desktoping-ollama-map (kbd "a") #'desktoping-ollama-open-api-guide)
+
 ;; Config files keybindings (User & Dev)
 (define-key desktoping-apps-map (kbd "c g") #'desktoping-config-git)
 (define-key desktoping-apps-map (kbd "c m") #'desktoping-config-maven)
@@ -1707,6 +1792,18 @@ With prefix argument `C-u', prompt for directory."
      ["Rclone: Desktop -> GDrive" desktoping-cloud-rclone-desktop-to-gdrive :keys "C-c d s d" :help "Sync Desktop to GDrive"]
      "---"
      ["Azure Login (az login)" desktoping-cloud-azure-login :keys "C-c d a" :help "Login to Azure CLI"])
+    ("Ollama"
+     ["Install Ollama (Official Linux Installer)" desktoping-ollama-install :keys "C-c d O i" :help "Run Ollama's official installer after confirmation"]
+     "---"
+     ["Available Models (Organization Page)" desktoping-ollama-open-models-page :keys "C-c d O m" :help "Open the organization page with available models"]
+     ["Official Model Library" desktoping-ollama-open-library :help "Browse the official Ollama model library"]
+     ["Download Model..." desktoping-ollama-pull-model :keys "C-c d O d" :help "Download a model with ollama pull"]
+     "---"
+     ["List Installed Models" desktoping-ollama-list-models :keys "C-c d O l" :help "Run ollama list"]
+     ["List Running Models" desktoping-ollama-list-running-models :keys "C-c d O p" :help "Run ollama ps"]
+     "---"
+     ["REST API Guide (Org)" desktoping-ollama-open-api-guide :keys "C-c d O a" :help "Open local examples for the Ollama REST API"]
+     ["Official REST API Documentation" desktoping-ollama-open-api-docs :help "Open the official Ollama API documentation"])
     ("Config files"
      ("System Configs (Sudo /etc)"
       ["Hosts (/etc/hosts)" desktoping-config-hosts :keys "C-c d c H" :help "Open /etc/hosts with sudo"]

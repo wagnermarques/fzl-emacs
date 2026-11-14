@@ -1,0 +1,68 @@
+#+TITLE: Guia: API REST do Ollama
+#+AUTHOR: fzl-emacs
+#+STARTUP: showall
+#+OPTIONS: toc:2 num:t ^:nil
+
+* Pré-requisitos
+
+Instale o Ollama e baixe um modelo. No menu, use
+=Desktoping -> Ollama -> Install Ollama= e depois
+=Desktoping -> Ollama -> Download Model...=.
+
+O Ollama normalmente atende em =http://127.0.0.1:11434=. Inicie o servidor,
+se necessário, com:
+
+#+begin_src sh
+ollama serve
+#+end_src
+
+Em outra janela, confirme os modelos disponíveis:
+
+#+begin_src sh
+ollama list
+#+end_src
+
+* Gerar texto
+
+Use =/api/generate= para uma solicitação simples. Defina =stream= como
+=false= para receber uma única resposta JSON:
+
+#+begin_src sh
+curl http://127.0.0.1:11434/api/generate \
+  -d '{
+    "model": "llama3.2",
+    "prompt": "Explique recursão em uma frase.",
+    "stream": false
+  }'
+#+end_src
+
+Troque =llama3.2= pelo nome exibido por =ollama list=.
+
+* Conversar com mensagens
+
+Use =/api/chat= para enviar o histórico de uma conversa:
+
+#+begin_src sh
+curl http://127.0.0.1:11434/api/chat \
+  -d '{
+    "model": "llama3.2",
+    "messages": [
+      {"role": "system", "content": "Responda em português."},
+      {"role": "user", "content": "O que é uma API REST?"}
+    ],
+    "stream": false
+  }'
+#+end_src
+
+* Listar modelos pela API
+
+Para verificar se o servidor está respondendo e obter os modelos instalados:
+
+#+begin_src sh
+curl http://127.0.0.1:11434/api/tags
+#+end_src
+
+* Próximos passos
+
+Consulte a documentação oficial para embeddings, imagens, ferramentas e os
+demais parâmetros: https://docs.ollama.com/api
