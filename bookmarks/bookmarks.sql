@@ -146,6 +146,8 @@ INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://a
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://wagnermarques.github.io/leitordaldb/','Leitor da LDB',',fzl-projects,fzl-projects-leitordaldb,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://github.com/wagnermarques/biblereaderapp','GitHub - wagnermarques/biblereaderapp: biblereaderapp · GitHub',',fzl-projects,fzl-projects-biblereaderapp,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://wagnermarques.github.io/biblereaderapp/','Bíblia',',fzl-projects,fzl-projects-biblereaderapp,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://wagnermarques.github.io/fzl-caqdas/#/conta/entrar','Entrar — FZL CAQDAS — Pesquisa Qualitativa',',fzl-projects,fzl-projects-caqdas,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://wagnermarques.github.io/guiaregionaldepoliticaspublicasdeguaianases/','Guia Regional — Zona Leste SP',',fzl-projects,fzl-projects-guiaregional,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://drive.google.com/drive/u/0/folders/17ZwDKMf_5wjoK4S52Bob7LtWjYloRqjb','PROFEI2027 - Google Drive',',pos-profei-leitura,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://consulta-ead.labs.unesp.br/ui/login.html','Cluster Overview - Trino',',cdep3-projects,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://src.visa.com/cards','Click to Pay - Meus Cartões',',cockpits-$,','',0);
@@ -184,3 +186,5 @@ INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://r
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://acervodigital.ufpr.br/xmlui/','Página inicial',',researching-search,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://www.gov.br/mec/pt-br/pnp','PNP - Plataforma Nilo Peçanha — Ministério da Educação',',dadosabertos-sites,pos-profei-leitura,pos-profei-wgn,','',0);
 INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://www.fct.unesp.br/#!/pos-graduacao/educacao-inclusiva/processo-seletivo6680/processo-seletivo-2027---edital-01-2026/','Processo Seletivo 2027 - Edital 01/2026 - Unesp - Faculdade de Ciências e Tecnologia - Câmpus de Presidente Prudente',',pos-profei-wgn,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://www.aaidd.org/home','Home',',pos-profei-leitura,','',0);
+INSERT OR REPLACE INTO bookmarks(URL,metadata,tags,desc,flags) VALUES('https://eric.ed.gov/?id=ED468327','ERIC - ED468327 - Mental Retardation: Definition, Classification, and Systems of Supports. 10th Edition., 2002',',pos-profei-leitura,','',0);
