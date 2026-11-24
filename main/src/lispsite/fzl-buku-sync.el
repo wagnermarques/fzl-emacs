@@ -218,7 +218,8 @@ Return a symbol describing what happened."
 (defun fzl-buku-sync--ssh-auth-sock ()
   "Ensure SSH_AUTH_SOCK is resolved from environment or standard user locations."
   (or (getenv "SSH_AUTH_SOCK")
-      (let ((cands (list (expand-file-name (format "/run/user/%d/gcr/.ssh" (user-uid)))
+      (let ((cands (list (expand-file-name (format "/run/user/%d/gcr/ssh" (user-uid)))
+                         (expand-file-name (format "/run/user/%d/gcr/.ssh" (user-uid)))
                          (expand-file-name (format "/run/user/%d/keyring/ssh" (user-uid)))
                          (expand-file-name (format "/run/user/%d/openssh_agent" (user-uid))))))
         (seq-find #'file-exists-p cands))))
