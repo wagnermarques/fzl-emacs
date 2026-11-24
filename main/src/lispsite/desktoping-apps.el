@@ -895,23 +895,192 @@ If left blank, uses links from clipboard."
          (candidates
           (delq nil
                 (list
-                 ;; 1. From desktoping-apps library location:
+                 ;; 1. Peer repository fzl-emacs-extension (active development):
+                 (expand-file-name "../fzl-emacs-extension" home)
+                 ;; 2. From desktoping-apps library location:
                  (let ((lib (locate-library "desktoping-apps")))
                    (and lib (expand-file-name "../../../gitsubmodules/fzl-emacs-extension" (file-name-directory lib))))
-                 ;; 2. Submodule relative to home:
+                 ;; 3. Submodule relative to home:
                  (expand-file-name "gitsubmodules/fzl-emacs-extension" home)
-                 ;; 3. Submodule relative to default-directory:
+                 ;; 4. Submodule relative to default-directory:
                  (expand-file-name "gitsubmodules/fzl-emacs-extension" default-directory)
-                 ;; 4. Peer repository:
+                 ;; 5. Peer repository fzl-emacs-bookmarks:
                  (expand-file-name "../fzl-emacs-bookmarks" home))))
          (found (seq-find (lambda (dir)
                             (and dir
                                  (file-directory-p dir)
-                                 (file-exists-p (expand-file-name "native-host/install-native-host.sh" dir))))
+                                 (file-exists-p (expand-file-name "native-host/fzl_buku_native_host.py" dir))))
                           candidates)))
     (or found
+        (expand-file-name "../fzl-emacs-extension" home)
         (expand-file-name "gitsubmodules/fzl-emacs-extension" home)
         (car candidates))))
+
+(defcustom desktoping-buku-auto-ensure-host t
+  "When non-nil, automatically ensure browser extension host manifests and permissions on Emacs startup."
+  :type 'boolean
+  :group 'desktoping)
+
+(defcustom desktoping-buku-auto-start-http-server t
+  "When non-nil, automatically start the Buku HTTP bridge server on Emacs startup."
+  :type 'boolean
+  :group 'desktoping)
+
+(defvar desktoping-buku-http-server-process nil
+  "Process handle for the fzl-buku HTTP bridge server.")
+
+(defun desktoping-buku-http-server-running-p ()
+  "Return non-nil if fzl_buku_server is listening on port 8765 or process is alive."
+  (or (and (processp desktoping-buku-http-server-process)
+           (process-live-p desktoping-buku-http-server-process))
+      (and (executable-find "ss")
+           (let ((res (call-process "ss" nil nil nil "-tlpn" "sport = :8765")))
+             (and (eq res 0)
+                  (with-temp-buffer
+                    (call-process "ss" nil t nil "-tlpn" "sport = :8765")
+                    (string-match-p "8765" (buffer-string))))))))
+
+(defun desktoping-buku-http-server-start (&optional verbose)
+  "Start the fzl_buku_server.py HTTP bridge in the background."
+  (interactive '(t))
+  (let* ((ext-dir (desktoping--buku-extension-dir))
+         (server-script (and ext-dir (expand-file-name "native-host/fzl_buku_server.py" ext-dir))))
+    (if (desktoping-buku-http-server-running-p)
+        (when verbose
+          (message "FZL Buku HTTP Bridge já está ativo em http://127.0.0.1:8765."))
+      (if (and server-script (file-exists-p server-script))
+          (progn
+            (set-file-modes server-script #o755)
+            (setq desktoping-buku-http-server-process
+                  (start-process "fzl-buku-http-server"
+                                 "*fzl-buku-http-server*"
+                                 "python3" server-script))
+            (set-process-query-on-exit-flag desktoping-buku-http-server-process nil)
+            (message "FZL Buku HTTP Bridge iniciado em http://127.0.0.1:8765."))
+        (when verbose
+          (message "FZL Buku: Script fzl_buku_server.py não encontrado em %s." ext-dir))))))
+
+(defun desktoping-buku-http-server-stop ()
+  "Stop the fzl_buku_server.py HTTP bridge process."
+  (interactive)
+  (let ((stopped nil))
+    (when (and (processp desktoping-buku-http-server-process)
+               (process-live-p desktoping-buku-http-server-process))
+      (delete-process desktoping-buku-http-server-process)
+      (setq desktoping-buku-http-server-process nil)
+      (setq stopped t))
+    (let ((fuser (executable-find "fuser")))
+      (when fuser
+        (call-process fuser nil nil nil "-k" "8765/tcp")
+        (setq stopped t)))
+    (if stopped
+        (message "FZL Buku HTTP Bridge parado.")
+      (message "FZL Buku HTTP Bridge não estava ativo."))))
+
+(defun desktoping-buku-http-server-restart ()
+  "Restart the fzl_buku_server.py HTTP bridge process."
+  (interactive)
+  (desktoping-buku-http-server-stop)
+  (sit-for 0.5)
+  (desktoping-buku-http-server-start t))
+
+(defun desktoping--buku-write-all-manifests (host-script)
+  "Write native messaging manifests directly for Chromium-based browsers and Firefox."
+  (let ((chrome-json (format "{\n  \"name\": \"fzl_emacs_buku\",\n  \"description\": \"FZL Emacs Buku Native Messaging Host\",\n  \"path\": \"%s\",\n  \"type\": \"stdio\",\n  \"allowed_origins\": [\n    \"chrome-extension://ckmmhjhihijcbgiibcnmieooofnibjeg/\"\n  ]\n}\n" host-script))
+        (firefox-json (format "{\n  \"name\": \"fzl_emacs_buku\",\n  \"description\": \"FZL Emacs Buku Native Messaging Host\",\n  \"path\": \"%s\",\n  \"type\": \"stdio\",\n  \"allowed_extensions\": [\n    \"fzl-emacs-buku@fzl.desktop\"\n  ]\n}\n" host-script))
+        (chrome-dirs (list
+                      "~/.config/google-chrome/NativeMessagingHosts"
+                      "~/.config/chromium/NativeMessagingHosts"
+                      "~/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts"
+                      "~/.config/microsoft-edge/NativeMessagingHosts"))
+        (firefox-dir "~/.mozilla/native-messaging-hosts"))
+    (dolist (dir chrome-dirs)
+      (let* ((d (expand-file-name dir))
+             (browser-root (directory-file-name (file-name-directory (directory-file-name d)))))
+        (when (file-directory-p browser-root)
+          (make-directory d t)
+          (let ((dest (expand-file-name "fzl_emacs_buku.json" d)))
+            (with-temp-file dest
+              (insert chrome-json))
+            (set-file-modes dest #o644)))))
+    (let ((fd (expand-file-name firefox-dir)))
+      (when (file-directory-p (expand-file-name "~/.mozilla"))
+        (make-directory fd t)
+        (let ((dest (expand-file-name "fzl_emacs_buku.json" fd)))
+          (with-temp-file dest
+            (insert firefox-json))
+          (set-file-modes dest #o644))))))
+
+(defun desktoping-buku-ensure-native-host (&optional verbose)
+  "Ensure the browser extension can execute the native host Python script.
+- Verifies that `fzl_buku_native_host.py' and `install-native-host.sh' are executable (chmod +x).
+- Ensures that browser manifests point to the correct, existing script path.
+- Ensures the Emacs server is running for emacsclient calls.
+- Optionally starts the HTTP Bridge background server if enabled."
+  (interactive '(t))
+  ;; 1. Ensure Emacs server is active
+  (require 'server)
+  (unless (server-running-p)
+    (server-start)
+    (when verbose (message "Emacs server started.")))
+
+  ;; 2. Locate native host script
+  (let* ((ext-dir (desktoping--buku-extension-dir))
+         (host-script (and ext-dir (expand-file-name "native-host/fzl_buku_native_host.py" ext-dir)))
+         (installer-script (and ext-dir (expand-file-name "native-host/install-native-host.sh" ext-dir))))
+    (if (not (and host-script (file-exists-p host-script)))
+        (when verbose
+          (message "FZL Buku: Script do host nativo não encontrado em %s." ext-dir))
+      ;; Ensure permissions
+      (set-file-modes host-script #o755)
+      (when (and installer-script (file-exists-p installer-script))
+        (set-file-modes installer-script #o755))
+
+      ;; 3. Check if any installed browser manifest needs updating
+      (let* ((chrome-manifests (list
+                                "~/.config/google-chrome/NativeMessagingHosts/fzl_emacs_buku.json"
+                                "~/.config/chromium/NativeMessagingHosts/fzl_emacs_buku.json"
+                                "~/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/fzl_emacs_buku.json"
+                                "~/.config/microsoft-edge/NativeMessagingHosts/fzl_emacs_buku.json"))
+             (firefox-manifest "~/.mozilla/native-messaging-hosts/fzl_emacs_buku.json")
+             (all-manifests (cons firefox-manifest chrome-manifests))
+             (needs-install nil))
+        (dolist (m-path all-manifests)
+          (let ((exp (expand-file-name m-path)))
+            (if (not (file-exists-p exp))
+                (let* ((m-dir (file-name-directory exp))
+                       (browser-dir (directory-file-name (file-name-directory (directory-file-name m-dir)))))
+                  (when (file-directory-p browser-dir)
+                    (setq needs-install t)))
+              ;; Manifest exists, check if path matches host-script
+              (condition-case nil
+                  (with-temp-buffer
+                    (insert-file-contents exp)
+                    (let ((txt (buffer-string)))
+                      (unless (and (string-match "\"path\":[ \t]*\"\\([^\"]+\\)\"" txt)
+                                   (string= (match-string 1 txt) host-script)
+                                   (file-executable-p (match-string 1 txt)))
+                        (setq needs-install t))))
+                (error (setq needs-install t))))))
+
+        ;; Run installer script or write manifests directly
+        (when needs-install
+          (if (and installer-script (file-exists-p installer-script))
+              (let* ((process-environment (append (list "FZL_EMACS_SERVER_ACTIVE=1"
+                                                        "FZL_SKIP_EMACSCLIENT_CHECK=1"
+                                                        "INSIDE_EMACS=1")
+                                                  process-environment))
+                     (cmd (format "bash %s >/dev/null 2>&1" (shell-quote-argument installer-script))))
+                (call-process-shell-command cmd))
+            (desktoping--buku-write-all-manifests host-script)))
+
+        ;; 4. Ensure HTTP Bridge if configured
+        (when (and desktoping-buku-auto-start-http-server
+                   (not noninteractive))
+          (desktoping-buku-http-server-start nil))
+
+        (when verbose
+          (message "FZL Buku: Host nativo verificado e pronto para a extensão (%s)." host-script))))))
 
 (defun desktoping-buku-install-browser-extensions ()
   "Install Native Messaging Host and guide installation in local browsers.
@@ -1646,6 +1815,8 @@ With prefix argument `C-u', prompt for directory."
 (define-key desktoping-apps-map (kbd "b i") #'desktoping-buku-import-html)
 (define-key desktoping-apps-map (kbd "b t") #'desktoping-buku-open-tutorial)
 (define-key desktoping-apps-map (kbd "b I") #'desktoping-buku-install-browser-extensions)
+(define-key desktoping-apps-map (kbd "b H") #'desktoping-buku-ensure-native-host)
+(define-key desktoping-apps-map (kbd "b h") #'desktoping-buku-http-server-start)
 (define-key desktoping-apps-map (kbd "b y") #'fzl-buku-sync-now)
 (define-key desktoping-apps-map (kbd "b p") #'fzl-buku-sync-git-commit-and-push)
 
@@ -1745,6 +1916,10 @@ With prefix argument `C-u', prompt for directory."
      ["Open Start-Day URLs Buffer" desktoping-buku-open-start-day-urls-buffer :keys "C-c d b S" :help "Open start-day-* routine URLs in an Org buffer"]
      "---"
      ["Install Browsers Extensions" desktoping-buku-install-browser-extensions :keys "C-c d b I" :help "Install Native Messaging Host and setup extension in Chromium / Firefox"]
+     ["Garantir Host Nativo (Auto-Setup)" desktoping-buku-ensure-native-host :keys "C-c d b H" :help "Verificar permissões, manifestos e Emacs server para a extensão"]
+     ["Iniciar HTTP Bridge (127.0.0.1:8765)" desktoping-buku-http-server-start :keys "C-c d b h" :help "Iniciar servidor HTTP local para a extensão de navegador"]
+     ["Parar HTTP Bridge" desktoping-buku-http-server-stop :help "Parar servidor HTTP local da extensão"]
+     ["Reiniciar HTTP Bridge" desktoping-buku-http-server-restart :help "Reiniciar servidor HTTP local da extensão"]
      "---"
      ["Add New Bookmark" desktoping-buku-add-bookmark :keys "C-c d b a" :help "Add bookmark with tags and comments"]
      ["Add Batch Bookmarks (Paste URLs)" desktoping-buku-add-batch :keys "C-c d b B" :help "Add multiple URLs to a tag group at once"]
@@ -1855,6 +2030,15 @@ With prefix argument `C-u', prompt for directory."
      "---"
      ["HTML to PDF (wkhtmltopdf)" desktoping-util-wkhtmltopdf :keys "C-c d p" :help "Convert HTML file to PDF"]
      ["NPM Config List" desktoping-util-npm-config-list :keys "C-c d n" :help "List npm configuration"])))
+
+;; Auto-ensure native messaging host and permissions on Emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (when (bound-and-true-p desktoping-buku-auto-ensure-host)
+              (desktoping-buku-ensure-native-host nil))))
+
+;; Stop background HTTP bridge process on Emacs exit
+(add-hook 'kill-emacs-hook #'desktoping-buku-http-server-stop)
 
 (provide 'desktoping-apps)
 ;;; desktoping-apps.el ends here
